@@ -1,0 +1,35 @@
+# On branch server-1.6-branch
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#	modified:   dix/dixfonts.c
+#
+# Changed but not updated:
+#   (use "git add/rm <file>..." to update what will be committed)
+#
+#	deleted:    hw/xwin/xlaunch/Makefile
+#
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#	afb/
+#	cfb/
+#	cfb32/
+#	hw/xfree86/xf8_32bpp/
+diff --git a/dix/dixfonts.c b/dix/dixfonts.c
+index 416adb3..719bca4 100644
+--- a/dix/dixfonts.c
++++ b/dix/dixfonts.c
+@@ -1907,12 +1907,9 @@ InitFonts (void)
+ {
+     patternCache = MakeFontPatternCache();
+ 
+-#ifdef BUILTIN_FONTS
+     BuiltinRegisterFpeFunctions();
+-#else
+     FontFileRegisterFpeFunctions();
+     fs_register_fpe_functions();
+-#endif
+ }
+ 
+ int

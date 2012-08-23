@@ -1,0 +1,67 @@
+--- hylafax-6.0.3/faxd/FaxRecv.c++.old	2009-01-07 16:21:20.000000000 +0100
++++ hylafax-6.0.3/faxd/FaxRecv.c++	2009-01-07 16:21:44.000000000 +0100
+@@ -185,13 +185,13 @@
+ 	 * patterns defined for the server.  This form of access
+ 	 * control depends on the sender passing a valid TSI/PWD.
+ 	 * Note that to accept/reject unspecified values one
+-	 * should match "<UNSPECIFIED>".
++	 * should match "UNSPECIFIED".
+ 	 *
+ 	 * NB: Caller-ID access control is done elsewhere; prior
+ 	 *     to answering a call.
+ 	 */
+ 	if (!modem->getRecvTSI(info.sender))		// optional TSI
+-	    info.sender = "<UNSPECIFIED>";
++	    info.sender = "UNSPECIFIED";
+ 	if (qualifyTSI != "") {
+ 	    okToRecv = isTSIOk(info.sender);
+ 	    reason = Status(350, "Permission denied (unnacceptable client TSI)");
+@@ -199,7 +199,7 @@
+ 		(const char*) info.sender);
+ 	}
+ 	if (!modem->getRecvPWD(info.passwd))		// optional PWD
+-	    info.passwd = "<UNSPECIFIED>";
++	    info.passwd = "UNSPECIFIED";
+ 	if (qualifyPWD != "") {
+ 	    okToRecv = isPWDOk(info.passwd);
+ 	    reason = Status(351, "Permission denied (unnacceptable client PWD)");
+--- hylafax-6.0.3/faxd/FaxSend.c++.old	2009-01-07 16:22:01.000000000 +0100
++++ hylafax-6.0.3/faxd/FaxSend.c++	2009-01-07 16:22:09.000000000 +0100
+@@ -229,7 +229,7 @@
+ 	    sendFailed(fax, status, result, requeueProto);
+ 	} else {
+ 	    // CSI
+-	    fxStr csi("<UNSPECIFIED>");
++	    fxStr csi("UNSPECIFIED");
+ 	    (void) modem->getSendCSI(csi);
+ 	    clientInfo.setCSI(csi);			// record remote CSI
+ 	    fax.csi = csi;				// store in queue file also for notify
+--- hylafax-6.0.3/faxd/faxQueueApp.c++.old	2009-01-07 17:09:14.000000000 +0100
++++ hylafax-6.0.3/faxd/faxQueueApp.c++	2009-01-07 17:20:01.000000000 +0100
+@@ -580,7 +580,7 @@
+      * (source) document name by removing the
+      * encoded session parameters used for imaging.
+      */
+-    u_int l = file.nextR(file.length(), ';');
++    u_int l = file.nextR(file.length(), '@');
+     if (l == 0) {
+ 	logError("Bogus document handed to unrefDoc: %s", (const char*) file);
+ 	return;
+@@ -736,7 +736,7 @@
+ 	case FaxRequest::send_pcl:		// convert PCL
+ 	case FaxRequest::send_tiff:		// verify&possibly convert TIFF
+         case FaxRequest::send_pdf:		// convert PDF
+-	    tmp = FaxRequest::mkbasedoc(fitem.item) | ";" | params.encodePage();
++	    tmp = FaxRequest::mkbasedoc(fitem.item) | "@" | params.encodePage();
+ 	    status = convertDocument(job, fitem, tmp, params, req.result);
+ 	    if (status == Job::done) {
+ 		/*
+@@ -1296,7 +1296,7 @@
+     traceQueue(job, "COVER PAGE: %s", (const char*)cmd);
+     if (runCmd(cmd, true)) {
+ 	Status result;
+-	fxStr tmp = fitem.item | ";" | params.encodePage();
++	fxStr tmp = fitem.item | "@" | params.encodePage();
+ 	if (convertDocument(job, fitem, tmp, params, result)) {
+ 	    req.insertFax(0, tmp);
+ 	    req.cover = tmp;			// needed in sendJobDone

@@ -1,0 +1,15 @@
+--- wizardpen.c.orig	2006-02-19 00:51:13.000000000 +0000
++++ wizardpen.c	2006-02-19 00:53:40.000000000 +0000
+@@ -629,10 +629,10 @@
+      * If something went wrong, cleanup and return NULL
+      */
+   SetupProc_fail:
+-    if ((local) && (local->fd))
++/*    if ((local) && (local->fd))
+ 	xf86CloseSerial(local->fd);
+     if (local)
+-	xf86DeleteInput(local, 0);
++	xf86DeleteInput(local, 0);*/
+ 
+     if ((priv) && (priv->buffer))
+ 	XisbFree(priv->buffer);

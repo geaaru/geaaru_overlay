@@ -1,0 +1,12 @@
+AUX tablet-not-connected.patch 453 RMD160 1ad3cefe6bcc9fd1bc5c28bf229f57e220c4bb43 SHA1 07b22c2fca22c7cfc75e3dd23156df623f3f1ce7 SHA256 876597dacd80c73846309ded0a0ff9da540fb1aeb0993787779cf8ff51bc2fdf
+MD5 3fe3cf689ea304559f90886fb05c5d9c files/tablet-not-connected.patch 453
+RMD160 1ad3cefe6bcc9fd1bc5c28bf229f57e220c4bb43 files/tablet-not-connected.patch 453
+SHA256 876597dacd80c73846309ded0a0ff9da540fb1aeb0993787779cf8ff51bc2fdf files/tablet-not-connected.patch 453
+DIST wizardpen-driver-0.5.0.tar.gz 116124 RMD160 1ce9168a6accbe026d685fc1fb2cb120c025ad77 SHA1 f24dc14e95a754741572cce1417c324915b12627 SHA256 1a07511ee406b2f94d2598d572fb5c33d882bb18f149878eb5fe1b0a2cbf85bf
+EBUILD wizardpen-driver-0.5.0.ebuild 2657 RMD160 5f8db1a93aaa6a2643b46b03fc82008d6912fb32 SHA1 08b7675a9c481a85b790091b9333a44cb3408755 SHA256 77b5c565656f75417ee543a4d9225d42b8ed8100d1f5c61b35d49ca9b0c276d1
+MD5 23e5bda0ecc6b5a6ea8a4cc8bd8c59a2 wizardpen-driver-0.5.0.ebuild 2657
+RMD160 5f8db1a93aaa6a2643b46b03fc82008d6912fb32 wizardpen-driver-0.5.0.ebuild 2657
+SHA256 77b5c565656f75417ee543a4d9225d42b8ed8100d1f5c61b35d49ca9b0c276d1 wizardpen-driver-0.5.0.ebuild 2657
+MD5 4082b3448d0f5d404a5f926a39e74496 files/digest-wizardpen-driver-0.5.0 268
+RMD160 b152c0772d432a8ae8c9f3ed6695b33f2f005b33 files/digest-wizardpen-driver-0.5.0 268
+SHA256 e34b2acc4fc7731420e5ab40ed77f5165914f156416d7dae90cadba6d7fd56d2 files/digest-wizardpen-driver-0.5.0 268

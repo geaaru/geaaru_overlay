@@ -1,0 +1,78 @@
+--- vpnclient.ori/interceptor.c 2009-05-21 01:16:34.000000000 +1200
++++ vpnclient/interceptor.c 2009-09-06 22:02:39.000000000 +1200
+@@ -116,6 +116,14 @@
+ };
+ #endif
+ 
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,31)
++static struct net_device_ops interceptor_netdev_ops = {
++    .ndo_start_xmit = interceptor_tx,
++    .ndo_do_ioctl   = interceptor_ioctl,
++    .ndo_get_stats  = interceptor_stats,
++};
++#endif
++
+ static struct notifier_block interceptor_notifier = {
+     .notifier_call = handle_netdev_event,
+ };
+@@ -129,9 +137,13 @@
+ {
+     ether_setup(dev);
+ 
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,31)
++    dev->netdev_ops = &interceptor_netdev_ops;
++#else
+     dev->hard_start_xmit = interceptor_tx;
+     dev->get_stats = interceptor_stats;
+     dev->do_ioctl = interceptor_ioctl;
++#endif
+ 
+     dev->mtu = ETH_DATA_LEN-MTU_REDUCTION;
+     kernel_memcpy(dev->dev_addr, interceptor_eth_addr,ETH_ALEN);
+@@ -242,6 +254,9 @@
+ {
+     int rc = -1;
+     int i = 0;
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,31)
++    struct net_device_ops * tmp_ops;
++#endif
+ 
+     if (!supported_device(dev))
+     {
+@@ -268,8 +283,14 @@
+     Bindings[i].original_mtu = dev->mtu;
+ 
+     /*replace the original send function with our send function */
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,31)
++    Bindings[i].InjectSend = dev->netdev_ops->ndo_start_xmit;
++    tmp_ops = (struct net_device_ops *) dev->netdev_ops;
++    tmp_ops->ndo_start_xmit = replacement_dev_xmit;
++#else
+     Bindings[i].InjectSend = dev->hard_start_xmit;
+     dev->hard_start_xmit = replacement_dev_xmit;
++#endif
+ 
+     /*copy in the ip packet handler function and packet type struct */
+     Bindings[i].InjectReceive = original_ip_handler.orig_handler_func;
+@@ -285,13 +306,21 @@
+ {
+     int rc = -1;
+     BINDING *b;
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,31)
++    struct net_device_ops * tmp_ops;
++#endif
+ 
+     b = getbindingbydev(dev);
+ 
+     if (b)
+     {   
+         rc = 0;
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,31)
++        tmp_ops = (struct net_device_ops *) dev->netdev_ops;
++        tmp_ops->ndo_start_xmit = b->InjectSend;
++#else
+         dev->hard_start_xmit = b->InjectSend;
++#endif
+         kernel_memset(b, 0, sizeof(BINDING));
+     }
+     else

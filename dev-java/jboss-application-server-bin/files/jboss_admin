@@ -1,0 +1,246 @@
+#!/bin/bash
+#######################################################
+# Author: Ge@@ru, geaaru@gmail.com                    #
+# Date: 22 July, 2008                                 #
+#######################################################
+VERSION="0.1"
+#DEBUG=true
+
+INST_OPT=0
+DEL_OPT=0
+CREATE_OPT=0
+
+SERVER_NAME="default"
+DIR="/var/jboss"
+FROM_SERVER=""
+BASEDIR=""
+USER="jboss"
+GROUP="jboss"
+
+#
+# Example 1 (initialize jboss directory):
+# 	jboss_admin -c -d ~/jboss_directory -u jboss -g jboss
+# Example 2 (create a server directory with name test1 from default tree):
+# 	jboss_admin -i -d ~/jboss_directory -u jboss -g jboss -n test1 -f default
+# Example 3 (remove a server directory with name 
+show_help () {
+	echo -en "jboss_admin: \n"
+	echo -en "[-h]		this message\n"
+	echo -en "[-i]		install new jboss server environment\n"
+	echo -en "[-r]		remove an installed jboss server environment\n"
+	echo -en "[-n name]	name of the server tree. Possible values\n"
+	echo -en "		could be still all|default|minimal\n"
+	echo -en "[-f]		this param must be used if name of the -n param\n"
+	echo -en "		use a name different of all|default|minimal\n"
+	echo -en "[-d dir]	directory where install or remove server data\n"
+	echo -en "		Default directory is $DIR.(Use absolute path)\n"
+	echo -en "[-v]		version of this script.\n"
+	echo -en "[-u]		user permission. Default is $USER\n"
+	echo -en "[-g]		group permission. Default is $GROUP\n"
+	echo -en "[-c]		create and initialize jboss root directory.\n"
+}
+
+# return 0 ok
+# return 1 error or help message
+check_cmdline_args () {
+	local iter=1
+
+	if [ $# -eq 0 ] ; then
+		show_help
+		return 1
+	fi
+
+	while getopts "hvircg:u:n:f:d:v" opts ; do
+		case $opts in
+			n) SERVER_NAME="$OPTARG";;
+			i) INST_OPT=1;;
+			r) DEL_OPT=1;;
+			f) FROM_SERVER="$OPTARG";;
+			d) DIR="$OPTARG";;
+			g) GROUP="$OPTARG";;
+			u) USER="$OPTARG";;
+			c) CREATE_OPT=1;;
+			h)
+				show_help
+				return 1
+				;;
+			v)
+				echo -en "jboss_admin version $VERSION\n"
+				return 1
+				;;
+			*)
+				show_help
+				return 1
+				;;
+		esac
+	done
+
+	if [[  $INST_OPT -eq 1 && $DEL_OPT -eq 1 && $CREATE_OPT -eq 1 ]] ; then
+		echo -en "Error: you can use -r or -i or -c flag\n"
+		return 1
+	fi
+
+	return 0
+}
+
+error_handled () {
+	local result=$?
+	if [ $result -ne 0 ] ; then
+		echo -en "$1\n"
+		exit 1
+	fi
+}
+
+# Check if exit target dir and server
+# return 1 if directory doesn't exist
+# return 0 if directory exist.
+check_target_dir () {
+	local targetdir="$DIR/server"
+	local targetserverdir="$DIR/server/$SERVER_NAME"
+
+	[[ $DEBUG ]] && echo "Target dir: $targetdir"
+	if [ ! -d $targetdir ] ; then
+		return 1
+	fi
+
+	[[ $DEBUG ]] && echo "Target server dir: $targetserverdir"
+	if [ ! -d $targetserverdir ] ; then
+		return 1
+	fi
+
+	return 0
+}
+
+# Change jboss-log4j.xml file for use log file under
+# starndard /var/log/jboss directory
+change_log4j_file () {
+	local log4jfile="${DIR}/server/${SERVER_NAME}/conf/jboss-log4j.xml"
+	local log4jfileold="${log4jfile}.old"
+
+	# fix server.log filename
+	[[ $DEBUG ]] && echo "sed command on $log4jfileold to $log4jfile"
+	mv $log4jfile $log4jfileold
+	sed -e 's/\/server.log/\/server_${jboss.server.name}.log/' $log4jfileold > $log4jfile
+	if [ $? -ne 0 ] ; then
+		echo -en "Error on fix log4j file\n"
+		exit 1
+	fi
+
+	# fix cluster.log filename
+	[[ $DEBUG ]] && echo "sed command on $log4jfileold to $log4jfile"
+	mv $log4jfile $log4jfileold
+	sed -e 's/\/cluster.log/\/cluster_${jboss.server.name}.log/' $log4jfileold > $log4jfile
+	if [ $? -ne 0 ] ; then
+		echo -en "Error on fix log4j file\n"
+		exit 1
+	fi
+
+	rm $log4jfileold || error_handled "Error on remove $log4jfileold file"
+}
+
+# return 1 on error
+# return 0 ok
+install_server () {
+	local result=1
+	local primarydir=""
+
+	check_target_dir
+	result=$?
+	if [ $result -eq 0 ] ; then
+		echo -en "Directory $DIR/server/$SERVER_NAME already exist\n"
+		return 1
+	fi
+
+	[[ $DEBUG ]] && echo "Check server name: $SERVER_NAME"
+	if [[ x"$SERVER_NAME" != "xdefault" && x"$SERVER_NAME" != "xall" && x"$SERVER_NAME" != "xminimal" ]] ; then
+		if [ x"$FROM_SERVER" == x ] ; then
+			echo -en "-f value is invalid\n"
+			return 1
+		fi
+		primarydir="$BASEDIR/server/$FROM_SERVER"
+	else
+		primarydir="$BASEDIR/server/$SERVER_NAME"
+	fi
+
+	[[ $DEBUG ]] && echo "Create directory $DIR/server if doesn't exist"
+	if [ ! -d "$DIR/server" ] ; then
+		mkdir $DIR/server || error_handled "Error on create directory $DIR/server"
+		chown $USER:$GROUP -R $DIR/server || error_handled "Error on change permission to $DIR/server directory"
+	fi
+
+	[[ $DEBUG ]] && echo "Copy data from $primarydir directory $DIR/server/$SERVER_NAME..."
+	cp -rf $primarydir $DIR/server/$SERVER_NAME || error_handled "Error on copy data"
+
+	change_log4j_file
+
+	# change permissions
+	chown $USER:$GROUP -R $DIR/server/$SERVER_NAME || error_handled "Error on change permission to $DIR directory"
+
+	return 0
+}
+
+# return 1 on error
+# return 0 ok
+remove_server () {
+	local result=1
+
+	check_target_dir
+	error_handled "Error directory $DIR/server/$SERVER_NAME doesn't exist"
+
+	[[ $DEBUG ]] && echo "Remove directory $DIR/server/$SERVER_NAME"
+	rm -r $DIR/server/$SERVER_NAME || error_handled "Error on remove $DIR/server/$SERVER_NAME directory"
+
+	return 0
+}
+
+create_dir () {
+	local result=1
+
+	if [ -d $DIR ] ; then
+		echo -en "Directory $DIR already exist.\n"
+		if [[ -e $DIR/bin || -e $DIR/lib ]] ; then
+			echo -en "Directory $DIR already contains links.\n"
+			return -1
+		fi
+	else
+		# create directory root for server
+		mkdir $DIR || error_handled "Error on create directory $DIR"
+	fi
+
+	# create link to bin directory
+	ln -s $BASEDIR/bin $DIR/bin || error_handled "Error on create link to $BASEDIR/bin in $DIR/bin"
+
+	# create link to lib directory
+	ln -s $BASEDIR/lib $DIR/lib || error_handled "Error on create link to $BASEDIR/lib in $DIR/lib"
+
+	# change permissions
+	chown $USER:$GROUP -R $DIR || error_handled "Error on change permission to $DIR directory"
+
+	return 0
+}
+
+main () {
+	local result=1
+
+	check_cmdline_args $@
+	result=$?
+	if [ $result -eq 1 ] ; then
+		exit $result
+	fi
+
+	if [[ $INST_OPT -eq 1 ]] ; then
+		install_server
+	elif [[ $DEL_OPT -eq 1 ]] ; then
+		remove_server
+	else
+		create_dir
+	fi
+	result=$?
+
+	exit $result
+}
+
+
+main $@
+
+

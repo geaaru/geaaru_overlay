@@ -1,0 +1,8 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Ecomorph
+Comment=Log in using Ecomorph
+Type=XSession
+Icon=/usr/share/enlightenment/data/images/enlightenment.png
+Exec=/etc/X11/Sessions/ecomorph
+TryExec=/etc/X11/Sessions/ecomorph

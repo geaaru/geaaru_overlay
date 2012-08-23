@@ -1,0 +1,8 @@
+DIST python-fuse-2.3.tar.gz 12855 RMD160 ea10c6a9d42dfd8146a430d58f13c1ebc01373c8 SHA1 977119e872a69eae82c582ced047f93f42bf9385 SHA256 2309ed220866ad9d1ce8f4f0d6d819b8ad5f6b7a35de28cb92e329b3f30b512c
+EBUILD python-fuse-2.3.ebuild 480 RMD160 a4fac4af73049d9e0c5c28ad5d7aba46bf2b4e4f SHA1 603f25e83d2983a2a31723614820bc218112dac6 SHA256 ec6d2238f7193760c23bb45f6b9cafce1ec488ee5374ec8046ed0324e3e764eb
+MD5 f60dcd1e6d44bdb3b585a4bfd6e94514 python-fuse-2.3.ebuild 480
+RMD160 a4fac4af73049d9e0c5c28ad5d7aba46bf2b4e4f python-fuse-2.3.ebuild 480
+SHA256 ec6d2238f7193760c23bb45f6b9cafce1ec488ee5374ec8046ed0324e3e764eb python-fuse-2.3.ebuild 480
+MD5 fd90ded18818328fc7b1c9269e8a0c22 files/digest-python-fuse-2.3 244
+RMD160 efef50504220cd995220486df1f99be6900f5292 files/digest-python-fuse-2.3 244
+SHA256 7603a872f1db06d068731a8a1b04a46f621caa4ec149f4d290193f4abebce374 files/digest-python-fuse-2.3 244

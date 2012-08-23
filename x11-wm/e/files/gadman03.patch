@@ -1,0 +1,772 @@
+Index: configure.in
+===================================================================
+RCS file: /cvs/e/e17/apps/e/configure.in,v
+retrieving revision 1.204
+diff -u -r1.204 configure.in
+--- configure.in	28 Mar 2008 20:53:26 -0000	1.204
++++ configure.in	16 Apr 2008 20:09:31 -0000
+@@ -373,6 +373,8 @@
+ src/modules/conf_mime/module.desktop
+ src/modules/conf_interaction/Makefile
+ src/modules/conf_interaction/module.desktop
++src/modules/gadman/Makefile
++src/modules/gadman/module.desktop
+ src/preload/Makefile
+ data/Makefile
+ data/fonts/Makefile
+Index: data/themes/default_gadman.edc
+===================================================================
+RCS file: /cvs/e/e17/apps/e/data/themes/default_gadman.edc,v
+retrieving revision 1.9
+diff -u -r1.9 default_gadman.edc
+--- data/themes/default_gadman.edc	20 Aug 2007 18:50:19 -0000	1.9
++++ data/themes/default_gadman.edc	16 Apr 2008 20:09:31 -0000
+@@ -1426,3 +1426,208 @@
+         }
+     }
+ }
++
++group {
++   name: "e/gadman/full_bg";
++   parts {
++      part{
++	 name:          "bg";
++	 type:          RECT;
++	 mouse_events:  0;
++	 description {
++	    state:    "default" 0.0;
++	    color: 255 255 255 200;
++	 }
++	 description {
++	    state:    "hidden" 0.0;
++	    color: 255 255 255 0;
++         }
++      }
++   }
++   programs {
++      program {
++	 name:    "hide";
++	 signal:  "e,state,visibility,hide";
++	 source:  "e";
++	 action:  STATE_SET "hidden" 0.0;
++	 transition:  LINEAR 0.4;
++	 target:  "bg";
++      }
++      program {
++	 name:    "show";
++	 signal:  "e,state,visibility,show";
++	 source:  "e";
++	 action:  STATE_SET "default" 0.0;
++	 transition:  LINEAR 0.4;
++	 target:  "bg";
++      }
++   }
++}
++
++group {
++   name: "e/gadman/frame";
++   parts {
++      part{
++	 name:          "bg_clip";
++	 type:          RECT;
++	 mouse_events:  0;
++	 description {
++	    state:    "default" 0.0;
++	    color: 255 255 255 255;
++	    rel1 {
++	       to:       "overlay";
++	    }
++	    rel2 {
++	       to:       "overlay";
++	    }
++	 }
++	 description {
++	    state:    "plain" 0.0;
++	    color: 255 255 255 255;
++	    rel1 {
++	       relative: 0.0 0.0;
++	    }
++	    rel2 {
++	       relative: 0.0 0.0;
++	    }
++	 }
++      }
++      part {
++	 name:          "background";
++	 mouse_events:  0;
++	 clip_to:       "bg_clip";
++	 description {
++	    state:    "default" 0.0;
++	    rel1 {
++	       to:       "overlay";
++	    }
++	    rel2 {
++	       to:       "overlay";
++	    }
++	    image {
++	       normal: "e17_ibar_bg_h.png";
++	       border: 6 6 6 6;
++	    }
++	    fill {
++	       smooth: 0;
++	    }
++	 }
++	 description {
++	    state:    "hidden" 0.0;
++	    inherit:  "default" 0.0;
++	    color: 255 255 255 0;
++	 }
++      }
++      part {
++	 name:          "items_clip";
++	 type:          RECT;
++	 mouse_events:  0;
++	 description {
++	    state:    "default" 0.0;
++	    rel1 {
++	       to:       "background";
++	       offset:   4    4;
++	    }
++	    rel2 {
++	       to:       "background";
++	       offset:   -5    -5;
++	    }
++	    color: 255 255 255 255;
++	 }
++	 description {
++	    state:    "hidden" 0.0;
++	    inherit:  "default" 0.0;
++	    color: 255 255 255 0;
++	 }
++      }
++      part {
++	 name:          "e.swallow.content";
++	 type:          SWALLOW;
++	 clip_to:       "items_clip";
++	 description {
++	    state:    "default" 0.0;
++	    rel1 {
++	       offset:   4    4;
++	    }
++	    rel2 {
++	       offset:   -5    -5;
++	    }
++	 }
++	 description {
++	    state:    "hidden" 0.0;
++	    color: 255 255 255 0;
++	    rel1 {
++	       relative: 0.5 0.5;
++	    }
++	    rel2 {
++	       relative: 0.5 0.5;
++	    }
++	 }
++      }
++      part {
++	 name:          "overlay";
++	 mouse_events:  0;
++	 clip_to:       "bg_clip";
++	 description {
++	    state:    "default" 0.0;
++	    image {
++	       normal: "e17_ibar_over_h.png";
++	       border: 13 13 13 13;
++	       middle: 0;
++	    }
++	    fill {
++	       smooth: 0;
++	    }
++	 }
++	 description {
++	    state:    "hidden" 0.0;
++	    inherit:  "default" 0.0;
++	    color: 255 255 255 0;
++	    rel1 {
++	       relative: 0.5 0.5;
++	    }
++	    rel2 {
++	       relative: 0.5 0.5;
++	    }
++	 }
++      }
++   }
++   programs {
++      program {
++	 name:    "inset";
++	 signal:  "e,state,visibility,inset";
++	 source:  "e";
++	 action:  STATE_SET "default" 0.0;
++	 target:  "bg_clip";
++      }
++      program {
++	 name:    "plain";
++	 signal:  "e,state,visibility,plain";
++	 source:  "e";
++	 action:  STATE_SET "plain" 0.0;
++	 target:  "bg_clip";
++      }
++      program {
++	 name:    "hide";
++	 signal:  "e,state,visibility,hide";
++	 source:  "e";
++	 action:  STATE_SET "hidden" 0.0;
++	 transition:  ACCELERATE 0.4;
++	 target:  "items_clip";
++	 target:  "background";
++	 target:  "overlay";
++	 target:  "e.swallow.content";
++      }
++      program {
++	 name:    "show";
++	 signal:  "e,state,visibility,show";
++	 source:  "e";
++	 action:  STATE_SET "default" 0.0;
++	 transition:  DECELERATE 0.4;
++	 target:  "items_clip";
++	 target:  "background";
++	 target:  "overlay";
++	 target:  "e.swallow.content";
++      }
++   }
++}
+Index: src/bin/e_config.c
+===================================================================
+RCS file: /cvs/e/e17/apps/e/src/bin/e_config.c,v
+retrieving revision 1.283
+diff -u -r1.283 e_config.c
+--- src/bin/e_config.c	31 Mar 2008 15:49:19 -0000	1.283
++++ src/bin/e_config.c	16 Apr 2008 20:09:33 -0000
+@@ -96,6 +96,10 @@
+    E_CONFIG_VAL(D, T, geom.pos, INT);
+    E_CONFIG_VAL(D, T, geom.size, INT);
+    E_CONFIG_VAL(D, T, geom.res, INT);
++   E_CONFIG_VAL(D, T, geom.pos_x, DOUBLE);
++   E_CONFIG_VAL(D, T, geom.pos_y, DOUBLE);
++   E_CONFIG_VAL(D, T, geom.size_w, DOUBLE);
++   E_CONFIG_VAL(D, T, geom.size_h, DOUBLE);
+    E_CONFIG_VAL(D, T, state_info.seq, INT);
+    E_CONFIG_VAL(D, T, state_info.flags, INT);
+    E_CONFIG_VAL(D, T, style, STR);
+@@ -188,6 +192,7 @@
+    E_CONFIG_VAL(D, T, name, STR);
+    E_CONFIG_VAL(D, T, enabled, UCHAR);
+    E_CONFIG_VAL(D, T, delayed, UCHAR);
++   E_CONFIG_VAL(D, T, priority, INT);
+ 
+    _e_config_font_default_edd = E_CONFIG_DD_NEW("E_Font_Default", 
+ 						E_Font_Default);
+@@ -761,62 +766,64 @@
+      {
+ 	E_Config_Module *em;
+ 
+-#define CFG_MODULE(_name, _enabled, _delayed) \
++#define CFG_MODULE(_name, _enabled, _delayed, _priority) \
+    em = E_NEW(E_Config_Module, 1); \
+    em->name = evas_stringshare_add(_name); \
+    em->enabled = _enabled; \
+    em->delayed = _delayed; \
++   em->priority = _priority; \
+    e_config->modules = evas_list_append(e_config->modules, em)
+ 
+-	CFG_MODULE("start", 1, 0);
+-	CFG_MODULE("ibar", 1, 0);
+-	CFG_MODULE("ibox", 1, 0);
+-	CFG_MODULE("dropshadow", 1, 0);
+-	CFG_MODULE("clock", 1, 0);
+-	CFG_MODULE("battery", 1, 0);
+-	CFG_MODULE("cpufreq", 1, 0);
+-	CFG_MODULE("temperature", 1, 0);
+-	CFG_MODULE("pager", 1, 0);
+-	CFG_MODULE("exebuf", 1, 1);
+-	CFG_MODULE("winlist", 1, 1);
+-	CFG_MODULE("conf", 1, 1);
+-	CFG_MODULE("conf_applications", 1, 1);
+-	CFG_MODULE("conf_borders", 1, 1);
+-	CFG_MODULE("conf_clientlist", 1, 1);
+-	CFG_MODULE("conf_colors", 1, 1);
+-	CFG_MODULE("conf_desk", 1, 1);
+-	CFG_MODULE("conf_desklock", 1, 1);
+-	CFG_MODULE("conf_desks", 1, 1);
+-	CFG_MODULE("conf_dialogs", 1, 1);
+-	CFG_MODULE("conf_display", 1, 1);
+-	CFG_MODULE("conf_dpms", 1, 1);
+-	CFG_MODULE("conf_exebuf", 1, 1);
+-	CFG_MODULE("conf_fonts", 1, 1);
+-	CFG_MODULE("conf_icon_theme", 1, 1);
+-	CFG_MODULE("conf_imc", 1, 1);
+-	CFG_MODULE("conf_intl", 1, 1);
+-	CFG_MODULE("conf_keybindings", 1, 1);
+-	CFG_MODULE("conf_menus", 1, 1);
+-	CFG_MODULE("conf_mime", 1, 1);
+-	CFG_MODULE("conf_mouse", 1, 1);
+-	CFG_MODULE("conf_mousebindings", 1, 1);
+-	CFG_MODULE("conf_mouse_cursor", 1, 1);
+-	CFG_MODULE("conf_paths", 1, 1);
+-	CFG_MODULE("conf_performance", 1, 1);
+-	CFG_MODULE("conf_profiles", 1, 1);
+-	CFG_MODULE("conf_screensaver", 1, 1);
+-	CFG_MODULE("conf_shelves", 1, 1);
+-	CFG_MODULE("conf_startup", 1, 1);
+-	CFG_MODULE("conf_theme", 1, 1);
+-	CFG_MODULE("conf_transitions", 1, 1);
+-	CFG_MODULE("conf_wallpaper", 1, 1);
+-	CFG_MODULE("conf_window_display", 1, 1);
+-	CFG_MODULE("conf_window_focus", 1, 1);
+-	CFG_MODULE("conf_window_manipulation", 1, 1);
+-	CFG_MODULE("conf_winlist", 1, 1);
+-	CFG_MODULE("conf_engine", 1, 1);
+-	CFG_MODULE("fileman", 1, 1);
+-	CFG_MODULE("conf_interaction", 1, 1);
++	CFG_MODULE("start", 1, 0, 0);
++	CFG_MODULE("ibar", 1, 0, 0);
++	CFG_MODULE("ibox", 1, 0, 0);
++	CFG_MODULE("dropshadow", 1, 0, 0);
++	CFG_MODULE("clock", 1, 0, 0);
++	CFG_MODULE("battery", 1, 0, 0);
++	CFG_MODULE("cpufreq", 1, 0, 0);
++	CFG_MODULE("temperature", 1, 0, 0);
++	CFG_MODULE("gadman", 1, 0, -100);
++	CFG_MODULE("pager", 1, 0, 0);
++	CFG_MODULE("exebuf", 1, 1, 0);
++	CFG_MODULE("winlist", 1, 1, 0);
++	CFG_MODULE("conf", 1, 1, 0);
++	CFG_MODULE("conf_applications", 1, 1, 0);
++	CFG_MODULE("conf_borders", 1, 1, 0);
++	CFG_MODULE("conf_clientlist", 1, 1, 0);
++	CFG_MODULE("conf_colors", 1, 1, 0);
++	CFG_MODULE("conf_desk", 1, 1, 0);
++	CFG_MODULE("conf_desklock", 1, 1, 0);
++	CFG_MODULE("conf_desks", 1, 1, 0);
++	CFG_MODULE("conf_dialogs", 1, 1, 0);
++	CFG_MODULE("conf_display", 1, 1, 0);
++	CFG_MODULE("conf_dpms", 1, 1, 0);
++	CFG_MODULE("conf_exebuf", 1, 1, 0);
++	CFG_MODULE("conf_fonts", 1, 1, 0);
++	CFG_MODULE("conf_icon_theme", 1, 1, 0);
++	CFG_MODULE("conf_imc", 1, 1, 0);
++	CFG_MODULE("conf_intl", 1, 1, 0);
++	CFG_MODULE("conf_keybindings", 1, 1, 0);
++	CFG_MODULE("conf_menus", 1, 1, 0);
++	CFG_MODULE("conf_mime", 1, 1, 0);
++	CFG_MODULE("conf_mouse", 1, 1, 0);
++	CFG_MODULE("conf_mousebindings", 1, 1, 0);
++	CFG_MODULE("conf_mouse_cursor", 1, 1, 0);
++	CFG_MODULE("conf_paths", 1, 1, 0);
++	CFG_MODULE("conf_performance", 1, 1, 0);
++	CFG_MODULE("conf_profiles", 1, 1, 0);
++	CFG_MODULE("conf_screensaver", 1, 1, 0);
++	CFG_MODULE("conf_shelves", 1, 1, 0);
++	CFG_MODULE("conf_startup", 1, 1, 0);
++	CFG_MODULE("conf_theme", 1, 1, 0);
++	CFG_MODULE("conf_transitions", 1, 1, 0);
++	CFG_MODULE("conf_wallpaper", 1, 1, 0);
++	CFG_MODULE("conf_window_display", 1, 1, 0);
++	CFG_MODULE("conf_window_focus", 1, 1, 0);
++	CFG_MODULE("conf_window_manipulation", 1, 1, 0);
++	CFG_MODULE("conf_winlist", 1, 1, 0);
++	CFG_MODULE("conf_engine", 1, 1, 0);
++	CFG_MODULE("fileman", 1, 1, 0);
++	CFG_MODULE("conf_interaction", 1, 1, 0);
+      }
+ #if 0
+      {
+Index: src/bin/e_config.h
+===================================================================
+RCS file: /cvs/e/e17/apps/e/src/bin/e_config.h,v
+retrieving revision 1.169
+diff -u -r1.169 e_config.h
+--- src/bin/e_config.h	20 Feb 2008 04:12:58 -0000	1.169
++++ src/bin/e_config.h	16 Apr 2008 20:09:33 -0000
+@@ -293,6 +293,7 @@
+    const char    *name;
+    unsigned char  enabled;
+    unsigned char  delayed;
++   int            priority;
+ };
+ 
+ struct _E_Config_Theme
+@@ -373,7 +374,8 @@
+    const char    *name;
+    const char    *id;
+    struct {
+-      int pos, size, res;
++      int pos, size, res;                   //gadcon
++      double pos_x, pos_y, size_w, size_h;  //gadman
+    } geom;
+    struct {
+       int seq, flags;
+Index: src/bin/e_gadcon.c
+===================================================================
+RCS file: /cvs/e/e17/apps/e/src/bin/e_gadcon.c,v
+retrieving revision 1.104
+diff -u -r1.104 e_gadcon.c
+--- src/bin/e_gadcon.c	7 Mar 2008 19:13:53 -0000	1.104
++++ src/bin/e_gadcon.c	16 Apr 2008 20:09:33 -0000
+@@ -654,7 +654,7 @@
+ 
+ EAPI void
+ e_gadcon_util_menu_attach_func_set(E_Gadcon *gc, 
+-				   void (*func) (void *data, E_Menu *menu),
++				   void (*func) (void *data, E_Gadcon_Client *gcc, E_Menu *menu),
+ 				   void *data)
+ {
+    E_OBJECT_CHECK(gc);
+@@ -1187,7 +1187,7 @@
+    gcc->menu = menu;
+    */
+ 
+-   if (!gcc->gadcon->toolbar) 
++   if (gcc->gadcon->shelf) 
+      {
+ 	mn = e_menu_new();
+ 	mi = e_menu_item_new(mn);
+@@ -1214,42 +1214,44 @@
+ 	e_menu_item_submenu_set(mi, mn);
+ 	e_object_del(E_OBJECT(mn));
+      }
+-   mi = e_menu_item_new(menu);
+-   e_menu_item_label_set(mi, _("Automatically scroll contents"));
+-   e_util_menu_item_edje_icon_set(mi, "enlightenment/autoscroll");
+-   e_menu_item_check_set(mi, 1);
+-   if (gcc->autoscroll) e_menu_item_toggle_set(mi, 1);
+-   e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_autoscroll, gcc);
+-
+-   mi = e_menu_item_new(menu);
+-   e_menu_item_label_set(mi, _("Able to be resized"));
+-   e_util_menu_item_edje_icon_set(mi, "enlightenment/resizable");
+-   e_menu_item_check_set(mi, 1);
+-   if (gcc->resizable) e_menu_item_toggle_set(mi, 1);
+-   e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_resizable, gcc);
+-
+-   mi = e_menu_item_new(menu);
+-   e_menu_item_separator_set(mi, 1);
+-   
+-   if (!gcc->o_control) 
++   if (gcc->gadcon->shelf || gcc->gadcon->toolbar)
+      {
+ 	mi = e_menu_item_new(menu);
+-	e_menu_item_label_set(mi, _("Begin move/resize this gadget"));
+-	e_util_menu_item_edje_icon_set(mi, "enlightenment/edit");
+-	e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_edit, gcc);
+-     }
++	e_menu_item_label_set(mi, _("Automatically scroll contents"));
++	e_util_menu_item_edje_icon_set(mi, "enlightenment/autoscroll");
++	e_menu_item_check_set(mi, 1);
++	if (gcc->autoscroll) e_menu_item_toggle_set(mi, 1);
++	e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_autoscroll, gcc);
+ 
+-   mi = e_menu_item_new(menu);
+-   e_menu_item_label_set(mi, _("Remove this gadget"));
+-   e_util_menu_item_edje_icon_set(mi, "enlightenment/remove");
+-   e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_remove, gcc);
++	mi = e_menu_item_new(menu);
++	e_menu_item_label_set(mi, _("Able to be resized"));
++	e_util_menu_item_edje_icon_set(mi, "enlightenment/resizable");
++	e_menu_item_check_set(mi, 1);
++	if (gcc->resizable) e_menu_item_toggle_set(mi, 1);
++	e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_resizable, gcc);
+ 
++	mi = e_menu_item_new(menu);
++	e_menu_item_separator_set(mi, 1);
++   
++	if (!gcc->o_control) 
++	  {
++		mi = e_menu_item_new(menu);
++		e_menu_item_label_set(mi, _("Begin move/resize this gadget"));
++		e_util_menu_item_edje_icon_set(mi, "enlightenment/edit");
++		e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_edit, gcc);
++	  }
++
++	mi = e_menu_item_new(menu);
++	e_menu_item_label_set(mi, _("Remove this gadget"));
++	e_util_menu_item_edje_icon_set(mi, "enlightenment/remove");
++	e_menu_item_callback_set(mi, _e_gadcon_client_cb_menu_remove, gcc);
++     }
+    if (gcc->gadcon->menu_attach.func)
+      {
+ 	mi = e_menu_item_new(menu);
+ 	e_menu_item_separator_set(mi, 1);
+ 	
+-	gcc->gadcon->menu_attach.func(gcc->gadcon->menu_attach.data, menu);
++	gcc->gadcon->menu_attach.func(gcc->gadcon->menu_attach.data, gcc, menu);
+      }
+ }
+     
+@@ -1449,6 +1451,10 @@
+    gcc->cf->geom.pos = gcc->config.pos;
+    gcc->cf->geom.size = gcc->config.size;
+    gcc->cf->geom.res = gcc->config.res;
++   gcc->cf->geom.pos_x = gcc->config.pos_x;
++   gcc->cf->geom.pos_y = gcc->config.pos_y;
++   gcc->cf->geom.size_w = gcc->config.size_w;
++   gcc->cf->geom.size_h = gcc->config.size_h;
+    gcc->cf->state_info.seq = gcc->state_info.seq;
+    gcc->cf->state_info.flags = gcc->state_info.flags;
+    gcc->cf->autoscroll = gcc->autoscroll;
+@@ -1647,7 +1653,7 @@
+ 	     mi = e_menu_item_new(mn);
+ 	     e_menu_item_separator_set(mi, 1);
+ 
+-	     gcc->gadcon->menu_attach.func(gcc->gadcon->menu_attach.data, mn);
++	     gcc->gadcon->menu_attach.func(gcc->gadcon->menu_attach.data, gcc, mn);
+ 	  }
+ 	
+ 	if (gcc->gadcon->toolbar)
+Index: src/bin/e_gadcon.h
+===================================================================
+RCS file: /cvs/e/e17/apps/e/src/bin/e_gadcon.h,v
+retrieving revision 1.45
+diff -u -r1.45 e_gadcon.h
+--- src/bin/e_gadcon.h	5 Mar 2008 12:39:55 -0000	1.45
++++ src/bin/e_gadcon.h	16 Apr 2008 20:09:33 -0000
+@@ -80,7 +80,7 @@
+      } frame_request;
+    struct 
+      {
+-	void (*func) (void *data, E_Menu *menu);
++	void (*func) (void *data, E_Gadcon_Client *gcc, E_Menu *menu);
+ 	void *data;
+      } menu_attach;
+    
+@@ -135,7 +135,8 @@
+    void                  *data;
+    struct 
+      {
+-	int               pos, size, res;
++	int               pos, size, res;                 //gadcon
++	double            pos_x, pos_y, size_w, size_h;   //gadman
+      } config; 
+ 
+    struct 
+@@ -202,7 +203,7 @@
+ EAPI E_Zone          *e_gadcon_zone_get(E_Gadcon *gc);
+ EAPI void             e_gadcon_ecore_evas_set(E_Gadcon *gc, Ecore_Evas *ee);
+ EAPI int              e_gadcon_canvas_zone_geometry_get(E_Gadcon *gc, int *x, int *y, int *w, int *h);
+-EAPI void             e_gadcon_util_menu_attach_func_set(E_Gadcon *gc, void (*func) (void *data, E_Menu *menu), void *data);
++EAPI void             e_gadcon_util_menu_attach_func_set(E_Gadcon *gc, void (*func) (void *data, E_Gadcon_Client *gcc, E_Menu *menu), void *data);
+ EAPI void             e_gadcon_dnd_window_set(E_Gadcon *gc, Ecore_X_Window win);
+ EAPI Ecore_X_Window   e_gadcon_dnd_window_get(E_Gadcon *gc);
+ EAPI void             e_gadcon_shelf_set(E_Gadcon *gc, E_Shelf *shelf);
+Index: src/bin/e_gadcon_popup.c
+===================================================================
+RCS file: /cvs/e/e17/apps/e/src/bin/e_gadcon_popup.c,v
+retrieving revision 1.11
+diff -u -r1.11 e_gadcon_popup.c
+--- src/bin/e_gadcon_popup.c	5 Feb 2008 16:39:22 -0000	1.11
++++ src/bin/e_gadcon_popup.c	16 Apr 2008 20:09:33 -0000
+@@ -133,6 +133,17 @@
+         else if (px < zx)
+           px = zx;
+ 	break;
++      case E_GADCON_ORIENT_FLOAT:
++	px = (gx + (gw / 2)) - (pop->w / 2);
++	if (gy >= zh / 2)
++	  py = gy - pop->h;
++	else
++	  py = gy + gh;
++	if (px + pop->w >= zw)
++	  px = zw - pop->w;
++        else if (px < zx)
++          px = zx;
++	break;
+       default:
+ 	e_popup_move_resize(pop->win, 50, 50, pop->w, pop->h);
+ 	return;
+Index: src/bin/e_module.c
+===================================================================
+RCS file: /cvs/e/e17/apps/e/src/bin/e_module.c,v
+retrieving revision 1.88
+diff -u -r1.88 e_module.c
+--- src/bin/e_module.c	4 Mar 2008 12:20:50 -0000	1.88
++++ src/bin/e_module.c	16 Apr 2008 20:09:33 -0000
+@@ -16,6 +16,7 @@
+ static void _e_module_cb_dialog_disable(void *data, E_Dialog *dia);
+ static void _e_module_event_update_free(void *data, void *event);
+ static int _e_module_cb_idler(void *data);
++static int _e_module_sort_priority(void *d1, void *d2);
+ 
+ /* local subsystem globals */
+ static Evas_List *_e_modules = NULL;
+@@ -70,7 +71,9 @@
+ e_module_all_load(void)
+ {
+    Evas_List *l;
+-   
++   e_config->modules = evas_list_sort(e_config->modules,
++                                      evas_list_count(e_config->modules),
++                                      _e_module_sort_priority);
+    for (l = e_config->modules; l; l = l->next)
+      {
+ 	E_Config_Module *em;
+@@ -445,6 +448,31 @@
+      }
+ }
+ 
++EAPI void
++e_module_priority_set(E_Module *m, int priority)
++{
++   /* Set the loading order for a module.
++      More priority means load earlier */
++   Evas_List *l;
++   
++   for (l = e_config->modules; l; l = l->next)
++     {
++	E_Config_Module *em;
++	
++	em = l->data;
++	if (!em) continue;
++	if (!e_util_strcmp(m->name, em->name))
++	  {
++	     if (em->priority != priority)
++	       {
++		  em->priority = priority;
++		  e_config_save_queue();
++	       }
++	     break;
++	  }
++     }
++}
++
+ /* local subsystem functions */
+ 
+ static void
+@@ -541,4 +569,14 @@
+    if (_e_modules_delayed) return 1;
+    _e_module_idler = NULL;
+    return 0;
++}
++
++static int
++_e_module_sort_priority(void *d1, void *d2)
++{
++   E_Config_Module *m1, *m2;
++
++   m1 = d1;
++   m2 = d2;
++   return (m2->priority - m1->priority);
+ }
+Index: src/bin/e_module.h
+===================================================================
+RCS file: /cvs/e/e17/apps/e/src/bin/e_module.h,v
+retrieving revision 1.21
+diff -u -r1.21 e_module.h
+--- src/bin/e_module.h	2 Nov 2007 12:07:09 -0000	1.21
++++ src/bin/e_module.h	16 Apr 2008 20:09:33 -0000
+@@ -68,6 +68,7 @@
+ EAPI Evas_List   *e_module_list(void);
+ EAPI void         e_module_dialog_show(E_Module *m, const char *title, const char *body);
+ EAPI void         e_module_delayed_set(E_Module *m, int delayed);
++EAPI void         e_module_priority_set(E_Module *m, int priority);
+     
+ #endif
+ #endif
+Index: src/bin/e_shelf.c
+===================================================================
+RCS file: /cvs/e/e17/apps/e/src/bin/e_shelf.c,v
+retrieving revision 1.91
+diff -u -r1.91 e_shelf.c
+--- src/bin/e_shelf.c	19 Jan 2008 11:41:42 -0000	1.91
++++ src/bin/e_shelf.c	16 Apr 2008 20:09:33 -0000
+@@ -15,7 +15,7 @@
+ static void _e_shelf_cb_confirm_dialog_yes(void *data);
+ static void _e_shelf_cb_menu_delete(void *data, E_Menu *m, E_Menu_Item *mi);
+ static void _e_shelf_menu_append(E_Shelf *es, E_Menu *mn);
+-static void _e_shelf_cb_menu_items_append(void *data, E_Menu *mn);
++static void _e_shelf_cb_menu_items_append(void *data, E_Gadcon_Client *gcc, E_Menu *mn);
+ static void _e_shelf_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info);
+ static int  _e_shelf_cb_mouse_in(void *data, int type, void *event);
+ static int  _e_shelf_cb_mouse_out(void *data, int type, void *event);
+@@ -1079,7 +1079,7 @@
+ }
+ 
+ static void
+-_e_shelf_cb_menu_items_append(void *data, E_Menu *mn)
++_e_shelf_cb_menu_items_append(void *data, E_Gadcon_Client *gcc, E_Menu *mn)
+ {
+    E_Shelf *es;
+    
+Index: src/bin/e_toolbar.c
+===================================================================
+RCS file: /cvs/e/e17/apps/e/src/bin/e_toolbar.c,v
+retrieving revision 1.12
+diff -u -r1.12 e_toolbar.c
+--- src/bin/e_toolbar.c	4 Jan 2008 20:59:10 -0000	1.12
++++ src/bin/e_toolbar.c	16 Apr 2008 20:09:34 -0000
+@@ -18,7 +18,7 @@
+ static void _e_toolbar_fm2_files_deleted(void *data, Evas_Object *obj, void *event_info);
+ static void _e_toolbar_fm2_selected(void *data, Evas_Object *obj, void *event_info);
+ static void _e_toolbar_fm2_selection_changed(void *data, Evas_Object *obj, void *event_info);
+-static void _e_toolbar_menu_items_append(void *data, E_Menu *mn);
++static void _e_toolbar_menu_items_append(void *data, E_Gadcon_Client *gcc, E_Menu *mn);
+ 
+ /* local vars */
+ static Evas_List *toolbars = NULL;
+@@ -336,7 +336,7 @@
+ }
+ 
+ static void 
+-_e_toolbar_menu_items_append(void *data, E_Menu *mn) 
++_e_toolbar_menu_items_append(void *data, E_Gadcon_Client *gcc, E_Menu *mn) 
+ {
+    E_Toolbar *tbar;
+    
+Index: src/bin/e_widget_list.c
+===================================================================
+RCS file: /cvs/e/e17/apps/e/src/bin/e_widget_list.c,v
+retrieving revision 1.5
+diff -u -r1.5 e_widget_list.c
+--- src/bin/e_widget_list.c	19 Jul 2006 19:38:29 -0000	1.5
++++ src/bin/e_widget_list.c	16 Apr 2008 20:09:34 -0000
+@@ -70,6 +70,18 @@
+    evas_object_show(sobj);
+ }
+ 
++EAPI void
++e_widget_list_clear(Evas_Object *obj)
++{
++   E_Widget_Data *wd;
++   Evas_Object *o;
++   
++   wd = e_widget_data_get(obj);
++   while (o = e_box_pack_object_last(wd->o_box))
++      e_box_unpack(o);
++   
++}
++
+ static void
+ _e_wid_del_hook(Evas_Object *obj)
+ {
+Index: src/bin/e_widget_list.h
+===================================================================
+RCS file: /cvs/e/e17/apps/e/src/bin/e_widget_list.h,v
+retrieving revision 1.2
+diff -u -r1.2 e_widget_list.h
+--- src/bin/e_widget_list.h	12 Oct 2005 16:02:33 -0000	1.2
++++ src/bin/e_widget_list.h	16 Apr 2008 20:09:34 -0000
+@@ -8,7 +8,7 @@
+ 
+ EAPI Evas_Object *e_widget_list_add(Evas *evas, int homogenous, int horiz);
+ EAPI void e_widget_list_object_append(Evas_Object *obj, Evas_Object *sobj, int fill, int expand, double align);
+-    
++EAPI void e_widget_list_clear(Evas_Object *obj);
+ 
+ #endif
+ #endif
+Index: src/modules/Makefile.am
+===================================================================
+RCS file: /cvs/e/e17/apps/e/src/modules/Makefile.am,v
+retrieving revision 1.43
+diff -u -r1.43 Makefile.am
+--- src/modules/Makefile.am	23 Jan 2008 09:04:55 -0000	1.43
++++ src/modules/Makefile.am	16 Apr 2008 20:09:34 -0000
+@@ -50,7 +50,8 @@
+ conf_exebuf \
+ conf_paths \
+ conf_mime \
+-conf_interaction
++conf_interaction \
++gadman
+ 
+ if HAVE_TEMPERATURE
+ SUBDIRS += temperature

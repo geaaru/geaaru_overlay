@@ -1,0 +1,14 @@
+#!/bin/sh
+#
+# Session file for ecomorph
+#
+# The default should work for nvidia cards with nvidia's driver.
+
+# uncomment following for ATI and Intel
+#export LIBGL_ALWAYS_INDIRECT=1 
+
+# Intel users uncomment following too
+#export INTEL_BATCH=1 
+
+/usr/bin/ecomorph ccp dbus &
+/usr/bin/enlightenment_start -evil

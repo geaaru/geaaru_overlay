@@ -1,0 +1,80 @@
+Index: exmap-0.10/jutil/Makefile
+===================================================================
+--- exmap-0.10.orig/jutil/Makefile
++++ exmap-0.10/jutil/Makefile
+@@ -15,12 +15,11 @@ EXES += egtest
+ CXX=g++
+ CXXFLAGS += -Wall -g -I.
+ LD=g++
+-LDFLAGS=-lpcre
+ 
+ build: $(LIBS) $(EXES)
+ 
+ trun: $(TROBJ) $(JLIB)
+-	$(LD) $(TROBJ) -o trun $(LDFLAGS) -ljutil -L.
++	$(LD) $(LDFLAGS) $(TROBJ) -o trun -ljutil -lpcre -L.
+ 
+ $(JLIB): $(JOBJ)
+ 	ar rs $(JLIB) $(JOBJ)
+Index: exmap-0.10/src/Makefile
+===================================================================
+--- exmap-0.10.orig/src/Makefile
++++ exmap-0.10/src/Makefile
+@@ -12,10 +12,11 @@ JUTILDIR=../jutil
+ EXMAP_OBJ=Exmap.o Range.o Elf.o
+ 
+ CXXFLAGS += -g -Wall -I$(JUTILDIR)
+-LDFLAGS += -lpcre -ljutil -L$(JUTILDIR)
++LDFLAGS += -L$(JUTILDIR)
++LIBS += -ljutil -lpcre
+ 
+ GTKCXXFLAGS = `pkg-config --cflags gtkmm-2.4`
+-GTKLDFLAGS = `pkg-config --libs gtkmm-2.4`
++GTKLIBS = `pkg-config --libs gtkmm-2.4`
+ 
+ # ------------------------------------------------------------
+ 
+@@ -76,34 +77,34 @@ test: $(TESTS) $(EXES) $(SHLIBS)
+ 	$(JUTILDIR)/trun $(TESTS)
+ 
+ gexmap: $(GEM_OBJ)
+-	$(LD) -o gexmap $(GEM_OBJ) $(LDFLAGS) $(GTKLDFLAGS)
++	$(LD) $(LDFLAGS) -o gexmap $(GEM_OBJ) $(LIBS) $(GTKLIBS)
+ 
+ gexmap.o: gexmap.cpp
+ 	$(CC) $(CXXFLAGS) $(GTKCXXFLAGS) -c $<
+ 
+ exmtool: $(CL_OBJ)
+-	$(LD) -o exmtool $(CL_OBJ) $(LDFLAGS) 
++	$(LD) $(LDFLAGS) -o exmtool $(CL_OBJ) $(LIBS)
+ 
+ elftool: $(ET_OBJ)
+-	$(LD) -o elftool $(ET_OBJ) $(LDFLAGS) 
++	$(LD) $(LDFLAGS) -o elftool $(ET_OBJ) $(LIBS)
+ 
+ showproc: $(SP_OBJ)
+-	$(LD) -o showproc $(SP_OBJ) $(LDFLAGS) 
++	$(LD) $(LDFLAGS) -o showproc $(SP_OBJ) $(LIBS)
+ 
+ t_range: $(TR_OBJ)
+-	$(LD) -o t_range $(TR_OBJ) $(LDFLAGS) 
++	$(LD) $(LDFLAGS) -o t_range $(TR_OBJ) $(LIBS)
+ 
+ t_elf: $(TE_OBJ)
+-	$(LD) -o t_elf $(TE_OBJ) $(LDFLAGS) 
++	$(LD) $(LDFLAGS) -o t_elf $(TE_OBJ) $(LIBS)
+ 
+ t_pcre: $(TP_OBJ)
+-	$(LD) -o t_pcre $(TP_OBJ) $(LDFLAGS) 
++	$(LD) $(LDFLAGS) -o t_pcre $(TP_OBJ) $(LIBS)
+ 
+ t_exmap: $(TX_OBJ)
+-	$(LD) -o t_exmap $(TX_OBJ) $(LDFLAGS) 
++	$(LD) $(LDFLAGS) -o t_exmap $(TX_OBJ) $(LIBS)
+ 
+ t_artsd: $(TA_OBJ)
+-	$(LD) -o t_artsd $(TA_OBJ) $(LDFLAGS) 
++	$(LD) $(LDFLAGS) -o t_artsd $(TA_OBJ) $(LIBS)
+ 
+ clean: cleantags cleandoc
+ 	rm -f $(OBJS) $(EXES) $(SHLIBS) $(EXTRA_DEL_FILES)

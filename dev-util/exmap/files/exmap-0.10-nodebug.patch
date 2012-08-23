@@ -1,0 +1,26 @@
+Index: exmap-0.10/jutil/Makefile
+===================================================================
+--- exmap-0.10.orig/jutil/Makefile
++++ exmap-0.10/jutil/Makefile
+@@ -13,7 +13,7 @@ OBJ += $(ETOBJ)
+ EXES += egtest
+ 
+ CXX=g++
+-CXXFLAGS += -Wall -g -I.
++CXXFLAGS += -Wall -I.
+ LD=g++
+ 
+ build: $(LIBS) $(EXES)
+Index: exmap-0.10/src/Makefile
+===================================================================
+--- exmap-0.10.orig/src/Makefile
++++ exmap-0.10/src/Makefile
+@@ -11,7 +11,7 @@ JUTILDIR=../jutil
+ 
+ EXMAP_OBJ=Exmap.o Range.o Elf.o
+ 
+-CXXFLAGS += -g -Wall -I$(JUTILDIR)
++CXXFLAGS += -Wall -I$(JUTILDIR)
+ LDFLAGS += -L$(JUTILDIR)
+ LIBS += -lpcre -ljutil
+ 
