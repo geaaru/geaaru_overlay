@@ -20,12 +20,12 @@ IUSE="doc examples +introspection"
 # FIXME: Support for gstreamer-basevideo-0.10 (HW decoder support) is automagic
 RDEPEND="
 	>=dev-libs/glib-2.20:2
-	>=media-libs/clutter-1.6.0:1.0[introspection?]
-	>=media-libs/cogl-1.8:1.0[introspection?]
-	>=media-libs/gstreamer-0.10.26:0.10[introspection?]
+	>=media-libs/clutter-1.11.12:1.0[introspection?]
+	>=media-libs/cogl-1.11.2:1.0[introspection?]
+	>=media-libs/gstreamer-0.11.0:0.11[introspection?]
 	>=media-libs/gst-plugins-bad-0.10.22
 	media-libs/gst-plugins-base:0.10[introspection?]
-	introspection? ( >=dev-libs/gobject-introspection-0.6.8 )"
+	introspection? ( >=dev-libs/gobject-introspection-1.33.2 )"
 DEPEND="${RDEPEND}
 	=dev-lang/python-2*
 	virtual/pkgconfig
