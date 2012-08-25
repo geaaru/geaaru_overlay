@@ -18,11 +18,11 @@ KEYWORDS="alpha amd64 arm hppa ia64 ~mips ppc ppc64 sh sparc x86 ~amd64-fbsd ~x8
 IUSE="+introspection nls +orc"
 
 RDEPEND=">=dev-libs/glib-2.22:2
-	>=media-libs/gstreamer-0.10.34:0.10[introspection?]
+	>=media-libs/gstreamer-0.11.93:0.11[introspection?]
 	dev-libs/libxml2:2
 	app-text/iso-codes
 	introspection? ( >=dev-libs/gobject-introspection-0.9.12 )
-	orc? ( >=dev-lang/orc-0.4.11 )
+	orc? ( >=dev-lang/orc-0.4.16 )
 	!<media-libs/gst-plugins-bad-0.10.10"
 DEPEND="${RDEPEND}
 	nls? ( >=sys-devel/gettext-0.11.5 )
