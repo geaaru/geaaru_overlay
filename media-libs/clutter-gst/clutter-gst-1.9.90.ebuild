@@ -23,8 +23,8 @@ RDEPEND="
 	>=media-libs/clutter-1.11.12:1.0[introspection?]
 	>=media-libs/cogl-1.11.2:1.0[introspection?]
 	>=media-libs/gstreamer-0.11.0:0.11[introspection?]
-	>=media-libs/gst-plugins-bad-0.10.22
-	media-libs/gst-plugins-base:0.10[introspection?]
+	>=media-libs/gst-plugins-good-0.11.93
+	media-libs/gst-plugins-base:0.11[introspection?]
 	introspection? ( >=dev-libs/gobject-introspection-1.33.2 )"
 DEPEND="${RDEPEND}
 	=dev-lang/python-2*
