@@ -41,12 +41,7 @@ RDEPEND=">=dev-libs/glib-2.27.92:2
 	>=media-libs/gst-plugins-base-0.10.30:0.10
 	x11-libs/mx:1.0
 
-	media-libs/gst-plugins-good:0.10
-	media-plugins/gst-plugins-taglib:0.10
-	media-plugins/gst-plugins-gio:0.10
-	media-plugins/gst-plugins-pango:0.10
-	media-plugins/gst-plugins-x:0.10
-	media-plugins/gst-plugins-meta:0.10
+	media-libs/gst-plugins-good:0.11
 
 	x11-libs/libICE
 	x11-libs/libSM
@@ -79,6 +74,12 @@ RDEPEND=">=dev-libs/glib-2.27.92:2
 	zeroconf? ( >net-libs/libepc-0.4.0 )"
 # XXX: zeroconf requires unreleased version of libepc
 
+# TOO FIX AFTER SET SLOT ON GSTREAMER
+#	media-plugins/gst-plugins-taglib:0.10
+#	media-plugins/gst-plugins-gio:0.10
+#	media-plugins/gst-plugins-pango:0.10
+#	media-plugins/gst-plugins-x:0.10
+#	media-plugins/gst-plugins-meta:0.10
 DEPEND="${RDEPEND}
 	app-text/docbook-xml-dtd:4.5
 	>=app-text/gnome-doc-utils-0.20.3
