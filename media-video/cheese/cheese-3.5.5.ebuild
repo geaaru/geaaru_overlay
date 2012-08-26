@@ -36,23 +36,23 @@ COMMON_DEPEND="
 	x11-libs/libXtst
 
 	>=media-libs/gstreamer-0.11.93:0.11[introspection?]
-	>=media-libs/gst-plugins-base-0.11.93:0.11[introspection?]
 
 	introspection? ( >=dev-libs/gobject-introspection-0.6.7 )"
+#	>=media-libs/gst-plugins-base-0.11.93:0.11[introspection?]
 RDEPEND="${COMMON_DEPEND}
-	>=media-libs/gst-plugins-bad-0.10.19
-	>=media-libs/gst-plugins-good-0.10.16:0.10
-	>=media-plugins/gst-plugins-ogg-0.10.20:0.10
-	>=media-plugins/gst-plugins-pango-0.10.20:0.10
-	>=media-plugins/gst-plugins-theora-0.10.20:0.10
-	>=media-plugins/gst-plugins-vorbis-0.10.20:0.10
+	>=media-libs/gst-plugins-bad-0.11.93
+	>=media-libs/gst-plugins-good-0.11.93:0.11
+	>=media-plugins/gst-plugins-ogg-0.11.93:0.11
+	>=media-plugins/gst-plugins-pango-0.11.93:0.11
+	>=media-plugins/gst-plugins-theora-0.11.93:0.11
+	>=media-plugins/gst-plugins-vorbis-0.11.93:0.11
 
-	media-plugins/gst-plugins-jpeg:0.10
-	media-plugins/gst-plugins-v4l2:0.10
-	media-plugins/gst-plugins-vp8:0.10
+	media-plugins/gst-plugins-jpeg:0.11
+	media-plugins/gst-plugins-v4l2:0.11
+	media-plugins/gst-plugins-vp8:0.11
 
-	|| ( media-plugins/gst-plugins-x:0.10
-		media-plugins/gst-plugins-xvideo:0.10 )
+	|| ( media-plugins/gst-plugins-x:0.11
+		media-plugins/gst-plugins-xvideo:0.11 )
 
 	sendto? ( >=gnome-extra/nautilus-sendto-2.91 )"
 DEPEND="${COMMON_DEPEND}
