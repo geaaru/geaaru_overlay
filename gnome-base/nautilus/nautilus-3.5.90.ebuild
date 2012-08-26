@@ -66,7 +66,7 @@ pkg_setup() {
 		$(use_enable sendto nst-extension)
 		$(use_enable tracker)
 		$(use_enable xmp)"
-	DOCS="AUTHORS ChangeLog* HACKING MAINTAINERS NEWS README THANKS TODO"
+	DOCS="AUTHORS ChangeLog* HACKING MAINTAINERS NEWS README THANKS"
 }
 
 src_prepare() {
