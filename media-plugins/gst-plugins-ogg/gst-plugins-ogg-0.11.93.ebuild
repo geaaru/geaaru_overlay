@@ -11,5 +11,6 @@ KEYWORDS="alpha amd64 arm hppa ia64 ~mips ppc ppc64 sh sparc x86 ~amd64-fbsd ~x8
 IUSE=""
 SRC_URI="http://ftp.gnome.org/pub/gnome/sources/gst-plugins-base/0.11/gst-plugins-base-${PV}.tar.xz"
 
+SLOT="0.11"
 RDEPEND=">=media-libs/libogg-1.0"
 DEPEND="${RDEPEND}"
