@@ -20,7 +20,7 @@ RDEPEND=">=dev-libs/glib-2.32.0:2
 	>=dev-libs/dbus-glib-0.90
 	introspection? ( >=dev-libs/gobject-introspection-1.30 )
 	vala? (
-		>=dev-lang/vala-0.17.5:0.17[vapigen]
+		>=dev-lang/vala-0.17.5:0.18[vapigen]
 		>=dev-libs/gobject-introspection-1.30 )"
 DEPEND="${RDEPEND}
 	dev-libs/libxslt
