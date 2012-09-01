@@ -46,6 +46,7 @@ src_prepare() {
 	# bug #401383, https://bugzilla.gnome.org/show_bug.cgi?id=669054
 	# FIXME: is this still needed? I don't think so, but not sure. ~nirbheek
 	#eautoreconf
+	epatch "${FILESDIR}/${P}-gl-include.patch"
 
 	gnome2_src_prepare
 }

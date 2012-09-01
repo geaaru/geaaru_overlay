@@ -1,0 +1,10 @@
+--- clutter-gst-1.9.90/clutter-gst/clutter-gst-video-sink.c	2012-09-01 16:08:36.294380410 +0200
++++ clutter-gst-1.9.90b/clutter-gst/clutter-gst-video-sink.c	2012-09-01 16:08:26.237712935 +0200
+@@ -46,6 +46,7 @@
+ #include "clutter-gst-util.h"
+ #include "clutter-gst-private.h"
+ #include "clutter-gst-shaders.h"
++#include <GL/gl.h>
+ 
+ #ifdef CLUTTER_COGL_HAS_GL
+ /* include assembly shaders */
