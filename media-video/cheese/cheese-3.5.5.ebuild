@@ -5,7 +5,7 @@
 EAPI="4"
 GNOME2_LA_PUNT="yes"
 
-inherit gnome2 virtualx
+inherit eutils autotools gnome2 virtualx
 
 DESCRIPTION="A cheesy program to take pictures and videos from your webcam"
 HOMEPAGE="http://www.gnome.org/projects/cheese/"
@@ -31,7 +31,6 @@ COMMON_DEPEND="
 
 	media-video/gnome-video-effects
 	x11-libs/gdk-pixbuf:2[jpeg,introspection?]
-	x11-libs/mx
 	x11-libs/libX11
 	x11-libs/libXtst
 
@@ -67,6 +66,20 @@ DEPEND="${COMMON_DEPEND}
 
 	doc? ( >=dev-util/gtk-doc-1.14 )
 	test? ( dev-libs/glib:2[utils] )"
+
+src_unpack () {
+	unpack ${A}
+
+	cd "${S}"
+	clutter_gst_version=$(best_version media-libs/clutter-gst)
+
+	if [ $clutter_gst_version == 'media-libs/clutter-gst-1.9.90' ] ; then
+		epatch "${FILESDIR}/${P}-clutter-gst-2.0.patch"
+ 	fi
+
+	eautoreconf
+
+}
 
 pkg_setup() {
 	G2CONF="${G2CONF}

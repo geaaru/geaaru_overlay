@@ -1,0 +1,12 @@
+--- cheese-3.5.5/configure.ac	2012-08-06 23:30:36.000000000 +0200
++++ cheese-3.5.5/configure.ac	2012-09-01 17:44:09.334840145 +0200
+@@ -70,7 +70,7 @@
+ LIBRSVG_REQUIRED="librsvg-2.0 >= 2.32.0"
+ CLUTTER_REQUIRED="clutter-1.0 >= 1.10.0"
+ CLUTTERGTK_REQUIRED="clutter-gtk-1.0 >= 0.91.8"
+-CLUTTERGST_REQUIRED="clutter-gst-1.0 >= 1.0.0"
++CLUTTERGST_REQUIRED="clutter-gst-2.0 >= 1.0.0"
+ GEE_REQUIRED="gee-1.0 >= 0.6.0"
+ LIBCANBERRA_REQUIRED="libcanberra-gtk3 >= 0.26"
+ X11_REQUIRED="x11"
+
