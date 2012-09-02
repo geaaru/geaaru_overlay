@@ -1,34 +1,28 @@
 # Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/media-libs/gst-plugins-good/gst-plugins-good-0.10.30.ebuild,v 1.9 2012/05/17 13:48:34 aballier Exp $
+# $Header: /var/cvsroot/gentoo-x86/media-libs/gst-plugins-ugly/gst-plugins-ugly-0.10.18.ebuild,v 1.9 2012/05/17 15:17:57 aballier Exp $
 
-#EAPI=1
 EAPI="4"
 GCONF_DEBUG="no"
 
-inherit gnome2 gst-plugins-good11 eutils flag-o-matic libtool
+inherit gnome2 gst-plugins-ugly11 eutils flag-o-matic libtool
 
 DESCRIPTION="Basepack of plugins for gstreamer"
-HOMEPAGE="http://gstreamer.net/"
+HOMEPAGE="http://gstreamer.sourceforge.net"
 
-LICENSE="LGPL-2.1"
+LICENSE="GPL-2"
 KEYWORDS="alpha amd64 arm hppa ia64 ~mips ppc ppc64 sh sparc x86 ~amd64-fbsd ~x86-fbsd"
-IUSE="+orc"
+IUSE=""
 
-RDEPEND=">=media-libs/gst-plugins-base-0.11.93
-	>=media-libs/gstreamer-0.11.93
-	orc? ( >=dev-lang/orc-0.4.11 )
-	sys-libs/zlib
-	app-arch/bzip2"
+RDEPEND=">=media-libs/gst-plugins-base-0.11.93:0.11
+	>=media-libs/gstreamer-0.11.93:0.11
+	>=dev-libs/glib-2.20"
 DEPEND="${RDEPEND}
 	>=sys-devel/gettext-0.11.5
 	virtual/pkgconfig
-	!<media-libs/gst-plugins-bad-0.11.93" # audioparsers and qtmux moves
+	!<media-libs/gst-plugins-bad-0.11.93:0.11"
 
-# Always enable optional bz2 support for matroska
-# Always enable optional zlib support for qtdemux, id3demux and matroska
-# Many media files require these to work, as some container headers are often compressed, bug 291154
-GST_PLUGINS_BUILD="bz2 zlib"
+GST_PLUGINS_BUILD=""
 
 src_compile() {
 	# gst doesnt handle optimisations well
@@ -36,11 +30,7 @@ src_compile() {
 	replace-flags "-O3" "-O2"
 	filter-flags "-fprefetch-loop-arrays" # see bug 22249
 
-	gst-plugins-good11_src_configure \
-		$(use_enable orc) \
-		--disable-examples \
-		--with-default-audiosink=autoaudiosink \
-		--with-default-visualizer=goom
+	gst-plugins-ugly11_src_configure
 
 	emake || die "emake failed."
 }
@@ -55,10 +45,9 @@ DOCS="AUTHORS ChangeLog NEWS README RELEASE"
 pkg_postinst () {
 	gnome2_pkg_postinst
 
-	echo
 	elog "The Gstreamer plugins setup has changed quite a bit on Gentoo,"
 	elog "applications now should provide the basic plugins needed."
-	echo
+	elog ""
 	elog "The new seperate plugins are all named 'gst-plugins-<plugin>'."
 	elog "To get a listing of currently available plugins execute 'emerge -s gst-plugins-'."
 	elog "In most cases it shouldn't be needed though to emerge extra plugins."

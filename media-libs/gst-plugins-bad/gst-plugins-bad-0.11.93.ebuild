@@ -33,7 +33,7 @@ src_compile() {
 	replace-flags "-O3" "-O2"
 	filter-flags "-fprefetch-loop-arrays" # (Bug #22249)
 
-	gst-plugins-bad_src_configure \
+	gst-plugins-bad11_src_configure \
 		$(use_enable orc) \
 		--disable-examples \
 		--disable-debug

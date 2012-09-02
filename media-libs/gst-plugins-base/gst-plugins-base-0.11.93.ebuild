@@ -6,15 +6,13 @@ EAPI="3"
 GCONF_DEBUG="no"
 
 # order is important, gnome2 after gst-plugins
-inherit gst-plugins-base gst-plugins10 gnome2 eutils
+inherit gnome2 gst-plugins-base11 eutils
 # libtool
 
 DESCRIPTION="Basepack of plugins for gstreamer"
 HOMEPAGE="http://gstreamer.freedesktop.org/"
-SRC_URI="http://ftp.gnome.org/pub/gnome/sources/${PN}/0.11/${P}.tar.xz"
 
 LICENSE="GPL-2"
-SLOT="0.11"
 KEYWORDS="alpha amd64 arm hppa ia64 ~mips ppc ppc64 sh sparc x86 ~amd64-fbsd ~x86-fbsd ~x86-freebsd ~x86-interix ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~sparc-solaris ~x64-solaris ~x86-solaris"
 IUSE="+introspection nls +orc"
 
@@ -24,18 +22,19 @@ RDEPEND=">=dev-libs/glib-2.22:2
 	app-text/iso-codes
 	introspection? ( >=dev-libs/gobject-introspection-0.9.12 )
 	orc? ( >=dev-lang/orc-0.4.16 )
-	!<media-libs/gst-plugins-bad-0.10.10"
+	!<media-libs/gst-plugins-bad-0.11.93"
 DEPEND="${RDEPEND}
 	nls? ( >=sys-devel/gettext-0.11.5 )
 	virtual/pkgconfig"
 	# Only if running eautoreconf: dev-util/gtk-doc-am
 
 GST_PLUGINS_BUILD=""
+GST_PLUGINS_BUILD_DIR=""
 
 DOCS="AUTHORS NEWS README RELEASE"
 
 src_configure() {
-	gst-plugins-base_src_configure \
+	gst-plugins-base11_src_configure \
 		$(use_enable introspection) \
 		$(use_enable nls) \
 		$(use_enable orc) \
