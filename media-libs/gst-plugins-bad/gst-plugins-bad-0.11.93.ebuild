@@ -19,8 +19,7 @@ IUSE="+orc"
 RDEPEND=">=media-libs/gst-plugins-base-0.10.33
 	>=media-libs/gstreamer-0.10.33
 	>=dev-libs/glib-2.22
-	orc? ( >=dev-lang/orc-0.4.11 )
-	!<media-plugins/gst-plugins-farsight-0.12.11"
+	orc? ( >=dev-lang/orc-0.4.11 )"
 
 DEPEND="${RDEPEND}
 	virtual/pkgconfig"

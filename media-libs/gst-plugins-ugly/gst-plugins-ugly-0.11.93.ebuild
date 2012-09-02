@@ -19,8 +19,7 @@ RDEPEND=">=media-libs/gst-plugins-base-0.11.93:0.11
 	>=dev-libs/glib-2.20"
 DEPEND="${RDEPEND}
 	>=sys-devel/gettext-0.11.5
-	virtual/pkgconfig
-	!<media-libs/gst-plugins-bad-0.11.93:0.11"
+	virtual/pkgconfig"
 
 GST_PLUGINS_BUILD=""
 

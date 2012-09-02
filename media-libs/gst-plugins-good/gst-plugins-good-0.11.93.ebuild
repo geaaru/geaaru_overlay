@@ -22,8 +22,7 @@ RDEPEND=">=media-libs/gst-plugins-base-0.11.93
 	app-arch/bzip2"
 DEPEND="${RDEPEND}
 	>=sys-devel/gettext-0.11.5
-	virtual/pkgconfig
-	!<media-libs/gst-plugins-bad-0.11.93" # audioparsers and qtmux moves
+	virtual/pkgconfig"
 
 # Always enable optional bz2 support for matroska
 # Always enable optional zlib support for qtdemux, id3demux and matroska
