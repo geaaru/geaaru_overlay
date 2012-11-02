@@ -100,8 +100,6 @@ src_prepare() {
 	sed -e 's:$PYTHON-config:$PYTHON$PYTHON_VERSION-config:g' \
 		-i plugins/am-project/tests/anjuta.lst || die "sed failed"
 
-	# https://bugzilla.gnome.org/show_bug.cgi?id=684758
-	epatch "${FILESDIR}/${PN}-3.5.91-cxx-check.patch"
 	eautoreconf
 
 	use vala && vala_src_prepare
