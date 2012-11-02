@@ -136,7 +136,7 @@ src_prepare() {
 	python_convert_shebangs -r 2 libgda-report/RML/trml2{html,pdf}
 
 	# Missing from tarball
-	cp "${FILESDIR}/libgda-${PV}-custom.vala" libgda/libgda-5.0-custom.vala || die
+	cp "${FILESDIR}/libgda-5.0.3-custom.vala" libgda/libgda-5.0-custom.vala || die
 
 	intltoolize --force --copy --automake || die "intltoolize failed"
 	eautoreconf
