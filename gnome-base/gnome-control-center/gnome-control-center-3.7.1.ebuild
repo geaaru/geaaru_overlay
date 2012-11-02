@@ -53,7 +53,7 @@ COMMON_DEPEND="
 
 	bluetooth? ( >=net-wireless/gnome-bluetooth-3.3.4 )
 	cheese? (
-		media-libs/gstreamer:0.11
+		media-libs/gstreamer:1.0.2
 		>=media-video/cheese-3.3.5 )
 	colord? ( >=x11-misc/colord-0.1.8 )
 	cups? ( >=net-print/cups-1.4[dbus] )
