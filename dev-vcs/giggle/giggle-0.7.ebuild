@@ -34,6 +34,5 @@ DOCS="AUTHORS ChangeLog NEWS README"
 G2CONF="$(use_enable eds evolution-data-server)"
 
 src_prepare() {
-	epatch "${FILESDIR}/${PN}-0.6.1-gmodule-explicit.patch"
 	eautoreconf
 }
