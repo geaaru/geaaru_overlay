@@ -41,8 +41,6 @@ RDEPEND=">=dev-libs/glib-2.27.92:2
 	>=media-libs/gst-plugins-base-0.10.30:0.10
 	x11-libs/mx:1.0
 
-	media-libs/gst-plugins-good:0.11
-
 	x11-libs/libICE
 	x11-libs/libSM
 	x11-libs/libX11
@@ -79,6 +77,7 @@ RDEPEND=">=dev-libs/glib-2.27.92:2
 #	media-plugins/gst-plugins-gio:0.10
 #	media-plugins/gst-plugins-pango:0.10
 #	media-plugins/gst-plugins-x:0.10
+#	media-libs/gst-plugins-good:0.11
 #	media-plugins/gst-plugins-meta:0.10
 DEPEND="${RDEPEND}
 	app-text/docbook-xml-dtd:4.5
