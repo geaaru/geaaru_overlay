@@ -21,7 +21,7 @@ if [[ ${PV} = 9999 ]]; then
 else
 	KEYWORDS="~amd64 ~x86 ~x86-fbsd"
 fi
-IUSE="crypt doc +gnome-online-accounts gstreamer kerberos ldap map ssl"
+IUSE="crypt doc +gnome-online-accounts gstreamer kerberos ldap map ssl bogofilter spamassassin"
 
 # We need a graphical pinentry frontend to be able to ask for the GPG
 # password from inside evolution, bug 160302
@@ -69,8 +69,8 @@ COMMON_DEPEND=">=dev-libs/glib-2.32:2
 		>=media-libs/libchamplain-0.12:0.12 )
 	bogofilter? (
 		>=mail-filter/bogofilter-1.2.2 )
-	mail-filter/spamassassin? (
-		>=mail-filter/spamassassin )
+	spamassassin? (
+		>=mail-filter/spamassassin-3.3.2-r1 )
 	ssl? (
 		>=dev-libs/nspr-4.6.1
 		>=dev-libs/nss-3.11 )"
