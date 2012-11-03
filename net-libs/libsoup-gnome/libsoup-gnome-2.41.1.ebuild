@@ -54,7 +54,6 @@ pkg_setup() {
 
 src_prepare() {
 	# Use lib present on the system
-	epatch "${FILESDIR}"/${PN}-system-lib.patch
 	[[ ${PV} != 9999 ]] && eautoreconf
 	gnome2_src_prepare
 }
