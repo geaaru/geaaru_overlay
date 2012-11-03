@@ -70,13 +70,6 @@ pkg_setup() {
 }
 
 src_prepare() {
-	# Build-time segfaults under PaX with USE=introspection when building
-	# against webkit-gtk[introspection,jit]
-	if use introspection && use jit; then
-		epatch "${FILESDIR}/${PN}-3.3.90-paxctl-introspection.patch"
-		cp "${FILESDIR}/paxctl.sh" "${S}/" || die
-		[[ ${PV} != 9999 ]] && eautoreconf
-	fi
 	gnome2_src_prepare
 }
 
