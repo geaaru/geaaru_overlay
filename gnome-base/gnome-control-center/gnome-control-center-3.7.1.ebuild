@@ -118,6 +118,8 @@ pkg_setup() {
 }
 
 src_prepare() {
+	epatch ${FILESDIR}/nm_ui_utils_fix.patch
+
 	eautoreconf
 
 	gnome2_src_prepare
