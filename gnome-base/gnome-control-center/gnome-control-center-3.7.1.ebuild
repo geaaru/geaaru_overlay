@@ -118,8 +118,6 @@ pkg_setup() {
 }
 
 src_prepare() {
-	# Fix some absolute paths to be appropriate for Gentoo
-	epatch "${FILESDIR}/${PN}-3.4.2-gentoo-paths.patch"
 	eautoreconf
 
 	gnome2_src_prepare
