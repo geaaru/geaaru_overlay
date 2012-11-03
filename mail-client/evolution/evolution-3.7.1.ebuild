@@ -67,6 +67,10 @@ COMMON_DEPEND=">=dev-libs/glib-2.32:2
 	map? (
 		>=app-misc/geoclue-0.12.0
 		>=media-libs/libchamplain-0.12:0.12 )
+	bogofilter? (
+		>=mail-filter/bogofilter-1.2.2 )
+	mail-filter/spamassassin? (
+		>=mail-filter/spamassassin )
 	ssl? (
 		>=dev-libs/nspr-4.6.1
 		>=dev-libs/nss-3.11 )"
@@ -98,6 +102,8 @@ pkg_setup() {
 		--disable-pst-import
 		--enable-canberra
 		--enable-weather
+		$(use_enable bogofilter)
+		$(use_enable spamassassin)
 		$(use_enable ssl nss)
 		$(use_enable ssl smime)
 		$(use_enable gnome-online-accounts goa)
