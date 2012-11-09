@@ -38,7 +38,7 @@ COMMON_DEPEND=">=dev-libs/glib-2.30:2
 	>=media-libs/clutter-gtk-1.1.2:1.0
 	|| (
 		>=media-libs/clutter-gst-1.5.2:1.0
-		>=media-libs/clutter-gst-1.9.90:1.0 )
+		>=media-libs/clutter-gst-1.9.90:2.0 )
 
 	>=net-libs/telepathy-glib-0.19.9
 	>=net-im/telepathy-logger-0.2.13
