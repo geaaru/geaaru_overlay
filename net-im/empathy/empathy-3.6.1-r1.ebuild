@@ -40,7 +40,7 @@ COMMON_DEPEND=">=dev-libs/glib-2.30:2
 		>=media-libs/clutter-gst-1.5.2:1.0
 		>=media-libs/clutter-gst-1.9.90:1.0 )
 
-	>=net-libs/telepathy-glib-0.18
+	>=net-libs/telepathy-glib-0.19.9
 	>=net-im/telepathy-logger-0.2.13
 	>=net-libs/telepathy-farstream-0.2.1
 
@@ -87,10 +87,10 @@ DEPEND="${COMMON_DEPEND}
 
 	>=dev-util/intltool-0.40.0
 	virtual/pkgconfig
+	>=dev-libs/libxslt-1.1.27
 	test? (
 		sys-apps/grep
 		>=dev-libs/check-0.9.4 )
-	dev-libs/libxslt
 "
 PDEPEND=">=net-im/telepathy-mission-control-5.12"
 
@@ -99,10 +99,6 @@ src_unpack () {
 
 	cd "${S}"
 	clutter_gst_version=$(best_version media-libs/clutter-gst)
-
-	if [ $clutter_gst_version == 'media-libs/clutter-gst-1.9.90' ] ; then
-		epatch "${FILESDIR}/${P}-clutter-gst-2.0.patch"
- 	fi
 
 	eautoreconf
 
@@ -117,6 +113,7 @@ pkg_setup() {
 		--disable-static
 		--disable-meego
 		--disable-Werror
+		--enable-gst-1.0
 		$(use_enable legacy-call empathy-av)
 		$(use_enable debug)
 		$(use_with eds)
