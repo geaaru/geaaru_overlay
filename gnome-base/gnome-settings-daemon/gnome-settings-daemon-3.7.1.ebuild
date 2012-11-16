@@ -92,6 +92,16 @@ pkg_setup() {
 		$(use_enable systemd)
 		$(use_enable udev gudev)
 		$(use_enable wacom)"
+
+	# https://bugzilla.gnome.org/show_bug.cgi?id=621836
+	# Apparently this change severely affects touchpad usability for some
+	# people, so revert it if USE=short-touchpad-timeout.
+	# Revisit if/when upstream adds a setting for customizing the timeout.
+	use short-touchpad-timeout &&
+		epatch "${FILESDIR}/${PN}-3.5.91-short-touchpad-timeout.patch"
+
+	# Make colord and wacom optional; requires eautoreconf
+	epatch "${FILESDIR}/${PN}-3.5.91-optional-color-wacom.patch"
 }
 
 src_prepare() {
