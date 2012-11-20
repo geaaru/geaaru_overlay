@@ -1,2 +1,1 @@
 =x11-libs/libX11-9999
-=x11-libs/libX11-9999*
