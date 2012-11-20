@@ -57,7 +57,6 @@ pkg_setup() {
 }
 
 src_prepare() {
-	epatch "${FILESDIR}"/${P}-fallback.patch
 	sed -i -e 's|unix-group:wheel|unix-user:0|' src/polkitbackend/*-default.rules || die #401513
 	has_version ">=dev-lang/spidermonkey-1.8.7" && { sed -i -e '/mozjs/s:185:187:g' configure || die; }
 }
