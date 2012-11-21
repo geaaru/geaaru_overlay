@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/gnome-extra/evolution-data-server/evolution-data-server-2.32.1-r1.ebuild,v 1.4 2011/01/15 19:55:02 nirbheek Exp $
 
-EAPI="4"
+EAPI="5"
 GCONF_DEBUG="no"
 GNOME2_LA_PUNT="yes"
 PYTHON_DEPEND="2"
@@ -28,7 +28,7 @@ RDEPEND=">=dev-libs/glib-2.32:2
 	>=x11-libs/gtk+-3.2:3
 	>=dev-db/sqlite-3.5
 	>=dev-libs/libgdata-0.10
-	>=gnome-base/gnome-keyring-2.20.1
+	>=gnome-base/gnome-keyring-3.6.1
 	>=dev-libs/libical-0.43
 	>=net-libs/libsoup-2.38.1:2.4
 	>=dev-libs/libxml2-2
@@ -42,7 +42,7 @@ RDEPEND=">=dev-libs/glib-2.32:2
 
 	gnome-online-accounts? (
 		>=net-libs/gnome-online-accounts-3.2
-		>=net-libs/liboauth-0.9.4 )
+		>=net-libs/liboauth-0.9.7 )
 	introspection? ( >=dev-libs/gobject-introspection-0.9.12 )
 	kerberos? ( virtual/krb5 )
 	ldap? ( >=net-nds/openldap-2 )
