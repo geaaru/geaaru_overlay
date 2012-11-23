@@ -1,0 +1,11 @@
+--- camel/camel-db.c.orig	2012-11-23 11:34:47.000000000 +0100
++++ camel/camel-db.c	2012-11-23 11:36:20.000000000 +0100
+@@ -126,7 +126,7 @@
+ 
+ 	data = g_new0 (struct SyncRequestData, 1);
+ 	data->cFile = cFile;
+-	data->flags = cFile->flags;
++	data->flags = cFile->flags = SQLITE_SYNC_NORMAL;
+ 	data->done = done;
+ 
+ 	cFile->flags = 0;

@@ -95,6 +95,9 @@ pkg_setup() {
 }
 
 src_prepare() {
+
+	epatch ${FILESDIR}/evolution-sqlite-sync.patch
+
 	gnome2_src_prepare
 	use vala && vala_src_prepare
 
