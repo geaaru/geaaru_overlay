@@ -6,3 +6,11 @@
          line = re.subn(pat[0], pat[1], line)[0]
 -    print line.rstrip()
 +    print(line.rstrip())
+--- a/xen/tools/compat-build-source.py	2012-12-09 18:04:52.473713932 +0100
++++ b/xen/tools/compat-build-source.py	2012-12-09 18:05:02.583716778 +0100
+@@ -24,4 +24,4 @@
+     for xlat in xlats:
+         line = re.subn(r"(struct|union)\s+(%s|xen_%s)\s+(\w)" % (xlat, xlat),
+             r"\1 @KeeP@\2 \3", line.rstrip())[0]
+-    print line.rstrip()
++    print(line.rstrip())
