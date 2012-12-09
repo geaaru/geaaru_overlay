@@ -1,0 +1,8 @@
+--- a/xen/tools/compat-build-header.py	2012-12-09 17:50:07.383505313 +0100
++++ b/xen/tools/compat-build-header.py	2012-12-09 17:50:19.123508229 +0100
+@@ -18,4 +18,4 @@
+ for line in sys.stdin.readlines():
+     for pat in pats:
+         line = re.subn(pat[0], pat[1], line)[0]
+-    print line.rstrip()
++    print(line.rstrip())
