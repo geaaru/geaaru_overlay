@@ -1,0 +1,119 @@
+diff -rua mysql-proxy-0.8.3.orig/plugins/proxy/proxy-plugin.c mysql-proxy-0.8.3/plugins/proxy/proxy-plugin.c
+--- mysql-proxy-0.8.3.orig/plugins/proxy/proxy-plugin.c	2012-08-06 13:42:12.000000000 +0200
++++ mysql-proxy-0.8.3/plugins/proxy/proxy-plugin.c	2012-10-10 13:34:25.000000000 +0200
+@@ -721,7 +721,7 @@
+  		con->client->response = auth;
+ 
+ 		g_string_assign_len(con->client->default_db, S(auth->database));
+-
++    
+ 		/* client and server support auth-plugins and the client uses
+ 		 * win-auth, we may have more data to read from the client
+ 		 */
+@@ -1304,8 +1304,10 @@
+ 		send_sock = con->server;
+ 
+ 		network_mysqld_queue_reset(send_sock);
++    // Inject query to server
+ 		network_mysqld_queue_append(send_sock, send_sock->send_queue, S(inj->query));
+ 
++    // Free queries from client
+ 		while ((packet = g_queue_pop_head(recv_sock->recv_queue->chunks))) g_string_free(packet, TRUE);
+ 
+ 		break; }
+@@ -1387,6 +1389,12 @@
+ 		return NETWORK_SOCKET_SUCCESS;
+ 	}
+ 
++	if (con->parse.command == COM_QUERY &&
++		network_mysqld_com_query_result_is_local_infile(con->parse.data) == 1) {
++		// Handle LOAD DATA LOCAL INFILE
++		return NETWORK_SOCKET_SUCCESS;
++	}
++
+ 	/* looks like we still have queries in the queue, 
+ 	 * push the next one 
+ 	 */
+@@ -1472,7 +1480,9 @@
+ 		 * */
+ 
+ 		if (inj) {
+-			if (con->parse.command == COM_QUERY || con->parse.command == COM_STMT_EXECUTE) {
++
++      if ((con->parse.command == COM_QUERY || con->parse.command == COM_STMT_EXECUTE) &&
++          network_mysqld_com_query_result_is_local_infile(con->parse.data) != 1) {
+ 				network_mysqld_com_query_result_t *com_query = con->parse.data;
+ 
+ 				inj->bytes = com_query->bytes;
+@@ -1493,13 +1503,15 @@
+ 			/* g_get_current_time(&(inj->ts_read_query_result_last)); */
+ 		}
+ 		
+-		network_mysqld_queue_reset(recv_sock); /* reset the packet-id checks as the server-side is finished */
++    if (network_mysqld_com_query_result_is_local_infile(con->parse.data) != 1)
++      network_mysqld_queue_reset(recv_sock); /* reset the packet-id checks as the server-side is finished */
+ 
+ 		NETWORK_MYSQLD_CON_TRACK_TIME(con, "proxy::ready_query_result::enter_lua");
+ 		ret = proxy_lua_read_query_result(con);
+ 		NETWORK_MYSQLD_CON_TRACK_TIME(con, "proxy::ready_query_result::leave_lua");
+ 
+-		if (PROXY_IGNORE_RESULT != ret) {
++		if (PROXY_IGNORE_RESULT != ret &&
++        network_mysqld_com_query_result_is_local_infile(con->parse.data) != 1) {
+ 			/* reset the packet-id checks, if we sent something to the client */
+ 			network_mysqld_queue_reset(send_sock);
+ 		}
+@@ -2117,17 +2129,50 @@
+  */
+ NETWORK_MYSQLD_PLUGIN_PROTO(proxy_send_local_infile_result) {
+ 	network_socket *recv_sock, *send_sock;
++	injection *inj;
++	network_mysqld_con_lua_t *st = con->plugin_con_state;
+ 
+ 	NETWORK_MYSQLD_CON_TRACK_TIME(con, "proxy::send_local_infile_result::enter");
+ 
+ 	recv_sock = con->server;
+ 	send_sock = con->client;
+ 
+-	/* reset the packet-ids */
+-	if (send_sock) network_mysqld_queue_reset(send_sock);
+ 	if (recv_sock) network_mysqld_queue_reset(recv_sock);
++	if (send_sock) network_mysqld_queue_reset(send_sock);
++
++	if (st->injected.queries->length > 0) {
++
++		/* looks like we still have queries in the queue, 
++		 * push the next one 
++		 */
++		inj = g_queue_peek_head(st->injected.queries);
++		con->resultset_is_needed = inj->resultset_is_needed;
++
++		if (!inj->resultset_is_needed && st->injected.sent_resultset > 0) {
++			/* we already sent a resultset to the client and the next query wants to forward it's result-set too, that can't work */
++			g_critical("%s: proxy.queries:append() in %s can only have one injected query without { resultset_is_needed = true } set. We close the client connection now.",
++					G_STRLOC,
++					con->config->lua_script);
+ 
+-	con->state = CON_STATE_READ_QUERY;
++			return NETWORK_SOCKET_ERROR;
++		}
++
++		g_assert(inj);
++		g_assert(recv_sock);
++
++		network_mysqld_queue_append(recv_sock, recv_sock->send_queue, S(inj->query));
++
++		network_mysqld_con_reset_command_response_state(con);
++
++		con->state = CON_STATE_SEND_QUERY;
++
++	} else {
++
++		/* reset the packet-ids */
++
++		con->state = CON_STATE_READ_QUERY;
++
++	}
+ 
+ 	return NETWORK_SOCKET_SUCCESS;
+ }
