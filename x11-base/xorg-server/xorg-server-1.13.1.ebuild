@@ -111,8 +111,8 @@ REQUIRED_USE="!minimal? (
 PATCHES=(
 	"${UPSTREAMED_PATCHES[@]}"
 	"${FILESDIR}"/${PN}-1.12-disable-acpi.patch
+	"${FILESDIR}"/gnome-shell-check-version.patch
 )
-#	"${FILESDIR}"/gnome-shell-check-version.patch
 
 pkg_pretend() {
 	# older gcc is not supported
