@@ -62,9 +62,6 @@ src_prepare() {
 	# Patch the unmergeable newlib, fix most of the leftover gcc QA issues
 	cp "${FILESDIR}"/newlib-implicits.patch stubdom || die
 
-	# Patch stubdom/Makefile to patch insource newlib & prevent internal downloading
-	epatch "${FILESDIR}"/xen-4.2.0-externals.patch
-
 	# Drop .config and Fix gcc-4.6
 	epatch 	"${FILESDIR}"/${PN/-pvgrub/}-4-fix_dotconfig-gcc.patch
 }
