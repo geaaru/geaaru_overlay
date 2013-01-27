@@ -179,10 +179,10 @@ src_prepare() {
 		-i tools/qemu-xen-traditional/Makefile || die
 
 	# Fix network broadcast on bridged networks
-	epatch "${FILESDIR}/${PN}-3.4.0-network-bridge-broadcast.patch"
+#	epatch "${FILESDIR}/${PN}-3.4.0-network-bridge-broadcast.patch"
 
 	# Prevent the downloading of ipxe, seabios
-	epatch "${FILESDIR}"/${P/-tools/}-anti-download.patch
+	epatch "${FILESDIR}"/xen-4.2.0-anti-download.patch
 	cp "${DISTDIR}"/ipxe.tar.gz tools/firmware/etherboot/ || die
 	mv ../seabios-dir-remote tools/firmware/ || die
 	pushd tools/firmware/ > /dev/null
@@ -198,10 +198,10 @@ src_prepare() {
 	fi
 
 	# Prevent double stripping of files at install
-	epatch "${FILESDIR}"/${P/-tools/}-nostrip.patch
+	epatch "${FILESDIR}"/xen-4.2.0-nostrip.patch
 
 	# fix jobserver in Makefile
-	epatch "${FILESDIR}"/${P/-tools/}-jserver.patch
+	epatch "${FILESDIR}"/xen-4.2.0-jserver.patch
 }
 
 src_compile() {
