@@ -181,7 +181,9 @@ src_install() {
 	find "${D}" -name '*.la' -exec rm -f {} +
 
 	# Remove gdbus-codegen already present on dev-util/gdbus-codegen package.
-	rm -rf "${ED}/usr/bin/gdbus-codegen" "${ED}/usr/share/man/man1/gdbus-codegen.1.bz2"
+	rm -f "${ED}usr/bin/gdbus-codegen"
+	rm -f "${ED}usr/share/man/man1/gdbus-codegen.*"
+
 }
 
 src_test() {
