@@ -179,6 +179,9 @@ src_install() {
 	# Completely useless with or without USE static-libs, people need to use
 	# pkg-config
 	find "${D}" -name '*.la' -exec rm -f {} +
+
+	# Remove gdbus-codegen already present on dev-util/gdbus-codegen package.
+	rm -rf "${ED}/usr/bin/gdbus-codegen" "${ED}/usr/share/man/man1/gdbus-codegen.1.bz2"
 }
 
 src_test() {
@@ -203,9 +206,11 @@ src_test() {
 
 	# Need X for dbus-launch session X11 initialization
 	Xemake check
+
 }
 
 pkg_preinst() {
+
 	# Only give the introspection message if:
 	# * The user has gobject-introspection
 	# * Has glib already installed
