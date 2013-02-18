@@ -182,7 +182,7 @@ src_install() {
 
 	# Remove gdbus-codegen already present on dev-util/gdbus-codegen package.
 	rm -f "${ED}usr/bin/gdbus-codegen"
-	rm -f "${ED}usr/share/man/man1/gdbus-codegen.*"
+	rm -f "${ED}usr/share/man/man1/gdbus-codegen.1"
 
 }
 
