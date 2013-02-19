@@ -62,9 +62,6 @@ src_prepare() {
 		$(use_enable cairo)
 		$(use_enable threads thread)"
 
-	# Do not build tests if unneeded, bug #226345
-	epatch "${FILESDIR}/${PN}-3.4.1.1-make_check.patch"
-
 	eautoreconf
 	gnome2_src_prepare
 	python_clean_py-compile_files
