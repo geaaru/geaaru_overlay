@@ -1,0 +1,21 @@
+
+=x11-libs/cairo-1.12.14
+
+=dev-libs/glib-2.35.7
+
+# gdbus-codegen is inside glib package
+=dev-util/gdbus-codegen-2.35.7
+
+=gnome-base/gsettings-desktop-schemas-3.7.5
+
+=net-libs/glib-networking-2.35.6
+
+=media-libs/cogl-1.13.2
+
+=net-libs/libsoup-2.41.5
+
+=x11-libs/pango-1.33.7
+
+=net-libs/libsoup-gnome-2.41.5
+
+=gnome-base/dconf-0.15.3
