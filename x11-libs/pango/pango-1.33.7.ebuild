@@ -27,7 +27,7 @@ IUSE="X deprecated +introspection"
 RDEPEND="
 	>=media-libs/harfbuzz-0.9.3
 	>=dev-libs/glib-2.33.12:2
-	>=media-libs/fontconfig-2.5.0:1.0
+	>=media-libs/fontconfig-2.10.91
 	media-libs/freetype:2
 	>=x11-libs/cairo-1.7.6[X?]
 	X? (
@@ -37,7 +37,7 @@ RDEPEND="
 DEPEND="${RDEPEND}
 	>=dev-util/gtk-doc-am-1.13
 	virtual/pkgconfig
-	introspection? ( >=dev-libs/gobject-introspection-0.9.5 )
+	introspection? ( >=dev-libs/gobject-introspection-1.35.4 )
 	X? ( x11-proto/xproto )
 	!<=sys-devel/autoconf-2.63:2.5"
 PDEPEND="deprecated? ( x11-libs/pangox-compat )"
