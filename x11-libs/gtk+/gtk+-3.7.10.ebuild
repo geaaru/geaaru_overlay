@@ -27,7 +27,7 @@ KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc ~x86 ~amd6
 # NOTE: cairo[svg] dep is due to bug 291283 (not patched to avoid eautoreconf)
 # Use gtk+:2 for gtk-update-icon-cache
 COMMON_DEPEND="X? (
-		>=app-accessibility/at-spi2-atk-2.5.3
+		>=app-accessibility/at-spi2-atk-2.7.5
 		x11-libs/libXrender
 		x11-libs/libX11
 		>=x11-libs/libXi-1.3
@@ -46,11 +46,11 @@ COMMON_DEPEND="X? (
 		x11-libs/libxkbcommon
 		egl? ( x11-libs/cairo[opengl] )
 	)
-	>=dev-libs/glib-2.33.1
-	>=x11-libs/pango-1.30[introspection?]
-	>=dev-libs/atk-2.5.3[introspection?]
+	>=dev-libs/glib-2.35.5
+	>=x11-libs/pango-1.32.4[introspection?]
+	>=dev-libs/atk-2.7.5[introspection?]
 	>=x11-libs/cairo-1.10.0[aqua?,glib,svg,X?]
-	>=x11-libs/gdk-pixbuf-2.26:2[introspection?,X?]
+	>=x11-libs/gdk-pixbuf-2.27.1:2[introspection?,X?]
 	>=x11-libs/gtk+-2.24:2
 	media-libs/fontconfig
 	x11-misc/shared-mime-info
