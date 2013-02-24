@@ -10,11 +10,83 @@
 
 =net-libs/glib-networking-2.35.6
 
-=media-libs/cogl-1.13.2
+=dev-libs/glibmm-2.34.1
+
+=dev-libs/gobject-introspection-common-1.35.4
+=dev-libs/gobject-introspection-1.35.4
+
+=sys-devel/gettext-0.18.2
+
+=media-libs/fontconfig-2.10.91
+
+=x11-libs/pango-1.33.7
+
+=media-libs/cogl-1.13.4
 
 =net-libs/libsoup-2.41.5
 
-=x11-libs/pango-1.33.7
+=gnome-base/gnome-common-3.7.4
+
+=dev-libs/atk-2.7.91
+=app-accessibility/at-spi2-core-2.7.90
+=app-accessibility/at-spi2-atk-2.7.90
+
+=gnome-extra/yelp-xsl-3.7.90
+
+=x11-libs/gdk-pixbuf-2.27.1
+
+=x11-libs/gtk+-2.24.16
+
+# (Check that is installed last version of the
+#  udev package)
+
+=x11-misc/colord-0.1.28
+
+=x11-libs/gtk+-3.7.10
+
+=dev-libs/json-glib-0.15.2
+=media-libs/clutter-1.34.6
+=media-libs/clutter-gtk-1.4.2
+
+=media-libs/gstreamer-1.0.5-r1
+
+=media-libs/gst-plugins-base-1.0.5-r2
+=media-libs/gst-plugins-good-1.0.5
+=media-libs/gst-plugins-ugly-1.0.5
+=media-libs/gst-plugins-bad-1.0.5
+=media-plugins/gst-plugins-x264-1.0.5
+=media-plugins/gst-plugins-v4l2-1.0.5
+=media-plugins/gst-plugins-speex-1.0.5
+=media-plugins/gst-plugins-rtmp-1.0.5
+
+=media-sound/pulseaudio-3.0
+
+=media-video/ffmpeg-0.10.6
+
+=media-plugins/gst-plugins-pulse-1.0.5
+
+=media-libs/clutter-gst-2.0.0
+
+=app-crypt/gcr-3.7.5
+
+=gnome-base/gnome-keyring-3.7.5
+=gnome-base/libgnome-keyring-3.7.5
+
+=app-crypt/libsecret-0.19
+
+=gnome-base/gnome-common-3.7.4
+
+=gnome-base/gconf-3.2.6
+
+=app-text/poppler-0.22.1
+
+=x11-themes/gnome-icon-theme-symbolic-3.7.5
+=x11-themes/gnome-icon-theme-extras-3.6.2
+=x11-themes/gnome-icon-theme-symbolic-3.7.5
+
+=app-text/yelp-tools-3.6.1
+=gnome-extra/yelp-3.7.90
+
 
 =net-libs/libsoup-gnome-2.41.5
 
