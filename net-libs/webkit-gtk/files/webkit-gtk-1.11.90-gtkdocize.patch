@@ -1,0 +1,11 @@
+--- a/webkitgtk-1.11.90/configure.ac	2013-02-24 23:12:32.341817151 +0100
++++ b/webkitgtk-1.11.90/configure.ac.new	2013-02-24 23:12:25.531775951 +0100
+@@ -31,6 +31,8 @@
+ AM_INIT_AUTOMAKE([foreign subdir-objects dist-xz no-dist-gzip tar-ustar])
+ m4_include([Source/autotools/SetupAutomake.m4])
+ 
++GTK_DOC_CHECK([1.10])
++
+ ######################################################################################
+ # Processing of configuration files
+ ######################################################################################

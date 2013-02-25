@@ -14,8 +14,7 @@ SRC_URI="http://www.webkitgtk.org/releases/${MY_P}.tar.xz"
 
 LICENSE="LGPL-2+ BSD"
 SLOT="3"
-#KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~amd64-fbsd ~x86-fbsd ~x86-freebsd ~amd64-linux ~ia64-linux ~x86-linux ~x86-macos"
-KEYWORDS=""
+KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc ~x86 ~amd64-fbsd ~x86-fbsd ~x86-freebsd ~amd64-linux ~ia64-linux ~x86-linux ~x86-macos"
 IUSE="aqua coverage debug +geoloc +gstreamer +introspection +jit spell +webgl"
 # bugs 372493, 416331
 REQUIRED_USE="introspection? ( geoloc gstreamer )"
@@ -153,6 +152,9 @@ src_prepare() {
 
 	# occasional test failure due to additional Xvfb process spawned
 	# TODO epatch "${FILESDIR}/${PN}-1.8.1-tests-xvfb.patch"
+
+	# Fix gtkdocize initialization
+	epatch "${FILESDIR}/${PN}-1.11.90-gtkdocize.patch"
 
 	# Respect CC, otherwise fails on prefix #395875
 	tc-export CC
