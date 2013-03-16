@@ -12,7 +12,7 @@ DESCRIPTION="Vala - Compiler for the GObject type system"
 HOMEPAGE="http://live.gnome.org/Vala"
 
 LICENSE="LGPL-2.1"
-SLOT="0.19"
+SLOT="0.20"
 KEYWORDS="alpha amd64 arm hppa ~ia64 ~mips ppc ppc64 ~sh ~sparc ~x86 ~amd64-fbsd ~x86-fbsd ~x86-linux"
 IUSE="test +vapigen"
 
