@@ -3,7 +3,7 @@
 # $Header: /var/cvsroot/gentoo-x86/app-crypt/libsecret/libsecret-0.12.ebuild,v 1.9 2013/01/28 14:56:10 aballier Exp $
 
 EAPI="5"
-VALA_MIN_API_VERSION=0.18
+VALA_MIN_API_VERSION=0.20
 VALA_USE_DEPEND=vapigen
 
 inherit eutils gnome2 python vala virtualx
@@ -64,7 +64,7 @@ src_prepare() {
 		-e '/test_get_async);/d' \
 		-i libsecret/tests/test-service.c || die
 
-	use vala && vala_src_prepare
+	use vala && vala_src_prepare --vala-api-version 0.20
 	gnome2_src_prepare
 }
 
