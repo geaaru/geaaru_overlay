@@ -30,7 +30,7 @@ DEPEND="${RDEPEND}
 "
 
 pkg_setup() {
-	DOCS="AUTHORS ChangeLog NEWS README"
+	DOCS="AUTHORS NEWS README"
 	# xevie is deprecated/broken since xorg-1.6/1.7
 	G2CONF="${G2CONF} --disable-xevie"
 }
