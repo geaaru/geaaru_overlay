@@ -5,7 +5,7 @@
 EAPI="5"
 GCONF_DEBUG="yes"
 GNOME2_LA_PUNT="yes"
-VALA_MIN_API_VERSION="0.16"
+VALA_MIN_API_VERSION="0.20"
 VALA_USE_DEPEND="vapigen"
 
 inherit gnome2 python vala
@@ -39,7 +39,7 @@ pkg_setup() {
 
 src_prepare() {
 	G2CONF="${G2CONF} $(use_enable vala)"
-	use vala && vala_src_prepare
+	use vala && vala_src_prepare --vala-api-version 0.20
 	gnome2_src_prepare
 
 	# FIXME: Remove silly CFLAGS
