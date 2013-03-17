@@ -50,7 +50,7 @@ pkg_setup() {
 
 src_prepare() {
 	# Drop DEPRECATED flags
-	sed -i -e "s/ -DG_DISABLE_DEPRECATED//" configure.in configure || die
+	sed -i -e "s/ -DG_DISABLE_DEPRECATED//" configure.ac configure || die
 
 	# Python bindings are built/installed manually.
 	sed -e "/SUBDIRS += python/d" -i Makefile.am || die
