@@ -5,7 +5,7 @@
 EAPI="5"
 GCONF_DEBUG="no"
 GNOME2_LA_PUNT="yes"
-PYTHON_COMPAT=( python{2_6,2_7} )
+PYTHON_COMPAT=( python{2_6,2_7,3_1,3_2} )
 
 inherit eutils gnome2 flag-o-matic python-single-r1
 
@@ -40,7 +40,7 @@ RDEPEND="sys-libs/zlib
 	introspection? ( >=dev-libs/gobject-introspection-1.0.0:= )
 	perl? ( dev-lang/perl )
 	python? ( ${PYTHON_DEPS}
-		>=dev-python/pygobject-3.0.0:3[${PYTHON_USEDEP}] )
+		>=dev-python/pygobject-3.7.0:3[${PYTHON_USEDEP}] )
 "
 #	libgda? (
 #		>=gnome-extra/libgda-4.1.1:4.0
