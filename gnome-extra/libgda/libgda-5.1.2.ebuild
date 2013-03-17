@@ -13,7 +13,7 @@ DESCRIPTION="Gnome Database Access Library"
 HOMEPAGE="http://www.gnome-db.org/"
 LICENSE="GPL-2 LGPL-2"
 
-IUSE="berkdb bindist canvas doc firebird gnome-keyring gtk graphviz http +introspection json ldap mdb mysql oci8 postgres sourceview ssl" # vala
+IUSE="berkdb bindist doc firebird gnome-keyring gtk graphviz http +introspection json ldap mdb mysql oci8 postgres sourceview ssl" # vala
 SLOT="5"
 KEYWORDS="alpha amd64 ia64 ppc ppc64 sparc x86 ~x86-fbsd"
 
@@ -28,7 +28,6 @@ RDEPEND="
 	!bindist? ( firebird? ( dev-db/firebird ) )
 	gtk? (
 		>=x11-libs/gtk+-3.0.0:3
-		canvas? ( x11-libs/goocanvas:2.0 )
 		sourceview? ( x11-libs/gtksourceview:3.0 )
 		graphviz? ( media-gfx/graphviz )
 	)
@@ -56,14 +55,14 @@ pkg_setup() {
 
 	DOCS="AUTHORS ChangeLog NEWS README"
 
-	if use canvas || use graphviz || use sourceview; then
+	if use graphviz || use sourceview; then
 		if ! use gtk; then
 			ewarn "You must enable USE=gtk to make use of canvas, graphivz or sourceview USE flag."
 			ewarn "Disabling for now."
 			G2CONF="${G2CONF} --without-goocanvas --without-graphivz --without-gtksourceview"
 		else
 			G2CONF="${G2CONF}
-				$(use_with canvas goocanvas)
+				--without-goocanvas
 				$(use_with graphviz)
 				$(use_with sourceview gtksourceview)"
 		fi
