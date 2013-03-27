@@ -5,7 +5,7 @@
 EAPI="5"
 GCONF_DEBUG="no"
 GNOME2_LA_PUNT="yes"
-PYTHON_COMPAT=( python2_{6,7} )
+PYTHON_COMPAT=( python{2_6,2_7,3_2,3_3} )
 PYTHON_REQ_USE="xml"
 
 inherit gnome2 python-r1
@@ -50,7 +50,7 @@ src_prepare() {
 	# + caribou is python2 only so fix the shell scripts
 	sed -e '/export PYTHONPATH=.*python/ d' \
 		-e "s:@PYTHON@:${EPREFIX}/usr/bin/python2:" \
-		-i bin/{antler-keyboard,caribou,caribou-preferences}.in ||
+		-i bin/{antler-keyboard,caribou-preferences}.in ||
 		die "sed failed"
 
 	gnome2_src_prepare
