@@ -29,6 +29,10 @@ RESTRICT="binchecks strip"
 
 # FIXME: double check potential LINGUAS problem
 src_prepare() {
+
+	# Add gnome-icon-theme-symbolic.pc.in missing on package
+	cp ${FILESDIR}/gnome-icon-theme-symbolic.pc.in  ${WORKDIR}/
+
 	DOCS="AUTHORS NEWS README"
 	G2CONF="${G2CONF}
 		--enable-icon-mapping
