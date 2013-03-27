@@ -23,7 +23,7 @@ COMMON_DEPEND="
 	>=x11-libs/gtk+-3:3[introspection]
 	x11-libs/gtk+:2
 	>=dev-libs/gobject-introspection-0.10.7
-	dev-libs/libgee:0.8
+	dev-libs/libgee:0.10
 	dev-libs/libxml2
 	>=media-libs/clutter-1.5.11:1.0[introspection]
 	x11-libs/libX11
@@ -34,7 +34,7 @@ COMMON_DEPEND="
 # pyatspi-2.1.90 needed to run caribou if pygobject:3 is installed
 # librsvg needed to load svg images in css styles
 RDEPEND="${COMMON_DEPEND}
-	>=dev-python/pyatspi-2.1.90[${PYTHON_USEDEP}]
+	>=dev-python/pyatspi-2.8.0[${PYTHON_USEDEP}]
 	>=gnome-base/gsettings-desktop-schemas-3
 	gnome-base/librsvg:2
 	sys-apps/dbus
