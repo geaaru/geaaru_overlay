@@ -39,8 +39,8 @@ DEPEND="${RDEPEND}
 pkg_setup() {
 	DOCS="AUTHORS BUGS ChangeLog HACKING NEWS README TODO"
 	G2CONF="${G2CONF}
-		--with-gio
 		--disable-static
+		$(use_enable introspection)
 		$(use_with bzip2 bz2)
 		$(use_with python)
 		$(use_with gtk gdk-pixbuf)"
