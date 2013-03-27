@@ -46,7 +46,6 @@ pkg_setup() {
 
 src_prepare() {
 	gnome2_src_prepare
-	python_convert_shebangs 2 "${S}"/scripts/make-tests
 	has_version ">=dev-lang/spidermonkey-1.8.7" && { sed -i -e 	 '/mozjs/s:185:187:g' configure || die; }
 
 }
