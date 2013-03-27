@@ -5,7 +5,9 @@
 EAPI="5"
 GCONF_DEBUG="no"
 GNOME2_LA_PUNT="yes"
-PYTHON_COMPAT=( python{2_6,2_7,3_2,3_3} )
+# It seems that caribou it isn't complaint with python3. To verify.
+# PYTHON_COMPAT=( python{2_6,2_7,3_2,3_3} )
+PYTHON_COMPAT=( python{2_6,2_7} )
 PYTHON_REQ_USE="xml"
 
 inherit gnome2 python-r1
@@ -49,7 +51,6 @@ src_prepare() {
 	# delete custom PYTHONPATH, useless on Gentoo and potential bug source
 	# + caribou is python2 only so fix the shell scripts
 	sed -e '/export PYTHONPATH=.*python/ d' \
-		-e "s:@PYTHON@:${EPREFIX}/usr/bin/python2:" \
 		-i bin/{antler-keyboard,caribou-preferences}.in ||
 		die "sed failed"
 
