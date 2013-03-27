@@ -31,7 +31,7 @@ RESTRICT="binchecks strip"
 src_prepare() {
 
 	# Add gnome-icon-theme-symbolic.pc.in missing on package
-	cp ${FILESDIR}/gnome-icon-theme-symbolic.pc.in  ${WORKDIR}/
+	cp ${FILESDIR}/gnome-icon-theme-symbolic.pc.in  ${WORKDIR}/${P}
 
 	DOCS="AUTHORS NEWS README"
 	G2CONF="${G2CONF}
