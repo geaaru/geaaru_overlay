@@ -45,10 +45,6 @@ pkg_setup() {
 }
 
 src_prepare() {
-	# To avoid file collison with other slots, rename help module.
-	# Prevent the UI from loading glade:3's gladeui devhelp documentation.
-	epatch "${FILESDIR}/${PN}-3.14.1-doc-version.patch"
-
 	gnome2_src_prepare
 }
 
