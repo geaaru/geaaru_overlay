@@ -3,7 +3,7 @@
 # $Header: /var/cvsroot/gentoo-x86/sys-libs/libosinfo/libosinfo-0.2.4.ebuild,v 1.1 2013/02/24 21:59:34 cardoe Exp $
 
 EAPI=5
-VALA_MIN_API_VERSION="0.16"
+VALA_MIN_API_VERSION="0.20"
 VALA_USE_DEPEND="vapigen"
 
 inherit eutils toolchain-funcs vala udev
@@ -32,6 +32,8 @@ DEPEND="${RDEPEND}
 	vala? ( $(vala_depend) )"
 
 src_configure() {
+
+	use vala && vala_src_prepare --vala-api-version 0.20
 	# --enable-udev is only for rules.d file install
 	econf \
 		--disable-static \
