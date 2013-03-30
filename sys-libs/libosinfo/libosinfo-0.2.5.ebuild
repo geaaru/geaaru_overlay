@@ -31,9 +31,12 @@ DEPEND="${RDEPEND}
 	test? ( dev-libs/check )
 	vala? ( $(vala_depend) )"
 
+src_prepare() {
+	use vala && vala_src_prepare --vala-api-version 0.20
+}
+
 src_configure() {
 
-	use vala && vala_src_prepare --vala-api-version 0.20
 	# --enable-udev is only for rules.d file install
 	econf \
 		--disable-static \
