@@ -93,9 +93,6 @@ pkg_setup() {
 
 src_prepare() {
 
-	# Fix .desktop file so menu item shows up
-	epatch "${FILESDIR}"/${PN}-0.7.1-display-menu.patch
-
 	gnome2_src_prepare
 
 	AT_NOELIBTOOLIZE=yes eautoreconf
