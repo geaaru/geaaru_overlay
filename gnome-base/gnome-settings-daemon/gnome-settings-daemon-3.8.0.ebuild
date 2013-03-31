@@ -21,7 +21,7 @@ COMMON_DEPEND="
 	>=dev-libs/glib-2.31.0:2
 	>=x11-libs/gtk+-3.3.4:3
 	>=gnome-base/libgnomekbd-2.91.1
-	>=gnome-base/gnome-desktop-3.3.92:3
+	>=gnome-base/gnome-desktop-3.8.0:3
 	>=gnome-base/gsettings-desktop-schemas-3.3.0
 	media-fonts/cantarell
 	media-libs/fontconfig
@@ -31,7 +31,7 @@ COMMON_DEPEND="
 	>=sys-power/upower-0.9.11
 	x11-libs/cairo
 	x11-libs/gdk-pixbuf:2
-	>=x11-libs/libnotify-0.7.3
+	>=x11-libs/libnotify-0.7.5
 	x11-libs/libX11
 	x11-libs/libXi
 	x11-libs/libXext
@@ -93,15 +93,6 @@ pkg_setup() {
 		$(use_enable udev gudev)
 		$(use_enable wacom)"
 
-	# https://bugzilla.gnome.org/show_bug.cgi?id=621836
-	# Apparently this change severely affects touchpad usability for some
-	# people, so revert it if USE=short-touchpad-timeout.
-	# Revisit if/when upstream adds a setting for customizing the timeout.
-	use short-touchpad-timeout &&
-		epatch "${FILESDIR}/${PN}-3.5.91-short-touchpad-timeout.patch"
-
-	# Make colord and wacom optional; requires eautoreconf
-	epatch "${FILESDIR}/${PN}-3.5.91-optional-color-wacom.patch"
 }
 
 src_prepare() {
