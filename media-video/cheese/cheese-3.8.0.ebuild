@@ -26,7 +26,7 @@ fi
 
 COMMON_DEPEND="
 	>=dev-libs/glib-2.28:2
-	>=dev-libs/libgee-0.6.3:0
+	>=dev-libs/libgee-0.10.0:0.8
 	>=x11-libs/gtk+-3.4.4:3[introspection?]
 	>=x11-libs/cairo-1.10
 	>=x11-libs/pango-1.28.0
