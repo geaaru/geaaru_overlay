@@ -20,7 +20,7 @@ EGIT_REPO_URI="git://git.gnome.org/${PN}
 LICENSE="GPL-2+ LGPL-2.1+"
 SLOT="0/16"
 IUSE="applet cue doc eds elibc_glibc exif firefox-bookmarks flac flickr gif
-gnome-keyring gsf gstreamer gtk iptc +iso +jpeg laptop +miner-fs mp3 networkmanager pdf playlist rss test thunderbird +tiff upnp-av +vorbis xine +xml xmp xps" # qt4 strigi
+libsecret gsf gstreamer gtk iptc +iso +jpeg laptop +miner-fs mp3 networkmanager pdf playlist rss test thunderbird +tiff upnp-av +vorbis xine +xml xmp xps" # qt4 strigi
 if [[ ${PV} = 9999 ]]; then
 	KEYWORDS=""
 	IUSE="${IUSE} doc"
@@ -69,7 +69,7 @@ RDEPEND="
 	flac? ( >=media-libs/flac-1.2.1 )
 	flickr? ( net-libs/rest:0.7 )
 	gif? ( media-libs/giflib )
-	gnome-keyring? ( >=gnome-base/gnome-keyring-2.26 )
+	libsecret? ( >=app-crypt/libsecret-0.15 )
 	gsf? ( >=gnome-extra/libgsf-1.13 )
 	gstreamer? (
 		>=media-libs/gstreamer-0.10.31:0.10
@@ -232,7 +232,7 @@ src_configure() {
 		FIREFOX="${S}"/firefox-version.sh \
 		$(use_enable flac libflac) \
 		$(use_enable flickr miner-flickr) \
-		$(use_enable gnome-keyring) \
+		$(use_enable libsecret) \
 		$(use_enable gsf libgsf) \
 		$(use_enable gtk tracker-explorer) \
 		$(use_enable gtk tracker-needle) \
