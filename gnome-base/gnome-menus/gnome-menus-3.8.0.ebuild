@@ -39,9 +39,6 @@ DEPEND="${COMMON_DEPEND}
 src_prepare() {
 	gnome2_src_prepare
 
-	# Don't show KDE standalone settings desktop files in GNOME others menu
-	epatch "${FILESDIR}/${PN}-3.0.0-ignore_kde_standalone.patch"
-
 	if use python; then
 		python_copy_sources
 	else
@@ -88,18 +85,11 @@ src_install() {
 		installing() {
 			gnome2_src_install
 			# Massage shebang to make python_doscript happy
-			sed -e 's:#!'"${PYTHON}:#!/usr/bin/python:" \
-				-i simple-editor/gmenu-simple-editor || die
-				python_doscript simple-editor/gmenu-simple-editor
 			}
 		python_foreach_impl run_in_build_dir installing
 	else
 		gnome2_src_install
 	fi
-
-	# Prefix menu, bug #256614
-	mv "${ED}"/etc/xdg/menus/applications.menu \
-		"${ED}"/etc/xdg/menus/gnome-applications.menu || die "menu move failed"
 
 	exeinto /etc/X11/xinit/xinitrc.d/
 	newexe "${FILESDIR}/10-xdg-menu-gnome-r1" 10-xdg-menu-gnome
