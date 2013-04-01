@@ -47,12 +47,6 @@ src_prepare() {
 		$(use_enable introspection)"
 	DOCS="AUTHORS ChangeLog NEWS"
 
-	# Avoid glib-2.34 dependency for now, bug #435408
-	epatch "${FILESDIR}/${P}-no-g_clear_pointer.patch"
-
-	# build: Use gmime-2.6 (fixed in 'master' (> 3.4.3))
-	epatch "${FILESDIR}/${PN}-2.32.6-gmime26.patch"
-
 	# Disable tests requiring network access, bug #346127
 	sed -e 's:\(g_test_add_func.*/parser/resolution.*\):/*\1*/:' \
 		-e 's:\(g_test_add_func.*/parser/parsing/itms_link.*\):/*\1*/:' \
