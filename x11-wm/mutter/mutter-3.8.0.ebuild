@@ -33,6 +33,7 @@ COMMON_DEPEND=">=x11-libs/pango-1.2[X,introspection?]
 	>=x11-libs/startup-notification-0.7
 	>=x11-libs/libXcomposite-0.2
 	>=gnome-base/gsettings-desktop-schemas-3.3.0[introspection?]
+	>=x11-libs/libXi-1.7
 
 	x11-libs/libICE
 	x11-libs/libSM
