@@ -38,6 +38,7 @@ COMMON_DEPEND="
 	x11-libs/libXfixes
 	x11-libs/libXtst
 	x11-libs/libXxf86misc
+	>=app-i18n/ibus-1.5.1-r2
 	>=x11-libs/libxklavier-5.0
 	>=media-sound/pulseaudio-0.9.16
 
@@ -51,7 +52,7 @@ COMMON_DEPEND="
 		>=dev-libs/nss-3.11.2 )
 	systemd? ( >=sys-apps/systemd-31 )
 	udev? ( sys-fs/udev[gudev] )
-	wacom? ( >=dev-libs/libwacom-0.3
+	wacom? ( >=dev-libs/libwacom-0.7
 		x11-drivers/xf86-input-wacom )"
 # Themes needed by g-s-d, gnome-shell, gtk+:3 apps to work properly
 # <gnome-color-manager-3.1.1 has file collisions with g-s-d-3.1.x
