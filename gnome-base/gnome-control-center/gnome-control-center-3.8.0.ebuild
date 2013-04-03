@@ -2,18 +2,20 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/gnome-base/gnome-control-center/gnome-control-center-3.4.2-r1.ebuild,v 1.2 2012/08/07 10:18:15 tetromino Exp $
 
-EAPI="4"
+EAPI="5"
 GCONF_DEBUG="yes"
 GNOME2_LA_PUNT="yes" # gmodule is used, which uses dlopen
+VALA_MIN_API_VERSION="0.20"
+VALA_USE_DEPEND=vapigen
 
-inherit autotools eutils gnome2
+inherit autotools eutils gnome2 vala
 
 DESCRIPTION="GNOME Desktop Configuration Tool"
 HOMEPAGE="http://www.gnome.org/"
 
 LICENSE="GPL-2"
 SLOT="2"
-IUSE="+bluetooth +cheese +colord +cups +gnome-online-accounts +networkmanager +socialweb systemd wacom"
+IUSE="+bluetooth +cheese +colord +cups +gnome-online-accounts +networkmanager +socialweb systemd wacom vala"
 KEYWORDS="~amd64 ~x86 ~x86-fbsd ~x86-freebsd ~amd64-linux ~x86-linux ~x86-solaris"
 
 # XXX: gnome-desktop-2.91.5 is needed for upstream commit c67f7efb
@@ -50,6 +52,8 @@ COMMON_DEPEND="
 	x11-libs/libXxf86misc
 	>=x11-libs/libxklavier-5.1
 	>=x11-libs/libXi-1.2
+
+	app-crypt/mit-krb5
 
 	bluetooth? ( >=net-wireless/gnome-bluetooth-3.3.4 )
 	cheese? (
@@ -98,13 +102,14 @@ DEPEND="${COMMON_DEPEND}
 
 	cups? ( sys-apps/sed )
 
+	vala? ( $(vala_depend) )
+
 	gnome-base/gnome-common"
 # Needed for autoreconf
 #	gnome-base/gnome-common
 
 pkg_setup() {
 	G2CONF="${G2CONF}
-		--disable-update-mimedb
 		--disable-static
 		$(use_enable bluetooth)
 		$(use_with cheese)
@@ -114,7 +119,9 @@ pkg_setup() {
 		$(use_with socialweb libsocialweb)
 		$(use_enable systemd)
 		$(use_enable wacom)"
-	DOCS="AUTHORS ChangeLog NEWS README TODO"
+	DOCS="AUTHORS ChangeLog NEWS README"
+
+	use vala && vala_src_prepare
 }
 
 src_prepare() {
