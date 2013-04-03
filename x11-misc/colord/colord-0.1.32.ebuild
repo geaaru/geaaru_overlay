@@ -3,7 +3,7 @@
 # $Header: /var/cvsroot/gentoo-x86/x11-misc/colord/colord-0.1.28.ebuild,v 1.4 2013/03/26 16:56:40 ago Exp $
 
 EAPI="5"
-VALA_MIN_API_VERSION="0.18"
+VALA_MIN_API_VERSION="0.20"
 VALA_USE_DEPEND="vapigen"
 
 inherit autotools bash-completion-r1 check-reqs eutils user systemd base udev vala
@@ -60,7 +60,6 @@ pkg_setup() {
 src_prepare() {
 	use vala && vala_src_prepare
 
-	epatch "${FILESDIR}/${PN}-0.1.26-fix-automagic-systemd.patch"
 	eautoreconf
 }
 
