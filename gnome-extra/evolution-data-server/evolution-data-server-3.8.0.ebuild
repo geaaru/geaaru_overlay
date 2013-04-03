@@ -3,11 +3,13 @@
 # $Header: /var/cvsroot/gentoo-x86/gnome-extra/evolution-data-server/evolution-data-server-2.32.1-r1.ebuild,v 1.4 2011/01/15 19:55:02 nirbheek Exp $
 
 EAPI="5"
+VALA_MIN_API_VERSION=0.20
+VALA_USE_DEPEND=vapigen
 GCONF_DEBUG="no"
 GNOME2_LA_PUNT="yes"
 PYTHON_DEPEND="2"
 
-inherit db-use eutils flag-o-matic gnome2 python versionator virtualx
+inherit db-use eutils flag-o-matic gnome2 python versionator virtualx vala
 if [[ ${PV} = 9999 ]]; then
 	inherit gnome2-live
 fi
@@ -57,7 +59,7 @@ DEPEND="${RDEPEND}
 	>=sys-devel/gettext-0.17
 	virtual/pkgconfig
 	doc? ( >=dev-util/gtk-doc-1.14 )
-	vala? ( dev-lang/vala:0.18[vapigen] )"
+	vala? ( $(vala_depend) )"
 # eautoreconf needs:
 #	>=gnome-base/gnome-common-2
 #	>=dev-util/gtk-doc-am-1.9
@@ -72,8 +74,6 @@ pkg_setup() {
 	# Uh, what to do about dbus-call-timeout ?
 	G2CONF="${G2CONF}
 		--disable-schemas-compile
-		VALAC=$(type -P valac-0.18)
-		VAPIGEN=$(type -P vapigen-0.18)
 		$(use_with doc private-docs)
 		$(use_enable gnome-online-accounts goa)
 		$(use_enable introspection)
@@ -87,6 +87,8 @@ pkg_setup() {
 		--enable-smime
 		--with-libdb=${EPREFIX}/usr"
 	python_set_active_version 2
+
+	use vala && vala_src_prepare
 }
 
 src_prepare() {
