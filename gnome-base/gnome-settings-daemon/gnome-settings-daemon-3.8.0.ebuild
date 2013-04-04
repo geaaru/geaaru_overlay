@@ -42,7 +42,7 @@ COMMON_DEPEND="
 	>=x11-libs/libxklavier-5.0
 	>=media-sound/pulseaudio-0.9.16
 
-	colord? ( >=x11-misc/colord-0.1.13 )
+	colord? ( >=x11-misc/colord-0.1.29 )
 	cups? ( >=net-print/cups-1.4[dbus] )
 	packagekit? (
 		sys-fs/udev[gudev]
