@@ -72,8 +72,10 @@ RESTRICT="test"
 pkg_setup() {
 	DOCS="ChangeLog MAINTAINERS NEWS TODO"
 	# Uh, what to do about dbus-call-timeout ?
+	# --disable-uao for Ubuntu Account Online
 	G2CONF="${G2CONF}
 		--disable-schemas-compile
+		--disable-uoa
 		$(use_with doc private-docs)
 		$(use_enable gnome-online-accounts goa)
 		$(use_enable introspection)
