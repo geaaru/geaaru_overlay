@@ -22,7 +22,7 @@ IUSE="eds socialweb +telepathy test tracker utils vala"
 COMMON_DEPEND="
 	>=dev-libs/glib-2.32:2
 	dev-libs/dbus-glib
-	<dev-libs/libgee-0.7:0[introspection]
+	>=dev-libs/libgee-0.10.0[introspection]
 	dev-libs/libxml2
 	sys-libs/ncurses:=
 	sys-libs/readline:=
