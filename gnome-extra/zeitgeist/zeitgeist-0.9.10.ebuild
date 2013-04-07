@@ -43,7 +43,6 @@ DEPEND="${RDEPEND}
 	virtual/pkgconfig"
 
 PATCHES=(
-	"${FILESDIR}"/${PN}-0.9.0-doc.patch
 	)
 
 pkg_setup() {
