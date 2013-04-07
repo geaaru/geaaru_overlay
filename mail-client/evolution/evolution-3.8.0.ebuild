@@ -49,6 +49,8 @@ COMMON_DEPEND=">=dev-libs/glib-2.32:2
 	>=dev-libs/libgdata-0.10
 	>=net-libs/webkit-gtk-1.8.0
 
+	app-text/highlight
+
 	x11-libs/libSM
 	x11-libs/libICE
 
