@@ -38,17 +38,15 @@ DEPEND="${RDEPEND}
 # eautoreconf needs gnome-base/gnome-common
 
 src_prepare() {
-	# https://bugzilla.gnome.org/show_bug.cgi?id=692233
-	epatch "${FILESDIR}/${PN}-3.6.1-no-gnome-doc-utils.patch"
 	# annoying window auto-resize behavior; fixed in 3.7.x
-	epatch "${FILESDIR}/${PN}-3.6.1-window-resize.patch"
+	# epatch "${FILESDIR}/${PN}-3.6.1-window-resize.patch"
 
 	eautoreconf
 	gnome2_src_prepare
 }
 
 src_configure() {
-	DOCS="AUTHORS ChangeLog HACKING NEWS README"
+	DOCS="AUTHORS ChangeLog HACKING NEWS"
 	# FIXME: leave smclient configure unset until it accepts values from the
 	# switch and not from GDK_TARGET, bug #363033
 	gnome2_src_configure --with-gtk=3.0
