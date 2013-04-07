@@ -67,6 +67,8 @@ DEPEND="${RDEPEND}
 	>=sys-devel/make-3.82-r4
 	virtual/pkgconfig
 
+	>=sys-devel/gcc-4.7.0:4.7
+
 	introspection? ( jit? ( sys-apps/paxctl ) )
 	test? (
 		x11-themes/hicolor-icon-theme
@@ -236,7 +238,6 @@ src_install() {
 	default
 
 	newdoc Source/WebKit/gtk/ChangeLog ChangeLog.gtk
-	newdoc Source/WebKit/gtk/po/ChangeLog ChangeLog.gtk-po
 	newdoc Source/JavaScriptCore/ChangeLog ChangeLog.JavaScriptCore
 	newdoc Source/WebCore/ChangeLog ChangeLog.WebCore
 
