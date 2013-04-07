@@ -29,6 +29,7 @@ REQUIRED_USE="flash? ( nsplugin )
 # FIXME:
 # Automagic tracker-0.9.0
 # Runtime dependency on gnome-session-2.91
+# x11-libs/mx:1.0
 RDEPEND="
 	>=dev-libs/glib-2.33:2
 	>=x11-libs/gdk-pixbuf-2.23.0:2
@@ -41,7 +42,6 @@ RDEPEND="
 	>=media-libs/clutter-1.10:1.0
 	>=media-libs/clutter-gst-1.5.5:2.0
 	>=media-libs/clutter-gtk-1.0.2:1.0
-	x11-libs/mx:1.0
 
 	media-libs/gstreamer:1.0
 	media-libs/gst-plugins-base:1.0[X,introspection?,pango]
