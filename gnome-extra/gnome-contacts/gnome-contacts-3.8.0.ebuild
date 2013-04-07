@@ -39,7 +39,7 @@ RDEPEND="
 
 	v4l? ( >=media-video/cheese-3.5.91 )
 
-	dev-libs/libgee:0
+	dev-libs/libgee
 	net-libs/gnome-online-accounts
 	x11-libs/cairo
 	x11-libs/gdk-pixbuf:2
