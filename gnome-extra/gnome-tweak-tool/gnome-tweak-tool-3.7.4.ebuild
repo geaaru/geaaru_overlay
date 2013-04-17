@@ -41,7 +41,7 @@ DEPEND="${COMMON_DEPEND}
 
 src_prepare() {
 	# Add contents of Gentoo's cursor theme directory to cursor theme list
-	epatch "${FILESDIR}/${PN}-3.0.4-gentoo-cursor-themes.patch"
+	epatch "${FILESDIR}/${PN}-3.7.4-gentoo-cursor-themes.patch"
 
 	gnome2_src_prepare
 	python_copy_sources

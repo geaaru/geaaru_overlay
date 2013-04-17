@@ -25,7 +25,7 @@ COMMON_DEPEND="
 	x11-libs/pango
 	>=dev-libs/dbus-glib-0.51
 	>=dev-libs/folks-0.7.3:=[telepathy]
-	dev-libs/libgee:0=
+	dev-libs/libgee:0.8
 	>=app-crypt/libsecret-0.5
 	>=media-libs/libcanberra-0.25[gtk3]
 	>=net-libs/gnutls-2.8.5:=
