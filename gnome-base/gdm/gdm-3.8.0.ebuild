@@ -164,7 +164,8 @@ src_prepare() {
 	#epatch "${FILESDIR}/${PN}-2.32.0-fix-vt-problems.patch"
 
 	# daemonize so that the boot process can continue, bug #236701
-	epatch "${FILESDIR}/${PN}-3.6.0-fix-daemonize-regression.patch"
+	epatch "${FILESDIR}/${PN}-3.7.90-fix-daemonize-regression.patch"
+
 
 	# make custom session work, bug #216984
 	epatch "${FILESDIR}/${PN}-3.2.1.1-custom-session.patch"
@@ -176,7 +177,7 @@ src_prepare() {
 	epatch "${FILESDIR}/${PN}-3.6.0-selinux-automagic.patch"
 
 	# don't load accessibility support at runtime when USE=-accessibility
-	use accessibility || epatch "${FILESDIR}/${PN}-3.3.92.1-disable-accessibility.patch"
+	use accessibility || epatch "${FILESDIR}/${PN}-3.7.3.1-disable-accessibility.patch"
 
 	# make gdm-fallback session the default if USE=-gnome-shell
 	if ! use gnome-shell; then
@@ -184,10 +185,8 @@ src_prepare() {
 			-i data/00-upstream-settings || die "sed failed"
 	fi
 
-	if [[ ${PV} != 9999 ]]; then
-		mkdir -p "${S}"/m4
-		eautoreconf
-	fi
+	mkdir -p "${S}"/m4
+	eautoreconf
 
 	gnome2_src_prepare
 }

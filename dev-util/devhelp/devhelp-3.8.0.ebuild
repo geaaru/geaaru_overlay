@@ -47,14 +47,8 @@ src_prepare() {
 
 	use gedit || sed -e '/SUBDIRS/ s/gedit-plugin//' -i misc/Makefile.{am,in} || die
 
-	eautoreconf
+	#eautoreconf
 
 	gnome2_src_prepare
 }
 
-pkg_postinst() {
-	gnome2_pkg_postinst
-	# Keep all the notify calls around so that users get reminded to delete them
-	preserve_old_lib_notify /usr/$(get_libdir)/libdevhelp-1.so.1
-	preserve_old_lib_notify /usr/$(get_libdir)/libdevhelp-2.so.1
-}
