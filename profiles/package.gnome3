@@ -31,7 +31,6 @@
 =app-accessibility/at-spi2-core-2.8.0
 =app-accessibility/at-spi2-atk-2.8.0
 
-=app-accessibility/caribou-0.4.10
 
 =gnome-extra/yelp-xsl-3.8.0
 
@@ -42,13 +41,13 @@
 # (Check that is installed last version of the
 #  udev package)
 
-=x11-misc/colord-0.1.28
+=x11-misc/colord-0.1.32
 
 =x11-libs/gtk+-3.8.0
 
 =dev-libs/json-glib-0.15.2
 =media-libs/clutter-1.14.0
-=media-libs/clutter-gtk-1.4.2
+=media-libs/clutter-gtk-1.4.4
 
 =media-libs/gstreamer-1.0.5-r1
 
@@ -67,13 +66,19 @@
 
 =media-plugins/gst-plugins-pulse-1.0.5
 
-=media-libs/clutter-gtk-1.4.4
 =media-libs/clutter-gst-2.0.2
 
 =app-crypt/gcr-3.8.0
 
 =dev-libs/vala-common-0.20.0
 =dev-lang/vala-0.20.0
+
+=dev-libs/libgee-0.10.0
+
+=dev-python/pygobject-3.8.0
+=dev-python/pygobject-2.28-6-r53
+
+=dev-python/pyatspi-2.8.0
 
 =gnome-base/gnome-keyring-3.8.0
 =gnome-base/libgnome-keyring-3.8.0
@@ -82,15 +87,13 @@
 
 =dev-libs/gdl-3.8.0
 
-# Probably fix valac-0.20
-=dev-libs/libgee-0.10.0
-
 =gnome-base/gnome-common-3.7.4
 
 =gnome-base/gconf-3.2.6
 
 =app-text/poppler-data-0.4.6
-=app-text/poppler-0.22.1
+# From gentoo portage
+=app-text/poppler-0.22.2-r2
 
 =x11-themes/gnome-icon-theme-3.8.0
 =x11-themes/gnome-icon-theme-symbolic-3.8.0
@@ -102,16 +105,15 @@
 
 =app-text/yelp-tools-3.6.1
 
-=net-libs/webkit-gtk-1.11.91
+# Require gcc-4.7.x (check how can i set from ebuild
+# gcc version)
+=net-libs/webkit-gtk-1.11.92
 
 =gnome-extra/yelp-3.8.0
 
 =gnome-base/librsvg-2.37.0
 
 =gnome-extra/libgsf-1.14.26
-
-=dev-python/pygobject-3.8.0
-=dev-python/pygobject-2.28-6-r53
 
 =gnome-base/gnome-desktop-3.8.0
 
@@ -130,19 +132,23 @@
 =dev-lang/spidermonkey-1.8.5-r4
 
 =dev-libs/gjs-1.36.0
-=dev-util/devhelp-3.8.0
+
+# Check how fix problem with automake
+# =dev-util/devhelp-3.8.0
+
+=sys-libs/libosinfo-0.2.5
+
+=gnome-base/gvfs-1.16.0
 
 =x11-libs/goffice-0.10.1
+
+=net-libs/gnome-online-accounts-3.8.0
+
+=dev-libs/totem-pl-parser-3.4.4
 
 =app-misc/tracker-0.16.0
 
 =dev-util/glade-3.15.0
-
-=mail-client/evolution-3.7.91
-
-=gnome-base/gvfs-1.16.0
-
-=app-misc/tracker-0.15.4
 
 # Already on portage
 =media-libs/audiofile-0.3.6
@@ -158,67 +164,103 @@
 
 =gnome-base/nautilus-3.8.0
 
+=gnome-base/gnome-desktop-3.8.0
+
+# With support to vala-0.20
+=app-i18n/ibus-1.5.1-r2
+
+=dev-libs/libwacom-0.7
+# Already on portage
+=x11-drivers/xf86-input-wacom-0.20.0
+
+
 =gnome-base/gnome-settings-daemon-3.8.0
 
-=gnome-extra/gnome-documents-3.8.0
-
-
-=gnome-base/gnome-desktop-3.7.90
+=gnome-extras/zenity-3.8.0
 
 =x11-wm/mutter-3.8.0
 
-=net-im/empathy-3.8.0
+=gnome-base/gnome-session-3.8.0
+=net-wireless/gnome-bluetooth-3.8.0
 
-=gnome-base/gnome-control-center-3.8.0
+=sys-apps/accountsservice-0.6.30-r1
+
+=x11-libs/colord-gtk-0.1.25
 
 =gnome-base/gnome-menus-3.8.0
 
-=gnome-base/gnome-panel-3.6.2
+=dev-libs/libgweather-3.8.0
 
-=gnome-base/gnome-session-3.8.0
+# Check if it is needed or deprecated
+# =gnome-base/gnome-panel-3.6.2
 
-=gnome-extras/zenity-3.8.0
-=net-libs/gnome-online-accounts-3.8.0
+=media-video/cheese-3.8.0
 
 =gnome-extras/gnome-color-manager-3.8.0
 
-=gnome-extras/gnome-contacts-3.8.0
-
-=dev-libs/totem-pl-parser-3.4.4
-=media-video/totem-3.8.0
-=media-video/cheese-3.8.0
-
-=dev-libs/libpeas-1.8.0
-=dev-libs/libgweather-3.8.0
-
-=www-client/epiphany-3.8.0
-
-=net-wireless/gnome-bluetooth-3.8.0
-
-=app-arch/file-roller-3.8.0
-
 =x11-libs/vte-0.34.3
-=gnome-extras/gucharmap-3.8.0
 
-=x11-terms/gnome-terminal-3.8.0
+# Added support to vala-0.20
+=net-libs/libsocialweb-0.25.21-r1
+
+=gnome-base/gnome-control-center-3.8.0
+
+=dev-libs/libgdata-0.13.3
 
 =gnome-extras/evolution-data-server-3.8.0
 
 =mail-client/evolution-3.8.0
 
-=app-editors/gedit-3.8.0
+=gnome-extras/zeitgeist-0.9.10
+
+=dev-libs/folks-0.9.1
+
+=gnome-extras/gnome-contacts-3.8.0
+
+# Support only >=python3.2
+=dev-libs/libpeas-1.8.0
+
+=media-video/totem-3.8.0
+
+=gnome-extra/gnome-documents-3.8.0
+
+=app-arch/file-roller-3.8.0
+
+=gnome-extras/gucharmap-3.8.0
+=x11-terms/gnome-terminal-3.8.0
+
+
+=www-client/epiphany-3.8.0
+
 
 =media-gfx/eog-3.8.0
-=media-gfx/eog-plugins-3.8.0
 =media-gfx/gnome-font-viewer-3.8.0
+
 =media-gfx/gnome-screenshot-3.8.0
+
 
 =gnome-extras/gnome-user-share-3.8.0
 
-=gnome-base/gdm-3.8.0
+=app-editors/gedit-3.8.0
+
+
+net-libs/gssdp-0.14.2
 
 =gnome-base/gnome-shell-3.8.0
-=gnome-extras/gnome-shell-extensions3.8.0
+=gnome-extras/gnome-shell-extensions-3.8.0
+
+=gnome-base/gdm-3.8.0
+
+=app-crypt/seahorse-3.8.0
+=sci-geosciences/geocode-glib-0.99.0
+
+
+=net-im/empathy-3.8.0
+
+
+=media-gfx/eog-plugins-3.8.0
+
+
 
 =gnome-extras/gnome-system-monitor-3.8.0
 =gnome-extras/gnome-power-manager-3.8.0
@@ -232,16 +274,12 @@
 
 =net-voip/ekiga-4.0.1
 
-=app-crypt/seahorse-3.8.0
 
-=dev-python/pyatspi-2.8.0
 
 =dev-util/anjuta-3.8.0
 =app-editors/ghex-3.8.0
 
 =app-misc/gnote-3.8.0
-
-=dev-util/glade-3.15.0
 
 =app-mobilphone/gnome-phone-manager-0.69
 
@@ -253,3 +291,8 @@
 # net-misc/gupnp-tools-0.8.6
 # media-plugins/grilo-plugins
 # media-libs/grilo
+
+# FIX support to python3
+# devhelp
+# app-accessibility/caribou-0.4.10
+
