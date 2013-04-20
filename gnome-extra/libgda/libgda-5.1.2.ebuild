@@ -6,14 +6,16 @@ EAPI="4"
 GNOME2_LA_PUNT="yes"
 GCONF_DEBUG="yes"
 PYTHON_DEPEND="2"
+VALA_MIN_API_VERSION=0.20
+VALA_USE_DEPEND=vapigen
 
-inherit autotools db-use eutils flag-o-matic gnome2 java-pkg-opt-2 python
+inherit autotools db-use eutils flag-o-matic gnome2 java-pkg-opt-2 python vala
 
 DESCRIPTION="Gnome Database Access Library"
 HOMEPAGE="http://www.gnome-db.org/"
 LICENSE="GPL-2 LGPL-2"
 
-IUSE="berkdb bindist doc firebird gnome-keyring gtk graphviz http +introspection json ldap mdb mysql oci8 postgres sourceview ssl" # vala
+IUSE="berkdb bindist doc firebird gnome-keyring gtk graphviz http +introspection json ldap mdb mysql oci8 postgres sourceview ssl vala"
 SLOT="5"
 KEYWORDS="alpha amd64 ia64 ppc ppc64 sparc x86 ~x86-fbsd"
 
@@ -47,8 +49,8 @@ DEPEND="${RDEPEND}
 	>=dev-util/intltool-0.35.5
 	>=app-text/gnome-doc-utils-0.9
 	doc? ( >=dev-util/gtk-doc-1 )
-	java? ( virtual/jdk:1.6 )"
-#	vala? ( >=dev-lang/vala-0.14:0.14[vapigen] )
+	java? ( virtual/jdk:1.6 )
+	vala? ( $(vala_depend) )"
 
 pkg_setup() {
 	java-pkg-opt-2_pkg_setup
@@ -66,6 +68,9 @@ pkg_setup() {
 				$(use_with graphviz)
 				$(use_with sourceview gtksourceview)"
 		fi
+	else
+		G2CONF="${G2CONF}
+			--without-graphviz --without-gtksourceview"
 	fi
 
 	G2CONF="${G2CONF}
@@ -83,11 +88,14 @@ pkg_setup() {
 		$(use_with mdb mdb /usr)
 		$(use_with mysql mysql /usr)
 		$(use_with postgres postgres /usr)
-		$(use_enable ssl crypto)
-		--disable-vala
-		VAPIGEN=$(type -P vapigen-0.14)"
+		$(use_enable vala)
+		$(use_enable ssl crypto)"
+#		--disable-vala
+#		VAPIGEN=$(type -P vapigen-0.14)"
 #		$(use_enable vala)
 	# Disable vala due to https://bugzilla.gnome.org/show_bug.cgi?id=668701
+
+	use vala && vala_src_prepare
 
 	if use bindist; then
 		# firebird license is not GPL compatible
@@ -115,6 +123,9 @@ src_prepare() {
 	epatch "${FILESDIR}/${PN}-4.99.1-gda-browser-help-collision.patch"
 	epatch "${FILESDIR}/${PN}-4.99.1-gda-browser-doc-collision.patch"
 	epatch "${FILESDIR}/${PN}-4.99.1-control-center-icon-collision.patch"
+
+    # Fix compilation with graphviz
+	epatch "${FILESDIR}/libgda-5.1.2-cgraph-define.patch"
 
 	# Move files with mv (since epatch can't handle rename diffs) and
 	# update pre-generated gtk-doc files
