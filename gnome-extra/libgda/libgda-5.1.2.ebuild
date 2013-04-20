@@ -88,14 +88,18 @@ pkg_setup() {
 		$(use_with mdb mdb /usr)
 		$(use_with mysql mysql /usr)
 		$(use_with postgres postgres /usr)
-		$(use_enable vala)
 		$(use_enable ssl crypto)"
 #		--disable-vala
 #		VAPIGEN=$(type -P vapigen-0.14)"
 #		$(use_enable vala)
 	# Disable vala due to https://bugzilla.gnome.org/show_bug.cgi?id=668701
 
-	use vala && vala_src_prepare
+	if use vala; then
+		vala_src_prepare
+		G2CONF="${G2CONF}
+			$(use_enable vala)
+			--enable-gda-gi"
+	fi
 
 	if use bindist; then
 		# firebird license is not GPL compatible
