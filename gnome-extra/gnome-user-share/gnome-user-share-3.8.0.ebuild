@@ -30,7 +30,7 @@ RDEPEND=">=dev-libs/glib-2.28:2
 	>=net-wireless/bluez-4.18
 	>=sys-apps/dbus-1.1.1
 	>=www-apache/mod_dnssd-0.6
-	=www-servers/apache-2.2*[apache2_modules_dav,apache2_modules_dav_fs,apache2_modules_authn_file,apache2_modules_auth_digest,apache2_modules_authz_groupfile]
+	www-servers/apache:2[apache2_modules_dav,apache2_modules_dav_fs,apache2_modules_authn_file,apache2_modules_auth_digest,apache2_modules_authz_groupfile]
 	>=x11-libs/libnotify-0.7"
 DEPEND="${RDEPEND}
 	app-text/gnome-doc-utils
