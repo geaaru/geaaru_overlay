@@ -4,7 +4,8 @@
 
 EAPI="4"
 GCONF_DEBUG="no"
-VALA_MIN_API_VERSION="0.18"
+VALA_MIN_API_VERSION="0.20"
+VALA_USE_DEPEND=vapigen
 
 inherit gnome2 vala
 if [[ ${PV} = 9999 ]]; then
@@ -16,7 +17,7 @@ HOMEPAGE="https://live.gnome.org/Design/Apps/Contacts"
 
 LICENSE="GPL-2"
 SLOT="0"
-IUSE="v4l"
+IUSE="v4l vala"
 if [[ ${PV} = 9999 ]]; then
 	KEYWORDS=""
 else
@@ -49,13 +50,8 @@ DEPEND="${RDEPEND}
 	>=dev-util/intltool-0.40
 	>=sys-devel/gettext-0.17
 	virtual/pkgconfig
-	!v4l? ( ${VALA_DEPEND} )"
+	vala? ( $(vala_depend) )"
 # When !v4l, we regenerate the .c sources
-
-if [[ ${PV} = 9999 ]]; then
-	DEPEND+="
-		${VALA_DEPEND}"
-fi
 
 src_prepare() {
 	DOCS="AUTHORS ChangeLog NEWS" # README is empty
@@ -67,8 +63,6 @@ src_prepare() {
 	if ! use v4l; then
 		touch src/*.vala
 	fi
-	if [[ ${PV} = 9999 ]] || ! use v4l; then
-		vala_src_prepare
-	fi
+	use vala && vala_src_prepare
 	gnome2_src_prepare
 }
