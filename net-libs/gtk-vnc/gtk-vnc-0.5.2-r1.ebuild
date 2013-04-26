@@ -32,8 +32,7 @@ COMMON_DEPEND="
 	introspection? ( >=dev-libs/gobject-introspection-0.9.4 )
 	pulseaudio? ( media-sound/pulseaudio )
 	python? (
-		${PYTHON_DEPS}
-		>=dev-python/pygtk-2:2[${PYTHON_USEDEP}] )
+		>=dev-python/pygtk-2.24.0:2 )
 	sasl? ( dev-libs/cyrus-sasl )
 "
 RDEPEND="${COMMON_DEPEND}"
