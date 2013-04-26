@@ -48,7 +48,7 @@ RDEPEND=">=dev-python/pygtk-1.99.12
 	gnome-keyring? ( dev-python/gnome-keyring-python )
 	policykit? ( sys-auth/polkit )
 	spice? ( >=net-misc/spice-gtk-0.18[python,sasl?] )
-	vnc? ( >=net-libs/gtk-vnc-0.3.8[python,sasl?] )"
+	vnc? ( >=net-libs/gtk-vnc-0.5.1[python,sasl?] )"
 #	tui? ( >=dev-python/new_syrup-0.1.2 )"
 DEPEND="${RDEPEND}
 	app-text/rarian
