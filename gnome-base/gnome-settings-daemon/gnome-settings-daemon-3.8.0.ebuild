@@ -51,7 +51,10 @@ COMMON_DEPEND="
 		sys-fs/udev[gudev]
 		>=dev-libs/nss-3.11.2 )
 	systemd? ( >=sys-apps/systemd-31 )
-	udev? ( sys-fs/udev[gudev] )
+	udev? (
+		|| (
+			sys-fs/udev[gudev]
+			>=sys-apps/systemd-201[gudev] ) )
 	wacom? ( >=dev-libs/libwacom-0.7
 		x11-drivers/xf86-input-wacom )"
 # Themes needed by g-s-d, gnome-shell, gtk+:3 apps to work properly
