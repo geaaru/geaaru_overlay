@@ -8,26 +8,15 @@ GNOME2_LA_PUNT="yes"
 PYTHON_COMPAT=( python2_{6,7} )
 VALA_MIN_API_VERSION="0.20"
 
-[[ ${PV} = 9999 ]] && inherit autotools git-2
-inherit gnome2 linux-info multilib python-any-r1 vala versionator virtualx
+inherit autotools gnome2 linux-info multilib python-any-r1 vala versionator virtualx
 
 DESCRIPTION="A tagging metadata database, search tool and indexer"
 HOMEPAGE="http://projects.gnome.org/tracker/"
-EGIT_REPO_URI="git://git.gnome.org/${PN}
-	http://git.gnome.org/browse/${PN}"
-[[ ${PV} = 9999 ]] && SRC_URI=""
 
 LICENSE="GPL-2+ LGPL-2.1+"
-SLOT="0/14"
-IUSE="applet cue doc eds elibc_glibc exif firefox-bookmarks flac flickr gif
-gnome-keyring gsf gstreamer gtk iptc +iso +jpeg laptop +miner-fs mp3 networkmanager pdf playlist rss test thunderbird +tiff upnp-av +vorbis xine +xml xmp xps" # qt4 strigi
-if [[ ${PV} = 9999 ]]; then
-	KEYWORDS=""
-	IUSE="${IUSE} doc"
-else
-	KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc ~x86"
-	IUSE="${IUSE} nautilus"
-fi
+SLOT="0/16"
+IUSE="cue eds elibc_glibc exif firefox-bookmarks flac gif gsf gstreamer gtk iptc +iso +jpeg laptop libsecret +miner-fs mp3 nautilus networkmanager pdf playlist rss test thunderbird +tiff upnp-av +vorbis xine +xml xmp xps" # qt4 strigi
+KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc ~x86"
 
 REQUIRED_USE="
 	^^ ( gstreamer xine )
@@ -38,23 +27,20 @@ REQUIRED_USE="
 
 # According to NEWS, introspection is non-optional
 # glibc-2.12 needed for SCHED_IDLE (see bug #385003)
+# sqlite-3.7.16 for FTS4 support
 RDEPEND="
 	>=app-i18n/enca-1.9
-	>=dev-db/sqlite-3.7.14:=[threadsafe]
-	>=dev-libs/glib-2.28:2
+	>=dev-db/sqlite-3.7.16:=
+	>=dev-libs/glib-2.35.1:2
 	>=dev-libs/gobject-introspection-0.9.5
 	>=dev-libs/icu-4:=
 	|| (
 		>=media-gfx/imagemagick-5.2.1[png,jpeg=]
 		media-gfx/graphicsmagick[imagemagick,png,jpeg=] )
-	>=media-libs/libpng-1.2:=
+	>=media-libs/libpng-1.2:0=
 	>=x11-libs/pango-1:=
 	sys-apps/util-linux
 
-	applet? (
-		>=gnome-base/gnome-panel-2.91.6
-		>=x11-libs/gdk-pixbuf-2.12:2
-		>=x11-libs/gtk+-3:3 )
 	cue? ( media-libs/libcue )
 	eds? (
 		>=mail-client/evolution-3.3.5:=
@@ -67,13 +53,11 @@ RDEPEND="
 		>=www-client/firefox-4.0
 		>=www-client/firefox-bin-4.0 ) )
 	flac? ( >=media-libs/flac-1.2.1 )
-	flickr? ( net-libs/rest:0.7 )
 	gif? ( media-libs/giflib )
-	gnome-keyring? ( >=gnome-base/gnome-keyring-2.26 )
 	gsf? ( >=gnome-extra/libgsf-1.13 )
 	gstreamer? (
-		>=media-libs/gstreamer-0.10.31:0.10
-		>=media-libs/gst-plugins-base-0.10.31:0.10 )
+		media-libs/gstreamer:1.0
+		media-libs/gst-plugins-base:1.0 )
 	gtk? (
 		>=dev-libs/libgee-0.3:0.8
 		>=x11-libs/gtk+-3:3 )
@@ -81,6 +65,7 @@ RDEPEND="
 	iso? ( >=sys-libs/libosinfo-0.0.2:= )
 	jpeg? ( virtual/jpeg:0 )
 	laptop? ( >=sys-power/upower-0.9 )
+	libsecret? ( >=app-crypt/libsecret-0.15 )
 	mp3? (
 		>=media-libs/taglib-1.6
 		gtk? ( x11-libs/gdk-pixbuf:2 ) )
@@ -89,13 +74,13 @@ RDEPEND="
 		>=x11-libs/cairo-1:=
 		>=app-text/poppler-0.16:=[cairo,utils]
 		>=x11-libs/gtk+-2.12:2 )
-	playlist? ( dev-libs/totem-pl-parser )
-	rss? ( net-libs/libgrss )
+	playlist? ( >=dev-libs/totem-pl-parser-3 )
+	rss? ( net-libs/libgrss:0.5 )
 	thunderbird? ( || (
 		>=mail-client/thunderbird-5.0
 		>=mail-client/thunderbird-bin-5.0 ) )
 	tiff? ( media-libs/tiff )
-	upnp-av? ( >=media-libs/gupnp-dlna-0.5 )
+	upnp-av? ( >=media-libs/gupnp-dlna-0.9.4:2.0 )
 	vorbis? ( >=media-libs/libvorbis-0.22 )
 	xine? ( >=media-libs/xine-lib-1 )
 	xml? ( >=dev-libs/libxml2-2.6 )
@@ -116,12 +101,6 @@ DEPEND="${RDEPEND}
 		>=dev-libs/dbus-glib-0.82-r1
 		>=sys-apps/dbus-1.3.1[X] )
 "
-[[ ${PV} = 9999 ]] && DEPEND="${DEPEND}
-	doc? ( media-gfx/graphviz )
-	>=dev-util/gtk-doc-1.8
-	$(vala_depend)
-"
-[[ ${PV} = 9999 ]] || PDEPEND="nautilus? ( >=gnome-extra/nautilus-tracker-tags-0.14 )"
 
 function inotify_enabled() {
 	if linux_config_exists; then
@@ -141,14 +120,6 @@ pkg_setup() {
 	inotify_enabled
 
 	python-any-r1_pkg_setup
-}
-
-src_unpack() {
-	if [[ ${PV} = 9999 ]]; then
-		git_src_unpack
-	else
-		gnome2_src_unpack
-	fi
 }
 
 src_prepare() {
@@ -177,7 +148,7 @@ src_prepare() {
 		-i tests/tracker-steroids/tracker-test.c || die
 
 	eautoreconf
-	vala_src_prepare --vala-api-version 0.20
+	vala_src_prepare
 	gnome2_src_prepare
 }
 
@@ -203,10 +174,6 @@ src_configure() {
 		myconf="${myconf} --enable-gdkpixbuf"
 	fi
 
-	if [[ ${PV} = 9999 ]]; then
-		myconf="${myconf} $(use_enable doc gtk-doc)"
-	fi
-
 	# unicode-support: libunistring, libicu or glib ?
 	# According to NEWS, introspection is required
 	# FIXME: disabling streamanalyzer for now since tracker-sparql-builder.h
@@ -223,7 +190,6 @@ src_configure() {
 		--enable-tracker-fts \
 		--with-enca \
 		--with-unicode-support=libicu \
-		$(use_enable applet tracker-search-bar) \
 		$(use_enable cue libcue) \
 		$(use_enable eds miner-evolution) \
 		$(use_enable exif libexif) \
@@ -231,16 +197,14 @@ src_configure() {
 		$(use_with firefox-bookmarks firefox-plugin-dir "${EPREFIX}"/usr/$(get_libdir)/firefox/extensions) \
 		FIREFOX="${S}"/firefox-version.sh \
 		$(use_enable flac libflac) \
-		$(use_enable flickr miner-flickr) \
-		$(use_enable gnome-keyring) \
 		$(use_enable gsf libgsf) \
-		$(use_enable gtk tracker-explorer) \
 		$(use_enable gtk tracker-needle) \
 		$(use_enable gtk tracker-preferences) \
 		$(use_enable iptc libiptcdata) \
 		$(use_enable iso libosinfo) \
 		$(use_enable jpeg libjpeg) \
 		$(use_enable laptop upower) \
+		$(use_enable libsecret) \
 		$(use_enable miner-fs) \
 		$(use_enable mp3 taglib) \
 		$(use_enable networkmanager network-manager) \

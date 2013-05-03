@@ -61,7 +61,10 @@ RDEPEND=">=dev-libs/glib-2.33.12:2
 	systemd? ( sys-apps/systemd )
 	udev? (
 		cdda? ( >=dev-libs/libcdio-0.78.2[-minimal] )
-		|| ( >=sys-fs/udev-171[gudev] >=sys-fs/udev-164-r2[extras] ) )
+		|| (
+			>=sys-apps/systemd-201[gudev]
+			>=sys-fs/udev-171[gudev]
+			>=sys-fs/udev-164-r2[extras] ) )
 	udisks? ( >=sys-fs/udisks-1.97:2[systemd?] )"
 DEPEND="${RDEPEND}
 	dev-libs/libxslt
