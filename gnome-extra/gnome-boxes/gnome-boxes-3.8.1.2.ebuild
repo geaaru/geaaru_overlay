@@ -4,8 +4,10 @@
 
 EAPI="4"
 GCONF_DEBUG="no"
+VALA_MIN_API_VERSION=0.20
+VALA_USE_DEPEND=vapigen
 
-inherit linux-info gnome2
+inherit linux-info gnome2 vala
 if [[ ${PV} = 9999 ]]; then
 	inherit gnome2-live
 fi
@@ -28,7 +30,7 @@ RDEPEND="
 	>=virtual/udev-165[gudev]
 	>=dev-libs/glib-2.29.90:2
 	>=dev-libs/gobject-introspection-0.9.6
-	>=sys-libs/libosinfo-0.2.1
+	>=sys-libs/libosinfo-0.2.6
 	app-emulation/qemu[spice]
 	>=app-emulation/libvirt-0.9.3[libvirtd,qemu]
 	>=app-emulation/libvirt-glib-0.1.2
@@ -76,9 +78,9 @@ src_configure() {
 	G2CONF="${G2CONF}
 		--disable-schemas-compile
 		--disable-strict-cc
-		VALAC=$(type -P valac-0.18)
-		VAPIGEN=$(type -P vapigen-0.18)
 	"
+	vala_src_prepare
+
 	gnome2_src_configure
 }
 
