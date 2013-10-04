@@ -1,0 +1,27 @@
+diff -rua libreswan-3.5.orig/initsystems/systemd/Makefile libreswan-3.5/initsystems/systemd/Makefile
+--- libreswan-3.5.orig/initsystems/systemd/Makefile	2013-07-13 21:51:56.000000000 +0200
++++ libreswan-3.5/initsystems/systemd/Makefile.gentoo	2013-10-05 01:01:28.902189275 +0200
+@@ -18,9 +18,9 @@
+ programs:     systemdfiles sysconfigfiles
+ systemdfiles: $(SYSTEMDFILE)
+ sysconfigfiles: $(SYSCONFIGFILE)
+-install:      programs doinstall postcheck
++install:      programs doinstall
+ 
+-doinstall: programs installsystemdservice installsysconfig oldinitdcheck 
++doinstall: programs installsystemdservice
+ 
+ installsystemdservice:
+ 	@mkdir -p $(SYSTEMDDIR)
+diff -rua libreswan-3.5.orig/Makefile.inc libreswan-3.5/Makefile.inc
+--- libreswan-3.5.orig/Makefile.inc	2013-07-13 21:51:56.000000000 +0200
++++ libreswan-3.5/Makefile.inc.gentoo	2013-10-05 01:03:37.318880405 +0200
+@@ -72,7 +72,7 @@
+ DESTDIR?=
+ 
+ # "local" part of tree, used in building other pathnames
+-INC_USRLOCAL?=/usr/local
++INC_USRLOCAL?=/usr
+ 
+ # PUBDIR is where the "ipsec" command goes; beware, many things define PATH
+ # settings which are assumed to include it (or at least, to include *some*
