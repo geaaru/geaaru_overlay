@@ -1,36 +1,40 @@
 # Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/gnome-base/gnome-shell/gnome-shell-3.8.0.1.ebuild,v 1.2 2013/04/07 10:23:28 pacho Exp $
+# $Header: /var/cvsroot/gentoo-x86/gnome-base/gnome-shell/gnome-shell-3.8.4-r1.ebuild,v 1.8 2013/11/30 19:11:16 pacho Exp $
 
 EAPI="5"
 GCONF_DEBUG="no"
 GNOME2_LA_PUNT="yes"
-PYTHON_COMPAT=( python{2_6,2_7,3_2} )
+PYTHON_COMPAT=( python2_{6,7} )
 
-inherit autotools eutils gnome2 multilib pax-utils python-r1
+inherit autotools eutils gnome2 multilib pax-utils python-r1 systemd
 
 DESCRIPTION="Provides core UI functions for the GNOME 3 desktop"
 HOMEPAGE="http://live.gnome.org/GnomeShell"
 
 LICENSE="GPL-2+ LGPL-2+"
 SLOT="0"
-IUSE="+bluetooth +i18n +networkmanager"
-KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc ~x86"
+IUSE="+bluetooth +i18n +networkmanager -openrc-force"
+KEYWORDS="~alpha amd64 ~arm ~ppc ~ppc64 ~x86"
 
 # libXfixes-5.0 needed for pointer barriers
 # TODO: gstreamer support is currently automagical:
 # gstreamer? ( >=media-libs/gstreamer-0.11.92 )
+#
+# gnome-shell/gnome-control-center/mutter/gnome-settings-daemon better to be in sync for 3.8.3
+# https://mail.gnome.org/archives/gnome-announce-list/2013-June/msg00005.html
 COMMON_DEPEND="
+	app-crypt/libsecret
 	>=app-accessibility/at-spi2-atk-2.5.3
 	>=dev-libs/atk-2[introspection]
-	>=app-crypt/gcr-3.3.90[introspection]
+	>=app-crypt/gcr-3.7.5[introspection]
 	>=dev-libs/glib-2.35:2
-	>=dev-libs/gjs-1.35.8
+	>=dev-libs/gjs-1.38.1
 	>=dev-libs/gobject-introspection-0.10.1
 	>=x11-libs/gtk+-3.7.9:3[introspection]
 	>=media-libs/clutter-1.13.4:1.0[introspection]
 	>=dev-libs/json-glib-0.13.2
-	>=dev-libs/libcroco-0.6.2:0.6
+	>=dev-libs/libcroco-0.6.8:0.6
 	>=gnome-base/gnome-desktop-3.7.90:3=[introspection]
 	>=gnome-base/gsettings-desktop-schemas-3.7.4
 	>=gnome-base/gnome-keyring-3.3.90
@@ -42,7 +46,7 @@ COMMON_DEPEND="
 	>=net-libs/telepathy-glib-0.19[introspection]
 	>=sys-auth/polkit-0.100[introspection]
 	>=x11-libs/libXfixes-5.0
-	>=x11-wm/mutter-3.8.0[introspection]
+	>=x11-wm/mutter-3.8.3[introspection]
 	>=x11-libs/startup-notification-0.11
 
 	${PYTHON_DEPS}
@@ -71,10 +75,11 @@ COMMON_DEPEND="
 # 2. Introspection stuff needed via imports.gi.*
 # 3. gnome-session is needed for gnome-session-quit
 # 4. Control shell settings
-# 5. xdg-utils needed for xdg-open, used by extension tool
-# 6. gnome-icon-theme-symbolic and dejavu font neeed for various icons & arrows
-# 7. IBus is needed for i18n integration
-# 8. mobile-broadband-provider-info, timezone-data for shell-mobile-providers.c
+# 5. Systemd needed for suspending support
+# 6. xdg-utils needed for xdg-open, used by extension tool
+# 7. gnome-icon-theme-symbolic and dejavu font neeed for various icons & arrows
+# 8. IBus is needed for i18n integration
+# 9. mobile-broadband-provider-info, timezone-data for shell-mobile-providers.c
 RDEPEND="${COMMON_DEPEND}
 	>=sys-auth/polkit-0.101[introspection]
 
@@ -86,16 +91,17 @@ RDEPEND="${COMMON_DEPEND}
 	sys-power/upower[introspection]
 
 	>=gnome-base/gnome-session-2.91.91
-	>=gnome-base/gnome-settings-daemon-2.91
-	>=gnome-base/gnome-control-center-2.91.92-r1[bluetooth(+)?]
+	>=gnome-base/gnome-settings-daemon-3.8.3
+	>=gnome-base/gnome-control-center-3.8.3[bluetooth(+)?]
+
+	!openrc-force? ( >=sys-apps/systemd-31 )
 
 	x11-misc/xdg-utils
 
 	media-fonts/dejavu
 	x11-themes/gnome-icon-theme-symbolic
 
-	|| ( sys-auth/consolekit >=sys-apps/systemd-31 )
-	i18n? ( >=app-i18n/ibus-1.4.99[dconf,gtk3,introspection] )
+	i18n? ( >=app-i18n/ibus-1.4.99[dconf(+),gtk3,introspection] )
 	networkmanager? (
 		net-misc/mobile-broadband-provider-info
 		sys-libs/timezone-data )
@@ -107,31 +113,55 @@ DEPEND="${COMMON_DEPEND}
 	gnome-base/gnome-common
 	>=sys-devel/gettext-0.17
 	virtual/pkgconfig
-	!!=dev-lang/spidermonkey-1.8.2*"
+	!!=dev-lang/spidermonkey-1.8.2*
+"
 # libmozjs.so is picked up from /usr/lib while compiling, so block at build-time
 # https://bugs.gentoo.org/show_bug.cgi?id=360413
 
+REQUIRED_USE="${PYTHON_REQUIRED_USE}"
+
 src_prepare() {
+	# Change favorites defaults, bug #479918
+	epatch "${FILESDIR}/${PN}-defaults.patch"
+
 	# Fix automagic gnome-bluetooth dep, bug #398145
-	epatch "${FILESDIR}/${PN}-3.7.90-bluetooth-flag.patch"
+#	epatch "${FILESDIR}/${PN}-3.7.90-bluetooth-flag.patch"
 
 	# Make networkmanager optional, bug #398593
-	epatch "${FILESDIR}/${PN}-3.8.0-networkmanager-flag-r1.patch"
+#	epatch "${FILESDIR}/${PN}-3.8.3-networkmanager-flag.patch"
 
-	# Revert suspend break, upstream bug #693162 (from Debian)
-	epatch "${FILESDIR}/${PN}-3.8.0-suspend.patch"
+	# Re-lock the screen if we're restarted from a previously crashed shell (from 'master')
+#	epatch "${FILESDIR}/${PN}-3.8.3-relock-screen.patch"
 
-	# Do not error out on warnings
-	G2CONF="${G2CONF}
-		--enable-man
-		--enable-compile-warnings=maximum
-		--disable-jhbuild-wrapper-script
-		$(use_with bluetooth)
-		$(use_enable networkmanager)
-		BROWSER_PLUGIN_DIR=${EPREFIX}/usr/$(get_libdir)/nsbrowser/plugins"
+	# Reset opacity when not animating (from 3.8 branch)
+#	epatch "${FILESDIR}/${P}-reset-opacity.patch"
+
+	# Unconditionally allocate scrollbars (from 3.8 branch)
+#	epatch "${FILESDIR}/${P}-allocate-scrollbars.patch"
+
+	# ScreenShield: don't allow events through the lock dialog (from 3.8 branch)
+#	epatch "${FILESDIR}/${P}-events-lock.patch"
+
+	# Revert "background: fix asynchronous management of background loading operations" (#481918)
+#	epatch "${FILESDIR}/${P}-revert-async.patch"
+
+	# AppDisplay/FrequentView: filter out hidden applications (from 'master')
+#	epatch "${FILESDIR}/${PN}-3.8.4-nodisplay.patch"
+
+	epatch_user
 
 	eautoreconf
 	gnome2_src_prepare
+}
+
+src_configure() {
+	# Do not error out on warnings
+	gnome2_src_configure \
+		--enable-man \
+		--disable-jhbuild-wrapper-script \
+		$(use_with bluetooth) \
+		$(use_enable networkmanager) \
+		BROWSER_PLUGIN_DIR="${EPREFIX}"/usr/$(get_libdir)/nsbrowser/plugins
 }
 
 src_install() {
@@ -145,6 +175,11 @@ src_install() {
 		pax-mark mr "${ED}usr/bin/gnome-shell"
 	elif has_version '>=dev-lang/spidermonkey-1.8.7[jit]'; then
 		pax-mark m "${ED}usr/bin/gnome-shell"
+	fi
+	# Required for gnome-shell on hardened/PaX #457146 and #457194
+	# PaX EMUTRAMP need to be on
+	if has_version '>=dev-libs/libffi-3.0.13[pax_kernel]'; then
+		pax-mark E "${ED}usr/bin/gnome-shell"
 	fi
 }
 
@@ -167,8 +202,8 @@ pkg_postinst() {
 
 	if has_version "<x11-drivers/ati-drivers-12"; then
 		ewarn "GNOME Shell has been reported to show graphical corruption under"
-		ewarn "x11-drivers/ati-drivers-11.*; you may want to use GNOME in"
-		ewarn "fallback mode, or switch to open-source drivers."
+		ewarn "x11-drivers/ati-drivers-11.*; you may want to switch to open-source"
+		ewarn "drivers."
 	fi
 
 	if has_version "media-libs/mesa[video_cards_radeon]" ||
@@ -182,14 +217,23 @@ pkg_postinst() {
 		fi
 	fi
 
-	if has_version "media-libs/mesa[video_cards_intel]" ||
-	   has_version "media-libs/mesa[video_cards_i915]" ||
-	   has_version "media-libs/mesa[video_cards_i965]"; then
-		elog "GNOME Shell is unstable under gallium-mode i915/i965 mesa drivers."
-		elog "Make sure that classic architecture for i915 and i965 drivers is"
-		elog "selected using 'eselect mesa'."
-		if ! has_version "media-libs/mesa[classic]"; then
-			ewarn "You will need to emerge media-libs/mesa with USE=classic."
-		fi
+	if ! has_version "media-libs/mesa[llvm]"; then
+		elog "llvmpipe is used as fallback when no 3D acceleration"
+		elog "is available. You will need to enable llvm USE for"
+		elog "media-libs/mesa."
+	fi
+
+	if ! systemd_is_booted; then
+		ewarn "${PN} needs Systemd to be *running* for working"
+		ewarn "properly. Please follow this guide to migrate:"
+		ewarn "http://wiki.gentoo.org/wiki/Systemd"
+	fi
+
+	if use openrc-force; then
+		ewarn "You are enabling 'openrc-force' USE flag to skip systemd requirement,"
+		ewarn "this can lead to unexpected problems and is not supported neither by"
+		ewarn "upstream neither by Gnome Gentoo maintainers. If you suffer any problem,"
+		ewarn "you will need to disable this USE flag system wide and retest before"
+		ewarn "opening any bug report."
 	fi
 }
