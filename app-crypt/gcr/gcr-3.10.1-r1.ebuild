@@ -51,6 +51,8 @@ src_prepare() {
 		-i configure.ac configure || die
 
 	gnome2_src_prepare
+
+	use vala && vala_src_prepare
 }
 
 src_configure() {
