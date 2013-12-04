@@ -36,7 +36,7 @@ COMMON_DEPEND="
 	>=gnome-base/gnome-settings-daemon-3.8.3[colord?,policykit]
 	>=gnome-base/libgnomekbd-2.91.91
 
-	dev-libs/libpwquality
+	>=dev-libs/libpwquality-1.2.3
 	dev-libs/libxml2:2
 	gnome-base/gnome-menus:3
 	gnome-base/libgtop:2
