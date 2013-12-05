@@ -25,8 +25,8 @@ COMMON_DEPEND="
 	>=dev-python/pygtk-2.18:2
 	dev-python/pycairo
 
-	>=media-libs/gstreamer-0.10.28:0.10
-	>=dev-python/gst-python-0.10.19:0.10
+	>=media-libs/gstreamer-1.2.0:1.0
+	>=dev-python/gst-python-1.1.90:1.0
 	>=media-libs/gnonlin-0.10.16:0.10
 	>=x11-libs/gtk+-2.24.0:2"
 RDEPEND="${COMMON_DEPEND}
@@ -41,6 +41,8 @@ RDEPEND="${COMMON_DEPEND}
 	>=media-plugins/gst-plugins-ffmpeg-0.10:0.10
 	>=media-plugins/gst-plugins-xvideo-0.10.31:0.10
 	>=media-plugins/gst-plugins-libpng-0.10.24:0.10
+
+	>=dev-python/gst-editing-services-0.10.1
 
 	v4l? ( media-plugins/gst-plugins-v4l2:0.10 )"
 DEPEND="${RDEPEND}
