@@ -49,7 +49,7 @@ pkg_setup() {
 }
 
 src_prepare() {
-	epatch "${FILESDIR}"/${P}-gentoo.patch
+	epatch "${FILESDIR}"/${PN}-3.x-gentoo.patch
 
 	find . -type f -regex '.*[.]\([1-8]\|html\|xml\)' -exec sed -i \
 	    -e s:/usr/local:/usr:g '{}' \; ||
