@@ -22,12 +22,12 @@ DEPEND=">=dev-lang/php-5.3.4"
 RDEPEND="dev-lang/php[zip]"
 
 src_unpack() {
-        mv "${DISTDIR}/${A}" "${WORKDIR}"
+        cp "${DISTDIR}/${A}" "${WORKDIR}"
         S=${WORKDIR}
 }
 
 src_install() {
-        mv "${WORKDIR}/${A}" "${WORKDIR}/composer"
-        dobin composer
+        newbin ${A} composer-${MY_PV}
+        dosym composer-${MY_PV} composer
 }
 
