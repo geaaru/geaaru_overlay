@@ -28,7 +28,6 @@ src_unpack() {
 
 src_install() {
         newbin ${A} composer-${MY_PV}
-        cd ${ED}usr/bin
-        dosym composer-${MY_PV} composer
+        dosym composer-${MY_PV} /usr/bin/composer
 }
 
