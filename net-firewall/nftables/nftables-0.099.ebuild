@@ -7,7 +7,7 @@ EAPI="5"
 # Force users doing their own patches to install their own tools
 AUTOTOOLS_AUTO_DEPEND=no
 
-inherit eutils multilib toolchain-funcs autotools
+inherit eutils multilib toolchain-funcs autotools linux-info
 
 DESCRIPTION="Linux kernel (3.13+) firewall, NAT and packet mangling tools"
 HOMEPAGE="http://netfilter.org/projects/nftables/"
@@ -40,13 +40,14 @@ src_prepare() {
 	epatch ${FILESDIR}/nftnl_fixname_${PV}.patch
 
 	# Only run autotools if user patched something
-	epatch_user && eautoreconf || elibtoolize
+	epatch_user
+
+	eautoreconf || elibtoolize
 }
 
 src_configure() {
 
 	econf \
-		$(use_enable static-libs static) \
 		--sbindir="${EPREFIX}/sbin"
 }
 
