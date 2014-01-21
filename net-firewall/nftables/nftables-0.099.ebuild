@@ -37,7 +37,7 @@ pkg_setup() {
 
 src_prepare() {
 
-	epatch ${FILES}/nftnl_fixname_${PV}.patch
+	epatch ${FILESDIR}/nftnl_fixname_${PV}.patch
 
 	# Only run autotools if user patched something
 	epatch_user && eautoreconf || elibtoolize
