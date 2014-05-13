@@ -52,18 +52,13 @@ src_prepare() {
 		echo "AddJavaLibFile $(java-pkg_getjars jdbc-mysql)" >> sqldeveloper/bin/sqldeveloper.conf
 	fi
 
-	# this fixes internal Classpath warning
-	cd "${T}"
-	unzip -q "${S}"/jdev/extensions/oracle.jdeveloper.runner.jar META-INF/extension.xml
-	sed -i 's@../../../oracle_common/modules/oracle.nlsrtl_12.1.0@../../jlib@' META-INF/extension.xml || die
-	zip -rq "${S}"/jdev/extensions/oracle.jdeveloper.runner.jar META-INF/extension.xml
-	rm -rf META-INF
 }
 
 src_install() {
 	dodir /opt/${PN}
-	cp -r {dataminer,ide,javavm,jdbc,jdev,jlib,jviews,modules,rdbms,readme.html,sleepycat,${PN},sqlj} \
+	cp -r {configuration,dataminer,dvt,dropins,equinox,external,ide,lib,javavm,jdbc,jdev,jlib,jviews,modules,netbeans,rdbms,readme.html,sleepycat,${PN},sqlj,svnkit} \
 		"${D}"/opt/${PN}/ || die "Install failed"
+
 
 	dobin "${FILESDIR}"/${PN} || die "Install failed"
 
@@ -83,6 +78,9 @@ pkg_postinst() {
 	# this fixes another datamodeler FileNotFoundException
 	# also more like a workaround than permanent fix
 	chmod 1777 /opt/sqldeveloper/sqldeveloper/extensions/oracle.datamodeler/types/dr_custom_scripts.xml
+
+    # THIS IS HORRIBLE!!!
+	chmod -R 1777 /opt/sqldeveloper/configuration
 
 	echo
 	einfo "If you want to use the TNS connection type you need to set up the"
