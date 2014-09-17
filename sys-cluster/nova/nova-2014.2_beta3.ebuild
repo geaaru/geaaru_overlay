@@ -15,7 +15,7 @@ EGIT_COMMIT="2014.2.b2"
 
 LICENSE="Apache-2.0"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64"
 IUSE="+compute +kvm +network +novncproxy sqlite mysql postgres xen"
 REQUIRED_USE="|| ( mysql postgres sqlite )
 			  compute? ( || ( kvm xen ) )"
