@@ -1,0 +1,16 @@
+[Unit]
+Description=Openstack Nova Console Authentication Service
+After=network.target remote-fs.target
+ConditionPathExists=/etc/nova/nova.conf
+
+[Service]
+User=nova
+Group=nova
+EnvironmentFile=-/etc/conf.d/nova
+ExecStart=/usr/bin/nova-consoleauth --config-file /etc/nova/nova.conf  $NOVA_ARGS
+PIDFile=/var/run/nova/nova-consoleauth.pid
+RuntimeDirectory=nova
+
+[Install]
+WantedBy=multi-user.target
+
