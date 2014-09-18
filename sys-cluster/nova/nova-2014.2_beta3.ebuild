@@ -26,19 +26,19 @@ DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
 		app-admin/sudo"
 
 RDEPEND="sqlite? (
-			>=dev-python/sqlalchemy-0.8.0[sqlite,${PYTHON_USEDEP}]
+			>=dev-python/sqlalchemy-0.8.5[sqlite,${PYTHON_USEDEP}]
 			!~dev-python/sqlalchemy-0.9.5[sqlite,${PYTHON_USEDEP}]
 			<=dev-python/sqlalchemy-0.9.99[sqlite,${PYTHON_USEDEP}]
 		)
 		mysql? (
 			dev-python/mysql-python
-			>=dev-python/sqlalchemy-0.8.0[${PYTHON_USEDEP}]
+			>=dev-python/sqlalchemy-0.8.4[${PYTHON_USEDEP}]
 			!~dev-python/sqlalchemy-0.9.5[${PYTHON_USEDEP}]
 			<=dev-python/sqlalchemy-0.9.99[${PYTHON_USEDEP}]
 		)
 		postgres? (
 			dev-python/psycopg:2
-			>=dev-python/sqlalchemy-0.8.0[${PYTHON_USEDEP}]
+			>=dev-python/sqlalchemy-0.8.4[${PYTHON_USEDEP}]
 			!~dev-python/sqlalchemy-0.9.5[${PYTHON_USEDEP}]
 			<=dev-python/sqlalchemy-0.9.99[${PYTHON_USEDEP}]
 		)
@@ -55,27 +55,26 @@ RDEPEND="sqlite? (
 		>=dev-python/greenlet-0.3.2[${PYTHON_USEDEP}]
 		>=dev-python/pastedeploy-1.5.0-r1[${PYTHON_USEDEP}]
 		dev-python/paste[${PYTHON_USEDEP}]
-		>=dev-python/sqlalchemy-migrate-0.8.2[${PYTHON_USEDEP}]
-		!~dev-python/sqlalchemy-migrate-0.8.4[${PYTHON_USEDEP}]
-		>=dev-python/netaddr-0.7.6[${PYTHON_USEDEP}]
+		>=dev-python/sqlalchemy-migrate-0.8.4[${PYTHON_USEDEP}]
+		>=dev-python/netaddr-0.7.12[${PYTHON_USEDEP}]
 		>=dev-python/suds-0.4[${PYTHON_USEDEP}]
 		>=dev-python/paramiko-1.9.0[${PYTHON_USEDEP}]
 		dev-python/pyasn1[${PYTHON_USEDEP}]
 		>=dev-python/Babel-1.3[${PYTHON_USEDEP}]
 		>=dev-python/iso8601-0.1.9[${PYTHON_USEDEP}]
-		>=dev-python/python-cinderclient-1.0.6[${PYTHON_USEDEP}]
-		>=dev-python/python-neutronclient-2.3.4[${PYTHON_USEDEP}]
+		>=dev-python/python-cinderclient-1.0.7[${PYTHON_USEDEP}]
+		>=dev-python/python-neutronclient-2.3.6[${PYTHON_USEDEP}]
 		<=dev-python/python-neutronclient-3.0.0[${PYTHON_USEDEP}]
-		>=dev-python/python-glanceclient-0.9.0[${PYTHON_USEDEP}]
-		>=dev-python/python-keystoneclient-0.7.0[${PYTHON_USEDEP}]
-		>=dev-python/six-1.5.2[${PYTHON_USEDEP}]
+		>=dev-python/python-glanceclient-0.14.0[${PYTHON_USEDEP}]
+		>=dev-python/python-keystoneclient-0.10.0[${PYTHON_USEDEP}]
+		>=dev-python/six-1.7.0[${PYTHON_USEDEP}]
 		>=dev-python/stevedore-0.14[${PYTHON_USEDEP}]
 		>=dev-python/websockify-0.5.1[${PYTHON_USEDEP}]
 		<dev-python/websockify-0.6[${PYTHON_USEDEP}]
-		>=dev-python/oslo-config-1.2.0[${PYTHON_USEDEP}]
-		dev-python/oslo-rootwrap[${PYTHON_USEDEP}]
-		>=dev-python/pycadf-0.4.1[${PYTHON_USEDEP}]
-		>=dev-python/oslo-messaging-1.3.0[${PYTHON_USEDEP}]
+		>=dev-python/oslo-config-1.4.0.0_alpha3[${PYTHON_USEDEP}]
+		>=dev-python/oslo-rootwrap-1.3.0.0_alpha1[${PYTHON_USEDEP}]
+		>=dev-python/pycadf-0.6.0[${PYTHON_USEDEP}]
+		>=dev-python/oslo-messaging-1.4.0.0_alpha3[${PYTHON_USEDEP}]
 		dev-python/libvirt-python[${PYTHON_USEDEP}]
 		novncproxy? ( www-apps/novnc )
 		sys-apps/iproute2
@@ -83,6 +82,9 @@ RDEPEND="sqlite? (
 		net-misc/rabbitmq-server
 		sys-fs/sysfsutils
 		sys-fs/multipath-tools
+		>=dev-python/oslo-vmware-0.5[${PYTHON_USEDEP}]
+		>=dev-python/oslo-db-0.4.0[${PYTHON_USEDEP}]
+		>=dev-python/oslo-i18n-0.4.0[${PYTHON_USEDEP}]
 		kvm? ( app-emulation/qemu )
 		xen? ( app-emulation/xen
 			   app-emulation/xen-tools )"
