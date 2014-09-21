@@ -24,5 +24,14 @@ src_install () {
 	# Install static library
 #	insinto /usr/lib64/
 	dolib.a ${S}/libUnitTest++.a
+
+	# Create include directory
+    dodir /usr/include/UnitTest++
+	insinto /usr/include/UnitTest++
+    for i in ${S}/src/*.h ; do
+		doins $i
+	done
+
+
 }
 
