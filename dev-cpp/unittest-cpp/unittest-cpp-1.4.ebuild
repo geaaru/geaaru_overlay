@@ -32,6 +32,12 @@ src_install () {
 		doins $i
 	done
 
+	dodir /usr/include/UnitTest++/Posix
+	insinto /usr/include/UnitTest++/Posix
+    for i in ${S}/src/Posix/*.h ; do
+		doins $i
+	done
+
 
 }
 
