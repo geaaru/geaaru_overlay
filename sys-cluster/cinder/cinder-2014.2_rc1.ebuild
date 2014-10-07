@@ -95,6 +95,7 @@ RDEPEND=">=dev-python/amqplib-0.6.1-r1[${PYTHON_USEDEP}]
 
 
 PATCHES=(
+   ${FILESDIR}/fix_create_volume_from_snapshot_without_glance_metadata.diff
 )
 
 pkg_setup() {
