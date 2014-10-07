@@ -1,0 +1,13 @@
+[Unit]
+Description=Openstack Glance API Service
+After=network.target remote-fs.target glance-registry.service
+ConditionPathExists=/etc/glance/glance-api.conf
+
+[Service]
+User=glance
+Group=glance
+ExecStart=/usr/bin/glance-api --config-file /etc/glance/glance-api.conf
+PIDFile=/var/run/glance-api.pid
+
+[Install]
+WantedBy=multi-user.target
