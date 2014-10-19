@@ -24,6 +24,13 @@ DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
 
 RDEPEND=""
 
+src_prepare () {
+	# Avoid install of xstatic.pkg namespace to permit
+	# setup of xstatic modules
+	sed -e 's/'\'xstatic.pkg\','//g' -i setup.py
+	rm xstatic/pkg/__init__.py
+}
+
 python_prepare_all() {
 	distutils-r1_python_prepare_all
 }
