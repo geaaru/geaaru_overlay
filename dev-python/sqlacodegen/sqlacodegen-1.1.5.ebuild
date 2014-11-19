@@ -17,6 +17,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
+    >=dev-python/inflect-0.2.0[$PYTHON_USEDEP]
     dev-python/sqlalchemy"
 
 RDEPEND="dev-python/sqlalchemy[${PYTHON_USEDEP}]"
