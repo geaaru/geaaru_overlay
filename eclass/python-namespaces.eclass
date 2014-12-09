@@ -35,9 +35,6 @@ _python-namespaces_set_metadata() {
         ((_PYTHON_NAMESPACES_COUNT++))
     done
 
-    echo "_PYTHON_NAMESPACES = $_PYTHON_NAMESPACES"
-    echo "_PYTHON_NAMESPACES_COUNT = $_PYTHON_NAMESPACES_COUNT"
-
     DESCRIPTION="Python namespaces: ${_PYTHON_NAMESPACES// /, }"
     HOMEPAGE="http://www.gentoo.org/"
     SRC_URI=""
@@ -81,10 +78,7 @@ pkg_resources.declare_namespace(__name__)
         done
     }
 
-    python_execute_function \
-        --action-message 'Installation Python namespaces with $(python_get_implementation_and_version)' \
-        --failure-message 'Installation of Python namespaces with $(python_get_implementation_and_version) failed' \
-        python-namespaces_installation
+    python-namespaces_installation
 
     unset -f python-namespaces_installation
 
