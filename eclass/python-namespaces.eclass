@@ -99,7 +99,7 @@ python-namespaces_pkg_postinst() {
         die "${FUNCNAME}() does not accept arguments"
     fi
 
-    python_byte-compile_modules $(for namespace in $(_python-namespaces_get_enabled_namespaces); do echo ${namespace//.//}/__init__.py; done)
+    #python_byte-compile_modules $(for namespace in ${_PYTHON_NAMESPACES}; do echo ${namespace//.//}/__init__.py; done)
 }
 
 # @FUNCTION: python-namespaces_pkg_postrm
@@ -117,7 +117,7 @@ python-namespaces_pkg_postrm() {
         die "${FUNCNAME}() does not accept arguments"
     fi
 
-    python_clean_byte-compiled_modules $(for namespace in $(_python-namespaces_get_enabled_namespaces); do echo ${namespace//.//}/__init__.py; done)
+    #python_clean_byte-compiled_modules $(for namespace in ${_PYTHON_NAMESPACES}; do echo ${namespace//.//}/__init__.py; done)
 }
 
 # vim: ts=4 sw=4 expandtab
