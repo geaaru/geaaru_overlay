@@ -4,7 +4,7 @@
 
 EAPI=5
 PYTHON_COMPAT=( python{2_7,3_3,3_4} )
-PYTHON_NAMESPACES="xstatic"
+PYTHON_NAMESPACES="xstatic xstatic.pkg"
 
 inherit python-namespaces
 
