@@ -19,6 +19,7 @@ IUSE="test"
 DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
 		>=dev-python/pbr-0.6.0[${PYTHON_USEDEP}]
 		<dev-python/pbr-1.0[${PYTHON_USEDEP}]
+		>=dev-python/pyscss-1.2.1[${PYTHON_USEDEP}]
 		test? (	>=dev-python/hacking-0.8.0[${PYTHON_USEDEP}]
 				<dev-python/hacking-0.9[${PYTHON_USEDEP}]
 				>=dev-python/Babel-1.3[${PYTHON_USEDEP}]
