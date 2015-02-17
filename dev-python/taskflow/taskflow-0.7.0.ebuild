@@ -3,7 +3,7 @@
 # $Header: /var/cvsroot/gentoo-x86/dev-python/taskflow/taskflow-0.2.ebuild,v 1.1 2014/04/28 02:26:06 prometheanfire Exp $
 
 EAPI=5
-PYTHON_COMPAT=( python2_7 )
+PYTHON_COMPAT=( python2_7 python3_3 )
 
 inherit distutils-r1
 
@@ -31,11 +31,11 @@ DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
 				>=dev-python/testtools-0.9.34[${PYTHON_USEDEP}] )"
 RDEPEND=">=dev-python/anyjson-0.3.3[${PYTHON_USEDEP}]
 		>=dev-python/iso8601-0.1.9[${PYTHON_USEDEP}]
-		>=dev-python/six-1.5.2[${PYTHON_USEDEP}]
+		>=dev-python/six-1.7.0[${PYTHON_USEDEP}]
 		>=dev-python/networkx-1.8[${PYTHON_USEDEP}]
 		>=dev-python/Babel-1.3[${PYTHON_USEDEP}]
-		>=dev-python/stevedore-0.14[${PYTHON_USEDEP}]
-		>=dev-python/futures-2.1.3[${PYTHON_USEDEP}]"
+		>=dev-python/stevedore-1.1.0[${PYTHON_USEDEP}]
+		>=dev-python/futures-2.1.6[${PYTHON_USEDEP}]"
 
 python_test() {
 	testr init
