@@ -1,15 +1,17 @@
 # Copyright 1999-2014 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sys-cluster/cinder/cinder-2014.1.1.ebuild,v 1.4 2014/08/10 20:20:15 slyfox Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-cluster/nova/nova-2014.1.9999.ebuild,v 1.5 2014/08/10 20:21:07 slyfox Exp $
 
 EAPI=5
 PYTHON_COMPAT=( python2_7 )
 
-inherit distutils-r1 eutils user
+inherit distutils-r1 eutils git-2 multilib user systemd
 
 DESCRIPTION="Cinder is the OpenStack Block storage service, a spin out of nova-volumes"
 HOMEPAGE="https://launchpad.net/cinder"
-SRC_URI="http://launchpad.net/${PN}/icehouse/${PV}/+download/${P}.tar.gz"
+EGIT_REPO_URI="https://github.com/openstack/cinder.git"
+EGIT_PROJECT="cinder"
+EGIT_COMMIT="2014.2.2"
 
 LICENSE="Apache-2.0"
 SLOT="0"
@@ -42,43 +44,65 @@ DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
 RDEPEND=">=dev-python/amqplib-0.6.1-r1[${PYTHON_USEDEP}]
 		>=dev-python/anyjson-0.3.3[${PYTHON_USEDEP}]
 		>=dev-python/Babel-1.3[${PYTHON_USEDEP}]
-		>=dev-python/eventlet-0.13.0[${PYTHON_USEDEP}]
+		>=dev-python/eventlet-0.15.1[${PYTHON_USEDEP}]
+		<dev-python/eventlet-0.16.0[${PYTHON_USEDEP}]
 		>=dev-python/greenlet-0.3.2[${PYTHON_USEDEP}]
 		>=dev-python/iso8601-0.1.9[${PYTHON_USEDEP}]
-		>=dev-python/kombu-2.4.8[${PYTHON_USEDEP}]
+		>=dev-python/keystonemiddleware-1.0.0[${PYTHON_USEDEP}]
+		>=dev-python/kombu-2.5.0[${PYTHON_USEDEP}]
 		>=dev-python/lxml-2.3[${PYTHON_USEDEP}]
-		>=dev-python/netaddr-0.7.6[${PYTHON_USEDEP}]
-		>=dev-python/oslo-config-1.2.0[${PYTHON_USEDEP}]
-		>=dev-python/oslo-messaging-1.3.0[${PYTHON_USEDEP}]
-		dev-python/oslo-rootwrap[${PYTHON_USEDEP}]
-		>=dev-python/paramiko-1.9.0[${PYTHON_USEDEP}]
+		>=dev-python/netaddr-0.7.12[${PYTHON_USEDEP}]
+		>=dev-python/oslo-config-1.4.0[${PYTHON_USEDEP}]
+		>=dev-python/oslo-messaging-1.4.0[${PYTHON_USEDEP}]
+		!~dev-python/oslo-messaging-1.5.0[${PYTHON_USEDEP}]
+		<dev-python/oslo-messaging-1.6.0[${PYTHON_USEDEP}]
+		>=dev-python/oslo-rootwrap-1.3.0[${PYTHON_USEDEP}]
+		>=dev-python/paramiko-1.13.0[${PYTHON_USEDEP}]
 		dev-python/paste[${PYTHON_USEDEP}]
+		>=dev-python/pycrypto-2.6[$PYTHON_USEDEP]
 		>=dev-python/pastedeploy-1.5.0[${PYTHON_USEDEP}]
-		>=dev-python/python-glanceclient-0.9.0[${PYTHON_USEDEP}]
-		>=dev-python/python-keystoneclient-0.7.0[${PYTHON_USEDEP}]
+		>=dev-python/python-glanceclient-0.14.0[${PYTHON_USEDEP}]
 		>=dev-python/python-novaclient-2.17.0[${PYTHON_USEDEP}]
 		>=dev-python/python-swiftclient-1.6[${PYTHON_USEDEP}]
 		>=dev-python/requests-1.1[${PYTHON_USEDEP}]
 		>=dev-python/routes-1.12.3[${PYTHON_USEDEP}]
-		>=dev-python/taskflow-0.1.3[${PYTHON_USEDEP}]
-		<dev-python/taskflow-0.2[${PYTHON_USEDEP}]
+		>=dev-python/taskflow-0.4.0[${PYTHON_USEDEP}]
+		>=dev-python/osprofiler-0.3.0[${PYTHON_USEDEP}]
 		>=dev-python/rtslib-fb-2.1.39[${PYTHON_USEDEP}]
-		>=dev-python/six-1.5.2[${PYTHON_USEDEP}]
+		>=dev-python/six-1.7.0[${PYTHON_USEDEP}]
 		sqlite? (
-			>=dev-python/sqlalchemy-0.8.0[sqlite,${PYTHON_USEDEP}]
+			>=dev-python/sqlalchemy-0.8.4[sqlite,${PYTHON_USEDEP}]
+			!~dev-python/sqlalchemy-0.9.0[sqlite,${PYTHON_USEDEP}]
+			!~dev-python/sqlalchemy-0.9.1[sqlite,${PYTHON_USEDEP}]
+			!~dev-python/sqlalchemy-0.9.2[sqlite,${PYTHON_USEDEP}]
+			!~dev-python/sqlalchemy-0.9.3[sqlite,${PYTHON_USEDEP}]
+			!~dev-python/sqlalchemy-0.9.4[sqlite,${PYTHON_USEDEP}]
 			!~dev-python/sqlalchemy-0.9.5[sqlite,${PYTHON_USEDEP}]
+			!~dev-python/sqlalchemy-0.9.6[sqlite,${PYTHON_USEDEP}]
 			<=dev-python/sqlalchemy-0.9.99[sqlite,${PYTHON_USEDEP}]
 		)
 		mysql? (
 			dev-python/mysql-python
-			>=dev-python/sqlalchemy-0.8.0[${PYTHON_USEDEP}]
+			>=dev-python/sqlalchemy-0.8.4[${PYTHON_USEDEP}]
+			!~dev-python/sqlalchemy-0.9.0[${PYTHON_USEDEP}]
+			!~dev-python/sqlalchemy-0.9.1[${PYTHON_USEDEP}]
+			!~dev-python/sqlalchemy-0.9.2[${PYTHON_USEDEP}]
+			!~dev-python/sqlalchemy-0.9.3[${PYTHON_USEDEP}]
+			!~dev-python/sqlalchemy-0.9.4[${PYTHON_USEDEP}]
 			!~dev-python/sqlalchemy-0.9.5[${PYTHON_USEDEP}]
+			!~dev-python/sqlalchemy-0.9.6[${PYTHON_USEDEP}]
 			<=dev-python/sqlalchemy-0.9.99[${PYTHON_USEDEP}]
 		)
 		postgres? (
 			dev-python/psycopg:2
-			>=dev-python/sqlalchemy-0.8.0[${PYTHON_USEDEP}]
+			>=dev-python/sqlalchemy-0.8.4[${PYTHON_USEDEP}]
+			!~dev-python/sqlalchemy-0.9.0[${PYTHON_USEDEP}]
+			!~dev-python/sqlalchemy-0.9.1[${PYTHON_USEDEP}]
+			!~dev-python/sqlalchemy-0.9.2[${PYTHON_USEDEP}]
+			!~dev-python/sqlalchemy-0.9.3[${PYTHON_USEDEP}]
+			!~dev-python/sqlalchemy-0.9.4[${PYTHON_USEDEP}]
 			!~dev-python/sqlalchemy-0.9.5[${PYTHON_USEDEP}]
+			!~dev-python/sqlalchemy-0.9.6[${PYTHON_USEDEP}]
 			<=dev-python/sqlalchemy-0.9.99[${PYTHON_USEDEP}]
 		)
 		>=dev-python/sqlalchemy-migrate-0.9[${PYTHON_USEDEP}]
@@ -91,16 +115,15 @@ RDEPEND=">=dev-python/amqplib-0.6.1-r1[${PYTHON_USEDEP}]
 		lvm? ( sys-fs/lvm2 )
 		sys-fs/sysfsutils"
 
-PATCHES=( )
+
+PATCHES=(
+   ${FILESDIR}/fix_create_volume_from_snapshot_without_glance_metadata.diff
+)
 
 pkg_setup() {
 	enewgroup cinder
 	enewuser cinder -1 -1 /var/lib/cinder cinder
 }
-
-#python_compile_all() { leave for next attempt
-#	use doc && emake -C doc html
-#}
 
 python_test() {
 	# Let's track progress of this # https://bugs.launchpad.net/swift/+bug/1249727	
@@ -132,4 +155,18 @@ python_install() {
 	insinto /etc/sudoers.d/
 	insopts -m 0440 -o root -g root
 	newins "${FILESDIR}/cinder.sudoersd" cinder
+
+	# Systemd files
+	systemd_dounit "${FILESDIR}"/cinder-api.service
+	systemd_dounit "${FILESDIR}"/cinder-scheduler.service
+	systemd_dounit "${FILESDIR}"/cinder-volume.service
+
+	# Copy logging property files
+	insinto /etc/cinder/
+	insopts -m 0440 -o root -g cinder
+	newins "${FILESDIR}/logging_api.conf" logging_api.conf
+	newins "${FILESDIR}/logging_scheduler.conf" logging_scheduler.conf
+	newins "${FILESDIR}/logging_volume.conf" logging_volume.conf
+
 }
+
