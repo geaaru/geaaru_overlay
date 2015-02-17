@@ -40,10 +40,12 @@ DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
 RDEPEND=">=dev-python/Babel-1.3[${PYTHON_USEDEP}]
 		>=dev-python/iso8601-0.1.9[${PYTHON_USEDEP}]
 		>=dev-python/netaddr-0.7.6[${PYTHON_USEDEP}]
-		>=dev-python/oslo-config-1.2.0[${PYTHON_USEDEP}]
-		>=dev-python/oslo-messaging-1.3.0[${PYTHON_USEDEP}]
+		>=dev-python/oslo-config-1.6.0[${PYTHON_USEDEP}]
+		>=dev-python/oslo-i18n-1.3.0[${PYTHON_USEDEP}]
+		>=dev-python/oslo-context-0.1.0[${PYTHON_USEDEP}]
+		>=dev-python/oslo-serialization-1.2.0[${PYTHON_USEDEP}]
 		>=dev-python/pytz-2010h[${PYTHON_USEDEP}]
-		>=dev-python/six-1.5.2[${PYTHON_USEDEP}]
+		>=dev-python/six-1.7.0[${PYTHON_USEDEP}]
 		>=dev-python/webob-1.2.3[${PYTHON_USEDEP}]"
 
 python_prepare_all() {
