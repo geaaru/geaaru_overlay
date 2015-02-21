@@ -1,0 +1,14 @@
+[Unit]
+Description=Openstack Keystone Service
+After=network.target remote-fs.target
+ConditionPathExists=/etc/keystone/keystone.conf
+
+[Service]
+User=keystone
+EnvironmentFile=-/etc/conf.d/keystone
+ExecStart=/usr/bin/keystone-all --config-file /etc/keystone/keystone.conf  $KEYSTONE_ARGS
+PIDFile=/var/run/keystone.pid
+
+[Install]
+WantedBy=multi-user.target
+
