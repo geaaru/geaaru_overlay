@@ -1,0 +1,17 @@
+[Unit]
+Description=Openstack Neutron Metering Agent Service
+After=network.target remote-fs.target
+ConditionPathExists=/etc/neutron/neutron.conf
+ConditionPathExists=/etc/neutron/metering_agent.ini
+
+[Service]
+User=neutron
+Group=neutron
+Type = simple
+EnvironmentFile=-/etc/conf.d/neutron
+ExecStart=/usr/bin/neutron-metering-agent --config-file /etc/neutron/neutron.conf --log-file /var/log/neutron/neutron-metering.log  $NEUTRON_DAEMON_OPTS
+PIDFile=/var/run/neutron/neutron-metering.pid
+RuntimeDirectory=neutron
+
+[Install]
+WantedBy=multi-user.target

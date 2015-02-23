@@ -1,0 +1,18 @@
+[Unit]
+Description=Openstack Neutron Server Service
+After=network.target remote-fs.target
+After = ovs-vswitchd.service
+ConditionPathExists=/etc/neutron/neutron.conf
+
+[Service]
+User=neutron
+Group=neutron
+Type = simple
+EnvironmentFile=-/etc/conf.d/neutron
+ExecStart=/usr/bin/neutron-server --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/plugins/ml2/ml2_conf.ini --log-file /var/log/neutron/neutron-server.log  $NEUTRON_DAEMON_OPTS
+PIDFile=/var/run/neutron/neutron-server.pid
+RuntimeDirectory=neutron
+
+[Install]
+WantedBy=multi-user.target
+
