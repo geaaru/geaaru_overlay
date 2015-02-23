@@ -39,10 +39,12 @@ RDEPEND=">=dev-python/pbr-0.6[${PYTHON_USEDEP}]
 		>=dev-python/Babel-1.3[${PYTHON_USEDEP}]
 		>=dev-python/prettytable-0.7[${PYTHON_USEDEP}]
 		<dev-python/prettytable-0.8[${PYTHON_USEDEP}]
-		>=dev-python/python-keystoneclient-0.9.0[${PYTHON_USEDEP}]
+		>=dev-python/python-keystoneclient-0.10.0[${PYTHON_USEDEP}]
 		>=dev-python/pyopenssl-0.11[${PYTHON_USEDEP}]
 		>=dev-python/warlock-1.0.1[${PYTHON_USEDEP}]
 		<dev-python/warlock-2[${PYTHON_USEDEP}]
+		>=dev-python/requests-1.2.1[${PYTHON_USEDEP}]
+		!~dev-python/requests-2.4.0[${PYTHON_USEDEP}]
 		>=dev-python/six-1.7.0[${PYTHON_USEDEP}]"
 
 python_prepare_all() {
