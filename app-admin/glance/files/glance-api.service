@@ -6,7 +6,7 @@ ConditionPathExists=/etc/glance/glance-api.conf
 [Service]
 User=glance
 Group=glance
-ExecStart=/usr/bin/glance-api --config-file /etc/glance/glance-api.conf
+ExecStart=/usr/bin/glance-api --config-file /etc/glance/glance-api.conf --log-config-append /etc/glance/logging_api.conf
 PIDFile=/var/run/glance-api.pid
 
 [Install]
