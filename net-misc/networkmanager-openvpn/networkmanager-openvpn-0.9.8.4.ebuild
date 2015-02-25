@@ -32,7 +32,6 @@ DEPEND="${RDEPEND}
 "
 
 PATCHES=(
-   ${FILESDIR}/patch_default_gw_diff.patch
 )
 
 src_prepare() {
@@ -42,6 +41,8 @@ src_prepare() {
 		-i properties/tests/test-import-export.c || die "sed failed"
 
 	gnome2_disable_deprecation_warning
+
+	epatch "${FILESDIR}/patch_default_gw_diff.patch"
 }
 
 src_configure() {
