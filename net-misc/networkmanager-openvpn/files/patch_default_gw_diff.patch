@@ -1,0 +1,25 @@
+--- src/nm-openvpn-service-openvpn-helper.c	2013-04-29 18:53:08.328277485 -0400
++++ src/nm-openvpn-service-openvpn-helper.c	2013-04-29 18:57:17.801625332 -0400
+@@ -215,6 +215,10 @@
+ 	char *tmp;
+ 	int i;
+ 
++	struct in_addr net_gateway = {0 ,};
++
++	if ((tmp = getenv("route_net_gateway")) && inet_pton(AF_INET, tmp, &net_gateway));
++
+ #define BUFLEN 256
+ 
+ 	routes = g_ptr_array_new ();
+@@ -252,6 +256,11 @@
+ 			continue;
+ 		}
+ 
++		// workaround bug
++		if (gateway.s_addr == net_gateway.s_addr) {
++			continue;
++		}
++
+ 		snprintf (buf, BUFLEN, "route_metric_%d", i);
+ 		tmp = getenv (buf);
+ 		/* metric can be missing */
