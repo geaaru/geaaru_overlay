@@ -12,7 +12,7 @@ RESTRICT="nomirror"
 LICENSE="GPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="ansi mixed unicode"
+IUSE=""
 
 DEPEND="dev-db/oracle-instantclient-basic"
 RDEPEND="dev-db/oracle-instantclient-basic"
@@ -33,19 +33,6 @@ src_compile() {
 
 	myconf="${myconf} \
 			--with-oracle-home=/usr/lib/oracle/${oracle_version}/client/"
-
-	if use ansi ; then
-		myconf="${myconf} \
-				--with-oracle-charset=ansi"
-	else
-		if use unicode ; then
-			myconf="${myconf} \
-					--with-oracle-charset=unicode"
-		else
-			myconf="${myconf} \
-					--with-oracle-charset=mixed"
-		fi
-	fi
 
 	econf ${myconf} || die
 	emake || die
