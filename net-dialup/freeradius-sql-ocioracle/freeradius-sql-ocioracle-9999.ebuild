@@ -75,4 +75,15 @@ src_configure() {
 		${myconf}
 }
 
+src_install() {
+
+	freeradius-modules_src_install
+
+	dodir /etc/raddb/mods-config/sql/main/ocioracle
+
+	# Copy same files from oracle driver.
+	insinto /etc/raddb/mods-config/sql/main/ocioracle
+	doins ${S}/raddb/mods-config/sql/main/oracle/*
+
+}
 
