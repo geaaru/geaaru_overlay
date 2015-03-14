@@ -1,0 +1,187 @@
+# Copyright 1999-2015 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+# @ECLASS: freeradius-modules.eclass
+# @MAINTAINER:
+# geaaru@gmail.com
+# @AUTHOR:
+# Geaaru <geaaru@gmail.com>
+# @DESCRIPTION:
+# Purpose: Manage compilation and installation of external freeradius modules.
+#
+
+# FREERADIUS_MOD_TYPE identify type of modules.
+# Possible values are: sql | normal
+# Currently are supported only sql modules.
+if [[ -z "${FREERADIUS_MOD_TYPE}" ]] ; then
+    die "FREERADIUS_MOD_TYPE variable not set"
+fi
+
+if [[ -z "${FREERADIUS_VERSION}" ]] ; then
+    die "FREERADIUS_VERSION variable not set"
+fi
+
+# TODO: add check for EAPI 5
+
+_freeradius-modules_set_metadata() {
+
+    # Retrieve current version of freeradius server
+    local fr_version="${FREERADIUS_VERSION}"
+
+    FR_P="freeradius-server-${fr_version}"
+    SRC_URI+="ftp://ftp.freeradius.org/pub/radius/${FR_P}.tar.gz"
+
+    S="${WORKDIR}/${FR_P}"
+}
+
+_freeradius-modules_set_metadata
+unset -f _freeradius-modules_set_metadata
+
+EXPORT_FUNCTIONS src_unpack src_compile src_prepare src_configure
+
+# @FUNCTION: freeradius-modules_src_unpack
+# @DESCRIPTION:
+# Implementation of src_unpack() phase. This function is exported.
+freeradius-modules_src_unpack() {
+
+    local module_dirname=""
+    local module_dirpath=""
+
+    if [[ ${PV} = "9999" || -n "${EGIT_COMMIT}" ]] ; then
+        local S_OLD=${S}
+        S="${WORKDIR}/${PN}"
+        git-2_src_unpack
+        S=${S_OLD}
+    else
+        default_src_unpack
+    fi
+
+    # rlm_mschap is required because
+    # contains smbdes.h header file.
+
+    if [[ ${FREERADIUS_MOD_TYPE} = "sql" ]] ; then
+        module_dirname="${PN/freeradius-sql-/rlm_sql_}"
+        module_dirpath="src/modules/rlm_sql/drivers/"
+
+        # Override stable file of rlm_sql modules
+        echo ${module_dirname} > ${S}/src/modules/rlm_sql/stable
+
+        echo "rlm_sql" > ${S}/src/modules/stable
+
+    else
+        module_dirname="${PN/freeradius-/rlm_}"
+        module_dirpath="src/modules/"
+
+        echo ${module_dirname} > ${S}/src/modules/stable
+    fi
+
+    # Remove all rlm_sql drivers
+    rm -rf ${S}/src/modules/rlm_sql/drivers/rlm_sql_*
+
+    rm -rf ${S}/src/modules/rlm_{always,attr_filter,cache,chap,couchbase,counter}
+    rm -rf ${S}/src/modules/rlm_{cram,date,digest,dynamic_clients,eap,example,exec}
+    rm -rf ${S}/src/modules/rlm_{expiration,expr,files,idn,ippool,krb5,ldap,linelog}
+    rm -rf ${S}/src/modules/rlm_{logintime,opendirectory,otp,pam,passwd,perl}
+    rm -rf ${S}/src/modules/rlm_{preprocess,python,radutmp,realm,redis,rediswho}
+    rm -rf ${S}/src/modules/rlm_{replicate,rest,ruby,securid,smsotp,soh,sometimes}
+    rm -rf ${S}/src/modules/rlm_{sqlcounter,sqlhpwippool,sqlippool,test,unbound}
+    rm -rf ${S}/src/modules/rlm_{unix,unpack,utf8,wimax,yubikey}
+    rm -rf ${S}/src/modules/rlm_{detail,pap}
+
+    mv ${WORKDIR}/${PN}/ ${S}/${module_dirpath}/${module_dirname}
+
+    epatch_user
+}
+
+
+# @FUNCTION: freeradius-modules_src_prepare
+# @DESCRIPTION:
+# Implementation of src_prepare() phase. This function is exported.
+freeradius-modules_src_prepare() {
+
+    # I'm on ${S}
+
+    eautoreconf
+
+    for driver in src/modules/rlm_sql/drivers/rlm_* ; do
+        cd ${driver}
+        eautoreconf
+    done
+}
+
+# @FUNCTION: freeradius-modules_src_compile
+# @DESCRIPTION:
+# Implementation of src_compile() phase. This function is exported.
+freeradius-modules_src_compile() {
+
+    # verbose, do not generate certificates
+    emake \
+        Q='' ECHO=true \
+        LOCAL_CERT_PRODUCTS=''
+}
+
+# @FUNCTION: freeradius-modules_src_configure
+# @DESCRIPTION:
+# Implementation of src_configure() phase. This function is exported.
+# This function must be override if there are custom configure params.
+freeradius-modules_src_configure() {
+
+    # fix bug #77613
+    if has_version app-crypt/heimdal; then
+        myconf="${myconf} --enable-heimdal-krb5"
+    fi
+
+    # do not try to enable static with static-libs; upstream is a
+    # massacre of libtool best practices so you also have to make sure
+    # to --enable-shared explicitly.
+    econf \
+        --enable-shared \
+        --disable-static \
+        --disable-ltdl-install \
+        --with-system-libtool \
+        --with-system-libltdl \
+        --with-ascend-binary \
+        --with-udpfromto \
+        --with-dhcp \
+        --with-iodbc-include-dir=/usr/include/iodbc \
+        --with-experimental-modules \
+        --with-docdir=/usr/share/doc/freeradius-${FREERADIUS_VERSION} \
+        --with-logdir=/var/log/radius \
+        ${myconf}
+
+}
+
+# @FUNCTION: freeradius-modules_src_install
+# @DESCRIPTION:
+# Implementation of src_install() phase. This function is exported.
+# This function must be override if there are custom configure params.
+freeradius-modules_src_install() {
+
+    dodir /etc
+    dodir /etc/raddb
+
+    # verbose, do not install certificates
+    # TODO: check if there a way to install only
+    #       module files.
+    emake -j1 \
+        Q='' ECHO=true \
+        LOCAL_CERT_PRODUCTS='' \
+        R="${D}" \
+        install
+
+    # Remove freeradius files
+    rm -r ${D}/etc/
+    rm -r ${D}/var/
+    rm -r ${D}/usr/bin/
+    rm -r ${D}/usr/sbin/
+    rm -r ${D}/usr/include/
+    rm -r ${D}/usr/share/
+    rm -r ${D}/usr/lib64/libfreeradius*
+    rm -r ${D}/usr/lib64/proto_*
+    rm -r ${D}/usr/lib64/rlm_{dhcp,mschap,sql}.*
+
+    prune_libtool_files
+}
+
+# vim: ts=4 sw=4 expandtab
