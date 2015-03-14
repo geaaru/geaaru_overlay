@@ -38,7 +38,7 @@ _freeradius-modules_set_metadata() {
 _freeradius-modules_set_metadata
 unset -f _freeradius-modules_set_metadata
 
-EXPORT_FUNCTIONS src_unpack src_compile src_prepare src_configure
+EXPORT_FUNCTIONS src_unpack src_compile src_prepare src_configure src_install
 
 # @FUNCTION: freeradius-modules_src_unpack
 # @DESCRIPTION:
