@@ -3,13 +3,17 @@ Description=FreeRADIUS Server
 After=network.target
 
 [Service]
-User="radius"
-Group="radius"
+User=radius
+Group=radius
 # ExecStartPre=/etc/raddb/certs/bootstrap
 ExecStartPre=/usr/sbin/radiusd -C
+#ExecStartPre=/usr/sbin/radiusd -C -Xx
 ExecStart=/usr/sbin/radiusd -f -d /etc/raddb
 ExecReload=/usr/sbin/radiusd -C
 ExecReload=/bin/kill -HUP $MAINPID
+RuntimeDirectory=radiusd
+ReadOnlyDirectories=/etc/raddb/
+ReadWriteDirectories=/var/log/radius/
 
 [Install]
 WantedBy=multi-user.target
