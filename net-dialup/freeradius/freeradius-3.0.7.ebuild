@@ -5,7 +5,7 @@
 EAPI=5
 
 PYTHON_COMPAT=( python2_7 )
-inherit autotools eutils pam python-any-r1 user
+inherit autotools eutils pam python-any-r1 user systemd
 
 PATCHSET=4
 
@@ -34,6 +34,8 @@ RDEPEND="!net-dialup/cistronradius
 	sys-devel/libtool
 	dev-lang/perl
 	sys-libs/gdbm
+	net-libs/libpcap
+	sys-libs/talloc
 	python? ( ${PYTHON_DEPS} )
 	readline? ( sys-libs/readline )
 	pcap? ( net-libs/libpcap )
@@ -204,6 +206,9 @@ src_install() {
 
 	newinitd "${FILESDIR}/radius.init-r3" radiusd
 	newconfd "${FILESDIR}/radius.conf-r3" radiusd
+
+	# Systemd files
+	systemd_dounit "${FILESDIR}"/freeradius.service
 
 	prune_libtool_files
 }
