@@ -5,9 +5,9 @@ After=network.target
 [Service]
 User=radius
 Group=radius
+EnvironmentFile=-/etc/conf.d/radiusd
 # ExecStartPre=/etc/raddb/certs/bootstrap
 ExecStartPre=/usr/sbin/radiusd -C
-#ExecStartPre=/usr/sbin/radiusd -C -Xx
 ExecStart=/usr/sbin/radiusd -f -d /etc/raddb
 ExecReload=/usr/sbin/radiusd -C
 ExecReload=/bin/kill -HUP $MAINPID
