@@ -85,5 +85,10 @@ src_install() {
 	insinto /etc/raddb/mods-config/sql/main/ocioracle
 	doins ${S}/raddb/mods-config/sql/main/oracle/*
 
+	insinto /etc/raddb/mods-config/sql/ippool/ocioracle
+	doins ${S}/raddb/mods-config/sql/ippool/oracle/*
+
+	insinto /etc/raddb/mods-config/sql/ippool-dhcp/ocioracle
+	doins ${S}/raddb/mods-config/sql/ippool-dhcp/oracle/*
 }
 
