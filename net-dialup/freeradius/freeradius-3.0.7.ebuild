@@ -212,7 +212,7 @@ src_install() {
 
 	# Remove all default sites under site-enables.
 	# Administrator install all sites when configure freeradius.
-	rm "${D}/etc/raddb/sites-enabled/*"
+	rm ${D}/etc/raddb/sites-enabled/{inner-tunnel,default}
 
 	prune_libtool_files
 }
