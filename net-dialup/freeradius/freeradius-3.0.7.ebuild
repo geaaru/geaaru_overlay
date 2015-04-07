@@ -210,6 +210,10 @@ src_install() {
 	# Systemd files
 	systemd_dounit "${FILESDIR}"/freeradius.service
 
+	# Remove all default sites under site-enables.
+	# Administrator install all sites when configure freeradius.
+	rm "${D}/etc/raddb/sites-enabled/*"
+
 	prune_libtool_files
 }
 
