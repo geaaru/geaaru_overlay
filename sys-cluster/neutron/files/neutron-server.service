@@ -9,7 +9,10 @@ User=neutron
 Group=neutron
 Type = simple
 EnvironmentFile=-/etc/conf.d/neutron
+# Neutron with ML2
 ExecStart=/usr/bin/neutron-server --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/plugins/ml2/ml2_conf.ini --log-file /var/log/neutron/neutron-server.log  $NEUTRON_DAEMON_OPTS
+# Neutron with OpenVSwitch Mode
+#ExecStart=/usr/bin/neutron-server --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini --log-file /var/log/neutron/neutron-server.log  $NEUTRON_DAEMON_OPTS
 PIDFile=/var/run/neutron/neutron-server.pid
 RuntimeDirectory=neutron
 

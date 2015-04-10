@@ -9,7 +9,7 @@ User=neutron
 Group=neutron
 Type = simple
 EnvironmentFile=-/etc/conf.d/neutron
-ExecStart=/usr/bin/neutron-l3-agent --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/l3_agent.ini --log-file /var/log/neutron/neutron-l3.log --config-file /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini  $NEUTRON_DAEMON_OPTS
+ExecStart=/usr/bin/neutron-l3-agent --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/l3_agent.ini --config-file /etc/neutron/fwaas_driver.ini --config-file /etc/neutron/plugins/ml2/ml2_conf.ini --log-file /var/log/neutron/neutron-l3.log  $NEUTRON_DAEMON_OPTS
 PIDFile=/var/run/neutron/neutron-l3.pid
 RuntimeDirectory=neutron
 

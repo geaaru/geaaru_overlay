@@ -2,14 +2,18 @@
 Description=Openstack Neutron OpenVSwitch Agent Service
 After=network.target remote-fs.target
 ConditionPathExists=/etc/neutron/neutron.conf
-ConditionPathExists=/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini
+ConditionPathExists=/etc/neutron/plugins/ml2/ml2_conf.ini
+#ConditionPathExists=/etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini
 
 [Service]
 #User=neutron
 #Group=neutron
 Type = simple
 EnvironmentFile=-/etc/conf.d/neutron
-ExecStart=/usr/bin/neutron-openvswitch-agent --config-file /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini --config-file /etc/neutron/neutron.conf --log-file /var/log/neutron/neutron-openvswitch.log  $NEUTRON_DAEMON_OPTS
+# With OpenvSwitch as core plugin
+# ExecStart=/usr/bin/neutron-openvswitch-agent --config-file /etc/neutron/plugins/openvswitch/ovs_neutron_plugin.ini --config-file /etc/neutron/neutron.conf --log-file /var/log/neutron/neutron-openvswitch.log  $NEUTRON_DAEMON_OPTS
+# With ML2 as core plugin
+ExecStart=/usr/bin/neutron-openvswitch-agent --config-file /etc/neutron/plugins/ml2/ml2_conf.ini --config-file /etc/neutron/neutron.conf --log-file /var/log/neutron/neutron-openvswitch.log  $NEUTRON_DAEMON_OPTS
 PIDFile=/var/run/neutron/neutron-openvswitch.pid
 RuntimeDirectory=neutron
 

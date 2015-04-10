@@ -9,7 +9,7 @@ User=neutron
 Group=neutron
 Type = simple
 EnvironmentFile=-/etc/conf.d/neutron
-ExecStart=/usr/bin/neutron-lbaas-agent --config-file /etc/neutron/neutron.conf --log-file /var/log/neutron/neutron-lbaas.log  $NEUTRON_DAEMON_OPTS
+ExecStart=/usr/bin/neutron-lbaas-agent --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/lbaas_agent.ini --log-file /var/log/neutron/neutron-lbaas.log  $NEUTRON_DAEMON_OPTS
 PIDFile=/var/run/neutron/neutron-lbaas.pid
 RuntimeDirectory=neutron
 
