@@ -1,42 +1,45 @@
-# Copyright 1999-2012 Gentoo Foundation
+# Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-emulation/libvirt/libvirt-1.0.0.ebuild,v 1.4 2012/11/29 02:13:06 ssuominen Exp $
+# $Header: /var/cvsroot/gentoo-x86/app-emulation/libvirt/libvirt-1.2.14.ebuild,v 1.1 2015/04/05 20:47:47 tamiko Exp $
 
-EAPI=4
+EAPI=5
 
-#BACKPORTS=85e8c146
 AUTOTOOLIZE=yes
 
 MY_P="${P/_rc/-rc}"
 
-PYTHON_DEPEND="python? 2:2.5"
-#RESTRICT_PYTHON_ABIS="3.*"
-#SUPPORT_PYTHON_ABIS="1"
+inherit eutils user autotools linux-info systemd readme.gentoo
 
-inherit eutils python user autotools linux-info
+BACKPORTS=""
 
 if [[ ${PV} = *9999* ]]; then
-	inherit git-2
+	inherit git-r3
 	EGIT_REPO_URI="git://libvirt.org/libvirt.git"
-	AUTOTOOLIZE=yes
 	SRC_URI=""
 	KEYWORDS=""
+	SLOT="0"
 else
-	SRC_URI="http://libvirt.org/sources/${MY_P}.tar.gz
-		ftp://libvirt.org/libvirt/${MY_P}.tar.gz
-		${BACKPORTS:+
-			http://dev.gentoo.org/~cardoe/distfiles/${MY_P}-${BACKPORTS}.tar.xz}"
+	# Versions with 4 numbers are stable updates:
+	if [[ ${PV} =~ ^[0-9]+(\.[0-9]+){3} ]]; then
+		SRC_URI="http://libvirt.org/sources/stable_updates/${MY_P}.tar.gz"
+	else
+		SRC_URI="http://libvirt.org/sources/${MY_P}.tar.gz"
+	fi
+	SRC_URI+=" ${BACKPORTS:+
+		http://dev.gentoo.org/~cardoe/distfiles/${P}-${BACKPORTS}.tar.xz
+		http://dev.gentoo.org/~tamiko/distfiles/${P}-${BACKPORTS}.tar.xz}"
 	KEYWORDS="~amd64 ~x86"
+	SLOT="0/${PV}"
 fi
 S="${WORKDIR}/${P%_rc*}"
 
 DESCRIPTION="C toolkit to manipulate virtual machines"
 HOMEPAGE="http://www.libvirt.org/"
 LICENSE="LGPL-2.1"
-SLOT="0"
-IUSE="audit avahi +caps debug firewalld iscsi +libvirtd lvm +lxc +macvtap nfs \
-	nls numa openvz parted pcap phyp policykit python qemu rbd sasl \
-	selinux +udev uml +vepa virtualbox virt-network xen elibc_glibc"
+# TODO: Reenable IUSE wireshark-plugins
+IUSE="audit avahi +caps firewalld fuse glusterfs iscsi +libvirtd lvm lxc \
+	+macvtap nfs nls numa openvz parted pcap phyp policykit +qemu rbd sasl \
+	selinux +udev uml +vepa virtualbox virt-network xen elibc_glibc systemd"
 REQUIRED_USE="libvirtd? ( || ( lxc openvz qemu uml virtualbox xen ) )
 	lxc? ( caps libvirtd )
 	openvz? ( libvirtd )
@@ -53,10 +56,12 @@ REQUIRED_USE="libvirtd? ( || ( lxc openvz qemu uml virtualbox xen ) )
 # We can use both libnl:1.1 and libnl:3, but if you have both installed, the
 # package will use 3 by default. Since we don't have slot pinning in an API,
 # we must go with the most recent
+
+# wireshark-plugins? ( net-analyzer/wireshark:= )
 RDEPEND="sys-libs/readline
 	sys-libs/ncurses
 	>=net-misc/curl-7.18.0
-	dev-libs/libgcrypt
+	dev-libs/libgcrypt:0
 	>=dev-libs/libxml2-2.7.6
 	dev-libs/libnl:3
 	>=net-libs/gnutls-1.0.25
@@ -69,8 +74,10 @@ RDEPEND="sys-libs/readline
 	audit? ( sys-process/audit )
 	avahi? ( >=net-dns/avahi-0.6[dbus] )
 	caps? ( sys-libs/libcap-ng )
+	fuse? ( >=sys-fs/fuse-2.8.6 )
+	glusterfs? ( >=sys-cluster/glusterfs-3.4.1 )
 	iscsi? ( sys-block/open-iscsi )
-	lxc? ( sys-power/pm-utils )
+	lxc? ( !systemd? ( sys-power/pm-utils ) )
 	lvm? ( >=sys-fs/lvm2-2.02.48-r2 )
 	nfs? ( net-fs/nfs-utils )
 	numa? (
@@ -87,15 +94,16 @@ RDEPEND="sys-libs/readline
 	qemu? (
 		>=app-emulation/qemu-0.13.0
 		dev-libs/yajl
-		sys-power/pm-utils
+		!systemd? ( sys-power/pm-utils )
 	)
 	rbd? ( sys-cluster/ceph )
 	sasl? ( dev-libs/cyrus-sasl )
 	selinux? ( >=sys-libs/libselinux-2.0.85 )
+	systemd? ( sys-apps/systemd )
 	virtualbox? ( || ( app-emulation/virtualbox >=app-emulation/virtualbox-bin-2.2.0 ) )
 	xen? ( app-emulation/xen-tools app-emulation/xen )
 	udev? ( virtual/udev >=x11-libs/libpciaccess-0.10.9 )
-	virt-network? ( net-dns/dnsmasq
+	virt-network? ( net-dns/dnsmasq[script]
 		>=net-firewall/iptables-1.4.10
 		net-misc/radvd
 		net-firewall/ebtables
@@ -103,31 +111,47 @@ RDEPEND="sys-libs/readline
 		firewalld? ( net-firewall/firewalld )
 	)
 	elibc_glibc? ( || ( >=net-libs/libtirpc-0.2.2-r1 <sys-libs/glibc-2.14 ) )"
-# one? ( dev-libs/xmlrpc-c )
+
 DEPEND="${RDEPEND}
 	virtual/pkgconfig
 	app-text/xhtml1
-	dev-libs/libxslt
-	=dev-lang/python-2*"
+	dev-lang/perl
+	dev-perl/XML-XPath
+	dev-libs/libxslt"
+
+DOC_CONTENTS="For the basic networking support (bridged and routed networks)
+you don't need any extra software. For more complex network modes
+including but not limited to NATed network, you can enable the
+'virt-network' USE flag.\n\n
+If you are using dnsmasq on your system, you will have
+to configure /etc/dnsmasq.conf to enable the following settings:\n\n
+	bind-interfaces\n
+	interface or except-interface\n\n
+Otherwise you might have issues with your existing DNS server."
 
 LXC_CONFIG_CHECK="
 	~CGROUPS
 	~CGROUP_FREEZER
 	~CGROUP_DEVICE
-	~CPUSETS
 	~CGROUP_CPUACCT
-	~RESOURCE_COUNTERS
 	~CGROUP_SCHED
+	~CGROUP_PERF
 	~BLK_CGROUP
+	~NET_CLS_CGROUP
+	~CGROUP_NET_PRIO
+	~CPUSETS
+	~RESOURCE_COUNTERS
 	~NAMESPACES
 	~UTS_NS
 	~IPC_NS
 	~PID_NS
 	~NET_NS
+	~USER_NS
 	~DEVPTS_MULTIPLE_INSTANCES
 	~VETH
 	~MACVLAN
 	~POSIX_MQUEUE
+	~SECURITYFS
 	~!GRKERNSEC_CHROOT_MOUNT
 	~!GRKERNSEC_CHROOT_DOUBLE
 	~!GRKERNSEC_CHROOT_PIVOT
@@ -137,16 +161,30 @@ LXC_CONFIG_CHECK="
 
 VIRTNET_CONFIG_CHECK="
 	~BRIDGE_NF_EBTABLES
+	~BRIDGE_EBT_MARK_T
 	~NETFILTER_ADVANCED
 	~NETFILTER_XT_TARGET_CHECKSUM
+	~NETFILTER_XT_CONNMARK
+	~NETFILTER_XT_MARK
 "
 
-MACVTAP_CONFIG_CHECK="~MACVTAP"
+BWLMT_CONFIG_CHECK="
+	~BRIDGE_EBT_T_NAT
+	~NET_SCH_HTB
+	~NET_SCH_SFQ
+	~NET_SCH_INGRESS
+	~NET_CLS_FW
+	~NET_CLS_U32
+	~NET_ACT_POLICE
+"
+
+MACVTAP_CONFIG_CHECK=" ~MACVTAP"
+
+LVM_CONFIG_CHECK=" ~BLK_DEV_DM ~DM_SNAPSHOT ~DM_MULTIPATH"
+
+ERROR_USER_NS="Optional depending on LXC configuration."
 
 pkg_setup() {
-	python_set_active_version 2
-	python_pkg_setup
-
 	enewgroup qemu 77
 	enewuser qemu 77 -1 -1 qemu kvm
 
@@ -159,14 +197,17 @@ pkg_setup() {
 	fi
 
 	# Handle specific kernel versions for different features
-	kernel_is lt 3 5 && LXC_CONFIG_CHECK+=" ~USER_NS"
-	kernel_is lt 3 6 && LXC_CONFIG_CHECK+=" ~CGROUP_MEM_RES_CTLR" || \
-						LXC_CONFIG_CHECK+=" ~MEMCG"
+	kernel_is lt 3 6 && LXC_CONFIG_CHECK+=" ~CGROUP_MEM_RES_CTLR"
+	kernel_is ge 3 6 &&	LXC_CONFIG_CHECK+=" ~MEMCG ~MEMCG_SWAP ~MEMCG_KMEM"
 
 	CONFIG_CHECK=""
+	use fuse && CONFIG_CHECK+=" ~FUSE_FS"
+	use lvm && CONFIG_CHECK+="${LVM_CONFIG_CHECK}"
 	use lxc && CONFIG_CHECK+="${LXC_CONFIG_CHECK}"
-	use macvtap && CONFIG_CHECK+="${MACVTAP}"
+	use macvtap && CONFIG_CHECK+="${MACVTAP_CONFIG_CHECK}"
 	use virt-network && CONFIG_CHECK+="${VIRTNET_CONFIG_CHECK}"
+	# Bandwidth Limiting Support
+	use virt-network && CONFIG_CHECK+="${BWLMT_CONFIG_CHECK}"
 	if [[ -n ${CONFIG_CHECK} ]]; then
 		linux-info_pkg_setup
 	fi
@@ -174,12 +215,8 @@ pkg_setup() {
 
 src_prepare() {
 	touch "${S}/.mailmap"
-	[[ -n ${BACKPORTS} ]] && \
-		EPATCH_FORCE=yes EPATCH_SUFFIX="patch" EPATCH_SOURCE="${S}/patches" \
-			epatch
 
 	if [[ ${PV} = *9999* ]]; then
-
 		# git checkouts require bootstrapping to create the configure script.
 		# Additionally the submodules must be cloned to the right locations
 		# bug #377279
@@ -190,6 +227,12 @@ src_prepare() {
 		) >.git-module-status
 	fi
 
+	epatch "${FILESDIR}"/${PN}-1.2.9-do_not_use_sysconf.patch
+
+	[[ -n ${BACKPORTS} ]] && \
+		EPATCH_FORCE=yes EPATCH_SUFFIX="patch" \
+			EPATCH_SOURCE="${WORKDIR}/patches" epatch
+
 	epatch_user
 
 	[[ -n ${AUTOTOOLIZE} ]] && eautoreconf
@@ -199,7 +242,7 @@ src_prepare() {
 	local iscsi_init=
 	local rbd_init=
 	local firewalld_init=
-	cp "${FILESDIR}/libvirtd.init-r11" "${S}/libvirtd.init"
+	cp "${FILESDIR}/libvirtd.init-r14" "${S}/libvirtd.init"
 	use avahi && avahi_init='avahi-daemon'
 	use iscsi && iscsi_init='iscsid'
 	use rbd && rbd_init='ceph'
@@ -214,85 +257,93 @@ src_prepare() {
 src_configure() {
 	local myconf=""
 
-	myconf="${myconf} $(use_enable debug)"
-
 	## enable/disable daemon, otherwise client only utils
-	myconf="${myconf} $(use_with libvirtd)"
+	myconf+=" $(use_with libvirtd)"
 
 	## enable/disable the daemon using avahi to find VMs
-	myconf="${myconf} $(use_with avahi)"
+	myconf+=" $(use_with avahi)"
 
 	## hypervisors on the local host
-	myconf="${myconf} $(use_with xen) $(use_with xen xen-inotify)"
-	 # leave it automagic as it depends on the version of xen used.
-	use xen || myconf+=" --without-libxl"
-	use xen || myconf+=" --without-xenapi"
-	myconf="${myconf} $(use_with openvz)"
-	myconf="${myconf} $(use_with lxc)"
-	if use virtualbox && has_version app-emulation/virtualbox-ose; then
-		myconf="${myconf} --with-vbox=/usr/lib/virtualbox-ose/"
+	myconf+=" $(use_with xen) $(use_with xen xen-inotify)"
+	myconf+=" --without-xenapi"
+	if use xen && has_version ">=app-emulation/xen-tools-4.2.0"; then
+		myconf+=" --with-libxl"
 	else
-		myconf="${myconf} $(use_with virtualbox vbox)"
+		myconf+=" --without-libxl"
 	fi
-	myconf="${myconf} $(use_with uml)"
-	myconf="${myconf} $(use_with qemu)"
-	myconf="${myconf} $(use_with qemu yajl)" # Use QMP over HMP
-	myconf="${myconf} $(use_with phyp)"
-	myconf="${myconf} --with-esx"
-	myconf="${myconf} --with-vmware"
+	myconf+=" $(use_with openvz)"
+	myconf+=" $(use_with lxc)"
+	if use virtualbox && has_version app-emulation/virtualbox-ose; then
+		myconf+=" --with-vbox=/usr/lib/virtualbox-ose/"
+	else
+		myconf+=" $(use_with virtualbox vbox)"
+	fi
+	myconf+=" $(use_with uml)"
+	myconf+=" $(use_with qemu)"
+	myconf+=" $(use_with qemu yajl)" # Use QMP over HMP
+	myconf+=" $(use_with phyp)"
+	myconf+=" --with-esx"
+	myconf+=" --with-vmware"
 
 	## additional host drivers
-	myconf="${myconf} $(use_with virt-network network)"
-	myconf="${myconf} --with-storage-fs"
-	myconf="${myconf} $(use_with lvm storage-lvm)"
-	myconf="${myconf} $(use_with iscsi storage-iscsi)"
-	myconf="${myconf} $(use_with parted storage-disk)"
-	myconf="${myconf} $(use_with lvm storage-mpath)"
-	myconf="${myconf} $(use_with rbd storage-rbd)"
-	myconf="${myconf} $(use_with numa numactl)"
-	myconf="${myconf} $(use_with numa numad)"
-	myconf="${myconf} $(use_with selinux)"
+	myconf+=" $(use_with virt-network network)"
+	myconf+=" --with-storage-fs"
+	myconf+=" $(use_with lvm storage-lvm)"
+	myconf+=" $(use_with iscsi storage-iscsi)"
+	myconf+=" $(use_with parted storage-disk)"
+	mycond+=" $(use_with glusterfs)"
+	mycond+=" $(use_with glusterfs storage-gluster)"
+	myconf+=" $(use_with lvm storage-mpath)"
+	myconf+=" $(use_with rbd storage-rbd)"
+	myconf+=" $(use_with numa numactl)"
+	myconf+=" $(use_with numa numad)"
+	myconf+=" $(use_with selinux)"
+	myconf+=" $(use_with fuse)"
 
 	# udev for device support details
-	myconf="${myconf} $(use_with udev)"
+	myconf+=" $(use_with udev)"
+	myconf+=" --without-hal"
 
 	# linux capability support so we don't need privileged accounts
-	myconf="${myconf} $(use_with caps capng)"
+	myconf+=" $(use_with caps capng)"
 
 	## auth stuff
-	myconf="${myconf} $(use_with policykit polkit)"
-	myconf="${myconf} $(use_with sasl)"
+	myconf+=" $(use_with policykit polkit)"
+	myconf+=" $(use_with sasl)"
 
 	# network bits
-	myconf="${myconf} $(use_with macvtap)"
-	myconf="${myconf} $(use_with pcap libpcap)"
-	myconf="${myconf} $(use_with vepa virtualport)"
-	myconf="${myconf} $(use_with firewalld)"
+	myconf+=" $(use_with macvtap)"
+	myconf+=" $(use_with pcap libpcap)"
+	myconf+=" $(use_with vepa virtualport)"
+	myconf+=" $(use_with firewalld)"
 
 	## other
-	myconf="${myconf} $(use_enable nls)"
-	myconf="${myconf} $(use_with python)"
+	myconf+=" $(use_enable nls)"
 
 	# user privilege bits fir qemu/kvm
 	if use caps; then
-		myconf="${myconf} --with-qemu-user=qemu"
-		myconf="${myconf} --with-qemu-group=qemu"
+		myconf+=" --with-qemu-user=qemu"
+		myconf+=" --with-qemu-group=qemu"
 	else
-		myconf="${myconf} --with-qemu-user=root"
-		myconf="${myconf} --with-qemu-group=root"
+		myconf+=" --with-qemu-user=root"
+		myconf+=" --with-qemu-group=root"
 	fi
 
 	# audit support
-	myconf="${myconf} $(use_with audit)"
+	myconf+=" $(use_with audit)"
+
+	# wireshark dissector
+	# myconf+=" $(use_with wireshark-plugins wireshark-dissector)"
 
 	## stuff we don't yet support
-	myconf="${myconf} --without-netcf"
-
-	# we use udev over hal
-	myconf="${myconf} --without-hal"
+	myconf+=" --without-netcf"
 
 	# locking support
-	myconf="${myconf} --without-sanlock"
+	myconf+=" --without-sanlock"
+
+	# systemd unit files
+	myconf+=" $(use_with systemd systemd-daemon)"
+	use systemd && myconf+=" --with-init-script=systemd"
 
 	# this is a nasty trick to work around the problem in bug
 	# #275073. The reason why we don't solve this properly is that
@@ -311,8 +362,9 @@ src_configure() {
 	econf \
 		${myconf} \
 		--disable-static \
-		--docdir=/usr/share/doc/${PF} \
+		--disable-werror \
 		--with-remote \
+		--docdir=/usr/share/doc/${PF} \
 		--localstatedir=/var
 
 	if [[ ${PV} = *9999* ]]; then
@@ -332,19 +384,31 @@ src_install() {
 	emake install \
 		DESTDIR="${D}" \
 		HTML_DIR=/usr/share/doc/${PF}/html \
-		DOCS_DIR=/usr/share/doc/${PF}/python \
-		EXAMPLE_DIR=/usr/share/doc/${PF}/python/examples \
+		DOCS_DIR=/usr/share/doc/${PF} \
+		EXAMPLE_DIR=/usr/share/doc/${PF}/examples \
+		SYSTEMD_UNIT_DIR="$(systemd_get_unitdir)" \
 		|| die "emake install failed"
 
 	find "${D}" -name '*.la' -delete || die
 
+	# Remove bogus, empty directories. They are either not used, or
+	# libvirtd is able to create them on demand
+	rm -rf "${D}"/etc/sysconf
+	rm -rf "${D}"/var/cache
+	rm -rf "${D}"/var/run
+	rm -rf "${D}"/var/log
+
 	use libvirtd || return 0
 	# From here, only libvirtd-related instructions, be warned!
 
+	use systemd && \
+		systemd_install_serviced "${FILESDIR}"/libvirtd.service.conf libvirtd
+
 	newinitd "${S}/libvirtd.init" libvirtd || die
 	newconfd "${FILESDIR}/libvirtd.confd-r4" libvirtd || die
+	newinitd "${FILESDIR}/virtlockd.init" virtlockd || die
 
-	keepdir /var/lib/libvirt/images
+	readme.gentoo_create_doc
 }
 
 pkg_preinst() {
@@ -360,24 +424,13 @@ pkg_preinst() {
 	fi
 
 	# Only sysctl files ending in .conf work
-	mv "${D}"/etc/sysctl.d/libvirtd "${D}"/etc/sysctl.d/libvirtd.conf
+	dodir /etc/sysctl.d
+	mv "${D}"/usr/lib/sysctl.d/libvirtd.conf "${D}"/etc/sysctl.d/libvirtd.conf
 }
 
 pkg_postinst() {
-	use python && python_mod_optimize libvirt.py
-
-	# support for dropped privileges
-	if use qemu; then
-		fperms 0750 "${EROOT}/var/lib/libvirt/qemu"
-		fperms 0750 "${EROOT}/var/cache/libvirt/qemu"
-	fi
-
-	if use caps && use qemu; then
-		fowners -R qemu:qemu "${EROOT}/var/lib/libvirt/qemu"
-		fowners -R qemu:qemu "${EROOT}/var/cache/libvirt/qemu"
-	elif use qemu; then
-		fowners -R root:root "${EROOT}/var/lib/libvirt/qemu"
-		fowners -R root:root "${EROOT}/var/cache/libvirt/qemu"
+	if [[ -e "${ROOT}"/etc/libvirt/qemu/networks/default.xml ]]; then
+		touch "${ROOT}"/etc/libvirt/qemu/networks/default.xml
 	fi
 
 	if ! use policykit; then
@@ -388,27 +441,23 @@ pkg_postinst() {
 	use libvirtd || return 0
 	# From here, only libvirtd-related instructions, be warned!
 
-	elog
-	elog "For the basic networking support (bridged and routed networks)"
-	elog "you don't need any extra software. For more complex network modes"
-	elog "including but not limited to NATed network, you can enable the"
-	elog "'virt-network' USE flag."
-	elog
-	if has_version net-dns/dnsmasq; then
-		ewarn "If you have a DNS server setup on your machine, you will have"
-		ewarn "to configure /etc/dnsmasq.conf to enable the following settings: "
-		ewarn " bind-interfaces"
-		ewarn " interface or except-interface"
-		ewarn
-		ewarn "Otherwise you might have issues with your existing DNS server."
-	fi
+	readme.gentoo_print_elog
 
 	if use caps && use qemu; then
 		elog "libvirt will now start qemu/kvm VMs with non-root privileges."
 		elog "Ensure any resources your VMs use are accessible by qemu:qemu"
 	fi
-}
 
-pkg_postrm() {
-	use python && python_mod_cleanup libvirt.py
+	if [[ -n "${REPLACING_VERSIONS}" ]]; then
+		elog ""
+		elog "The systemd service-file configuration under /etc/sysconfig has"
+		elog "been removed. Please use"
+		elog "    /etc/systemd/system/libvirt.d/00gentoo.conf"
+		elog "to control the '--listen' parameter for libvirtd. The configuration"
+		elog "for the libvirt-guests.service is now found under"
+		elog "    /etc/libvirt/libvirt-guests.conf"
+		elog "The openrc configuration has not been changed. Thus no action is"
+		elog "required for the openrc service manager."
+		elog ""
+	fi
 }
