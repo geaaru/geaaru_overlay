@@ -167,12 +167,14 @@ python_install() {
 	systemd_dounit "${FILESDIR}"/nova-objectstore.service
 	systemd_dounit "${FILESDIR}"/nova-scheduler.service
 
-	# Install udev rules for handle iscsi disk with right links
-	# under /dev
-	udev_newrules "${FILESDIR}/openstack-scsi-disk.rules" 60-openstack-scsi-disk.rules
+	if iscsi ; then
+		# Install udev rules for handle iscsi disk with right links
+		# under /dev
+		udev_newrules "${FILESDIR}/openstack-scsi-disk.rules" 60-openstack-scsi-disk.rules
 
-	insinto /etc/nova/
-	doins "${FILESDIR}/scsi-openscsi-link.sh"
+		insinto /etc/nova/
+		doins "${FILESDIR}/scsi-openscsi-link.sh"
+	fi
 
 }
 
