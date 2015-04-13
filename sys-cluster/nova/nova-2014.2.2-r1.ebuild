@@ -167,7 +167,7 @@ python_install() {
 	systemd_dounit "${FILESDIR}"/nova-objectstore.service
 	systemd_dounit "${FILESDIR}"/nova-scheduler.service
 
-	if iscsi ; then
+	if use iscsi ; then
 		# Install udev rules for handle iscsi disk with right links
 		# under /dev
 		udev_newrules "${FILESDIR}/openstack-scsi-disk.rules" 60-openstack-scsi-disk.rules
