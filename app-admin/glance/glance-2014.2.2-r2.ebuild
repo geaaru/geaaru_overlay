@@ -112,6 +112,7 @@ RDEPEND="
 
 PATCHES=(
 	"${FILESDIR}/${PN}-2013.2-sphinx_mapping.patch"
+	"${FILESDIR}/2014.2.2-CVE-2015-1881.patch"
 )
 
 pkg_setup() {
