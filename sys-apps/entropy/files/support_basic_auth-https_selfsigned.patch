@@ -1,6 +1,6 @@
 diff -rua entropy-296/lib/entropy/client/interfaces/db.py entropy-296-r1/lib/entropy/client/interfaces/db.py
 --- entropy-296/lib/entropy/client/interfaces/db.py	2015-03-17 17:16:55.000000000 +0100
-+++ entropy-296-r1/lib/entropy/client/interfaces/db.py	2015-04-16 12:13:08.329516791 +0200
++++ entropy-296-r1/lib/entropy/client/interfaces/db.py	2015-04-16 12:49:27.466240920 +0200
 @@ -396,6 +396,20 @@
          repo_data = avail_data[self._repository_id]
          database_uris = repo_data['databases']
@@ -31,7 +31,7 @@ diff -rua entropy-296/lib/entropy/client/interfaces/db.py entropy-296-r1/lib/ent
 +            uri_revision = self._remote_revision(repo_uri, \
 +                http_basic_user = basic_user,
 +                http_basic_pwd = basic_pwd,
-+                https_validate_cert)
++                https_validate_cert = https_validate_cert)
  
              if uri_revision != -1:
  
@@ -44,7 +44,7 @@ diff -rua entropy-296/lib/entropy/client/interfaces/db.py entropy-296-r1/lib/ent
 +            revision = self._remote_revision(url, \
 +                http_basic_user = basic_user,
 +                http_basic_pwd = basic_pwd,
-+                https_validate_cert)
++                https_validate_cert = https_validate_cert)
              if revision != -1:
                  # found
                  self._entropy.output(
