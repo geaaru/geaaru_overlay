@@ -1,0 +1,395 @@
+diff -rua entropy-296/lib/entropy/client/interfaces/db.py entropy-296-r1/lib/entropy/client/interfaces/db.py
+--- entropy-296/lib/entropy/client/interfaces/db.py	2015-03-17 17:16:55.000000000 +0100
++++ entropy-296-r1/lib/entropy/client/interfaces/db.py	2015-04-16 12:13:08.329516791 +0200
+@@ -396,6 +396,20 @@
+         repo_data = avail_data[self._repository_id]
+         database_uris = repo_data['databases']
+ 
++        if repo_data.has_key('username'):
++            basic_user = repo_data['username']
++        else:
++            basic_user = None
++        if repo_data.has_key('password'):
++            basic_pwd = repo_data['password']
++        else:
++            basic_pwd = None
++        if repo_data.has_key('https_validate_cert') and \
++                repo_data['https_validate_cert'] == "false":
++            https_validate_cert = False
++        else:
++            https_validate_cert = True
++
+         ws_revision = self._remote_webservice_revision()
+ 
+         # Setup the repository uri
+@@ -418,7 +432,11 @@
+             )
+ 
+             repo_uri = uri_meta['uri']
+-            uri_revision = self._remote_revision(repo_uri)
++
++            uri_revision = self._remote_revision(repo_uri, \
++                http_basic_user = basic_user,
++                http_basic_pwd = basic_pwd,
++                https_validate_cert)
+ 
+             if uri_revision != -1:
+ 
+@@ -478,7 +496,11 @@
+             if url == uri:
+                 # skip same URL
+                 continue
+-            revision = self._remote_revision(url)
++
++            revision = self._remote_revision(url, \
++                http_basic_user = basic_user,
++                http_basic_pwd = basic_pwd,
++                https_validate_cert)
+             if revision != -1:
+                 # found
+                 self._entropy.output(
+@@ -981,7 +1003,25 @@
+         return url, path
+ 
+     def _download_item(self, uri, item, cmethod = None,
+-        disallow_redirect = True, get_signature = False):
++                       disallow_redirect = True, get_signature = False):
++
++        my_repos = self._settings['repositories']
++        avail_data = my_repos['available']
++        repo_data = avail_data[self._repository_id]
++
++        if repo_data.has_key('username'):
++            basic_user = repo_data['username']
++        else:
++            basic_user = None
++        if repo_data.has_key('password'):
++            basic_pwd = repo_data['password']
++        else:
++            basic_pwd = None
++        if repo_data.has_key('https_validate_cert') and \
++                repo_data['https_validate_cert'] == "false":
++            https_validate_cert = False
++        else:
++            https_validate_cert = True
+ 
+         url, filepath = self._construct_paths(
+             uri, item, cmethod, get_signature = get_signature)
+@@ -1011,7 +1051,10 @@
+                 url,
+                 temp_filepath,
+                 resume = False,
+-                disallow_redirect = disallow_redirect
++                disallow_redirect = disallow_redirect,
++                http_basic_user = basic_user,
++                http_basic_pwd = basic_pwd,
++                https_validate_cert = https_validate_cert
+             )
+ 
+             rc = fetcher.download()
+@@ -1913,7 +1956,25 @@
+             rev = -1
+             return rev
+ 
+-        rev = self._remote_revision(uri)
++        if repo_data.has_key('username'):
++            basic_user = repo_data['username']
++        else:
++            basic_user = None
++        if repo_data.has_key('password'):
++            basic_pwd = repo_data['password']
++        else:
++            basic_pwd = None
++        if repo_data.has_key('https_validate_cert') and \
++                repo_data['https_validate_cert'] == "false":
++            https_validate_cert = False
++        else:
++            https_validate_cert = True
++
++        rev = self._remote_revision(url,
++            http_basic_user = basic_user,
++            http_basic_pwd = basic_pwd,
++            https_validate_cert = https_validate_cert)
++
+         return rev
+ 
+     def _remote_webservice_revision(self):
+@@ -1939,7 +2000,9 @@
+         # otherwise, fallback to previous EAPI
+         self._repo_eapi -= 1
+ 
+-    def _remote_revision(self, uri):
++    def _remote_revision(self, uri, http_basic_user = None,
++                         http_basic_pwd = None,
++                         https_validate_cert = True):
+         """
+         Return the remote repository revision by downloading
+         the revision file from the given uri.
+@@ -1953,7 +2016,10 @@
+             tmp_fd, tmp_path = const_mkstemp(
+                 prefix = "AvailableEntropyRepository.remote_revision")
+             fetcher = self._entropy._url_fetcher(
+-                url, tmp_path, resume = False)
++                url, tmp_path, resume = False,
++                http_basic_user = http_basic_user,
++                http_basic_pwd = http_basic_pwd,
++                https_validate_cert = https_validate_cert)
+             fetch_rc = fetcher.download()
+             if fetch_rc not in self.FETCH_ERRORS:
+                 with codecs.open(tmp_path, "r") as tmp_f:
+Only in entropy-296-r1/lib/entropy/client/interfaces: .db.py.swp
+diff -rua entropy-296/lib/entropy/core/settings/base.py entropy-296-r1/lib/entropy/core/settings/base.py
+--- entropy-296/lib/entropy/core/settings/base.py	2015-03-17 17:16:55.000000000 +0100
++++ entropy-296-r1/lib/entropy/core/settings/base.py	2015-04-16 12:07:36.271516845 +0200
+@@ -83,9 +83,16 @@
+                  that config files in /etc/entropy/repositories.conf.d/ starting
+                  with "_" are considered to contain disabled repositories. This
+                  is just provided for convienence.
++    - "username": if set, it used for HTTP Basic Authentication on retrieve
++                  data from remote repository.
++    - "password": if set, it used for HTTP Basic Authentication on retrieve
++                  data from remote repository.
++    - "https_validate_cert": if set to "false" disable ssl certificate
++                  validation of the remote repository.
+     """
+ 
+-    _SUPPORTED_KEYS = ("desc", "repo", "pkg", "enabled")
++    _SUPPORTED_KEYS = ("desc", "repo", "pkg", "enabled", \
++            "username", "password", "https_validate_cert")
+ 
+     _DEFAULT_ENABLED_VALUE = True
+ 
+@@ -114,7 +121,8 @@
+             return
+         return candidate
+ 
+-    def add(self, repository_id, desc, repos, pkgs, enabled = True):
++    def add(self, repository_id, desc, repos, pkgs, enabled = True,
++            username = None, password = None, https_validate_cert = True):
+         """
+         Add a repository to the repository configuration files directory.
+         Older repository configuration may get overwritten. This method
+@@ -146,7 +154,8 @@
+         # while disabled config files start with _
+         disabled_conf_file = os.path.join(conf_d_dir, "_" + base_name)
+ 
+-        self.write(enabled_conf_file, repository_id, desc, repos, pkgs)
++        self.write(enabled_conf_file, repository_id, desc, repos, pkgs,
++                   username, password, https_validate_cert)
+ 
+         # if any disabled entry file is around, kill it with fire!
+         try:
+@@ -275,7 +284,8 @@
+ 
+         return accomplished
+ 
+-    def write(self, path, repository_id, desc, repos, pkgs, enabled = True):
++    def write(self, path, repository_id, desc, repos, pkgs, enabled = True,
++              username = None, password = None, https_validate_cert = True):
+         """
+         Write the repository configuration to the given file.
+ 
+@@ -298,6 +308,11 @@
+         else:
+             enabled_str = "false"
+ 
++        if not https_validate_cert:
++            https_validate_cert_str = "https_validate_cert = false"
++        else:
++            https_validate_cert_str = ""
++
+         repos_str = ""
+         for repo_meta in repos:
+             repos_str += "repo = %(uri)s#%(dbcformat)s\n" % repo_meta
+@@ -310,11 +325,17 @@
+ desc = %(desc)s
+ %(repos)s
+ enabled = %(enabled)s
++%(username)s
++%(password)s
++%(https_validate_cert)s
+ """ % {
+             "repository_id": repository_id,
+             "desc": desc,
+             "repos": repos_str.rstrip(),
+             "enabled": enabled_str,
++            "username": ("", "username = %s" % username)[username],
++            "password": ("", "password = %s" % password)[password],
++            "https_validate_cert" : https_validate_cert_str
+             }
+         for pkg in pkgs:
+             config += "pkg = %s\n" % (pkg,)
+@@ -397,6 +418,47 @@
+         except KeyError:
+             return self._DEFAULT_ENABLED_VALUE
+ 
++    def username(self, repository_id):
++        """
++        Return the username to use with the repository.
++
++        @param repository_id: the repository identifier
++        @type repository_id: string
++        @raise KeyError: if repository_id is not found or
++            metadata is not available
++        @return: the repository username.
++        @rtype: string
++        """
++        return self[repository_id]["username"][0]
++
++    def password(self, repository_id):
++        """
++        Return the password to use with the repository.
++
++        @param repository_id: the repository identifier
++        @type repository_id: string
++        @raise KeyError: if repository_id is not found or
++            metadata is not available
++        @return: the repository password.
++        @rtype: string
++        """
++        return self[repository_id]["password"][0]
++
++    def https_validate_cert(self, repository_id):
++        """
++        Return whether SSL cert validation of remote repository
++        is enabled. It is used only for HTTPS.
++
++        @param repository_id: the repository identifier
++        @type repository_id: string
++        @return: status of ssl certificate validation.
++        @rtype: bool
++        """
++        try:
++            https_validate_cert = self[repository_id]["https_validate_cert"][0]
++            return https_validate_cert.strip().lower() == "true"
++        except KeyError:
++            return True # Default is enabled
+ 
+ class SystemSettings(Singleton, EntropyPluginStore):
+ 
+@@ -1678,11 +1740,13 @@
+         packages = [x.strip() for x in repo_split[2].strip().split() \
+                         if x.strip()]
+         database = repo_split[3].strip()
++
+         return name, self._generate_repository_metadata(
+             name, desc, packages, [database], product, branch)
+ 
+     def _generate_repository_metadata(self, name, desc, packages, databases,
+-                                      product, branch):
++                                      product, branch, username = None,
++                                      password = None, https_validate_cert = True):
+         """
+         Given a set of raw repository metadata information, like name,
+         description, a list of package urls and the database url, generate
+@@ -1752,6 +1816,13 @@
+         data['packages'] = []
+         data['plain_packages'] = []
+ 
++        if username and password:
++            data['username'] = username
++            data['password'] = password
++
++        if not https_validate_cert:
++            data['https_validate_cert'] = "false"
++
+         data['dbpath'] = etpConst['etpdatabaseclientdir'] + os.path.sep + \
+             name + os.path.sep + product + os.path.sep + \
+             etpConst['currentarch'] + os.path.sep + branch
+@@ -2035,10 +2106,25 @@
+                     except KeyError:
+                         ini_desc = _("No description")
+ 
++                    try:
++                        ini_username = ini_parser.username(ini_repository)
++                    except KeyError:
++                        ini_username = None
++
++                    try:
++                        ini_password = ini_parser.password(ini_repository)
++                    except KeyError:
++                        ini_password = None
++
++                    ini_https_validate_cert = \
++                            ini_parser.https_validate_cert(ini_repository)
++
+                     ini_excluded = not ini_parser.enabled(ini_repository)
+                     ini_data = self._generate_repository_metadata(
+                         ini_repository, ini_desc, ini_pkgs, ini_dbs,
+-                        data['product'], data['branch'])
++                        data['product'], data['branch'],
++                        ini_username, ini_password,
++                        ini_https_validate_cert)
+                     if ini_excluded or ini_conf_excluded:
+                         data['excluded'][ini_repository] = ini_data
+                     else:
+Only in entropy-296-r1/lib/entropy/core/settings: .base.py.swp
+diff -rua entropy-296/lib/entropy/fetchers.py entropy-296-r1/lib/entropy/fetchers.py
+--- entropy-296/lib/entropy/fetchers.py	2015-03-17 17:16:55.000000000 +0100
++++ entropy-296-r1/lib/entropy/fetchers.py	2015-04-16 11:50:50.913168605 +0200
+@@ -77,7 +77,9 @@
+                  abort_check_func = None, disallow_redirect = False,
+                  thread_stop_func = None, speed_limit = None,
+                  timeout = None, download_context_func = None,
+-                 pre_download_hook = None, post_download_hook = None):
++                 pre_download_hook = None, post_download_hook = None,
++                 http_basic_user = None, http_basic_pwd = None,
++                 https_validate_cert = True):
+         """
+         Entropy URL downloader constructor.
+ 
+@@ -166,9 +168,16 @@
+         self.__disallow_redirect = disallow_redirect
+         self.__speedlimit = speed_limit # kbytes/sec
+ 
++        # HTTP Basic Authentication parameters
++        self.__http_basic_user = http_basic_user
++        self.__http_basic_pwd = http_basic_pwd
++        # SSL Context options
++        self.__https_validate_cert = https_validate_cert
++
+         self._init_vars()
+         self.__init_urllib()
+ 
++
+     @staticmethod
+     def _get_url_protocol(url):
+         return url.split(":")[0]
+@@ -583,8 +592,34 @@
+         )
+ 
+         if url_protocol in ("http", "https"):
+-            headers = {'User-Agent': user_agent,}
+-            req = urlmod.Request(url, headers = headers)
++
++            # Handle HTTP Basic auth
++            if self.__http_basic_user and self.__http_basic_pwd:
++                import base64
++                basic_header = base64.encodestring('%s:%s' % \
++                (self.__http_basic_user, self.__http_basic_pwd)).replace('\n', '')
++
++                headers = {
++                    'User-Agent': user_agent,
++                    'Authorization': ('Basic %s' % basic_header),
++                }
++            else:
++                headers = {'User-Agent': user_agent,}
++
++            if url_protocol in ("https") and \
++                not self.__https_validate_cert:
++
++                import ssl
++                ctx = ssl.create_default_context()
++                ctx.check_hostname = False
++                ctx.verify_mode = ssl.CERT_NONE
++
++                req = urlmod.Request(url, headers = headers, context=ctx)
++
++            else:
++                req = urlmod.Request(url, headers = headers)
++
++
+         else:
+             req = url
+ 
+Only in entropy-296-r1/lib/entropy: .fetchers.py.swp
