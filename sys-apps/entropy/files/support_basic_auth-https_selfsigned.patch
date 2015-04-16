@@ -326,7 +326,7 @@ diff -rua entropy-296/lib/entropy/core/settings/base.py entropy-296-r1/lib/entro
 Only in entropy-296-r1/lib/entropy/core/settings: .base.py.swp
 diff -rua entropy-296/lib/entropy/fetchers.py entropy-296-r1/lib/entropy/fetchers.py
 --- entropy-296/lib/entropy/fetchers.py	2015-03-17 17:16:55.000000000 +0100
-+++ entropy-296-r1/lib/entropy/fetchers.py	2015-04-16 11:50:50.913168605 +0200
++++ entropy-296-r1/lib/entropy/fetchers.py	2015-04-16 13:12:32.169713652 +0200
 @@ -77,7 +77,9 @@
                   abort_check_func = None, disallow_redirect = False,
                   thread_stop_func = None, speed_limit = None,
@@ -355,12 +355,11 @@ diff -rua entropy-296/lib/entropy/fetchers.py entropy-296-r1/lib/entropy/fetcher
      @staticmethod
      def _get_url_protocol(url):
          return url.split(":")[0]
-@@ -583,8 +592,34 @@
+@@ -583,8 +592,23 @@
          )
  
          if url_protocol in ("http", "https"):
 -            headers = {'User-Agent': user_agent,}
--            req = urlmod.Request(url, headers = headers)
 +
 +            # Handle HTTP Basic auth
 +            if self.__http_basic_user and self.__http_basic_pwd:
@@ -375,21 +374,31 @@ diff -rua entropy-296/lib/entropy/fetchers.py entropy-296-r1/lib/entropy/fetcher
 +            else:
 +                headers = {'User-Agent': user_agent,}
 +
-+            if url_protocol in ("https") and \
-+                not self.__https_validate_cert:
-+
-+                import ssl
-+                ctx = ssl.create_default_context()
-+                ctx.check_hostname = False
-+                ctx.verify_mode = ssl.CERT_NONE
-+
-+                req = urlmod.Request(url, headers = headers, context=ctx)
-+
-+            else:
-+                req = urlmod.Request(url, headers = headers)
+             req = urlmod.Request(url, headers = headers)
 +
 +
          else:
              req = url
  
+@@ -594,7 +618,19 @@
+ 
+             # get file size if available
+             try:
+-                self.__remotefile = urlmod.urlopen(req, None, self.__timeout)
++                if url_protocol in ("https") and \
++                    not self.__https_validate_cert:
++
++                    import ssl
++                    ctx = ssl.create_default_context()
++                    ctx.check_hostname = False
++                    ctx.verify_mode = ssl.CERT_NONE
++
++                    self.__remotefile = urlmod.urlopen(req, None, self.__timeout,
++                            context=ctx)
++
++                else:
++                    self.__remotefile = urlmod.urlopen(req, None, self.__timeout)
+             except KeyboardInterrupt:
+                 self.__urllib_close(False)
+                 raise
 Only in entropy-296-r1/lib/entropy: .fetchers.py.swp
