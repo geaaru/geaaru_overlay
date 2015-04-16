@@ -137,7 +137,140 @@ diff -rua entropy-296/lib/entropy/client/interfaces/db.py entropy-296-r1/lib/ent
              fetch_rc = fetcher.download()
              if fetch_rc not in self.FETCH_ERRORS:
                  with codecs.open(tmp_path, "r") as tmp_f:
-Only in entropy-296-r1/lib/entropy/client/interfaces: .db.py.swp
+diff -rua entropy-296/lib/entropy/client/interfaces/package/actions/fetch.py entropy-296-r1/lib/entropy/client/interfaces/package/actions/fetch.py
+--- entropy-296/lib/entropy/client/interfaces/package/actions/fetch.py	2015-03-17 17:16:55.000000000 +0100
++++ entropy-296-r1/lib/entropy/client/interfaces/package/actions/fetch.py	2015-04-16 18:35:20.369388462 +0200
+@@ -456,11 +456,28 @@
+             UrlFetcher.GENERIC_FETCH_WARN,
+         )
+ 
++        basic_user = None
++        basic_pwd = None
++        https_validate_cert = True
++        avail_data = self._settings['repositories']['available']
++        repo_data = avail_data[self._repository_id]
++
++        if repo_data.has_key('username'):
++            basic_user = repo_data['username']
++        if repo_data.has_key('password'):
++            basic_pwd = repo_data['password']
++        if repo_data.has_key('https_validate_cert') and \
++                repo_data['https_validate_cert'] == "false":
++            https_validate_cert = False
++
+         for delta_url, delta_save in download_plan:
+ 
+             delta_fetcher = self._entropy._url_fetcher(delta_url,
+                 delta_save, resume = delta_resume,
+-                abort_check_func = fetch_abort_function)
++                abort_check_func = fetch_abort_function,
++                http_basic_user = basic_user,
++                http_basic_pwd = basic_pwd,
++                https_validate_cert = https_validate_cert)
+ 
+             try:
+                 # make sure that we don't need to abort already
+@@ -550,9 +567,29 @@
+         if os.path.isfile(download_path) and os.path.exists(download_path):
+             existed_before = True
+ 
++        avail_data = self._settings['repositories']['available']
++        repo_data = avail_data[self._repository_id]
++
++        if repo_data.has_key('username'):
++            basic_user = repo_data['username']
++        else:
++            basic_user = None
++        if repo_data.has_key('password'):
++            basic_pwd = repo_data['password']
++        else:
++            basic_pwd = None
++        if repo_data.has_key('https_validate_cert') and \
++                repo_data['https_validate_cert'] == "false":
++            https_validate_cert = False
++        else:
++            https_validate_cert = True
++
+         fetch_intf = self._entropy._url_fetcher(
+             url, download_path, resume = resume,
+-            abort_check_func = fetch_abort_function)
++            abort_check_func = fetch_abort_function,
++            http_basic_user = basic_user,
++            http_basic_pwd = basic_pwd,
++            https_validate_cert = https_validate_cert)
+ 
+         if (package_id is not None) and (repository_id is not None):
+             self._setup_differential_download(
+diff -rua entropy-296/lib/entropy/client/interfaces/package/actions/multifetch.py entropy-296-r1/lib/entropy/client/interfaces/package/actions/multifetch.py
+--- entropy-296/lib/entropy/client/interfaces/package/actions/multifetch.py	2015-03-17 17:16:55.000000000 +0100
++++ entropy-296-r1/lib/entropy/client/interfaces/package/actions/multifetch.py	2015-04-16 18:35:20.552389114 +0200
+@@ -382,7 +382,7 @@
+ 
+         return fetched_url_data, data_transfer, 0
+ 
+-    def _download_files(self, url_data, resume = True):
++    def _download_files(self, url_data, resume = True, repository_id = None):
+         """
+         Effectively fetch the package files.
+         """
+@@ -449,6 +449,7 @@
+                     validated_download_ids.add(download_id)
+ 
+         url_path_list = []
++        last_repos_id = None
+         for pkg_id, repository_id, url, download_path, _cksum, _sig in url_data:
+             url_path_list.append((url, download_path))
+ 
+@@ -463,10 +464,27 @@
+                         resume, download_path,
+                         repository_id, pkg_id)
+ 
++                    # This is horrible but probably
++                    # MultipleUrlFetcher must be reimplemented.
++                    last_repos_id = repository_id
++
+             finally:
+                 if lock is not None:
+                     lock.close()
+ 
++        avail_data = self._settings['repositories']['available']
++        repo_data = avail_data[last_repos_id]
++        basic_user = None
++        basic_pwd = None
++        https_validate_cert = True
++        if repo_data.has_key('username'):
++            basic_user = repo_data['username']
++        if repo_data.has_key('password'):
++            basic_pwd = repo_data['password']
++        if repo_data.has_key('https_validate_cert') and \
++                repo_data['https_validate_cert'] == "false":
++            https_validate_cert = False
++
+         fetch_abort_function = self._meta.get('fetch_abort_function')
+         fetch_intf = self._entropy._multiple_url_fetcher(
+             url_path_list, resume = resume,
+@@ -474,7 +492,10 @@
+             url_fetcher_class = self._entropy._url_fetcher,
+             download_context_func = download_context,
+             pre_download_hook = pre_download_hook,
+-            post_download_hook = post_download_hook)
++            post_download_hook = post_download_hook,
++            http_basic_user = basic_user,
++            http_basic_pwd = basic_pwd,
++            https_validate_cert = https_validate_cert)
+         try:
+             # make sure that we don't need to abort already
+             # doing the check here avoids timeouts
+@@ -757,7 +778,8 @@
+                         (exit_st, failed_downloads,
+                          data_transfer) = self._download_files(
+                              updated_fetch_files_list,
+-                             resume = do_resume)
++                             resume = do_resume,
++                             repository_id = repository_id)
+ 
+                 if exit_st == 0:
+                     show_successful_download(
 diff -rua entropy-296/lib/entropy/core/settings/base.py entropy-296-r1/lib/entropy/core/settings/base.py
 --- entropy-296/lib/entropy/core/settings/base.py	2015-03-17 17:16:55.000000000 +0100
 +++ entropy-296-r1/lib/entropy/core/settings/base.py	2015-04-16 12:07:36.271516845 +0200
@@ -323,10 +456,9 @@ diff -rua entropy-296/lib/entropy/core/settings/base.py entropy-296-r1/lib/entro
                      if ini_excluded or ini_conf_excluded:
                          data['excluded'][ini_repository] = ini_data
                      else:
-Only in entropy-296-r1/lib/entropy/core/settings: .base.py.swp
 diff -rua entropy-296/lib/entropy/fetchers.py entropy-296-r1/lib/entropy/fetchers.py
 --- entropy-296/lib/entropy/fetchers.py	2015-03-17 17:16:55.000000000 +0100
-+++ entropy-296-r1/lib/entropy/fetchers.py	2015-04-16 13:12:32.169713652 +0200
++++ entropy-296-r1/lib/entropy/fetchers.py	2015-04-16 18:36:04.022545726 +0200
 @@ -77,7 +77,9 @@
                   abort_check_func = None, disallow_redirect = False,
                   thread_stop_func = None, speed_limit = None,
@@ -355,7 +487,15 @@ diff -rua entropy-296/lib/entropy/fetchers.py entropy-296-r1/lib/entropy/fetcher
      @staticmethod
      def _get_url_protocol(url):
          return url.split(":")[0]
-@@ -583,8 +592,23 @@
+@@ -363,6 +372,7 @@
+                 self.__download_context_func,
+                 self.__pre_download_hook, self.__post_download_hook)
+         )
++
+         if downloader is None:
+             # return error, protocol not supported
+             self._update_speed()
+@@ -583,8 +593,23 @@
          )
  
          if url_protocol in ("http", "https"):
@@ -380,7 +520,7 @@ diff -rua entropy-296/lib/entropy/fetchers.py entropy-296-r1/lib/entropy/fetcher
          else:
              req = url
  
-@@ -594,7 +618,19 @@
+@@ -594,7 +619,19 @@
  
              # get file size if available
              try:
@@ -401,4 +541,39 @@ diff -rua entropy-296/lib/entropy/fetchers.py entropy-296-r1/lib/entropy/fetcher
              except KeyboardInterrupt:
                  self.__urllib_close(False)
                  raise
-Only in entropy-296-r1/lib/entropy: .fetchers.py.swp
+@@ -976,7 +1013,9 @@
+                  abort_check_func = None, disallow_redirect = False,
+                  url_fetcher_class = None, timeout = None,
+                  download_context_func = None,
+-                 pre_download_hook = None, post_download_hook = None):
++                 pre_download_hook = None, post_download_hook = None,
++                 http_basic_user = None, http_basic_pwd = None,
++                 https_validate_cert = True):
+         """
+         @param url_path_list: list of tuples composed by url and
+             path to save, for eg. [(url,path_to_save,),...]
+@@ -1045,6 +1084,12 @@
+         if self.__url_fetcher == None:
+             self.__url_fetcher = UrlFetcher
+ 
++        # HTTP Basic Authentication parameters
++        self.__http_basic_user = http_basic_user
++        self.__http_basic_pwd = http_basic_pwd
++        # SSL Context options
++        self.__https_validate_cert = https_validate_cert
++
+     def __handle_threads_stop(self):
+         if self.__stop_threads:
+             raise InterruptError("interrupted")
+@@ -1128,7 +1173,10 @@
+                 timeout = self.__timeout,
+                 download_context_func = self.__download_context_func,
+                 pre_download_hook = self.__pre_download_hook,
+-                post_download_hook = self.__post_download_hook
++                post_download_hook = self.__post_download_hook,
++                http_basic_user = self.__http_basic_user,
++                http_basic_pwd = self.__http_basic_pwd,
++                https_validate_cert = self.__https_validate_cert
+             )
+             downloader.set_id(th_id)
+ 
