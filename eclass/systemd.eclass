@@ -177,7 +177,7 @@ systemd_install_serviced() {
 	[[ ${src} ]] || die "No file specified"
 
 	if [[ ! ${service} ]]; then
-		[[ ${src} == *.conf ]] || die "Source file needs .conf suffix"
+		[[ ${src} == *.service.conf ]] || die "Source file needs .service.conf suffix"
 		service=${src##*/}
 		service=${service%.conf}
 	fi
@@ -185,7 +185,7 @@ systemd_install_serviced() {
 	[[ ${service} == *.d ]] && die "Service must not have .d suffix"
 
 	(
-		insinto /etc/systemd/system/"${service}".service.d
+		insinto /etc/systemd/system/"${service}".d
 		newins "${src}" 00gentoo.conf
 	)
 }

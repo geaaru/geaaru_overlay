@@ -402,7 +402,7 @@ src_install() {
 	# From here, only libvirtd-related instructions, be warned!
 
 	use systemd && \
-		systemd_install_serviced "${FILESDIR}"/libvirtd.service.conf libvirtd
+		systemd_install_serviced "${FILESDIR}"/libvirtd.service.conf
 
 	newinitd "${S}/libvirtd.init" libvirtd || die
 	newconfd "${FILESDIR}/libvirtd.confd-r4" libvirtd || die
