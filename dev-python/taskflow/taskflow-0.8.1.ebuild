@@ -31,13 +31,19 @@ DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
 				>=dev-python/testtools-0.9.34[${PYTHON_USEDEP}] )"
 RDEPEND=">=dev-python/anyjson-0.3.3[${PYTHON_USEDEP}]
 		>=dev-python/iso8601-0.1.9[${PYTHON_USEDEP}]
-		>=dev-python/six-1.7.0[${PYTHON_USEDEP}]
+		>=dev-python/six-1.9.0[${PYTHON_USEDEP}]
 		>=dev-python/networkx-1.8[${PYTHON_USEDEP}]
+		>=dev-python/jsonschema-2.0.0[${PYTHON_USEDEP}]
 		>=dev-python/Babel-1.3[${PYTHON_USEDEP}]
-		>=dev-python/stevedore-1.1.0[${PYTHON_USEDEP}]
-		>=dev-python/futures-2.1.6[${PYTHON_USEDEP}]"
+		>=dev-python/stevedore-1.3.0[${PYTHON_USEDEP}]
+		<dev-python/stevedore-1.4.0[${PYTHON_USEDEP}]
+		python_targets_python2_7? (
+			>=dev-python/futures-2.1.6[python_targets_python2_7?]
+		)
+		<dev-python/jsonschema-3.0.0[${PYTHON_USEDEP}]
+		>=dev-python/oslo-utils-1.4.0[${PYTHON_USEDEP}]
+		<dev-python/oslo-utils-1.5.0[${PYTHON_USEDEP}]
+		>=dev-python/oslo-serialization-1.4.0[${PYTHON_USEDEP}]
+		<dev-python/oslo-serialization-1.5.0[${PYTHON_USEDEP}]
+"
 
-python_test() {
-	testr init
-	testr run --parallel || die "testsuite failed under python2.7"
-}
