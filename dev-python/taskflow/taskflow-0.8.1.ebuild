@@ -45,5 +45,6 @@ RDEPEND=">=dev-python/anyjson-0.3.3[${PYTHON_USEDEP}]
 		<dev-python/oslo-utils-1.5.0[${PYTHON_USEDEP}]
 		>=dev-python/oslo-serialization-1.4.0[${PYTHON_USEDEP}]
 		<dev-python/oslo-serialization-1.5.0[${PYTHON_USEDEP}]
+		>=dev-python/debtcollector-0.3.0[${PYTHON_USEDEP}]
 "
 
