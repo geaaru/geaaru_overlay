@@ -217,6 +217,8 @@ src_install() {
 	# from mods-enabled directory.
 	rm ${D}/etc/raddb/mods-enabled/{cache_eap,digest,eap,mschap,ntlm_auth}
 
+	systemd_install_serviced "${FILESDIR}"/freeradius.service.conf
+
 	prune_libtool_files
 }
 
