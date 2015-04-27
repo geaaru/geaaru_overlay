@@ -43,6 +43,14 @@ src_unpack() {
 	cd ${S}
 }
 
+src_configure() {
+
+	# Change path to logfile
+	sed -i -e \
+		's/log4j.appender.out.file=.*/log4j.appender.out.file=\/var\/log\/smx\/servicemix.log/g' \
+		etc/org.ops4j.pax.logging.cfg
+}
+
 src_install() {
 
 	INSTDIR="/opt"
