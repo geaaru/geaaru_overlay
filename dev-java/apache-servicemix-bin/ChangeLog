@@ -1,0 +1,7 @@
+# ChangeLog for dev-java/apache-servicemix-bin
+# Copyright 1999-2015 Gentoo Foundation; Distributed under the GPL v2
+# $Id$
+
+	27 Apr 2015; Geaaru <geaaru@gmail.com> apache-servicemix-bin-6.0.0.ebuild
+	Bump of apache-servicemicix-6.0.0.M1 release.
+
