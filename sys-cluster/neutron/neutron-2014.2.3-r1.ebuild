@@ -98,11 +98,11 @@ RDEPEND="
 	openvswitch? ( net-misc/openvswitch )
 	dhcp? ( net-dns/dnsmasq[dhcp-tools] )"
 
-PATCHES=(
-	"${FILESDIR}/0001-Fixes-bug-in-interface-handling-of-ip_lib.py.patch"
-	"${FILESDIR}/0002-moving-vxlan-module-check-to-sanity-checks-and-makin.patch"
-	"${FILESDIR}/0003-fixes-error-logging-to-use-the-right-exception-paren.patch"
-)
+#PATCHES=(
+#	"${FILESDIR}/0001-Fixes-bug-in-interface-handling-of-ip_lib.py.patch"
+#	"${FILESDIR}/0002-moving-vxlan-module-check-to-sanity-checks-and-makin.patch"
+#	"${FILESDIR}/0003-fixes-error-logging-to-use-the-right-exception-paren.patch"
+#)
 
 pkg_setup() {
 	linux-info_pkg_setup
