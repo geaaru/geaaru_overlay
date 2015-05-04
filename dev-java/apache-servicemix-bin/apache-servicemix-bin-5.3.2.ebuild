@@ -31,7 +31,7 @@ DEPEND=">=virtual/jdk-1.7
 pkg_setup() {
 	ebegin "Creating smx group and user"
 	enewgroup smx
-	enewuser smx -1 -1 /dev/null smx
+	enewuser smx -1 -1 /var/lib/smx smx
 	eend ${?}
 }
 
@@ -56,6 +56,7 @@ src_install() {
 	INSTDIR="/opt"
 
 	dodir /var/log/smx/
+	dodir /var/lib/smx/
 
 	insinto ${INSTDIR}/${PF}/bin
 	newins bin/admin "admin"
@@ -82,7 +83,8 @@ src_install() {
 	dodoc LICENSE NOTICE README RELEASE-NOTES
 
 	fowners smx:smx /etc/default/smx5.conf /var/log/smx/
-	fowners smx:smx ${INSTDIR}/${PF}
+	fowners smx:smx -R /var/lib/smx/
+	fowners smx:smx -R ${INSTDIR}/${PF}
 
 	einfo "Configure /etc/default/smx5.conf before start service."
 }
