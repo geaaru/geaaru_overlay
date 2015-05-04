@@ -56,7 +56,7 @@ src_install() {
 	INSTDIR="/opt"
 
 	dodir /var/log/smx/
-	dodir /var/lib/smx/
+	# /var/lib/smx/ is a directory created on add user smx.
 
 	exeinto ${INSTDIR}/${PF}/bin
 	newexe bin/admin "admin"
@@ -70,6 +70,10 @@ src_install() {
 
 	insinto /etc/default/
 	newins ${FILESDIR}/servicemix.conf "smx5.conf"
+
+	# Fix conffile path
+	sed -i -e 's/conffile=.*/conffile=\/etc\/default\/smx5.conf/g' \
+		${D}/${INSTDIR}/${PF}/bin/karaf_linux.sh
 
 	for dir in data deploy etc lib licenses system ; do
 		cp -r ${S}/${dir} ${D}/${INSTDIR}/${PF}/${dir}/

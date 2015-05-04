@@ -30,7 +30,7 @@ init_env_vars () {
 
     KARAF_ARGS=""
 
-    # Check Service Mix 4 karaf home directory
+    # Check Service Mix karaf home directory
     if [ x"${karaf_home_dir}" == x ] ; then
         error "You need to set karaf_home_dir on configure file" && exit 1
     else
@@ -52,7 +52,7 @@ init_env_vars () {
         KARAF_ARGS="$KARAF_ARGS -Dkaraf.base=${karaf_home_dir}"
     fi
 
-    # Check Service Mix 4 Karaf Data directory
+    # Check Service Mix Karaf Data directory
     if [ x"${karaf_data_dir}" != x ] ; then
         if [ ! -d "${karaf_data_dir}" ] ; then
             error "Invalid directory for karaf_data_dir: ${karaf_data_dir}" && exit 1
@@ -64,7 +64,7 @@ init_env_vars () {
         KARAF_ARGS="$KARAF_ARGS -Dkaraf.data=${karaf_home_dir}/data"
     fi
 
-    # Check Service Mix 4 Karaf instances directory
+    # Check Service Mix Karaf instances directory
     if [ x"${karaf_instances_dir}" != x ] ; then
         if [ ! -d "${karaf_instances_dir}" ] ; then
             error "Invalid directory for karaf_instances_dir: ${karaf_instances_dir}"  && exit 1
@@ -74,7 +74,17 @@ init_env_vars () {
         KARAF_ARGS="$KARAF_ARGS -Dkaraf.instances=${karaf_home_dir}/instances"
     fi
 
-    # Check Service Mix 4 Karaf logging property file
+    # Check Service Mix Karaf etc directory
+    if [ x"${karaf_etc_dir}" != x ] ; then
+        if [ ! -d "${karaf_etc_dir}" ] ; then
+            error "Invalid directory for karaf_etc_dir: ${karaf_etc_dir}"  && exit 1
+        fi
+        KARAF_ARGS="$KARAF_ARGS -Dkaraf.etc=${karaf_etc_dir}"
+    else
+        KARAF_ARGS="$KARAF_ARGS -Dkaraf.etc=${karaf_home_dir}/etc"
+    fi
+
+    # Check Service Mix Karaf logging property file
     if [ x"${logging_prop_file}" != x ] ; then
         if [ ! -e "${logging_prop_file}" ] ; then
             error "Invalid logging property file: ${logging_prop_file}" && exit 1
@@ -147,12 +157,6 @@ init_env_vars () {
         KARAF_ARGS="$KARAF_ARGS -Dsun.rmi.dgc.server.gcInterval=3600000"
     fi
 
-    if [ x"$java_force_ipv4" != x ]; then
-        KARAF_ARGS="$KARAF_ARGS -Djava.net.preferIPv4Stack=$java_force_ipv4"
-    else
-        KARAF_ARGS="$KARAF_ARGS -Djava.net.preferIPv4Stack=true"
-    fi
-
     if [ x"$java_endorsed_dirs" != x ]; then
         KARAF_ARGS="$KARAF_ARGS -Djava.endorsed.dirs=\"${JAVA_HOME}/jre/lib/endorsed:${JAVA_HOME}/lib/endorsed:$java_endorsed_dirs\""
     else
@@ -175,6 +179,9 @@ init_env_vars () {
 
     # Set temporary dir
     KARAF_ARGS="$KARAF_ARGS -Djava.io.tmpdir=${KARAF_DATA}/tmp"
+
+    # Set managament builder initial class
+    KARAF_ARGS="$KARAF_ARGS -Djavax.management.builder.initial=org.apache.karaf.management.boot.KarafMBeanServerBuilder "
 
     # Add the jars in the lib dir
     for file in ${karaf_home_dir}/lib/karaf*.jar
@@ -333,8 +340,10 @@ start () {
             echo "Something goes wrong!!!"
             exit 1
         else
-	    pidfile=$!
-            echo $pidfile > $KARAF_PIDFILE
+            # Pidfile write is needed is systemd .service
+            # has PIDFile= option.
+            #pidfile=$!
+            #echo $pidfile > $KARAF_PIDFILE
             ans=0
         fi
 
@@ -427,11 +436,19 @@ stop () {
 
         $SU -c "$JAVA $KARAF_ARGS -classpath \"$CLASSPATH\" $KARAF_BIN" - $KARAF_USER >/dev/null 2>&1
         if [ $? -ne 0 ] ; then
-            echo "ERROR"
+            echo "Error on stop KARAF Server."
         else
 
             wait_karaf_shutdown
             $RM -f $KARAF_PIDFILE
+            ans=0
+        fi
+
+    else
+        eval "$JAVA $KARAF_ARGS -classpath \"$CLASSPATH\" $KARAF_BIN"
+        if [ $? -ne 0 ] ; then
+            echo "Error on stop KARAF Server."
+            ans=1
         fi
 
     fi

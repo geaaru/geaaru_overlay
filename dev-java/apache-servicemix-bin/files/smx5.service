@@ -17,7 +17,9 @@ WorkingDirectory=/opt/apache-servicemix/
 ExecStartPre=/opt/apache-servicemix/bin/karaf_linux.sh check
 ExecStart=/opt/apache-servicemix/bin/karaf_linux.sh start
 RuntimeDirectory=smx
-PIDFile=/var/run/smx/smx.pid
+# If enable Type forking PIDFile is not needed.
+Type=forking
+#PIDFile=/var/run/smx/smx5.pid
 
 # Set KILL signal after 60 seconds if service is already up after SIGTERM
 TimeoutStopSec=60

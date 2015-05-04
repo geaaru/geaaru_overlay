@@ -30,8 +30,8 @@ DEPEND=">=virtual/jdk-1.8
 
 pkg_setup() {
 	ebegin "Creating smx group and user"
-#	enewgroup smx
-#	enewuser smx -1 -1 /dev/null smx
+	enewgroup smx
+	enewuser smx -1 -1 /var/lib/smx smx
 	eend ${?}
 }
 
@@ -56,15 +56,16 @@ src_install() {
 	INSTDIR="/opt"
 
 	dodir /var/log/smx/
-	insinto ${INSTDIR}/${PF}/bin
-	newins bin/client "client"
-	newins bin/instance "instance"
-	newins bin/karaf "karaf"
-	newins bin/servicemix "servicemix"
-	newins bin/setenv "setenv"
-	newins bin/shell "shell"
-	newins bin/status "status"
-	newins ${FILESDIR}/karaf_linux.sh "karaf_linux.sh"
+
+	exeinto ${INSTDIR}/${PF}/bin
+	newexe bin/client "client"
+	newexe bin/instance "instance"
+	newexe bin/karaf "karaf"
+	newexe bin/servicemix "servicemix"
+	newexe bin/setenv "setenv"
+	newexe bin/shell "shell"
+	newexe bin/status "status"
+	newexe ${FILESDIR}/karaf_linux.sh "karaf_linux.sh"
 
 	insinto /etc/default/
 	newins ${FILESDIR}/servicemix.conf "servicemix.conf"
@@ -73,6 +74,10 @@ src_install() {
 		cp -r ${S}/${dir} ${D}/${INSTDIR}/${PF}/${dir}/
 		
 	done
+
+	# Fix conffile path
+	sed -i -e 's/conffile=.*/conffile=\/etc\/default\/servicemix.conf/g' \
+		${D}/${INSTDIR}/${PF}/bin/karaf_linux.sh
 
 	# Temporary create a link under /opt/ to current release version.
 	# In the next future will be a eselect-smx tool.
@@ -84,6 +89,10 @@ src_install() {
 	systemd_install_serviced "${FILESDIR}"/servicemix.service.conf
 
 	dodoc LICENSE NOTICE README RELEASE-NOTES
+
+	fowners smx:smx /etc/default/servicemix.conf /var/log/smx/
+	fowners smx:smx -R /var/lib/smx/
+	fowners smx:smx -R ${INSTDIR}/${PF}
 
 	einfo "Configure /etc/default/servicemix.conf before start service."
 }
