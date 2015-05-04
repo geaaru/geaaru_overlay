@@ -58,7 +58,7 @@ src_install() {
 	dodir /var/log/smx/
 	dodir /var/lib/smx/
 
-	insinto ${INSTDIR}/${PF}/bin
+	exeinto ${INSTDIR}/${PF}/bin
 	newexe bin/admin "admin"
 	newexe bin/client "client"
 	newexe bin/karaf "karaf"
