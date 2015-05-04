@@ -91,7 +91,6 @@ src_install() {
 	dodoc LICENSE NOTICE README RELEASE-NOTES
 
 	fowners smx:smx /etc/default/servicemix.conf /var/log/smx/
-	fowners smx:smx -R /var/lib/smx/
 	fowners smx:smx -R ${INSTDIR}/${PF}
 
 	einfo "Configure /etc/default/servicemix.conf before start service."

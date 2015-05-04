@@ -87,7 +87,6 @@ src_install() {
 	dodoc LICENSE NOTICE README RELEASE-NOTES
 
 	fowners smx:smx /etc/default/smx5.conf /var/log/smx/
-	fowners smx:smx -R /var/lib/smx/
 	fowners smx:smx -R ${INSTDIR}/${PF}
 
 	einfo "Configure /etc/default/smx5.conf before start service."
