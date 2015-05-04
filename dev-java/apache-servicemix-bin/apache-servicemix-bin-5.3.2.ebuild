@@ -59,14 +59,14 @@ src_install() {
 	dodir /var/lib/smx/
 
 	insinto ${INSTDIR}/${PF}/bin
-	newins bin/admin "admin"
-	newins bin/client "client"
-	newins bin/karaf "karaf"
-	newins bin/servicemix "servicemix"
-	newins bin/setenv "setenv"
-	newins bin/shell "shell"
-	newins bin/status "status"
-	newins ${FILESDIR}/karaf_linux.sh "karaf_linux.sh"
+	newexe bin/admin "admin"
+	newexe bin/client "client"
+	newexe bin/karaf "karaf"
+	newexe bin/servicemix "servicemix"
+	newexe bin/setenv "setenv"
+	newexe bin/shell "shell"
+	newexe bin/status "status"
+	newexe ${FILESDIR}/karaf_linux.sh "karaf_linux.sh"
 
 	insinto /etc/default/
 	newins ${FILESDIR}/servicemix.conf "smx5.conf"
