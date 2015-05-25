@@ -1,0 +1,8 @@
+# ChangeLog for net-dialup/freeradius-sql-ocioracle
+# Copyright 1999-2015 Gentoo Foundation; Distributed under the GPL v2
+# $Header$
+
+* freeradius-sql-ocioracle-0.2.0-r1 (25 May 2015)
+
+  25 May 2015; Geaaru <geaaru@gmail.com> +freeradius-sql-ocioracle-0.2.0-r1.ebuild:
+  Migratee module to freeradius-3.0.8
