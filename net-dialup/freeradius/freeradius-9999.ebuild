@@ -13,7 +13,7 @@ MY_P="${PN}-server-${PV}"
 
 EGIT_REPO_URI="https://github.com/FreeRADIUS/freeradius-server.git"
 EGIT_PROJECT="freeradius-server"
-EGIT_COMMIT="v3.0.x"
+EGIT_BRANCH="v3.0.x"
 
 DESCRIPTION="Highly configurable free RADIUS server"
 HOMEPAGE="http://www.freeradius.org/"
