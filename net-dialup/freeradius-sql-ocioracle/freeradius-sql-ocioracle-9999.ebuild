@@ -5,7 +5,7 @@
 EAPI=5
 
 FREERADIUS_MOD_TYPE="sql"
-FREERADIUS_VERSION="3.0.7"
+FREERADIUS_VERSION="3.0.8"
 
 SLOT="3.0"
 
@@ -27,8 +27,7 @@ IUSE=""
 REQUIRED_USE=""
 
 RDEPEND="
-	>=net-dialup/freeradius-${FREERADIUS_VERSION}
-	<=net-dialup/freeradius-3.1
+	net-dialup/freeradius
 	sys-devel/libtool
 	dev-lang/perl
 	sys-libs/gdbm
