@@ -137,6 +137,9 @@ src_prepare() {
 	usesqldriver oracle
 	usesqldriver sqlite
 
+	# Add preproxy/postproxy methods to sqlippool module
+	epatch "${FILESDIR}"/freeradius-3.0.9-add_proxy2sqlippool.patch
+
 	epatch_user
 
 	eautoreconf
