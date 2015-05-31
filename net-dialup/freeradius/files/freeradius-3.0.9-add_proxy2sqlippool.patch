@@ -1,40 +1,45 @@
 diff --git a/src/modules/rlm_sqlippool/rlm_sqlippool.c b/src/modules/rlm_sqlippool/rlm_sqlippool.c
-index d24aeed..9dedc3c 100644
+index d24aeed..78d519e 100644
 --- a/src/modules/rlm_sqlippool/rlm_sqlippool.c
 +++ b/src/modules/rlm_sqlippool/rlm_sqlippool.c
-@@ -49,6 +49,7 @@ typedef struct rlm_sqlippool_t {
+@@ -49,6 +49,9 @@ typedef struct rlm_sqlippool_t {
  	int		framed_ip_address; 	//!< the attribute number for Framed-IP(v6)-Address
  
  	time_t		last_clear;		//!< So we only do it once a second.
++#ifdef WITH_PROXY
 +	time_t		proxy_last_clear;	//!< So we only do it once a second (for proxy section)
++#endif
  	char const	*allocate_begin;	//!< SQL query to begin.
  	char const	*allocate_clear;	//!< SQL query to clear an IP.
  	char const	*allocate_find;		//!< SQL query to find an unused IP.
-@@ -82,6 +83,20 @@ typedef struct rlm_sqlippool_t {
+@@ -82,6 +85,22 @@ typedef struct rlm_sqlippool_t {
  	char const	*off_clear;		//!< SQL query to clear an entire NAS.
  	char const	*off_commit;		//!< SQL query to commit.
  
++#ifdef WITH_PROXY
 +						/* Pre proxy sequence */
-+	char const	*preproxy_begin;	//<! SQL query to begin
-+	char const	*preproxy_clear;	//<! SQL query to clear an IP.
-+	char const	*preproxy_find;		//<! SQL query to find an used IP.
-+	char const	*preproxy_update;	//<! SQL query to update an IP entry.
-+	char const	*preproxy_commit;	//<! SQL query to commit.
++	char const	*preproxy_begin;	//!< SQL query to begin
++	char const	*preproxy_clear;	//!< SQL query to clear an IP.
++	char const	*preproxy_find;		//!< SQL query to find an used IP.
++	char const	*preproxy_update;	//!< SQL query to update an IP entry.
++	char const	*preproxy_commit;	//!< SQL query to commit.
 +
 +						/* Post proxy sequence */
-+	char const	*postproxy_begin;	//<! SQL query to begin
-+	char const	*postproxy_clear;	//<! SQL query to clear an IP.
-+	char const	*postproxy_find;	//<! SQL query to find an used IP.
-+	char const	*postproxy_update;	//<! SQL query to update an IP entry.
-+	char const	*postproxy_commit;	//<! SQL query to commit.
++	char const	*postproxy_begin;	//!< SQL query to begin
++	char const	*postproxy_clear;	//!< SQL query to clear an IP.
++	char const	*postproxy_find;	//!< SQL query to find an used IP.
++	char const	*postproxy_update;	//!< SQL query to update an IP entry.
++	char const	*postproxy_commit;	//!< SQL query to commit.
++#endif
 +
  						/* Logging Section */
  	char const	*log_exists;		//!< There was an ip address already assigned.
  	char const	*log_success;		//!< We successfully allocated ip address from pool.
-@@ -198,6 +213,26 @@ static CONF_PARSER module_config[] = {
+@@ -198,6 +217,27 @@ static CONF_PARSER module_config[] = {
  	{ "off-commit", FR_CONF_OFFSET(PW_TYPE_STRING | PW_TYPE_XLAT | PW_TYPE_DEPRECATED, rlm_sqlippool_t, off_commit), NULL },
  	{ "off_commit", FR_CONF_OFFSET(PW_TYPE_STRING | PW_TYPE_XLAT, rlm_sqlippool_t, off_commit), "COMMIT" },
  
++#ifdef WITH_PROXY
 +	{ "preproxy_begin", FR_CONF_OFFSET(PW_TYPE_STRING | PW_TYPE_XLAT, rlm_sqlippool_t, preproxy_begin), NULL },
 +
 +	{ "preproxy_clear", FR_CONF_OFFSET(PW_TYPE_STRING | PW_TYPE_XLAT, rlm_sqlippool_t, preproxy_clear), NULL },
@@ -54,11 +59,11 @@ index d24aeed..9dedc3c 100644
 +	{ "postproxy_find", FR_CONF_OFFSET(PW_TYPE_STRING | PW_TYPE_XLAT, rlm_sqlippool_t, postproxy_find), NULL },
 +
 +	{ "postproxy_update", FR_CONF_OFFSET(PW_TYPE_STRING | PW_TYPE_XLAT, rlm_sqlippool_t, postproxy_update), NULL },
-+
++#endif
  	{ "messages", FR_CONF_POINTER(PW_TYPE_SUBSECTION, NULL), (void const *) message_config },
  
  	{ NULL, -1, 0, NULL, NULL }
-@@ -300,9 +335,9 @@ static int sqlippool_command(char const * fmt, rlm_sql_handle_t * handle, rlm_sq
+@@ -300,9 +340,9 @@ static int sqlippool_command(char const * fmt, rlm_sql_handle_t * handle, rlm_sq
  	int ret;
  
  	/*
@@ -70,7 +75,7 @@ index d24aeed..9dedc3c 100644
  
  	/*
  	 *	@todo this needs to die (should just be done in xlat expansion)
-@@ -343,6 +378,11 @@ static int CC_HINT(nonnull (1, 3, 4, 5)) sqlippool_query1(char *out, int outlen,
+@@ -343,6 +383,11 @@ static int CC_HINT(nonnull (1, 3, 4, 5)) sqlippool_query1(char *out, int outlen,
  	int rlen, retval;
  
  	/*
@@ -82,7 +87,7 @@ index d24aeed..9dedc3c 100644
  	 *	@todo this needs to die (should just be done in xlat expansion)
  	 */
  	sqlippool_expand(query, sizeof(query), fmt, data, param, param_len);
-@@ -722,6 +762,176 @@ static rlm_rcode_t CC_HINT(nonnull) mod_accounting(void *instance, REQUEST *requ
+@@ -722,6 +767,176 @@ static rlm_rcode_t CC_HINT(nonnull) mod_accounting(void *instance, REQUEST *requ
  	return rcode;
  }
  
@@ -90,8 +95,8 @@ index d24aeed..9dedc3c 100644
 +
 +/**
 + * Internal function for handle PRE_PROXY and POST_PROXY sections.
-+ * @param instance
-+ * @param request
++ * @param instance         rlm_sqlippool_t structure of the current instance.
++ * @param request          Packet request
 + * @param proxy_section    Identify section: 0 --> PRE_PROXY, 1 --> POST_PROXY.
 + */
 +static rlm_rcode_t sqlippool_proxy (void *instance, REQUEST *request, char proxy_section)
@@ -259,7 +264,7 @@ index d24aeed..9dedc3c 100644
  /*
   *	The module name should be the only globally exported symbol.
   *	That is, everything else should be 'static'.
-@@ -741,6 +951,10 @@ module_t rlm_sqlippool = {
+@@ -741,6 +956,10 @@ module_t rlm_sqlippool = {
  	.instantiate	= mod_instantiate,
  	.methods = {
  		[MOD_ACCOUNTING]	= mod_accounting,
