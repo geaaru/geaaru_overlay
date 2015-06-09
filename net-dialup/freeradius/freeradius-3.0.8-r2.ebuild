@@ -139,6 +139,7 @@ src_prepare() {
 
 	# Dynamic clients patch
 	epatch "${FILESDIR}"/freeradius-3.0.8_3ed8cadfd3033cea67769454415aca65469ea5c5.patch
+	epatch "${FILESDIR}"/freeradius-3.0.8_speedup_rlm_sqlippool_bfb0cad.patch
 
 	epatch_user
 
