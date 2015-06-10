@@ -139,7 +139,10 @@ src_prepare() {
 
 	# Dynamic clients patch
 	epatch "${FILESDIR}"/freeradius-3.0.8_3ed8cadfd3033cea67769454415aca65469ea5c5.patch
+	# Patch to bypass empty strings in rlm_sqlippool
 	epatch "${FILESDIR}"/freeradius-3.0.8_speedup_rlm_sqlippool_bfb0cad.patch
+	# Patch remove mandatory parameters from rlm_sqlippool
+	epatch "${FILESDIR}"/freeradius-3.0.8_sqlippool_mandatory_params.patch
 
 	epatch_user
 
