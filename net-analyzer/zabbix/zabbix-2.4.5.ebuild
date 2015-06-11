@@ -73,48 +73,12 @@ src_prepare() {
 }
 
 pkg_setup() {
-	if use server || use proxy ; then
-		local dbnum dbtypes="mysql oracle postgres sqlite" dbtype
-		declare -i dbnum=0
-		for dbtype in ${dbtypes}; do
-			use ${dbtype} && let dbnum++
-		done
-		if [ ${dbnum} -gt 1 ]; then
-			eerror
-			eerror "You can't use more than one database type in Zabbix."
-			eerror "Select exactly one database type out of these: ${dbtypes}"
-			eerror
-			die "Multiple database types selected."
-		elif [ ${dbnum} -lt 1 ]; then
-			eerror
-			eerror "Select exactly one database type out of these: ${dbtypes}"
-			eerror
-			die "No database type selected."
-		fi
-		if use oracle; then
-			if [ -z "${ORACLE_HOME}" ]; then
-				eerror
-				eerror "The environment variable ORACLE_HOME must be set"
-				eerror "and point to the correct location."
-				eerror "It looks like you don't have Oracle installed."
-				eerror
-				die "Environment variable ORACLE_HOME is not set"
-			fi
-			if has_version 'dev-db/oracle-instantclient-basic'; then
-				ewarn
-				ewarn "Please ensure you have a full install of the Oracle client."
-				ewarn "dev-db/oracle-instantclient* is NOT sufficient."
-				ewarn
-			fi
-		fi
-	fi
-
 	if use frontend; then
 		webapp_pkg_setup
 	fi
 
-#	enewgroup zabbix
-#	enewuser zabbix -1 -1 /var/lib/zabbix/home zabbix
+	enewgroup zabbix
+	enewuser zabbix -1 -1 /var/lib/zabbix/home zabbix
 }
 
 pkg_postinst() {
