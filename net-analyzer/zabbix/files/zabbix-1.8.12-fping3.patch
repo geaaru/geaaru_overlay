@@ -1,0 +1,39 @@
+diff -up zabbix-1.8.12/src/libs/zbxicmpping/icmpping.c.fping3 zabbix-1.8.12/src/libs/zbxicmpping/icmpping.c
+--- zabbix-1.8.12/src/libs/zbxicmpping/icmpping.c.fping3	2012-04-24 16:31:36.000000000 +0200
++++ zabbix-1.8.12/src/libs/zbxicmpping/icmpping.c	2012-04-24 16:32:31.000000000 +0200
+@@ -42,34 +42,7 @@ static const char	*source_ip6_option = N
+ 
+ static void	get_source_ip_option(const char *fping, const char **option, unsigned char *checked)
+ {
+-	FILE	*f;
+-	char	*p, tmp[MAX_STRING_LEN];
+-
+-	zbx_snprintf(tmp, sizeof(tmp), "%s -h 2>&1", fping);
+-
+-	if (NULL == (f = popen(tmp, "r")))
+-		return;
+-
+-	while (NULL != fgets(tmp, sizeof(tmp), f))
+-	{
+-		for (p = tmp; isspace(*p); p++)
+-			;
+-
+-		if ('-' == p[0] && 'I' == p[1] && isspace(p[2]))
+-		{
+-			*option = "-I";
+-			break;
+-		}
+-
+-		if ('-' == p[0] && 'S' == p[1] && isspace(p[2]))
+-		{
+-			*option = "-S";
+-			break;
+-		}
+-	}
+-
+-	pclose(f);
+-
++	*option = "-S";
+ 	*checked = 1;
+ }
+ 
