@@ -53,6 +53,8 @@ pkg_setup() {
 src_unpack() {
 	unpack ${A}
 
+	cd ${P}
+
 	epatch "${FILESDIR}"/basic_auth_ssl_38d03dc200a618a70e6bf297bb8599463d7bf66f.patch
 }
 
