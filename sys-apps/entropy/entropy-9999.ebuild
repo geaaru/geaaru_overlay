@@ -52,12 +52,6 @@ pkg_setup() {
 	enewuser entropy-nopriv -1 -1 -1 entropy-nopriv || die "failed to create entropy-nopriv user"
 }
 
-src_unpack() {
-	unpack ${A}
-
-	epatch "${FILESDIR}"/support_basic_auth-https_selfsigned.patch
-}
-
 src_install() {
 	emake DESTDIR="${D}" LIBDIR="usr/lib" install || die "make install failed"
 
