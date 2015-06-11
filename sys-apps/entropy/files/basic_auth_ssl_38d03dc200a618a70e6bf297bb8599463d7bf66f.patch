@@ -1,54 +1,44 @@
-diff -rua entropy-296/lib/entropy/client/interfaces/db.py entropy-296-r1/lib/entropy/client/interfaces/db.py
---- entropy-296/lib/entropy/client/interfaces/db.py	2015-03-17 17:16:55.000000000 +0100
-+++ entropy-296-r1/lib/entropy/client/interfaces/db.py	2015-04-16 12:49:27.466240920 +0200
-@@ -396,6 +396,20 @@
+diff --git a/lib/entropy/client/interfaces/db.py b/lib/entropy/client/interfaces/db.py
+index 91c422e..7e7856e 100644
+--- a/lib/entropy/client/interfaces/db.py
++++ b/lib/entropy/client/interfaces/db.py
+@@ -395,6 +395,9 @@ class AvailablePackagesRepositoryUpdater(object):
+         avail_data = repos_data['available']
          repo_data = avail_data[self._repository_id]
          database_uris = repo_data['databases']
++        basic_user = repo_data.get('username')
++        basic_pwd = repo_data.get('password')
++        https_validate_cert = not repo_data.get('https_validate_cert') == "false"
  
-+        if repo_data.has_key('username'):
-+            basic_user = repo_data['username']
-+        else:
-+            basic_user = None
-+        if repo_data.has_key('password'):
-+            basic_pwd = repo_data['password']
-+        else:
-+            basic_pwd = None
-+        if repo_data.has_key('https_validate_cert') and \
-+                repo_data['https_validate_cert'] == "false":
-+            https_validate_cert = False
-+        else:
-+            https_validate_cert = True
-+
          ws_revision = self._remote_webservice_revision()
  
-         # Setup the repository uri
-@@ -418,7 +432,11 @@
+@@ -418,7 +421,11 @@ class AvailablePackagesRepositoryUpdater(object):
              )
  
              repo_uri = uri_meta['uri']
 -            uri_revision = self._remote_revision(repo_uri)
 +
-+            uri_revision = self._remote_revision(repo_uri, \
++            uri_revision = self._remote_revision(repo_uri,
 +                http_basic_user = basic_user,
 +                http_basic_pwd = basic_pwd,
 +                https_validate_cert = https_validate_cert)
  
              if uri_revision != -1:
  
-@@ -478,7 +496,11 @@
+@@ -478,7 +485,11 @@ class AvailablePackagesRepositoryUpdater(object):
              if url == uri:
                  # skip same URL
                  continue
 -            revision = self._remote_revision(url)
 +
-+            revision = self._remote_revision(url, \
++            revision = self._remote_revision(url,
 +                http_basic_user = basic_user,
 +                http_basic_pwd = basic_pwd,
 +                https_validate_cert = https_validate_cert)
              if revision != -1:
                  # found
                  self._entropy.output(
-@@ -981,7 +1003,25 @@
+@@ -981,7 +992,15 @@ class AvailablePackagesRepositoryUpdater(object):
          return url, path
  
      def _download_item(self, uri, item, cmethod = None,
@@ -59,23 +49,13 @@ diff -rua entropy-296/lib/entropy/client/interfaces/db.py entropy-296-r1/lib/ent
 +        avail_data = my_repos['available']
 +        repo_data = avail_data[self._repository_id]
 +
-+        if repo_data.has_key('username'):
-+            basic_user = repo_data['username']
-+        else:
-+            basic_user = None
-+        if repo_data.has_key('password'):
-+            basic_pwd = repo_data['password']
-+        else:
-+            basic_pwd = None
-+        if repo_data.has_key('https_validate_cert') and \
-+                repo_data['https_validate_cert'] == "false":
-+            https_validate_cert = False
-+        else:
-+            https_validate_cert = True
++        basic_user = repo_data.get('username')
++        basic_pwd = repo_data.get('password')
++        https_validate_cert = not repo_data.get('https_validate_cert') == "false"
  
          url, filepath = self._construct_paths(
              uri, item, cmethod, get_signature = get_signature)
-@@ -1011,7 +1051,10 @@
+@@ -1011,7 +1030,10 @@ class AvailablePackagesRepositoryUpdater(object):
                  url,
                  temp_filepath,
                  resume = False,
@@ -87,24 +67,14 @@ diff -rua entropy-296/lib/entropy/client/interfaces/db.py entropy-296-r1/lib/ent
              )
  
              rc = fetcher.download()
-@@ -1913,7 +1956,25 @@
+@@ -1913,7 +1935,15 @@ class AvailablePackagesRepositoryUpdater(object):
              rev = -1
              return rev
  
 -        rev = self._remote_revision(uri)
-+        if repo_data.has_key('username'):
-+            basic_user = repo_data['username']
-+        else:
-+            basic_user = None
-+        if repo_data.has_key('password'):
-+            basic_pwd = repo_data['password']
-+        else:
-+            basic_pwd = None
-+        if repo_data.has_key('https_validate_cert') and \
-+                repo_data['https_validate_cert'] == "false":
-+            https_validate_cert = False
-+        else:
-+            https_validate_cert = True
++        basic_user = repo_data.get('username')
++        basic_pwd = repo_data.get('password')
++        https_validate_cert = not repo_data.get('https_validate_cert') == "false"
 +
 +        rev = self._remote_revision(url,
 +            http_basic_user = basic_user,
@@ -114,7 +84,7 @@ diff -rua entropy-296/lib/entropy/client/interfaces/db.py entropy-296-r1/lib/ent
          return rev
  
      def _remote_webservice_revision(self):
-@@ -1939,7 +2000,9 @@
+@@ -1939,7 +1969,9 @@ class AvailablePackagesRepositoryUpdater(object):
          # otherwise, fallback to previous EAPI
          self._repo_eapi -= 1
  
@@ -125,7 +95,7 @@ diff -rua entropy-296/lib/entropy/client/interfaces/db.py entropy-296-r1/lib/ent
          """
          Return the remote repository revision by downloading
          the revision file from the given uri.
-@@ -1953,7 +2016,10 @@
+@@ -1953,7 +1985,10 @@ class AvailablePackagesRepositoryUpdater(object):
              tmp_fd, tmp_path = const_mkstemp(
                  prefix = "AvailableEntropyRepository.remote_revision")
              fetcher = self._entropy._url_fetcher(
@@ -137,26 +107,20 @@ diff -rua entropy-296/lib/entropy/client/interfaces/db.py entropy-296-r1/lib/ent
              fetch_rc = fetcher.download()
              if fetch_rc not in self.FETCH_ERRORS:
                  with codecs.open(tmp_path, "r") as tmp_f:
-diff -rua entropy-296/lib/entropy/client/interfaces/package/actions/fetch.py entropy-296-r1/lib/entropy/client/interfaces/package/actions/fetch.py
---- entropy-296/lib/entropy/client/interfaces/package/actions/fetch.py	2015-03-17 17:16:55.000000000 +0100
-+++ entropy-296-r1/lib/entropy/client/interfaces/package/actions/fetch.py	2015-04-16 18:35:20.369388462 +0200
-@@ -456,11 +456,28 @@
+diff --git a/lib/entropy/client/interfaces/package/actions/fetch.py b/lib/entropy/client/interfaces/package/actions/fetch.py
+index 6befb86..1be2452 100644
+--- a/lib/entropy/client/interfaces/package/actions/fetch.py
++++ b/lib/entropy/client/interfaces/package/actions/fetch.py
+@@ -456,11 +456,21 @@ class _PackageFetchAction(PackageAction):
              UrlFetcher.GENERIC_FETCH_WARN,
          )
  
-+        basic_user = None
-+        basic_pwd = None
-+        https_validate_cert = True
 +        avail_data = self._settings['repositories']['available']
 +        repo_data = avail_data[self._repository_id]
 +
-+        if repo_data.has_key('username'):
-+            basic_user = repo_data['username']
-+        if repo_data.has_key('password'):
-+            basic_pwd = repo_data['password']
-+        if repo_data.has_key('https_validate_cert') and \
-+                repo_data['https_validate_cert'] == "false":
-+            https_validate_cert = False
++        basic_user = repo_data.get('username')
++        basic_pwd = repo_data.get('password')
++        https_validate_cert = not repo_data.get('https_validate_cert') == "false"
 +
          for delta_url, delta_save in download_plan:
  
@@ -170,26 +134,16 @@ diff -rua entropy-296/lib/entropy/client/interfaces/package/actions/fetch.py ent
  
              try:
                  # make sure that we don't need to abort already
-@@ -550,9 +567,29 @@
+@@ -550,9 +560,19 @@ class _PackageFetchAction(PackageAction):
          if os.path.isfile(download_path) and os.path.exists(download_path):
              existed_before = True
  
 +        avail_data = self._settings['repositories']['available']
 +        repo_data = avail_data[self._repository_id]
 +
-+        if repo_data.has_key('username'):
-+            basic_user = repo_data['username']
-+        else:
-+            basic_user = None
-+        if repo_data.has_key('password'):
-+            basic_pwd = repo_data['password']
-+        else:
-+            basic_pwd = None
-+        if repo_data.has_key('https_validate_cert') and \
-+                repo_data['https_validate_cert'] == "false":
-+            https_validate_cert = False
-+        else:
-+            https_validate_cert = True
++        basic_user = repo_data.get('username')
++        basic_pwd = repo_data.get('password')
++        https_validate_cert = not repo_data.get('https_validate_cert') == "false"
 +
          fetch_intf = self._entropy._url_fetcher(
              url, download_path, resume = resume,
@@ -201,10 +155,11 @@ diff -rua entropy-296/lib/entropy/client/interfaces/package/actions/fetch.py ent
  
          if (package_id is not None) and (repository_id is not None):
              self._setup_differential_download(
-diff -rua entropy-296/lib/entropy/client/interfaces/package/actions/multifetch.py entropy-296-r1/lib/entropy/client/interfaces/package/actions/multifetch.py
---- entropy-296/lib/entropy/client/interfaces/package/actions/multifetch.py	2015-03-17 17:16:55.000000000 +0100
-+++ entropy-296-r1/lib/entropy/client/interfaces/package/actions/multifetch.py	2015-04-16 18:35:20.552389114 +0200
-@@ -382,7 +382,7 @@
+diff --git a/lib/entropy/client/interfaces/package/actions/multifetch.py b/lib/entropy/client/interfaces/package/actions/multifetch.py
+index 58369c1..015bd1a 100644
+--- a/lib/entropy/client/interfaces/package/actions/multifetch.py
++++ b/lib/entropy/client/interfaces/package/actions/multifetch.py
+@@ -382,7 +382,7 @@ class _PackageMultiFetchAction(_PackageFetchAction):
  
          return fetched_url_data, data_transfer, 0
  
@@ -213,7 +168,7 @@ diff -rua entropy-296/lib/entropy/client/interfaces/package/actions/multifetch.p
          """
          Effectively fetch the package files.
          """
-@@ -449,6 +449,7 @@
+@@ -449,6 +449,7 @@ class _PackageMultiFetchAction(_PackageFetchAction):
                      validated_download_ids.add(download_id)
  
          url_path_list = []
@@ -221,7 +176,7 @@ diff -rua entropy-296/lib/entropy/client/interfaces/package/actions/multifetch.p
          for pkg_id, repository_id, url, download_path, _cksum, _sig in url_data:
              url_path_list.append((url, download_path))
  
-@@ -463,10 +464,27 @@
+@@ -463,10 +464,20 @@ class _PackageMultiFetchAction(_PackageFetchAction):
                          resume, download_path,
                          repository_id, pkg_id)
  
@@ -235,21 +190,14 @@ diff -rua entropy-296/lib/entropy/client/interfaces/package/actions/multifetch.p
  
 +        avail_data = self._settings['repositories']['available']
 +        repo_data = avail_data[last_repos_id]
-+        basic_user = None
-+        basic_pwd = None
-+        https_validate_cert = True
-+        if repo_data.has_key('username'):
-+            basic_user = repo_data['username']
-+        if repo_data.has_key('password'):
-+            basic_pwd = repo_data['password']
-+        if repo_data.has_key('https_validate_cert') and \
-+                repo_data['https_validate_cert'] == "false":
-+            https_validate_cert = False
++        basic_user = repo_data.get('username')
++        basic_pwd = repo_data.get('password')
++        https_validate_cert = not repo_data.get('https_validate_cert') == "false"
 +
          fetch_abort_function = self._meta.get('fetch_abort_function')
          fetch_intf = self._entropy._multiple_url_fetcher(
              url_path_list, resume = resume,
-@@ -474,7 +492,10 @@
+@@ -474,7 +485,10 @@ class _PackageMultiFetchAction(_PackageFetchAction):
              url_fetcher_class = self._entropy._url_fetcher,
              download_context_func = download_context,
              pre_download_hook = pre_download_hook,
@@ -261,7 +209,7 @@ diff -rua entropy-296/lib/entropy/client/interfaces/package/actions/multifetch.p
          try:
              # make sure that we don't need to abort already
              # doing the check here avoids timeouts
-@@ -757,7 +778,8 @@
+@@ -757,7 +771,8 @@ class _PackageMultiFetchAction(_PackageFetchAction):
                          (exit_st, failed_downloads,
                           data_transfer) = self._download_files(
                               updated_fetch_files_list,
@@ -271,10 +219,11 @@ diff -rua entropy-296/lib/entropy/client/interfaces/package/actions/multifetch.p
  
                  if exit_st == 0:
                      show_successful_download(
-diff -rua entropy-296/lib/entropy/core/settings/base.py entropy-296-r1/lib/entropy/core/settings/base.py
---- entropy-296/lib/entropy/core/settings/base.py	2015-03-17 17:16:55.000000000 +0100
-+++ entropy-296-r1/lib/entropy/core/settings/base.py	2015-04-16 12:07:36.271516845 +0200
-@@ -83,9 +83,16 @@
+diff --git a/lib/entropy/core/settings/base.py b/lib/entropy/core/settings/base.py
+index 8a6fc01..4c9d9f3 100644
+--- a/lib/entropy/core/settings/base.py
++++ b/lib/entropy/core/settings/base.py
+@@ -83,9 +83,16 @@ class RepositoryConfigParser(BaseConfigParser):
                   that config files in /etc/entropy/repositories.conf.d/ starting
                   with "_" are considered to contain disabled repositories. This
                   is just provided for convienence.
@@ -292,7 +241,7 @@ diff -rua entropy-296/lib/entropy/core/settings/base.py entropy-296-r1/lib/entro
  
      _DEFAULT_ENABLED_VALUE = True
  
-@@ -114,7 +121,8 @@
+@@ -114,7 +121,8 @@ class RepositoryConfigParser(BaseConfigParser):
              return
          return candidate
  
@@ -302,7 +251,7 @@ diff -rua entropy-296/lib/entropy/core/settings/base.py entropy-296-r1/lib/entro
          """
          Add a repository to the repository configuration files directory.
          Older repository configuration may get overwritten. This method
-@@ -146,7 +154,8 @@
+@@ -146,7 +154,8 @@ class RepositoryConfigParser(BaseConfigParser):
          # while disabled config files start with _
          disabled_conf_file = os.path.join(conf_d_dir, "_" + base_name)
  
@@ -312,7 +261,7 @@ diff -rua entropy-296/lib/entropy/core/settings/base.py entropy-296-r1/lib/entro
  
          # if any disabled entry file is around, kill it with fire!
          try:
-@@ -275,7 +284,8 @@
+@@ -275,7 +284,8 @@ class RepositoryConfigParser(BaseConfigParser):
  
          return accomplished
  
@@ -322,19 +271,7 @@ diff -rua entropy-296/lib/entropy/core/settings/base.py entropy-296-r1/lib/entro
          """
          Write the repository configuration to the given file.
  
-@@ -298,6 +308,11 @@
-         else:
-             enabled_str = "false"
- 
-+        if not https_validate_cert:
-+            https_validate_cert_str = "https_validate_cert = false"
-+        else:
-+            https_validate_cert_str = ""
-+
-         repos_str = ""
-         for repo_meta in repos:
-             repos_str += "repo = %(uri)s#%(dbcformat)s\n" % repo_meta
-@@ -310,11 +325,17 @@
+@@ -310,11 +320,17 @@ class RepositoryConfigParser(BaseConfigParser):
  desc = %(desc)s
  %(repos)s
  enabled = %(enabled)s
@@ -348,11 +285,11 @@ diff -rua entropy-296/lib/entropy/core/settings/base.py entropy-296-r1/lib/entro
              "enabled": enabled_str,
 +            "username": ("", "username = %s" % username)[username],
 +            "password": ("", "password = %s" % password)[password],
-+            "https_validate_cert" : https_validate_cert_str
++            "https_validate_cert" : ("https_validate_cert = false", "")[https_validate_cert]
              }
          for pkg in pkgs:
              config += "pkg = %s\n" % (pkg,)
-@@ -397,6 +418,47 @@
+@@ -397,6 +413,47 @@ enabled = %(enabled)s
          except KeyError:
              return self._DEFAULT_ENABLED_VALUE
  
@@ -400,12 +337,7 @@ diff -rua entropy-296/lib/entropy/core/settings/base.py entropy-296-r1/lib/entro
  
  class SystemSettings(Singleton, EntropyPluginStore):
  
-@@ -1678,11 +1740,13 @@
-         packages = [x.strip() for x in repo_split[2].strip().split() \
-                         if x.strip()]
-         database = repo_split[3].strip()
-+
-         return name, self._generate_repository_metadata(
+@@ -1682,7 +1739,8 @@ class SystemSettings(Singleton, EntropyPluginStore):
              name, desc, packages, [database], product, branch)
  
      def _generate_repository_metadata(self, name, desc, packages, databases,
@@ -415,7 +347,7 @@ diff -rua entropy-296/lib/entropy/core/settings/base.py entropy-296-r1/lib/entro
          """
          Given a set of raw repository metadata information, like name,
          description, a list of package urls and the database url, generate
-@@ -1752,6 +1816,13 @@
+@@ -1752,6 +1810,13 @@ class SystemSettings(Singleton, EntropyPluginStore):
          data['packages'] = []
          data['plain_packages'] = []
  
@@ -429,7 +361,7 @@ diff -rua entropy-296/lib/entropy/core/settings/base.py entropy-296-r1/lib/entro
          data['dbpath'] = etpConst['etpdatabaseclientdir'] + os.path.sep + \
              name + os.path.sep + product + os.path.sep + \
              etpConst['currentarch'] + os.path.sep + branch
-@@ -2035,10 +2106,25 @@
+@@ -2035,10 +2100,24 @@ class SystemSettings(Singleton, EntropyPluginStore):
                      except KeyError:
                          ini_desc = _("No description")
  
@@ -443,8 +375,7 @@ diff -rua entropy-296/lib/entropy/core/settings/base.py entropy-296-r1/lib/entro
 +                    except KeyError:
 +                        ini_password = None
 +
-+                    ini_https_validate_cert = \
-+                            ini_parser.https_validate_cert(ini_repository)
++                    ini_https_validate_cert = ini_parser.https_validate_cert(ini_repository)
 +
                      ini_excluded = not ini_parser.enabled(ini_repository)
                      ini_data = self._generate_repository_metadata(
@@ -456,10 +387,20 @@ diff -rua entropy-296/lib/entropy/core/settings/base.py entropy-296-r1/lib/entro
                      if ini_excluded or ini_conf_excluded:
                          data['excluded'][ini_repository] = ini_data
                      else:
-diff -rua entropy-296/lib/entropy/fetchers.py entropy-296-r1/lib/entropy/fetchers.py
---- entropy-296/lib/entropy/fetchers.py	2015-03-17 17:16:55.000000000 +0100
-+++ entropy-296-r1/lib/entropy/fetchers.py	2015-04-16 18:36:04.022545726 +0200
-@@ -77,7 +77,9 @@
+diff --git a/lib/entropy/fetchers.py b/lib/entropy/fetchers.py
+index 10953b0..27ce1f0 100644
+--- a/lib/entropy/fetchers.py
++++ b/lib/entropy/fetchers.py
+@@ -24,6 +24,8 @@ import pty
+ import subprocess
+ import threading
+ import contextlib
++import base64
++import ssl
+ 
+ from entropy.const import const_is_python3, const_file_readable
+ 
+@@ -77,7 +79,9 @@ class UrlFetcher(TextInterface):
                   abort_check_func = None, disallow_redirect = False,
                   thread_stop_func = None, speed_limit = None,
                   timeout = None, download_context_func = None,
@@ -470,7 +411,7 @@ diff -rua entropy-296/lib/entropy/fetchers.py entropy-296-r1/lib/entropy/fetcher
          """
          Entropy URL downloader constructor.
  
-@@ -166,9 +168,16 @@
+@@ -166,6 +170,12 @@ class UrlFetcher(TextInterface):
          self.__disallow_redirect = disallow_redirect
          self.__speedlimit = speed_limit # kbytes/sec
  
@@ -483,19 +424,7 @@ diff -rua entropy-296/lib/entropy/fetchers.py entropy-296-r1/lib/entropy/fetcher
          self._init_vars()
          self.__init_urllib()
  
-+
-     @staticmethod
-     def _get_url_protocol(url):
-         return url.split(":")[0]
-@@ -363,6 +372,7 @@
-                 self.__download_context_func,
-                 self.__pre_download_hook, self.__post_download_hook)
-         )
-+
-         if downloader is None:
-             # return error, protocol not supported
-             self._update_speed()
-@@ -583,8 +593,23 @@
+@@ -583,8 +593,21 @@ class UrlFetcher(TextInterface):
          )
  
          if url_protocol in ("http", "https"):
@@ -503,24 +432,22 @@ diff -rua entropy-296/lib/entropy/fetchers.py entropy-296-r1/lib/entropy/fetcher
 +
 +            # Handle HTTP Basic auth
 +            if self.__http_basic_user and self.__http_basic_pwd:
-+                import base64
-+                basic_header = base64.encodestring('%s:%s' % \
-+                (self.__http_basic_user, self.__http_basic_pwd)).replace('\n', '')
++                basic_header = base64.encodestring('%s:%s' % (
++                    self.__http_basic_user, self.__http_basic_pwd)).replace('\n', '')
 +
 +                headers = {
 +                    'User-Agent': user_agent,
-+                    'Authorization': ('Basic %s' % basic_header),
++                    'Authorization': 'Basic %s' % basic_header,
 +                }
 +            else:
 +                headers = {'User-Agent': user_agent,}
 +
              req = urlmod.Request(url, headers = headers)
 +
-+
          else:
              req = url
  
-@@ -594,7 +619,19 @@
+@@ -594,7 +617,18 @@ class UrlFetcher(TextInterface):
  
              # get file size if available
              try:
@@ -528,7 +455,6 @@ diff -rua entropy-296/lib/entropy/fetchers.py entropy-296-r1/lib/entropy/fetcher
 +                if url_protocol in ("https") and \
 +                    not self.__https_validate_cert:
 +
-+                    import ssl
 +                    ctx = ssl.create_default_context()
 +                    ctx.check_hostname = False
 +                    ctx.verify_mode = ssl.CERT_NONE
@@ -541,7 +467,7 @@ diff -rua entropy-296/lib/entropy/fetchers.py entropy-296-r1/lib/entropy/fetcher
              except KeyboardInterrupt:
                  self.__urllib_close(False)
                  raise
-@@ -976,7 +1013,9 @@
+@@ -976,7 +1010,9 @@ class MultipleUrlFetcher(TextInterface):
                   abort_check_func = None, disallow_redirect = False,
                   url_fetcher_class = None, timeout = None,
                   download_context_func = None,
@@ -552,7 +478,7 @@ diff -rua entropy-296/lib/entropy/fetchers.py entropy-296-r1/lib/entropy/fetcher
          """
          @param url_path_list: list of tuples composed by url and
              path to save, for eg. [(url,path_to_save,),...]
-@@ -1045,6 +1084,12 @@
+@@ -1045,6 +1081,12 @@ class MultipleUrlFetcher(TextInterface):
          if self.__url_fetcher == None:
              self.__url_fetcher = UrlFetcher
  
@@ -565,7 +491,7 @@ diff -rua entropy-296/lib/entropy/fetchers.py entropy-296-r1/lib/entropy/fetcher
      def __handle_threads_stop(self):
          if self.__stop_threads:
              raise InterruptError("interrupted")
-@@ -1128,7 +1173,10 @@
+@@ -1128,7 +1170,10 @@ class MultipleUrlFetcher(TextInterface):
                  timeout = self.__timeout,
                  download_context_func = self.__download_context_func,
                  pre_download_hook = self.__pre_download_hook,
