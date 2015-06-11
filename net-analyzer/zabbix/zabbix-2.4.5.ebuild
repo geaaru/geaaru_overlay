@@ -69,6 +69,8 @@ src_prepare() {
 	# Apply patch for support fping3
 	epatch "${FILESDIR}"/zabbix-1.8.12-fping3.patch
 
+	epatch "${FILESDIR}"/2.4/unset_limit4_one_database.patch
+
 	eautoreconf
 }
 
