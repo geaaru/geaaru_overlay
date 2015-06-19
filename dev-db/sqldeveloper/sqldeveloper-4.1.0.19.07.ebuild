@@ -18,7 +18,7 @@ IUSE="mssql mysql sybase"
 DEPEND="mssql? ( dev-java/jtds:1.2 )
 	mysql? ( dev-java/jdbc-mysql:0 )
 	sybase? ( dev-java/jtds:1.2 )"
-RDEPEND=">=virtual/jdk-1.7.0
+RDEPEND=">=virtual/jdk-1.8.0
 	${DEPEND}"
 
 S="${WORKDIR}/${PN}"
