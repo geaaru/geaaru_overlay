@@ -18,7 +18,7 @@ RDEPEND=">=dev-libs/libevent-1.4
 	>=dev-lang/lua-5.1"
 DEPEND="${RDEPEND}
 	>=virtual/mysql-5.0
-	dev-libs/libevent
+	<=dev-libs/libevent-2.0.22
 	virtual/pkgconfig"
 RESTRICT="test"
 
