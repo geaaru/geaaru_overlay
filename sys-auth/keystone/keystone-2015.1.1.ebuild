@@ -13,7 +13,7 @@ HOMEPAGE="https://launchpad.net/keystone"
 SRC_URI="http://launchpad.net/${PN}/kilo/${PV}/+download/${P}.tar.gz"
 
 LICENSE="Apache-2.0"
-SLOT="0"
+SLOT="2015.1-kilo"
 KEYWORDS="~amd64 ~x86"
 IUSE="+sqlite memcached mongo mysql postgres ldap test"
 REQUIRED_USE="|| ( mysql postgres sqlite )"

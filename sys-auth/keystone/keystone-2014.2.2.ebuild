@@ -13,12 +13,14 @@ HOMEPAGE="https://launchpad.net/keystone"
 SRC_URI="http://launchpad.net/${PN}/juno/${PV}/+download/${P}.tar.gz"
 
 LICENSE="Apache-2.0"
-SLOT="0"
+SLOT="2014.2-juno"
 KEYWORDS="~amd64 ~x86"
 IUSE="+sqlite mysql postgres ldap test"
 REQUIRED_USE="|| ( mysql postgres sqlite )"
 
 DEPEND="
+	!sys-auth/keystone[0]
+	!sys-auth/keystone[2015.1-kilo]
 	dev-python/setuptools[${PYTHON_USEDEP}]
 	>=dev-python/pbr-0.6[${PYTHON_USEDEP}]
 	!~dev-python/pbr-0.7[${PYTHON_USEDEP}]
