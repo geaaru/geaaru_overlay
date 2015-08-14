@@ -1,55 +1,59 @@
 # Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-admin/glance/glance-2014.2.2.ebuild,v 1.1 2015/02/08 01:51:56 prometheanfire Exp $
+# $Header: /var/cvsroot/gentoo-x86/app-admin/glance/glance-2015.1.1.ebuild,v 1.1 2015/07/29 23:24:16 prometheanfire Exp $
 
 EAPI=5
 PYTHON_COMPAT=( python2_7 )
 
-inherit distutils-r1 user systemd
+inherit distutils-r1 user
 
 DESCRIPTION="Provides services for discovering, registering, and retrieving
-virtual machine images with Openstack"
+virtual machine images"
 HOMEPAGE="https://launchpad.net/glance"
-SRC_URI="http://launchpad.net/${PN}/juno/${PV}/+download/${P}.tar.gz"
+SRC_URI="http://launchpad.net/${PN}/kilo/${PV}/+download/${P}.tar.gz"
 
 LICENSE="Apache-2.0"
-SLOT="2014.2-juno"
+SLOT="2015.1-kilo"
 KEYWORDS="~amd64 ~x86"
 IUSE="doc mysql postgres +sqlite +swift test"
 REQUIRED_USE="|| ( mysql postgres sqlite )"
 
 DEPEND="
 		!app-admin/glance[0]
-		!app-admin/glance[2015.1-kilo]
 		!app-admin/glance[liberty]
 		dev-python/setuptools[${PYTHON_USEDEP}]
-		>=dev-python/pbr-0.8.0[${PYTHON_USEDEP}]
 		>=dev-python/pbr-0.8.0[${PYTHON_USEDEP}]
 		<dev-python/pbr-1.0[${PYTHON_USEDEP}]
 		test? (
 			${RDEPEND}
-			>=dev-python/hacking-0.8.0[${PYTHON_USEDEP}]
-			<dev-python/hacking-0.9[${PYTHON_USEDEP}]
-			>=dev-python/Babel-1.3[${PYTHON_USEDEP}]
+			>=dev-python/hacking-0.10.0[${PYTHON_USEDEP}]
+			<dev-python/hacking-0.11[${PYTHON_USEDEP}]
+			~dev-python/Babel-1.3[${PYTHON_USEDEP}]
 			>=dev-python/coverage-3.6[${PYTHON_USEDEP}]
 			>=dev-python/fixtures-0.3.14[${PYTHON_USEDEP}]
+			<dev-python/fixtures-1.3.0[${PYTHON_USEDEP}]
 			>=dev-python/mock-1.0[${PYTHON_USEDEP}]
-			>=dev-python/mox-0.5.3[${PYTHON_USEDEP}]
+			<dev-python/mock-1.1.0[${PYTHON_USEDEP}]
 			>=dev-python/sphinx-1.1.2[${PYTHON_USEDEP}]
 			!~dev-python/sphinx-1.2.0[${PYTHON_USEDEP}]
 			<dev-python/sphinx-1.3[${PYTHON_USEDEP}]
-			>=dev-python/requests-1.2.1[${PYTHON_USEDEP}]
+			>=dev-python/requests-2.2.0[${PYTHON_USEDEP}]
 			!~dev-python/requests-2.4.0[${PYTHON_USEDEP}]
 			>=dev-python/testrepository-0.0.18[${PYTHON_USEDEP}]
-			>=dev-python/testtools-0.9.34[${PYTHON_USEDEP}]
+			>=dev-python/testtools-0.9.36[${PYTHON_USEDEP}]
+			!~dev-python/testtools-1.2.0[${PYTHON_USEDEP}]
 			>=dev-python/psutil-1.1.1[${PYTHON_USEDEP}]
 			<dev-python/psutil-2.0.0[${PYTHON_USEDEP}]
+			>=dev-python/oslotest-1.5.1[${PYTHON_USEDEP}]
+			<dev-python/oslotest-1.6.0[${PYTHON_USEDEP}]
 			dev-python/mysql-python[${PYTHON_USEDEP}]
 			dev-python/psycopg[${PYTHON_USEDEP}]
-			~dev-python/pysendfile-2.0.0[${PYTHON_USEDEP}]
+			~dev-python/pysendfile-2.0.1[${PYTHON_USEDEP}]
 			dev-python/qpid-python[${PYTHON_USEDEP}]
 			>=dev-python/pyxattr-0.5.0[${PYTHON_USEDEP}]
-			>=dev-python/oslo-sphinx-2.2.0[${PYTHON_USEDEP}]
+			>=dev-python/oslo-sphinx-2.5.0[${PYTHON_USEDEP}]
+			<dev-python/oslo-sphinx-2.6.0[${PYTHON_USEDEP}]
+			>=dev-python/elasticsearch-py-1.3.0[${PYTHON_USEDEP}]
 		)"
 
 #note to self, wsgiref is a python builtin, no need to package it
@@ -72,57 +76,80 @@ RDEPEND="
 		<=dev-python/sqlalchemy-0.9.99[${PYTHON_USEDEP}]
 	)
 	>=dev-python/anyjson-0.3.3[${PYTHON_USEDEP}]
-	>=dev-python/eventlet-0.15.1[${PYTHON_USEDEP}]
-	<dev-python/eventlet-0.16.0[${PYTHON_USEDEP}]
+	>=dev-python/eventlet-0.16.1[${PYTHON_USEDEP}]
+	!~dev-python/eventlet-0.17.0[${PYTHON_USEDEP}]
 	>=dev-python/pastedeploy-1.5.0[${PYTHON_USEDEP}]
 	>=dev-python/routes-1.12.3[${PYTHON_USEDEP}]
 	!~dev-python/routes-2.0[${PYTHON_USEDEP}]
 	>=dev-python/webob-1.2.3[${PYTHON_USEDEP}]
-	>=dev-python/boto-2.32.1[${PYTHON_USEDEP}]
-	>=dev-python/boto-2.35.0[${PYTHON_USEDEP}]
-	~dev-python/sqlalchemy-migrate-0.9.1[${PYTHON_USEDEP}]
+	>=dev-python/sqlalchemy-migrate-0.9.5[${PYTHON_USEDEP}]
 	>=dev-python/httplib2-0.7.5[${PYTHON_USEDEP}]
 	>=dev-python/kombu-2.5.0[${PYTHON_USEDEP}]
 	>=dev-python/pycrypto-2.6[${PYTHON_USEDEP}]
 	>=dev-python/iso8601-0.1.9[${PYTHON_USEDEP}]
 	dev-python/ordereddict[${PYTHON_USEDEP}]
-	>=dev-python/oslo-config-1.4.0[${PYTHON_USEDEP}]
-	>=dev-python/stevedore-1.0.0[${PYTHON_USEDEP}]
-	>=dev-python/netaddr-0.7.12[${PYTHON_USEDEP}]
-	>=dev-python/keystonemiddleware-1.0.0[${PYTHON_USEDEP}]
+	>=dev-python/oslo-config-1.9.3[${PYTHON_USEDEP}]
+	<dev-python/oslo-config-1.10.0[${PYTHON_USEDEP}]
+	>=dev-python/oslo-concurrency-1.8.0[${PYTHON_USEDEP}]
+	<dev-python/oslo-concurrency-1.9.0[${PYTHON_USEDEP}]
+	>=dev-python/oslo-context-0.2.0[${PYTHON_USEDEP}]
+	<dev-python/oslo-context-0.3.0[${PYTHON_USEDEP}]
+	>=dev-python/oslo-utils-1.4.0[${PYTHON_USEDEP}]
+	<dev-python/oslo-utils-1.5.0[${PYTHON_USEDEP}]
+	>=dev-python/stevedore-1.3.0[${PYTHON_USEDEP}]
+	<dev-python/stevedore-1.4.0[${PYTHON_USEDEP}]
+	>=dev-python/taskflow-0.7.1[${PYTHON_USEDEP}]
+	<dev-python/taskflow-0.8.0[${PYTHON_USEDEP}]
+	>=dev-python/keystonemiddleware-1.5.0[${PYTHON_USEDEP}]
+	<dev-python/keystonemiddleware-1.6.0[${PYTHON_USEDEP}]
 	>=dev-python/WSME-0.6[${PYTHON_USEDEP}]
+	<dev-python/WSME-0.7[${PYTHON_USEDEP}]
 	dev-python/posix_ipc[${PYTHON_USEDEP}]
 	swift? (
 		>=dev-python/python-swiftclient-2.2.0[${PYTHON_USEDEP}]
+		<dev-python/python-swiftclient-2.5.0[${PYTHON_USEDEP}]
 	)
-	>=dev-python/oslo-vmware-0.6.0[${PYTHON_USEDEP}]
-	<dev-python/oslo-vmware-0.9.0[${PYTHON_USEDEP}]
+	>=dev-python/oslo-vmware-0.11.1[${PYTHON_USEDEP}]
+	<dev-python/oslo-vmware-0.12.0[${PYTHON_USEDEP}]
 	dev-python/paste[${PYTHON_USEDEP}]
 	>=dev-python/jsonschema-2.0.0[${PYTHON_USEDEP}]
 	<dev-python/jsonschema-3.0.0[${PYTHON_USEDEP}]
-	>=dev-python/python-cinderclient-1.1.0[${PYTHON_USEDEP}]
-	>=dev-python/python-keystoneclient-0.10.0[${PYTHON_USEDEP}]
+	>=dev-python/python-keystoneclient-1.2.0[${PYTHON_USEDEP}]
+	<dev-python/python-keystoneclient-1.4.0[${PYTHON_USEDEP}]
 	>=dev-python/pyopenssl-0.11[${PYTHON_USEDEP}]
-	>=dev-python/six-1.7.0[${PYTHON_USEDEP}]
-	>=dev-python/oslo-db-1.0.0[${PYTHON_USEDEP}]
-	<dev-python/oslo-db-1.1.0[${PYTHON_USEDEP}]
-	>=dev-python/oslo-i18n-1.0.0[${PYTHON_USEDEP}]
-	>=dev-python/oslo-messaging-1.4.0[${PYTHON_USEDEP}]
-	!~dev-python/oslo-messaging-1.5.0[${PYTHON_USEDEP}]
-	<dev-python/oslo-messaging-1.6.0[${PYTHON_USEDEP}]
-	>=dev-python/retrying-1.2.2[${PYTHON_USEDEP}]
+	>=dev-python/six-1.9.0[${PYTHON_USEDEP}]
+	>=dev-python/oslo-db-1.7.0[${PYTHON_USEDEP}]
+	<dev-python/oslo-db-1.8.0[${PYTHON_USEDEP}]
+	>=dev-python/oslo-i18n-1.5.0[${PYTHON_USEDEP}]
+	<dev-python/oslo-i18n-1.6.0[${PYTHON_USEDEP}]
+	>=dev-python/oslo-log-1.0.0[${PYTHON_USEDEP}]
+	<dev-python/oslo-log-1.1.0[${PYTHON_USEDEP}]
+	>=dev-python/oslo-messaging-1.8.0[${PYTHON_USEDEP}]
+	<dev-python/oslo-messaging-1.9.0[${PYTHON_USEDEP}]
+	>=dev-python/oslo-policy-0.3.1[${PYTHON_USEDEP}]
+	<dev-python/oslo-policy-0.4.0[${PYTHON_USEDEP}]
+	>=dev-python/oslo-serialization-1.4.0[${PYTHON_USEDEP}]
+	<dev-python/oslo-serialization-1.5.0[${PYTHON_USEDEP}]
+	>=dev-python/retrying-1.2.3[${PYTHON_USEDEP}]
 	!~dev-python/retrying-1.3.0[${PYTHON_USEDEP}]
 	>=dev-python/osprofiler-0.3.0[${PYTHON_USEDEP}]
-	>=dev-python/glance_store-0.1.1[${PYTHON_USEDEP}]"
+	>=dev-python/glance_store-0.3.0[${PYTHON_USEDEP}]
+	<dev-python/glance_store-0.5.0[${PYTHON_USEDEP}]
+	>=dev-python/semantic_version-2.3.1[${PYTHON_USEDEP}]
+"
 
 PATCHES=(
-	"${FILESDIR}/${PN}-2013.2-sphinx_mapping.patch"
-	"${FILESDIR}/2014.2.2-CVE-2015-1881.patch"
 )
 
 pkg_setup() {
 	enewgroup glance
 	enewuser glance -1 -1 /var/lib/glance glance
+}
+
+python_prepare_all() {
+	sed -i '/xattr/d' test-requirements.txt || die
+	sed -i '/pysendfile/d' test-requirements.txt || die
+	distutils-r1_python_prepare_all
 }
 
 python_compile_all() {
@@ -132,7 +159,8 @@ python_compile_all() {
 python_test() {
 	# https://bugs.launchpad.net/glance/+bug/1251105
 	# https://bugs.launchpad.net/glance/+bug/1242501
-	nosetests glance/ || die "tests failed under python2.7"
+	testr init
+	testr run --parallel || die "failed testsuite under python2.7"
 }
 
 python_install() {
@@ -151,16 +179,9 @@ python_install() {
 
 	insinto /etc/glance
 	insopts -m 0640 -o glance -g glance
-	doins "etc/glance-api-paste.ini"
-	doins "etc/glance-api.conf"
-	doins "etc/glance-cache.conf"
-	doins "etc/glance-registry-paste.ini"
-	doins "etc/glance-registry.conf"
-	doins "etc/glance-scrubber.conf"
-	doins "etc/logging.cnf.sample"
-	doins "etc/policy.json"
-	doins "etc/schema-image.json"
-
+	doins etc/*.ini
+	doins etc/*.conf
+	doins etc/*.sample
 
 	# Systemd files
 	systemd_dounit "${FILESDIR}"/glance-api.service
