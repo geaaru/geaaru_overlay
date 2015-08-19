@@ -1,4 +1,2 @@
 =x11-libs/libX11-9999
 
-# Mask gentoo portage Openstack Keystone module
-sys-auth/keystone::gentoo

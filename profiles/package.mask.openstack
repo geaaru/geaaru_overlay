@@ -1,0 +1,6 @@
+# This file must be linking under /etc/portage/package.mask
+# cd /etc/portage ; ln -s /var/lib/layman/geaaru/profiles/package.mask.openstack .
+
+# Mask gentoo portage Openstack Keystone module
+sys-auth/keystone::gentoo
+
