@@ -1,6 +1,6 @@
-# Copyright 1999-2014 Gentoo Foundation
+# Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-misc/openvswitch/openvswitch-2.0.0-r3.ebuild,v 1.1 2014/02/17 05:07:34 prometheanfire Exp $
+# $Id$
 
 EAPI=5
 
@@ -18,14 +18,14 @@ KEYWORDS="~amd64 ~x86"
 IUSE="debug modules monitor +ssl"
 
 RDEPEND=">=sys-apps/openrc-0.10.5
-	ssl? ( dev-libs/openssl )
+	ssl? ( dev-libs/openssl:= )
 	monitor? (
 		${PYTHON_DEPS}
 		dev-python/twisted-core
 		dev-python/twisted-conch
 		dev-python/twisted-web
 		dev-python/PyQt4[${PYTHON_USEDEP}]
-		net-zope/zope-interface[${PYTHON_USEDEP}] )
+		dev-python/zope-interface[${PYTHON_USEDEP}] )
 	debug? ( dev-lang/perl )"
 DEPEND="${RDEPEND}
 	virtual/pkgconfig"
@@ -36,13 +36,9 @@ BUILD_TARGETS="all"
 
 pkg_setup() {
 	if use modules ; then
-		kernel_is ge 2 6 32 || die "Linux >=2.6.32 and <3.10 required"
-		if kernel_is gt 3 14 ; then
-			einfo "Ignore modules use flag with kernel >=3.14."
-			CONFIG_CHECK+=" ~OPENVSWITCH"
-		else
-			CONFIG_CHECK+=" ~!OPENVSWITCH"
-	    fi
+		CONFIG_CHECK+=" ~!OPENVSWITCH"
+		kernel_is ge 2 6 32 || die "Linux >= 2.6.32 and <= 3.14 required for userspace modules"
+		kernel_is le 3 14 || die "Linux >= 2.6.32 and <= 3.14 required for userspace modules"
 		linux-mod_pkg_setup
 	else
 		CONFIG_CHECK+=" ~OPENVSWITCH"
@@ -56,12 +52,7 @@ src_prepare() {
 	sed -i \
 		-e '/^SUBDIRS/d' \
 		datapath/Makefile.in || die "sed failed"
-#	epatch "${FILESDIR}/prevent-traceback.patch"
-#	epatch "${FILESDIR}/kernel-3.11-support.patch"
-	epatch "${FILESDIR}/xcp-interface-reconfigure.patch"
-#	epatch "${FILESDIR}/atomic-test.patch"
-#	epatch "${FILESDIR}/kernel-3.12-support.patch"
-	epatch "${FILESDIR}/acinclude.m4.patch"
+	epatch "${FILESDIR}/xcp-interface-reconfigure-2.3.2.patch"
 	eautoreconf
 }
 src_configure() {
@@ -71,9 +62,9 @@ src_configure() {
 	export ovs_cv_pyuic4="no"
 
 	local linux_config
-	use modules && kernel_is lt 3 14 && linux_config="--with-linux=${KV_OUT_DIR}"
+	use modules && linux_config="--with-linux=${KV_OUT_DIR}"
 
-	econf ${linux_config} \
+	PYTHON=python2.7 econf ${linux_config} \
 		--with-rundir=/var/run/openvswitch \
 		--with-logdir=/var/log/openvswitch \
 		--with-pkidir=/etc/ssl/openvswitch \
@@ -85,12 +76,17 @@ src_configure() {
 src_compile() {
 	default
 
-	use monitor && python_fix_shebang \
-		utilities/ovs-{pcap,tcpundump,test,vlan-test} \
-		utilities/bugtool/ovs-bugtool \
-		ovsdb/ovsdbmonitor/ovsdbmonitor
+#	use monitor && python_fix_shebang \
+#		utilities/ovs-{pcap,tcpundump,test,vlan-test} \
+#		utilities/bugtool/ovs-bugtool
+	if use monitor; then
+		sed -i \
+			's/^#\!\ python2\.7/#\!\/usr\/bin\/env\ python2\.7/' \
+			utilities/ovs-{pcap,parse-backtrace,dpctl-top,l3ping,tcpundump,test,vlan-test} \
+			utilities/bugtool/ovs-bugtool || die "sed died :("
+	fi
 
-	use modules && kernel_is lt 3 14 && linux-mod_src_compile
+	use modules && linux-mod_src_compile
 }
 
 src_install() {
@@ -115,24 +111,21 @@ src_install() {
 
 	newconfd "${FILESDIR}/ovsdb-server_conf2" ovsdb-server
 	newconfd "${FILESDIR}/ovs-vswitchd_conf" ovs-vswitchd
-	newconfd "${FILESDIR}/ovs-controller_conf" ovs-controller
 	newinitd "${FILESDIR}/ovsdb-server-r1" ovsdb-server
 	newinitd "${FILESDIR}/ovs-vswitchd-r1" ovs-vswitchd
-	newinitd "${FILESDIR}/ovs-controller-r1" ovs-controller
 
 	systemd_dounit "${FILESDIR}/ovsdb-server.service"
 	systemd_dounit "${FILESDIR}/ovs-vswitchd.service"
-	systemd_dounit "${FILESDIR}/ovs-controller.service"
 	systemd_newtmpfilesd "${FILESDIR}/openvswitch.tmpfiles" openvswitch.conf
 
 	insinto /etc/logrotate.d
 	newins rhel/etc_logrotate.d_openvswitch openvswitch
 
-	use modules && kernel_is lt 3 14 && linux-mod_src_install
+	use modules && linux-mod_src_install
 }
 
 pkg_postinst() {
-	use modules && kernel_is lt 3 14 && linux-mod_pkg_postinst
+	use modules && linux-mod_pkg_postinst
 
 	for pv in ${REPLACING_VERSIONS}; do
 		if ! version_is_at_least 1.9.0 ${pv} ; then
