@@ -1,0 +1,5 @@
+
+# Mask gentoo portage Openstack Keystone module
+# and use overlay SLOT
+sys-auth/keystone::gentoo
+
