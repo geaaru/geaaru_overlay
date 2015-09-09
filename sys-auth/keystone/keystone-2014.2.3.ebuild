@@ -19,8 +19,8 @@ IUSE="+sqlite mysql postgres ldap test"
 REQUIRED_USE="|| ( mysql postgres sqlite )"
 
 DEPEND="
-	!sys-auth/keystone[0]
-	!sys-auth/keystone[2015.1-kilo]
+	!sys-auth/keystone:0
+	!sys-auth/keystone:2015.1-kilo
 	dev-python/setuptools[${PYTHON_USEDEP}]
 	>=dev-python/pbr-0.6[${PYTHON_USEDEP}]
 	!~dev-python/pbr-0.7[${PYTHON_USEDEP}]
