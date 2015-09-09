@@ -19,6 +19,8 @@ IUSE="+sqlite memcached mongo mysql postgres ldap test"
 REQUIRED_USE="|| ( mysql postgres sqlite )"
 
 DEPEND="
+	!sys-auth/keystone:0
+	!sys-auth/keystone:2014.2-juno
 	dev-python/setuptools[${PYTHON_USEDEP}]
 	>=dev-python/pbr-0.8[${PYTHON_USEDEP}]
 	<dev-python/pbr-1.0[${PYTHON_USEDEP}]
