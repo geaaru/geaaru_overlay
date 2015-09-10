@@ -116,8 +116,6 @@ RDEPEND="
 	>=dev-python/glance_store-0.1.1[${PYTHON_USEDEP}]"
 
 PATCHES=(
-	"${FILESDIR}/${PN}-2013.2-sphinx_mapping.patch"
-	"${FILESDIR}/2014.2.2-CVE-2015-1881.patch"
 )
 
 pkg_setup() {
