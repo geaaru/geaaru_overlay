@@ -19,9 +19,9 @@ IUSE="doc mysql postgres +sqlite +swift test"
 REQUIRED_USE="|| ( mysql postgres sqlite )"
 
 DEPEND="
-		!app-admin/glance[0]
-		!app-admin/glance[2015.1-kilo]
-		!app-admin/glance[liberty]
+		!app-admin/glance:0
+		!app-admin/glance:2015.1-kilo
+		!app-admin/glance:liberty
 		dev-python/setuptools[${PYTHON_USEDEP}]
 		>=dev-python/pbr-0.8.0[${PYTHON_USEDEP}]
 		>=dev-python/pbr-0.8.0[${PYTHON_USEDEP}]
