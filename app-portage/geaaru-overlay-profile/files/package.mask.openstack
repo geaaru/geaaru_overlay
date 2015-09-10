@@ -3,3 +3,4 @@
 # and use overlay SLOT
 sys-auth/keystone::gentoo
 
+app-admin/glance::gentoo

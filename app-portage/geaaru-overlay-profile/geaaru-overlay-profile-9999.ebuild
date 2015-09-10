@@ -29,8 +29,10 @@ src_unpack() {
 
 src_install() {
 
-	insinto /etc/portage/package.mask/
-	newins ${FILESDIR}/package.mask.openstack "00-geaaru.openstack.package.mask"
+	if use openstack ; then
+		insinto /etc/portage/package.mask/
+		newins ${FILESDIR}/package.mask.openstack "00-geaaru.openstack.package.mask"
+	fi
 
 }
 
