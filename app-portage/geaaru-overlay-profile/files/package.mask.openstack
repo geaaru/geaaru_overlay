@@ -4,3 +4,9 @@
 sys-auth/keystone::gentoo
 
 app-admin/glance::gentoo
+
+sys-cluster/neutron::gentoo
+
+sys-cluster/cinder::gentoo
+
+sys-cluster/nova::gentoo
