@@ -12,12 +12,15 @@ HOMEPAGE="https://launchpad.net/neutron"
 SRC_URI="http://launchpad.net/${PN}/juno/${PV}/+download/${P}.tar.gz"
 
 LICENSE="Apache-2.0"
-SLOT="0"
+SLOT="2014.2-juno"
 KEYWORDS="~amd64 ~x86"
 IUSE="dhcp doc l3 metadata openvswitch linuxbridge server test sqlite mysql postgres"
 REQUIRED_USE="|| ( mysql postgres sqlite )"
 
 DEPEND="
+	!sys-cluster/neutron:0
+	!sys-cluster/neutron:2015.1-kilo
+	!sys-cluster/neutron:liberty
 	dev-python/setuptools[${PYTHON_USEDEP}]
 	>=dev-python/pbr-0.8[${PYTHON_USEDEP}]
 	<dev-python/pbr-1.0[${PYTHON_USEDEP}]
@@ -95,14 +98,12 @@ RDEPEND="
 	sys-apps/iproute2
 	net-misc/bridge-utils
 	net-firewall/ipset
+	l3? (
+		net-proxy/haproxy
+		sys-cluster/ipvsadm
+	)
 	openvswitch? ( net-misc/openvswitch )
 	dhcp? ( net-dns/dnsmasq[dhcp-tools] )"
-
-#PATCHES=(
-#	"${FILESDIR}/0001-Fixes-bug-in-interface-handling-of-ip_lib.py.patch"
-#	"${FILESDIR}/0002-moving-vxlan-module-check-to-sanity-checks-and-makin.patch"
-#	"${FILESDIR}/0003-fixes-error-logging-to-use-the-right-exception-paren.patch"
-#)
 
 pkg_setup() {
 	linux-info_pkg_setup
