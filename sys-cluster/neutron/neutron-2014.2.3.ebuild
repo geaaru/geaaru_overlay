@@ -185,8 +185,6 @@ python_install() {
 	insopts -m 0640 -o neutron -g neutron
 
 	doins etc/*
-	# stupid renames
-	rm "${D}etc/neutron/quantum"
 	insinto /etc/neutron
 	doins -r "etc/neutron/plugins"
 	insopts -m 0640 -o root -g root
