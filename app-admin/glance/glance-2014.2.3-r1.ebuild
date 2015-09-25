@@ -71,7 +71,7 @@ RDEPEND="
 	>=dev-python/webob-1.2.3[${PYTHON_USEDEP}]
 	>=dev-python/boto-2.32.1[${PYTHON_USEDEP}]
 	>=dev-python/boto-2.35.0[${PYTHON_USEDEP}]
-	~dev-python/sqlalchemy-migrate-0.9.1[${PYTHON_USEDEP}]
+	>=dev-python/sqlalchemy-migrate-0.9.1[${PYTHON_USEDEP}]
 	>=dev-python/httplib2-0.7.5[${PYTHON_USEDEP}]
 	>=dev-python/kombu-2.5.0[${PYTHON_USEDEP}]
 	>=dev-python/pycrypto-2.6[${PYTHON_USEDEP}]
