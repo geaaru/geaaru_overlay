@@ -12,37 +12,37 @@ HOMEPAGE="https://launchpad.net/nova"
 SRC_URI="http://launchpad.net/${PN}/juno/${PV}/+download/${P}.tar.gz"
 
 LICENSE="Apache-2.0"
-SLOT="0"
+SLOT="2014.2-juno"
 KEYWORDS="~amd64 ~x86"
 IUSE="+compute +kvm +network +novncproxy openvswitch sqlite mysql postgres xen iscsi"
 REQUIRED_USE="|| ( mysql postgres sqlite )
 			  compute? ( || ( kvm xen ) )"
 
-DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
-		>=dev-python/pbr-0.8[${PYTHON_USEDEP}]
-		<dev-python/pbr-1.0[${PYTHON_USEDEP}]
-		app-admin/sudo"
+DEPEND="
+	!sys-cluster/nova:0
+	!sys-cluster/nova:2015.1-kilo
+	!sys-cluster/nova:liberty
+	dev-python/setuptools[${PYTHON_USEDEP}]
+	>=dev-python/pbr-0.8[${PYTHON_USEDEP}]
+	app-admin/sudo
+"
 
 RDEPEND="
 	sqlite? (
 		>=dev-python/sqlalchemy-0.9.7[sqlite,${PYTHON_USEDEP}]
-		<=dev-python/sqlalchemy-0.9.99[sqlite,${PYTHON_USEDEP}]
 	)
 	mysql? (
 		dev-python/mysql-python
 		>=dev-python/sqlalchemy-0.9.7[${PYTHON_USEDEP}]
-		<=dev-python/sqlalchemy-0.9.99[${PYTHON_USEDEP}]
 	)
 	postgres? (
 		dev-python/psycopg:2
 		>=dev-python/sqlalchemy-0.9.7[${PYTHON_USEDEP}]
-		<=dev-python/sqlalchemy-0.9.99[${PYTHON_USEDEP}]
 	)
 	>=dev-python/anyjson-0.3.3[${PYTHON_USEDEP}]
 	>=dev-python/boto-2.32.1[${PYTHON_USEDEP}]
 	>=dev-python/decorator-3.4.0[${PYTHON_USEDEP}]
 	>=dev-python/eventlet-0.15.1[${PYTHON_USEDEP}]
-	<dev-python/eventlet-0.16.0[${PYTHON_USEDEP}]
 	dev-python/jinja[${PYTHON_USEDEP}]
 	>=dev-python/keystonemiddleware-1.0.0[${PYTHON_USEDEP}]
 	>=dev-python/lxml-2.3[${PYTHON_USEDEP}]
@@ -62,26 +62,21 @@ RDEPEND="
 	>=dev-python/Babel-1.3[${PYTHON_USEDEP}]
 	>=dev-python/iso8601-0.1.9[${PYTHON_USEDEP}]
 	>=dev-python/jsonschema-2.0.0[${PYTHON_USEDEP}]
-	<dev-python/jsonschema-3.0.0[${PYTHON_USEDEP}]
 	>=dev-python/python-cinderclient-1.1.0[${PYTHON_USEDEP}]
 	>=dev-python/python-neutronclient-2.3.6[${PYTHON_USEDEP}]
-	<=dev-python/python-neutronclient-3.0.0[${PYTHON_USEDEP}]
 	>=dev-python/python-glanceclient-0.14.0[${PYTHON_USEDEP}]
 	>=dev-python/six-1.7.0[${PYTHON_USEDEP}]
 	>=dev-python/stevedore-1.1.0[${PYTHON_USEDEP}]
 	>=dev-python/websockify-0.6.0[${PYTHON_USEDEP}]
-	<dev-python/websockify-0.7.0[${PYTHON_USEDEP}]
 	>=dev-python/oslo-config-1.4.0[${PYTHON_USEDEP}]
 	>=dev-python/oslo-db-1.0.0[${PYTHON_USEDEP}]
 	>=dev-python/oslo-rootwrap-1.3.0[${PYTHON_USEDEP}]
 	>=dev-python/oslo-messaging-1.4.0[${PYTHON_USEDEP}]
 	!~dev-python/oslo-messaging-1.5.0[${PYTHON_USEDEP}]
-	<dev-python/oslo-messaging-1.6.0[${PYTHON_USEDEP}]
 	>=dev-python/pycadf-0.6.0[${PYTHON_USEDEP}]
 	>=dev-python/oslo-i18n-1.0.0[${PYTHON_USEDEP}]
 	>=dev-python/rfc3986-0.2.0[${PYTHON_USEDEP}]
 	>=dev-python/oslo-vmware-0.6.0[${PYTHON_USEDEP}]
-	<dev-python/oslo-vmware-0.9.0[${PYTHON_USEDEP}]
 	>=dev-python/lockfile-0.8[${PYTHON_USEDEP}]
 	>=dev-python/simplejson-2.2.0[${PYTHON_USEDEP}]
 	dev-python/libvirt-python[${PYTHON_USEDEP}]
@@ -92,12 +87,15 @@ RDEPEND="
 	sys-fs/sysfsutils
 	sys-fs/multipath-tools
 	net-misc/bridge-utils
+	iscsi? (
+		sys-block/open-iscsi
+		sys-block/tgt
+	)
 	kvm? ( app-emulation/qemu )
 	xen? ( app-emulation/xen
 		   app-emulation/xen-tools )"
 
 PATCHES=(
-	"${FILESDIR}/CVE-2015-0259-2014.2.2.patch"
 )
 
 pkg_setup() {
