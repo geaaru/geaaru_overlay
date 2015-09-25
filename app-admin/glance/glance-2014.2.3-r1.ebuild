@@ -24,7 +24,6 @@ DEPEND="
 		!app-admin/glance:liberty
 		dev-python/setuptools[${PYTHON_USEDEP}]
 		>=dev-python/pbr-0.8.0[${PYTHON_USEDEP}]
-		>=dev-python/pbr-0.8.0[${PYTHON_USEDEP}]
 		test? (
 			${RDEPEND}
 			>=dev-python/hacking-0.8.0[${PYTHON_USEDEP}]
