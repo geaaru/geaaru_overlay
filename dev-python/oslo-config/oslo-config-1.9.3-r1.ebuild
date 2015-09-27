@@ -13,7 +13,7 @@ SRC_URI="mirror://pypi/${PN:0:1}/oslo.config/oslo.config-${PV}.tar.gz"
 S="${WORKDIR}/oslo.config-${PV}"
 
 LICENSE="Apache-2.0"
-SLOT="0"
+SLOT="1.x"
 KEYWORDS="amd64 x86 ~amd64-linux ~x86-linux"
 IUSE="test"
 
