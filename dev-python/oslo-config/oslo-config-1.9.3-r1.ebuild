@@ -18,6 +18,8 @@ KEYWORDS="amd64 x86 ~amd64-linux ~x86-linux"
 IUSE="test"
 
 DEPEND="
+	!dev-python/oslo-config:0
+	!dev-python/oslo-config:2.x
 	dev-python/setuptools[${PYTHON_USEDEP}]
 	>=dev-python/pbr-0.8.0[${PYTHON_USEDEP}]
 	test? (

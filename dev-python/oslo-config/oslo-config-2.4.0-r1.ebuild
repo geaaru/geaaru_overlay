@@ -20,6 +20,8 @@ IUSE="doc test"
 
 CDEPEND=">=dev-python/pbr-1.3[${PYTHON_USEDEP}]"
 DEPEND="
+	!dev-python/oslo-config:0
+	!dev-python/oslo-config:2.x
 	dev-python/setuptools[${PYTHON_USEDEP}]
 	${CDEPEND}
 	test? (
