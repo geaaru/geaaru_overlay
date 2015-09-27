@@ -14,7 +14,7 @@ HOMEPAGE="http://launchpad.net/oslo"
 SRC_URI="mirror://pypi/${MY_PN:0:1}/${MY_PN}/${MY_PN}-${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="Apache-2.0"
-SLOT="0"
+SLOT="2.x"
 KEYWORDS="~amd64 ~x86"
 IUSE="doc test"
 
@@ -22,6 +22,8 @@ CDEPEND="
 	>=dev-python/pbr-1.4[${PYTHON_USEDEP}]
 "
 DEPEND="
+	!dev-python/oslo-utils:0
+	!dev-python/oslo-utils:1.x
 	dev-python/setuptools[${PYTHON_USEDEP}]
 	${CDEPEND}
 	test? (
