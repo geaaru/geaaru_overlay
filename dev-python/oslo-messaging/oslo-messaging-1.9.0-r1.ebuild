@@ -13,11 +13,14 @@ SRC_URI="mirror://pypi/${PN:0:1}/oslo.messaging/oslo.messaging-${PV}.tar.gz"
 S="${WORKDIR}/oslo.messaging-${PV}"
 
 LICENSE="Apache-2.0"
-SLOT="0"
+SLOT="1.x"
 KEYWORDS="~amd64 ~x86"
 IUSE="test"
 
-DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
+DEPEND="
+	!dev-python/oslo-messaging:0
+	!dev-python/oslo-messaging:2.x
+	dev-python/setuptools[${PYTHON_USEDEP}]
 		>=dev-python/pbr-0.8[${PYTHON_USEDEP}]
 	test? (
 		>=dev-python/hacking-0.10[${PYTHON_USEDEP}]
@@ -40,9 +43,9 @@ DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
 		<dev-python/oslo-sphinx-2.6.0[${PYTHON_USEDEP}]
 	)"
 RDEPEND="
-	>=dev-python/oslo-config-1.9.3[${PYTHON_USEDEP}]
+	>=dev-python/oslo-config-1.9.3:1.x[${PYTHON_USEDEP}]
 	>=dev-python/oslo-context-0.2.0
-	>=dev-python/oslo-utils-1.4.0[${PYTHON_USEDEP}]
+	>=dev-python/oslo-utils-1.4.0:1.x[${PYTHON_USEDEP}]
 	>=dev-python/oslo-serialization-1.4.0[${PYTHON_USEDEP}]
 	<dev-python/oslo-serialization-1.5.0[${PYTHON_USEDEP}]
 	>=dev-python/oslo-i18n-1.5.0[${PYTHON_USEDEP}]

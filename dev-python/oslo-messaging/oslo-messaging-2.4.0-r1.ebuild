@@ -13,14 +13,17 @@ SRC_URI="mirror://pypi/${PN:0:1}/oslo.messaging/oslo.messaging-${PV}.tar.gz"
 S="${WORKDIR}/oslo.messaging-${PV}"
 
 LICENSE="Apache-2.0"
-SLOT="0"
+SLOT="2.x"
 KEYWORDS="~amd64 ~x86"
 IUSE="test"
 
 CDEPEND="
 	>=dev-python/pbr-1.4[${PYTHON_USEDEP}]
 "
-DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
+DEPEND="
+	!dev-python/oslo-messaging:0
+	!dev-python/oslo-messaging:1.x
+	dev-python/setuptools[${PYTHON_USEDEP}]
 	${CDEPEND}
 	test? (
 		>=dev-python/fixtures-1.3.1[${PYTHON_USEDEP}]
@@ -42,10 +45,10 @@ DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
 RDEPEND="
 	${CDEPEND}
 	>=dev-python/futurist-0.1.2[${PYTHON_USEDEP}]
-	>=dev-python/oslo-config-2.1.0[${PYTHON_USEDEP}]
+	>=dev-python/oslo-config-2.1.0:2.x[${PYTHON_USEDEP}]
 	>=dev-python/oslo-context-0.2.0[${PYTHON_USEDEP}]
 	>=dev-python/oslo-log-1.8.0[${PYTHON_USEDEP}]
-	>=dev-python/oslo-utils-2.0.0[${PYTHON_USEDEP}]
+	>=dev-python/oslo-utils-2.0.0:2.x[${PYTHON_USEDEP}]
 	>=dev-python/oslo-serialization-1.4.0[${PYTHON_USEDEP}]
 	>=dev-python/oslo-service-0.6.0[${PYTHON_USEDEP}]
 	>=dev-python/oslo-i18n-1.5.0[${PYTHON_USEDEP}]
