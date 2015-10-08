@@ -10,3 +10,43 @@ sys-cluster/neutron::gentoo
 sys-cluster/cinder::gentoo
 
 sys-cluster/nova::gentoo
+
+# FOR JUNO:
+# keystone-2014.2.x
+# neutron-2014.2.x
+# require
+# =<oslo-config-1.9.3-r1
+# =<oslo-utils-1.5.0-r1
+# =<oslo-messaging-1.9.0-r1
+
+# I use openstack libraries with less restrictions
+# from overlay. I mask some libraries from portage
+dev-python/keystonemiddleware::gentoo
+
+dev-python/oslo-context::gentoo
+dev-python/oslo-utils::gentoo
+dev-python/oslo-messaging::gentoo
+dev-python/oslo-vmware::gentoo
+dev-python/oslo-db::gentoo
+dev-python/oslo-concurrency::gentoo
+dev-python/oslo-middleware::gentoo
+dev-python/oslo-log::gentoo
+dev-python/oslo-service::gentoo
+dev-python/oslo-config::gentoo
+dev-python/oslo-policy::gentoo
+dev-python/oslo-i18n::gentoo
+
+# TODO: check if this is needed.
+dev-python/stevedore::gentoo
+dev-python/sqlalchemy-migrate::gentoo
+
+dev-python/glance_store::gentoo
+dev-python/taskflow::gentoo
+
+
+dev-python/python-keystoneclient::gentoo
+dev-python/python-glanceclient::gentoo
+dev-python/python-cinderclient::gentoo
+dev-python/python-openstackclient::gentoo
+dev-python/python-neutronclient::gentoo
+
