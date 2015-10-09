@@ -21,10 +21,16 @@ DEPEND="
 	>=dev-python/pbr-0.8.0[${PYTHON_USEDEP}]
 "
 RDEPEND="
-	>=dev-python/oslo-config-1.11.0[${PYTHON_USEDEP}]
+	|| (
+		>=dev-python/oslo-config-1.9.3:1.x[${PYTHON_USEDEP}]
+		>=dev-python/oslo-config-2.4.0:2.x[${PYTHON_USEDEP}]
+	)
 	>=dev-python/oslo-i18n-1.5.0[${PYTHON_USEDEP}]
 	>=dev-python/oslo-serialization-1.4.0[${PYTHON_USEDEP}]
-	>=dev-python/oslo-utils-1.4.0[${PYTHON_USEDEP}]
+	|| (
+		>=dev-python/oslo-utils-1.4.0:1.x[${PYTHON_USEDEP}]
+		>=dev-python/oslo-utils-2.4.0:2.x[${PYTHON_USEDEP}]
+	)
 	>=dev-python/oslo-concurrency-1.8.0[${PYTHON_USEDEP}]
 	>=dev-python/stevedore-1.3.0[${PYTHON_USEDEP}]
 	dev-python/enum34[${PYTHON_USEDEP}]
