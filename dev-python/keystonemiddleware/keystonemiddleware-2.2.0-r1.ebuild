@@ -58,7 +58,7 @@ RDEPEND="
 	>=dev-python/oslo-serialization-1.4.0[${PYTHON_USEDEP}]
 	|| (
 		>=dev-python/oslo-utils-2.0.0:2.x[${PYTHON_USEDEP}]
-		>=dev-python/oslo-utils-1.9.3:1.x[${PYTHON_USEDEP}]
+		>=dev-python/oslo-utils-1.5.0:1.x[${PYTHON_USEDEP}]
 	)
 	>=dev-python/pycadf-0.8.0[${PYTHON_USEDEP}]
 	>=dev-python/python-keystoneclient-1.6.0[${PYTHON_USEDEP}]
