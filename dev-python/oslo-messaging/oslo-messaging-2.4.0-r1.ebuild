@@ -60,7 +60,7 @@ RDEPEND="
 	>=dev-python/pyyaml-3.1.0[${PYTHON_USEDEP}]
 	>=dev-python/py-amqp-1.4.0[${PYTHON_USEDEP}]
 	>=dev-python/kombu-3.0.7[${PYTHON_USEDEP}]
-	>=dev-python/oslo-middleware-2.4.0[${PYTHON_USEDEP}]
+	>=dev-python/oslo-middleware-2.4.0:2.x[${PYTHON_USEDEP}]
 	!~dev-python/oslo-middleware-2.6.0[${PYTHON_USEDEP}]
 	>=dev-python/aioeventlet-0.4[${PYTHON_USEDEP}]
 	>=dev-python/trollius-1.0.0[${PYTHON_USEDEP}]

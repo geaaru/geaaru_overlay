@@ -55,7 +55,7 @@ RDEPEND="
 	!~dev-python/eventlet-0.17.0[${PYTHON_USEDEP}]
 	>=dev-python/pyyaml-3.1.0[${PYTHON_USEDEP}]
 	>=dev-python/kombu-2.5.8[${PYTHON_USEDEP}]
-	>=dev-python/oslo-middleware-1.0.0[${PYTHON_USEDEP}]
+	>=dev-python/oslo-middleware-1.0.0:1.x[${PYTHON_USEDEP}]
 	>=dev-python/futures-2.1.6[${PYTHON_USEDEP}]
 	>=dev-python/aioeventlet-0.4[${PYTHON_USEDEP}]
 	>=dev-python/trollius-1.0.0[${PYTHON_USEDEP}]
