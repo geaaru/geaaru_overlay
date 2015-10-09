@@ -36,9 +36,15 @@ RDEPEND="
 	${CDEPEND}
 	>=dev-python/Babel-1.3[${PYTHON_USEDEP}]
 	>=dev-python/iso8601-0.1.9[${PYTHON_USEDEP}]
-	>=dev-python/oslo-config-2.1.0[${PYTHON_USEDEP}]
+	|| (
+		>=dev-python/oslo-config-2.1.0:2.x[${PYTHON_USEDEP}]
+		>=dev-python/oslo-config-1.9.3:1.x[${PYTHON_USEDEP}]
+	)
 	>=dev-python/oslo-i18n-1.5.0[${PYTHON_USEDEP}]
-	>=dev-python/oslo-utils-2.0.0[${PYTHON_USEDEP}]
+	|| (
+		>=dev-python/oslo-utils-1.5.0:1.x[${PYTHON_USEDEP}]
+		>=dev-python/oslo-utils-2.4.0:2.x[${PYTHON_USEDEP}]
+	)
 	dev-python/posix_ipc[${PYTHON_USEDEP}]
 	>=dev-python/six-1.9.0[${PYTHON_USEDEP}]
 	>=dev-python/fasteners-0.7[${PYTHON_USEDEP}]
