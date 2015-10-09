@@ -21,13 +21,10 @@ IUSE="doc test"
 
 DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
 		>=dev-python/pbr-0.6[${PYTHON_USEDEP}]
-		<dev-python/pbr-1.0[${PYTHON_USEDEP}]
 	test? ( >=dev-python/sphinx-1.1.2[${PYTHON_USEDEP}]
-			<dev-python/sphinx-1.2[${PYTHON_USEDEP}]
 			dev-python/oslo-sphinx[${PYTHON_USEDEP}]
 			~dev-python/docutils-0.9.1[${PYTHON_USEDEP}]
 			>=dev-python/hacking-0.8.0[${PYTHON_USEDEP}]
-			<dev-python/hacking-0.9[${PYTHON_USEDEP}]
 			>=dev-python/fixtures-0.3.14[${PYTHON_USEDEP}]
 			dev-python/nose[${PYTHON_USEDEP}]
 			>=dev-python/mock-1.0[${PYTHON_USEDEP}]
@@ -43,8 +40,14 @@ DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
 RDEPEND=">=dev-python/Babel-1.3[${PYTHON_USEDEP}]
 		>=dev-python/iso8601-0.1.9[${PYTHON_USEDEP}]
 		>=dev-python/netaddr-0.7.6[${PYTHON_USEDEP}]
-		>=dev-python/oslo-config-1.2.0[${PYTHON_USEDEP}]
-		>=dev-python/oslo-messaging-1.3.0[${PYTHON_USEDEP}]
+		|| (
+			>=dev-python/oslo-config-1.2.0:1.x[${PYTHON_USEDEP}]
+			>=dev-python/oslo-config-2.4.0:2.x[${PYTHON_USEDEP}]
+		)
+		|| (
+			>=dev-python/oslo-messaging-1.3.0:1.x[${PYTHON_USEDEP}]
+			>=dev-python/oslo-messaging-2.4.0:2.x[${PYTHON_USEDEP}]
+		)
 		>=dev-python/pytz-2010h[${PYTHON_USEDEP}]
 		>=dev-python/six-1.5.2[${PYTHON_USEDEP}]
 		>=dev-python/webob-1.2.3[${PYTHON_USEDEP}]"
