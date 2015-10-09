@@ -17,7 +17,10 @@ SLOT="1.x"
 KEYWORDS="~amd64 ~x86"
 IUSE="test"
 
-DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
+DEPEND="
+		!dev-python/oslo-middleware:0
+		!dev-python/oslo-middleware:2.x
+		dev-python/setuptools[${PYTHON_USEDEP}]
 		>=dev-python/pbr-0.11[${PYTHON_USEDEP}]
 	test? (
 		>=dev-python/fixtures-0.3.14[${PYTHON_USEDEP}]

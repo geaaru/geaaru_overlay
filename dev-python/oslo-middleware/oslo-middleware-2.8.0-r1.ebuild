@@ -20,7 +20,10 @@ IUSE="test"
 CDEPEND="
 	>=dev-python/pbr-1.6[${PYTHON_USEDEP}]
 "
-DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
+DEPEND="
+		!dev-python/oslo-middleware:0
+		!dev-python/oslo-middleware:1.x
+		dev-python/setuptools[${PYTHON_USEDEP}]
 	${CDEPEND}
 	test? (
 		>=dev-python/fixtures-1.3.1[${PYTHON_USEDEP}]
