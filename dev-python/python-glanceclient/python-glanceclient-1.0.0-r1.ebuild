@@ -46,7 +46,10 @@ RDEPEND="
 	>=dev-python/requests-2.5.2[${PYTHON_USEDEP}]
 	>=dev-python/warlock-1.0.1[${PYTHON_USEDEP}]
 	>=dev-python/six-1.9.0[${PYTHON_USEDEP}]
-	>=dev-python/oslo-utils-1.9.0[${PYTHON_USEDEP}]
+	|| (
+		>=dev-python/oslo-utils-1.5.0:1.x[${PYTHON_USEDEP}]
+		>=dev-python/oslo-utils-2.4.0:2.x[${PYTHON_USEDEP}]
+	)
 	>=dev-python/oslo-i18n-1.5.0[${PYTHON_USEDEP}]
 "
 
