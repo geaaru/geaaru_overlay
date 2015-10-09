@@ -27,25 +27,23 @@ DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
 		>=dev-python/testtools-1.4.0[${PYTHON_USEDEP}]
 		>=dev-python/oslo-sphinx-2.5.0[${PYTHON_USEDEP}]
 		>=dev-python/sphinx-1.1.2[${PYTHON_USEDEP}]
-		<dev-python/sphinx-1.3[${PYTHON_USEDEP}]
 	)
 	doc? (
 		>=dev-python/oslo-sphinx-2.5.0[${PYTHON_USEDEP}]
 		>=dev-python/sphinx-1.1.2[${PYTHON_USEDEP}]
-		<dev-python/sphinx-1.3[${PYTHON_USEDEP}]
 	)"
 # !=1.2.0 of sphinx deleted since it is not in portage anyway
 RDEPEND="
 	|| (
-		>=dev-python/oslo-config-2.1.0:2.x[${PYTHON_USEDEP}]
 		>=dev-python/oslo-config-1.9.0:1.x[${PYTHON_USEDEP}]
+		>=dev-python/oslo-config-2.1.0:2.x[${PYTHON_USEDEP}]
 	)
 	>=dev-python/oslo-serialization-1.4.0[${PYTHON_USEDEP}]
 	>=dev-python/pytz-2013.6[${PYTHON_USEDEP}]
 	>=dev-python/six-1.9.0[${PYTHON_USEDEP}]"
 
 python_prepare_all() {
-	sed -i '/^hacking/d' test-requirements.py || die
+	sed -i '/^hacking/d' test-requirements.txt || die
 	distutils-r1_python_prepare_all
 }
 
