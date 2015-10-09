@@ -21,7 +21,7 @@ DEPEND="
 	!dev-python/oslo-messaging:0
 	!dev-python/oslo-messaging:2.x
 	dev-python/setuptools[${PYTHON_USEDEP}]
-		>=dev-python/pbr-0.8[${PYTHON_USEDEP}]
+	>=dev-python/pbr-0.8[${PYTHON_USEDEP}]
 	test? (
 		>=dev-python/hacking-0.10[${PYTHON_USEDEP}]
 		>=dev-python/fixtures-0.3.14[${PYTHON_USEDEP}]
@@ -40,14 +40,12 @@ DEPEND="
 		>=dev-python/sphinx-1.1.2[${PYTHON_USEDEP}]
 		!~dev-python/sphinx-1.2.0[${PYTHON_USEDEP}]
 		>=dev-python/oslo-sphinx-2.5.0[${PYTHON_USEDEP}]
-		<dev-python/oslo-sphinx-2.6.0[${PYTHON_USEDEP}]
 	)"
 RDEPEND="
 	>=dev-python/oslo-config-1.9.3:1.x[${PYTHON_USEDEP}]
 	>=dev-python/oslo-context-0.2.0
 	>=dev-python/oslo-utils-1.4.0:1.x[${PYTHON_USEDEP}]
 	>=dev-python/oslo-serialization-1.4.0[${PYTHON_USEDEP}]
-	<dev-python/oslo-serialization-1.5.0[${PYTHON_USEDEP}]
 	>=dev-python/oslo-i18n-1.5.0[${PYTHON_USEDEP}]
 	>=dev-python/stevedore-1.3.0[${PYTHON_USEDEP}]
 	>=dev-python/six-1.9.0[${PYTHON_USEDEP}]
