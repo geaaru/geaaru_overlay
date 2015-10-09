@@ -46,7 +46,10 @@ RDEPEND="
 	>=dev-python/iso8601-0.1.9[${PYTHON_USEDEP}]
 	>=dev-python/six-1.9.0[${PYTHON_USEDEP}]
 	>=dev-python/oslo-i18n-1.5.0[${PYTHON_USEDEP}]
-	>=dev-python/oslo-utils-2.0.0[${PYTHON_USEDEP}]
+	|| (
+		>=dev-python/oslo-utils-1.5.0:1.x[${PYTHON_USEDEP}]
+		>=dev-python/oslo-utils-2.0.0:2.x[${PYTHON_USEDEP}]
+	)
 	>=dev-python/Babel-1.3[${PYTHON_USEDEP}]
 	>=dev-python/pyyaml-3.1.0[${PYTHON_USEDEP}]
 	>=dev-python/suds-0.6[${PYTHON_USEDEP}]
