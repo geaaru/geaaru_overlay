@@ -30,9 +30,12 @@ DEPEND="
 		>=dev-python/pycrypto-2.6[${PYTHON_USEDEP}]
 		>=dev-python/oslo-sphinx-2.5.0[${PYTHON_USEDEP}]
 		>=dev-python/oslotest-1.10.0[${PYTHON_USEDEP}]
-		>=dev-python/oslo-messaging-1.16.0[${PYTHON_USEDEP}]
-		!~dev-python/oslo-messaging-1.17.0[${PYTHON_USEDEP}]
-		!~dev-python/oslo-messaging-1.17.1[${PYTHON_USEDEP}]
+		|| (
+			>=dev-python/oslo-messaging-1.16.0:1.x[${PYTHON_USEDEP}]
+			>=dev-python/oslo-messaging-2.4.0:2.x[${PYTHON_USEDEP}]
+		)
+		!~dev-python/oslo-messaging-1.17.0:1.x[${PYTHON_USEDEP}]
+		!~dev-python/oslo-messaging-1.17.1:1.x[${PYTHON_USEDEP}]
 		>=dev-python/requests-mock-0.6.0[${PYTHON_USEDEP}]
 		>=dev-python/sphinx-1.1.2[${PYTHON_USEDEP}]
 		!~dev-python/sphinx-1.2.0[${PYTHON_USEDEP}]
