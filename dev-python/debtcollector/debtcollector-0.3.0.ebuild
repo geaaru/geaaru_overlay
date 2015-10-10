@@ -19,17 +19,13 @@ IUSE="test"
 
 DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
 		>=dev-python/pbr-0.6[${PYTHON_USEDEP}]
-		!~dev-python/pbr-0.7[${PYTHON_USEDEP}]
-		<dev-python/pbr-1.0[${PYTHON_USEDEP}]
 		test? ( >=dev-python/hacking-0.10.0[${PYTHON_USEDEP}]
-				<dev-python/hacking-0.11[${PYTHON_USEDEP}]
 				>=dev-python/coverage-3.6[${PYTHON_USEDEP}]
 				>=dev-python/fixtures-0.3.14[${PYTHON_USEDEP}]
 				>=dev-python/keyring-2.1[${PYTHON_USEDEP}]
 				>=dev-python/mock-1.0[${PYTHON_USEDEP}]
 				>=dev-python/sphinx-1.1.2[${PYTHON_USEDEP}]
 				!~dev-python/sphinx-1.2.0[${PYTHON_USEDEP}]
-				<dev-python/sphinx-1.3[${PYTHON_USEDEP}]
 				>=dev-python/testrepository-0.0.18[${PYTHON_USEDEP}]
 				>=dev-python/testscenarios-0.4[${PYTHON_USEDEP}]
 				>=dev-python/testtools-0.9.36[${PYTHON_USEDEP}]
@@ -41,6 +37,9 @@ RDEPEND=">=dev-python/anyjson-0.3.3[${PYTHON_USEDEP}]
 		>=dev-python/six-1.9.0[${PYTHON_USEDEP}]
 		>=dev-python/Babel-1.3[${PYTHON_USEDEP}]
 		>=dev-python/wrapt-1.7.0[${PYTHON_USEDEP}]
-		>=dev-python/oslo-utils-1.4.0[${PYTHON_USEDEP}]
+		|| (
+			>=dev-python/oslo-utils-1.4.0:1.x[${PYTHON_USEDEP}]
+			>=dev-python/oslo-utils-2.0.0:2.x[${PYTHON_USEDEP}]
+		)
 "
 
