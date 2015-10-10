@@ -22,9 +22,7 @@ IUSE="test"
 
 DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
 		>=dev-python/pbr-0.6[${PYTHON_USEDEP}]
-		<dev-python/pbr-1.0[${PYTHON_USEDEP}]
 	test? ( >=dev-python/hacking-0.8.0[${PYTHON_USEDEP}]
-		<dev-python/hacking-0.9[${PYTHON_USEDEP}]
 		>=dev-python/fixtures-0.3.14[${PYTHON_USEDEP}]
 		dev-python/subunit[${PYTHON_USEDEP}]
 		>=dev-python/testrepository-0.0.17[${PYTHON_USEDEP}]
