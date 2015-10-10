@@ -73,6 +73,7 @@ RDEPEND="
 	>=dev-python/oslo-rootwrap-1.3.0[${PYTHON_USEDEP}]
 	>=dev-python/oslo-messaging-1.4.0:1.x[${PYTHON_USEDEP}]
 	!~dev-python/oslo-messaging-1.5.0[${PYTHON_USEDEP}]
+	>=dev-python/oslo-service-0.9.0[${PYTHON_USEDEP}]
 	>=dev-python/pycadf-0.6.0[${PYTHON_USEDEP}]
 	>=dev-python/oslo-i18n-1.0.0[${PYTHON_USEDEP}]
 	>=dev-python/rfc3986-0.2.0[${PYTHON_USEDEP}]
