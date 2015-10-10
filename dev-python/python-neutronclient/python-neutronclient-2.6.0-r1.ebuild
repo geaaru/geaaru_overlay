@@ -44,7 +44,10 @@ RDEPEND="
 	>=dev-python/netaddr-0.7.12[${PYTHON_USEDEP}]
 	>=dev-python/oslo-i18n-1.5.0[${PYTHON_USEDEP}]
 	>=dev-python/oslo-serialization-1.4.0[${PYTHON_USEDEP}]
-	>=dev-python/oslo-utils-1.4.0[${PYTHON_USEDEP}]
+	|| (
+		>=dev-python/oslo-utils-1.4.0:1.x[${PYTHON_USEDEP}]
+		>=dev-python/oslo-utils-2.4.0:2.x[${PYTHON_USEDEP}]
+	)
 	>=dev-python/requests-2.5.2[${PYTHON_USEDEP}]
 	>=dev-python/python-keystoneclient-1.3.0[${PYTHON_USEDEP}]
 	>=dev-python/simplejson-2.2.0[${PYTHON_USEDEP}]
