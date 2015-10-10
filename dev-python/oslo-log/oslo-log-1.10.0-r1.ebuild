@@ -35,7 +35,7 @@ RDEPEND="
 	|| (
 		>=dev-python/oslo-utils-1.5.0:1.x[${PYTHON_USEDEP}]
 		>=dev-python/oslo-utils-2.0.0:2.x[${PYTHON_USEDEP}]
-	(
+	)
 	>=dev-python/oslo-serialization-1.4.0[${PYTHON_USEDEP}]
 	>=dev-python/debtcollector-0.3.0[${PYTHON_USEDEP}]"
 DEPEND="
