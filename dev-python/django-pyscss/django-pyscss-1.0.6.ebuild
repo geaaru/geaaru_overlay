@@ -18,15 +18,12 @@ IUSE="test"
 
 DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
 		>=dev-python/pbr-0.6.0[${PYTHON_USEDEP}]
-		<dev-python/pbr-1.0[${PYTHON_USEDEP}]
 		>=dev-python/pyscss-1.2.1[${PYTHON_USEDEP}]
 		test? (	>=dev-python/hacking-0.8.0[${PYTHON_USEDEP}]
-				<dev-python/hacking-0.9[${PYTHON_USEDEP}]
 				>=dev-python/Babel-1.3[${PYTHON_USEDEP}]
 				>=dev-python/coverage-3.6[${PYTHON_USEDEP}]
 				>=dev-python/mox-0.5.3[${PYTHON_USEDEP}]
 				>=dev-python/sphinx-1.1.2[${PYTHON_USEDEP}]
-				<dev-python/sphinx-1.2[${PYTHON_USEDEP}]
 				dev-python/oslo-sphinx[${PYTHON_USEDEP}] )"
 RDEPEND=">=dev-python/django-1.4[${PYTHON_USEDEP}]
 		<dev-python/django-1.7[${PYTHON_USEDEP}]
