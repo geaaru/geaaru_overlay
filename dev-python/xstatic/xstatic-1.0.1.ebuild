@@ -20,25 +20,9 @@ S="${WORKDIR}/XStatic-${PV}"
 
 DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
 		>=dev-python/pbr-0.6[${PYTHON_USEDEP}]
-	test? ( >=dev-python/testtools-0.9.34[${PYTHON_USEDEP}] )"
+	test? ( >=dev-python/testtools-0.9.34[${PYTHON_USEDEP}] )
+	dev-python/namespaces-xstatic
+"
 
 RDEPEND=""
 
-src_prepare () {
-	# Avoid install of xstatic.pkg namespace to permit
-	# setup of xstatic modules
-	sed -e 's/'\'xstatic.pkg\','//g' -i setup.py
-	rm xstatic/pkg/__init__.py
-}
-
-python_prepare_all() {
-	distutils-r1_python_prepare_all
-}
-
-python_test() {
-	nosetests ${MY_PN}/tests || die "test failed under ${EPYTHON}"
-}
-
-python_install_all() {
-	distutils-r1_python_install_all
-}
