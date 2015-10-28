@@ -11,6 +11,8 @@ sys-cluster/cinder::gentoo
 
 sys-cluster/nova::gentoo
 
+www-apps/horizon::gentoo
+
 # FOR JUNO:
 # keystone-2014.2.x
 # neutron-2014.2.x
@@ -35,6 +37,8 @@ dev-python/oslo-service::gentoo
 dev-python/oslo-config::gentoo
 dev-python/oslo-policy::gentoo
 dev-python/oslo-i18n::gentoo
+dev-python/oslo-serialization::gentoo
+dev-python/pycadf::gentoo
 
 # TODO: check if this is needed.
 dev-python/stevedore::gentoo
@@ -49,4 +53,16 @@ dev-python/python-glanceclient::gentoo
 dev-python/python-cinderclient::gentoo
 dev-python/python-openstackclient::gentoo
 dev-python/python-neutronclient::gentoo
+dev-python/python-barbicanclient::gentoo
+dev-python/python-troveclient::gentoo
+dev-python/python-heatclient::gentoo
+dev-python/python-ceilometerclient::gentoo
+
+# For horizon
+dev-python/django-openstack-auth::gentoo
+dev-python/django-pyscss::gentoo
+dev-python/django-compressor::gentoo
+dev-python/django-appconf::gentoo
+dev-python/django::gentoo
+
 
