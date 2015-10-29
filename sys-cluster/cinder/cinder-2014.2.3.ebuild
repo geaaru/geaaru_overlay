@@ -96,6 +96,7 @@ RDEPEND="
 		sys-block/open-iscsi
 	)
 	lvm? ( sys-fs/lvm2 )
+	dev-python/oslo-service
 	sys-fs/sysfsutils
 "
 
