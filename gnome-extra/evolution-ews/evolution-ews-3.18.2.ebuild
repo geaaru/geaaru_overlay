@@ -1,6 +1,6 @@
 # Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/gnome-extra/evolution-ews/evolution-ews-3.12.11.ebuild,v 1.3 2015/03/15 13:25:06 pacho Exp $
+# $Id$
 
 EAPI="5"
 GCONF_DEBUG="no"
@@ -14,11 +14,11 @@ HOMEPAGE="https://wiki.gnome.org/Apps/Evolution"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="amd64 x86"
-IUSE=""
+IUSE="test"
 
 RDEPEND="
 	dev-db/sqlite:3=
-	>=dev-libs/glib-2.32:2
+	>=dev-libs/glib-2.40:2
 	dev-libs/libical:0=
 	>=dev-libs/libxml2-2
 	>=gnome-extra/evolution-data-server-${PV}:0=
@@ -30,12 +30,12 @@ DEPEND="${RDEPEND}
 	>=dev-util/gtk-doc-am-1.9
 	>=dev-util/intltool-0.35.5
 	virtual/pkgconfig
+	test? ( net-libs/uhttpmock )
 "
-
-# Requires libhttpmock which is not in portage
-RESTRICT="test"
 
 src_configure() {
 	# We don't have libmspack, needing internal lzx
-	gnome2_src_configure --with-internal-lzx
+	gnome2_src_configure \
+		--with-internal-lzx \
+		$(use_enable test tests)
 }
