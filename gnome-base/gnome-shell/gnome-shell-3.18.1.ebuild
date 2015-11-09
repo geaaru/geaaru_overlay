@@ -1,52 +1,50 @@
-# Copyright 1999-2013 Gentoo Foundation
+# Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/gnome-base/gnome-shell/gnome-shell-3.8.4-r1.ebuild,v 1.8 2013/11/30 19:11:16 pacho Exp $
+# $Id$
 
 EAPI="5"
 GCONF_DEBUG="no"
 GNOME2_LA_PUNT="yes"
-PYTHON_COMPAT=( python2_{6,7} )
+PYTHON_COMPAT=( python{3_3,3_4} )
 
 inherit autotools eutils gnome2 multilib pax-utils python-r1 systemd
 
 DESCRIPTION="Provides core UI functions for the GNOME 3 desktop"
-HOMEPAGE="http://live.gnome.org/GnomeShell"
+HOMEPAGE="https://wiki.gnome.org/Projects/GnomeShell"
 
 LICENSE="GPL-2+ LGPL-2+"
 SLOT="0"
 IUSE="+bluetooth +i18n +networkmanager -openrc-force"
-KEYWORDS="~alpha amd64 ~arm ~ppc ~ppc64 ~x86"
+REQUIRED_USE="${PYTHON_REQUIRED_USE}"
+KEYWORDS="~alpha ~amd64 ~arm ~ia64 ~ppc ~ppc64 ~sparc ~x86"
 
 # libXfixes-5.0 needed for pointer barriers
-# TODO: gstreamer support is currently automagical:
-# gstreamer? ( >=media-libs/gstreamer-0.11.92 )
-#
-# gnome-shell/gnome-control-center/mutter/gnome-settings-daemon better to be in sync for 3.8.3
-# https://mail.gnome.org/archives/gnome-announce-list/2013-June/msg00005.html
+# FIXME:
+#  * gstreamer support is currently automagic
 COMMON_DEPEND="
-	app-crypt/libsecret
 	>=app-accessibility/at-spi2-atk-2.5.3
 	>=dev-libs/atk-2[introspection]
 	>=app-crypt/gcr-3.7.5[introspection]
-	>=dev-libs/glib-2.35:2
-	>=dev-libs/gjs-1.38.1
-	>=dev-libs/gobject-introspection-0.10.1
-	>=x11-libs/gtk+-3.7.9:3[introspection]
-	>=media-libs/clutter-1.13.4:1.0[introspection]
+	>=dev-libs/glib-2.45.3:2[dbus]
+	>=dev-libs/gjs-1.39
+	>=dev-libs/gobject-introspection-1.45.4:=
+	dev-libs/libical:=
+	>=x11-libs/gtk+-3.15.0:3[introspection]
+	>=media-libs/clutter-1.21.5:1.0[introspection]
 	>=dev-libs/json-glib-0.13.2
 	>=dev-libs/libcroco-0.6.8:0.6
 	>=gnome-base/gnome-desktop-3.7.90:3=[introspection]
-	>=gnome-base/gsettings-desktop-schemas-3.7.4
+	>=gnome-base/gsettings-desktop-schemas-3.14
 	>=gnome-base/gnome-keyring-3.3.90
-	>=gnome-base/gnome-menus-3.5.3:3[introspection]
 	gnome-base/libgnome-keyring
-	>=gnome-extra/evolution-data-server-3.5.3:=
+	>=gnome-extra/evolution-data-server-3.17.2:=
 	>=media-libs/gstreamer-0.11.92:1.0
 	>=net-im/telepathy-logger-0.2.4[introspection]
 	>=net-libs/telepathy-glib-0.19[introspection]
 	>=sys-auth/polkit-0.100[introspection]
 	>=x11-libs/libXfixes-5.0
-	>=x11-wm/mutter-3.8.3[introspection]
+	x11-libs/libXtst
+	>=x11-wm/mutter-3.17.91[introspection]
 	>=x11-libs/startup-notification-0.11
 
 	${PYTHON_DEPS}
@@ -64,8 +62,11 @@ COMMON_DEPEND="
 	x11-libs/pango[introspection]
 	x11-apps/mesa-progs
 
-	bluetooth? ( >=net-wireless/gnome-bluetooth-3.5[introspection] )
-	networkmanager? ( >=net-misc/networkmanager-0.9.6[introspection] )
+	bluetooth? ( >=net-wireless/gnome-bluetooth-3.9[introspection] )
+	networkmanager? (
+		app-crypt/libsecret
+		>=gnome-extra/nm-applet-0.9.8
+		>=net-misc/networkmanager-0.9.8[introspection] )
 "
 # Runtime-only deps are probably incomplete and approximate.
 # Introspection deps generated using:
@@ -84,15 +85,12 @@ RDEPEND="${COMMON_DEPEND}
 	>=sys-auth/polkit-0.101[introspection]
 
 	>=app-accessibility/caribou-0.4.8
-	>=gnome-base/gdm-3.5[introspection]
-	>=gnome-base/libgnomekbd-2.91.4[introspection]
 	media-libs/cogl[introspection]
 	>=sys-apps/accountsservice-0.6.14[introspection]
-	sys-power/upower[introspection]
+	>=sys-power/upower-0.99[introspection]
 
 	>=gnome-base/gnome-session-2.91.91
 	>=gnome-base/gnome-settings-daemon-3.8.3
-	>=gnome-base/gnome-control-center-3.8.3[bluetooth(+)?]
 
 	!openrc-force? ( >=sys-apps/systemd-31 )
 
@@ -106,47 +104,32 @@ RDEPEND="${COMMON_DEPEND}
 		net-misc/mobile-broadband-provider-info
 		sys-libs/timezone-data )
 "
+# avoid circular dependency, see bug #546134
+PDEPEND="
+	>=gnome-base/gdm-3.5[introspection]
+	>=gnome-base/gnome-control-center-3.8.3[bluetooth(+)?,networkmanager(+)?]
+"
 DEPEND="${COMMON_DEPEND}
 	dev-libs/libxslt
 	>=dev-util/gtk-doc-am-1.17
 	>=dev-util/intltool-0.40
 	gnome-base/gnome-common
-	>=sys-devel/gettext-0.17
 	virtual/pkgconfig
 	!!=dev-lang/spidermonkey-1.8.2*
 "
 # libmozjs.so is picked up from /usr/lib while compiling, so block at build-time
 # https://bugs.gentoo.org/show_bug.cgi?id=360413
 
-REQUIRED_USE="${PYTHON_REQUIRED_USE}"
-
 src_prepare() {
 	# Change favorites defaults, bug #479918
-	epatch "${FILESDIR}/${PN}-defaults.patch"
+	epatch "${FILESDIR}"/${PN}-3.14.0-defaults.patch
 
 	# Fix automagic gnome-bluetooth dep, bug #398145
-#	epatch "${FILESDIR}/${PN}-3.7.90-bluetooth-flag.patch"
+	epatch "${FILESDIR}"/${PN}-3.12-bluetooth-flag.patch
 
-	# Make networkmanager optional, bug #398593
-#	epatch "${FILESDIR}/${PN}-3.8.3-networkmanager-flag.patch"
-
-	# Re-lock the screen if we're restarted from a previously crashed shell (from 'master')
-#	epatch "${FILESDIR}/${PN}-3.8.3-relock-screen.patch"
-
-	# Reset opacity when not animating (from 3.8 branch)
-#	epatch "${FILESDIR}/${P}-reset-opacity.patch"
-
-	# Unconditionally allocate scrollbars (from 3.8 branch)
-#	epatch "${FILESDIR}/${P}-allocate-scrollbars.patch"
-
-	# ScreenShield: don't allow events through the lock dialog (from 3.8 branch)
-#	epatch "${FILESDIR}/${P}-events-lock.patch"
-
-	# Revert "background: fix asynchronous management of background loading operations" (#481918)
-#	epatch "${FILESDIR}/${P}-revert-async.patch"
-
-	# AppDisplay/FrequentView: filter out hidden applications (from 'master')
-#	epatch "${FILESDIR}/${PN}-3.8.4-nodisplay.patch"
+	# Fix silent bluetooth linking failure with ld.gold, bug #503952
+	# https://bugzilla.gnome.org/show_bug.cgi?id=726435
+	epatch "${FILESDIR}"/${PN}-3.14.0-bluetooth-gold.patch
 
 	epatch_user
 
@@ -157,8 +140,9 @@ src_prepare() {
 src_configure() {
 	# Do not error out on warnings
 	gnome2_src_configure \
+		--enable-browser-plugin \
 		--enable-man \
-		--disable-jhbuild-wrapper-script \
+		$(use_enable !openrc-force systemd) \
 		$(use_with bluetooth) \
 		$(use_enable networkmanager) \
 		BROWSER_PLUGIN_DIR="${EPREFIX}"/usr/$(get_libdir)/nsbrowser/plugins
@@ -172,14 +156,15 @@ src_install() {
 	# Required for gnome-shell on hardened/PaX, bug #398941
 	# Future-proof for >=spidermonkey-1.8.7 following polkit's example
 	if has_version '<dev-lang/spidermonkey-1.8.7'; then
-		pax-mark mr "${ED}usr/bin/gnome-shell"
+		pax-mark mr "${ED}usr/bin/gnome-shell"{,-extension-prefs}
 	elif has_version '>=dev-lang/spidermonkey-1.8.7[jit]'; then
-		pax-mark m "${ED}usr/bin/gnome-shell"
-	fi
+		pax-mark m "${ED}usr/bin/gnome-shell"{,-extension-prefs}
 	# Required for gnome-shell on hardened/PaX #457146 and #457194
 	# PaX EMUTRAMP need to be on
-	if has_version '>=dev-libs/libffi-3.0.13[pax_kernel]'; then
-		pax-mark E "${ED}usr/bin/gnome-shell"
+	elif has_version '>=dev-libs/libffi-3.0.13[pax_kernel]'; then
+		pax-mark E "${ED}usr/bin/gnome-shell"{,-extension-prefs}
+	else
+		pax-mark m "${ED}usr/bin/gnome-shell"{,-extension-prefs}
 	fi
 }
 
@@ -206,17 +191,6 @@ pkg_postinst() {
 		ewarn "drivers."
 	fi
 
-	if has_version "media-libs/mesa[video_cards_radeon]" ||
-	   has_version "media-libs/mesa[video_cards_r300]" ||
-	   has_version "media-libs/mesa[video_cards_r600]"; then
-		elog "GNOME Shell is unstable under classic-mode r300/r600 mesa drivers."
-		elog "Make sure that gallium architecture for r300 and r600 drivers is"
-		elog "selected using 'eselect mesa'."
-		if ! has_version "media-libs/mesa[gallium]"; then
-			ewarn "You will need to emerge media-libs/mesa with USE=gallium."
-		fi
-	fi
-
 	if ! has_version "media-libs/mesa[llvm]"; then
 		elog "llvmpipe is used as fallback when no 3D acceleration"
 		elog "is available. You will need to enable llvm USE for"
@@ -226,7 +200,7 @@ pkg_postinst() {
 	if ! systemd_is_booted; then
 		ewarn "${PN} needs Systemd to be *running* for working"
 		ewarn "properly. Please follow this guide to migrate:"
-		ewarn "http://wiki.gentoo.org/wiki/Systemd"
+		ewarn "https://wiki.gentoo.org/wiki/Systemd"
 	fi
 
 	if use openrc-force; then
