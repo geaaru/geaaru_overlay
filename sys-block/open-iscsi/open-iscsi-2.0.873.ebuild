@@ -47,7 +47,12 @@ pkg_setup() {
 src_prepare() {
 	epatch "${FILESDIR}"/${P}-Makefiles.patch
 
+	if use slp ; then
+		sed -i -e 's:-lisns:-lisns -lslp:' usr/Makefile || die
+	fi
+
 	sed -i -e 's:^\(iscsid.startup\)\s*=.*:\1 = /usr/sbin/iscsid:' etc/iscsid.conf || die
+
 }
 
 src_configure() {
