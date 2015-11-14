@@ -1,0 +1,17 @@
+[Unit]
+Description=Linux SCSI Target Framework
+After = network.target remote-fs.target open-iscsid.service
+ConditionPathExists = /etc/tgt/targets.conf
+Requires = open-iscsid.service
+
+[Service]
+Type = simple
+EnvironmentFile=/etc/conf.d/tgtd
+ExecStart = /usr/sbin/tgtd -f $TGTD_OPTS
+PIDFile = /var/run/tgtd.pid
+#TimeoutStopSec=8s
+KillSignal=SIGKILL
+
+[Install]
+WantedBy = multi-user.target
+
