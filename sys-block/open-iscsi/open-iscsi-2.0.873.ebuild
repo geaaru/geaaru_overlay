@@ -60,6 +60,7 @@ src_configure() {
 
 src_compile() {
 	use debug && append-flags -DDEBUG_TCP -DDEBUG_SCSI
+	use slp && append-ldflags "-lslp"
 
 	KSRC="${KV_DIR}" CFLAGS="" \
 	emake \
