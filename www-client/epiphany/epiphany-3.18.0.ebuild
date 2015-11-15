@@ -91,7 +91,7 @@ src_test() {
 }
 
 src_install() {
-	DOCS="AUTHORS ChangeLog* HACKING MAINTAINERS NEWS README TODO"
+	DOCS="AUTHORS ChangeLog* NEWS README TODO"
 	gnome2_src_install
 	use jit && pax-mark m "${ED}usr/bin/epiphany"
 }
