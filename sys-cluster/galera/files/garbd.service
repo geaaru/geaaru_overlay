@@ -1,0 +1,13 @@
+[Unit]
+Description=Galera Arbitrator Service
+After=network.target remote-fs.target
+ConditionPathExists=/etc/mysql/arbitrator.conf
+
+[Service]
+User=mysql
+ExecStart=/usr/bin/garbd -c /etc/mysql/arbitrator.conf
+ExecReload=/bin/kill -HUP $MAINPID
+
+[Install]
+WantedBy=multi-user.target
+
