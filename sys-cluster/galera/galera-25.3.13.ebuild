@@ -43,10 +43,7 @@ src_prepare() {
 	# Remove bundled dev-cpp/asio
 	rm -r "${S}/asio" || die
 
-	# Respect {C,LD}FLAGS.
-	epatch "${FILESDIR}/respect-flags.patch" \
-		"${FILESDIR}/galera-3.12-strip-machine-cflags.patch" \
-		"${FILESDIR}/galera-3.12-strip-extra-buildconfig.patch"
+	epatch "${FILESDIR}/galera-3.13-strip-extra-cflags.patch"
 
 	#Remove optional garbd daemon
 	if ! use garbd ; then
