@@ -1,0 +1,10 @@
+[Unit]
+Description=CoroSync Cluster Engine Service
+After=network.target remote-fs.target
+ConditionPathExists=/etc/corosync/corosync.conf
+
+[Service]
+ExecStart=/usr/sbin/corosync
+
+[Install]
+WantedBy=multi-user.target
