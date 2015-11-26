@@ -6,7 +6,7 @@ EAPI=4
 
 inherit autotools base systemd
 
-MY_TREE="bf8ff17"
+MY_TREE="843e0c0"
 
 DESCRIPTION="OSI Certified implementation of a complete cluster engine"
 HOMEPAGE="http://www.corosync.org/"
