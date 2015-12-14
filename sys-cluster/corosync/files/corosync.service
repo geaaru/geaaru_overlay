@@ -4,7 +4,7 @@ After=network.target remote-fs.target
 ConditionPathExists=/etc/corosync/corosync.conf
 
 [Service]
-ExecStart=/usr/sbin/corosync
+ExecStart=/usr/sbin/corosync -f
 
 [Install]
 WantedBy=multi-user.target
