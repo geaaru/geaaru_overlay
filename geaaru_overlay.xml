@@ -1,12 +1,12 @@
 <?xml version="1.0" ?>
-<layman>
-        <overlay
-            contact="geaaru@gmail.com"
-            name="Ge@@ru"
-            src="https://github.com/geaaru/geaaru_overlay.git"
-            type="git">
-                <description>
-                        Ge@@ru Overlay
-                </description>
-        </overlay>
-</layman>
+<repositories version="1.0">
+  <repo priority="40" quality="experimental" status="unofficial">
+    <name>geaaru</name>
+    <description>Geaaru Overlay.</description>
+    <homepage>https://github.com/geaaru/geaaru_overlay/</homepage>
+    <owner>
+      <email>geaaru@gmail.com</email>
+    </owner>
+    <source type="git">https://github.com/geaaru/geaaru_overlay.git</source>
+  </repo>
+</repositories>
