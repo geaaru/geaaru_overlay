@@ -49,6 +49,8 @@ python_prepare_all() {
 	sed -i '/ordereddict/d' requirements*
 	# only needed by py2.7 and included by the virtual
 	sed -i '/futures/d' requirements*
+	# with pbr dependency
+	sed -i -e 's:pbr.*:pbr>=0.6:g' requirements*
 	distutils-r1_python_prepare_all
 }
 
