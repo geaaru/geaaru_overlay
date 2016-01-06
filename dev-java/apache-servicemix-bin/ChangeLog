@@ -2,6 +2,11 @@
 # Copyright 1999-2015 Gentoo Foundation; Distributed under the GPL v2
 # $Id$
 
+
+	6 Jan 2016; Geaaru <geaaru@gmail.com> apache-servicemix-bin-6.1.0.ebuild
+   * Bump of apache-servicemix-6.1.0 release.
+   * Remove ebuild of apache-servicemix-6.0.0 (M1)
+
 	27 Apr 2015; Geaaru <geaaru@gmail.com> apache-servicemix-bin-6.0.0.ebuild
-	Bump of apache-servicemicix-6.0.0.M1 release.
+	 * Bump of apache-servicemix-6.0.0.M1 release.
 

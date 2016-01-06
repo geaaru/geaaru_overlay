@@ -12,10 +12,10 @@ and Karaf into a powerful runtime platform you can use to build your own
 integrations solutions. It provides a complete, enterprise ready ESB
 exclusively powered by OSGi."
 HOMEPAGE="http://servicemix.apache.org/"
-SRC_URI="http://mirrors.muzzy.it/apache/servicemix/servicemix-6/${PV}.M1/apache-servicemix-${PV}.M1.zip"
+SRC_URI="http://mirrors.muzzy.it/apache/servicemix/servicemix-6/${PV}/apache-servicemix-${PV}.zip"
 
 LICENSE="Apache License v2.0"
-SLOT="6.0"
+SLOT="6.1"
 KEYWORDS="~amd64 ~x86"
 
 IUSE=""
@@ -39,7 +39,7 @@ src_unpack() {
 	unpack ${A}
 	cd ${WORKDIR}
 
-	mv apache-servicemix-${PV}.M1/ ${PF}
+	mv apache-servicemix-${PV}/ ${PF}
 	cd ${S}
 }
 
@@ -68,31 +68,26 @@ src_install() {
 	newexe ${FILESDIR}/karaf_linux.sh "karaf_linux.sh"
 
 	insinto /etc/default/
-	newins ${FILESDIR}/servicemix.conf "servicemix.conf"
+	newins ${FILESDIR}/servicemix.conf "smx-6.1.conf"
+
+	# Fix conffile path
+	sed -i -e 's/conffile=.*/conffile=\/etc\/default\/smx-6.1.conf/g' \
+		${D}/${INSTDIR}/${PF}/bin/karaf_linux.sh
 
 	for dir in data deploy etc lib licenses system ; do
 		cp -r ${S}/${dir} ${D}/${INSTDIR}/${PF}/${dir}/
 		
 	done
 
-	# Fix conffile path
-	sed -i -e 's/conffile=.*/conffile=\/etc\/default\/servicemix.conf/g' \
-		${D}/${INSTDIR}/${PF}/bin/karaf_linux.sh
-
-	# Temporary create a link under /opt/ to current release version.
-	# In the next future will be a eselect-smx tool.
-	insinto /opt
-	dosym /opt/${PF} /opt/apache-servicemix
-
 	# Systemd files
-	systemd_dounit "${FILESDIR}"/servicemix.service
-	systemd_install_serviced "${FILESDIR}"/servicemix.service.conf
+	systemd_dounit "${FILESDIR}"/smx-6.1.service
+	systemd_install_serviced "${FILESDIR}"/servicemix.service.conf "smx-6.1.service"
 
 	dodoc LICENSE NOTICE README RELEASE-NOTES
 
-	fowners smx:smx /etc/default/servicemix.conf /var/log/smx/
+	fowners smx:smx /etc/default/smx-6.1.conf /var/log/smx/
 	fowners smx:smx -R ${INSTDIR}/${PF}
 
-	einfo "Configure /etc/default/servicemix.conf before start service."
+	einfo "Configure /etc/default/smx-6.1.conf before start service."
 }
 

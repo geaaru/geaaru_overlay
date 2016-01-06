@@ -138,13 +138,6 @@ init_env_vars () {
         KARAF_ARGS="$KARAF_ARGS -Xmx512m"
     fi
 
-    # Check for java_maxperm_opt property
-    if [ x"$java_maxperm_opt" != x ] ; then
-        KARAF_ARGS="$KARAF_ARGS -XX:MaxPermSize=$java_maxperm_opt"
-    else
-        KARAF_ARGS="$KARAF_ARGS -XX:MaxPermSize=256m"
-    fi
-
     if [ x"$java_dgc_client_gcInterval" != x ]; then
         KARAF_ARGS="$KARAF_ARGS -Dsun.rmi.dgc.client.gcInterval=$java_dgc_client_gcInterval"
     else
