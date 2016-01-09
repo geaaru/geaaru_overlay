@@ -13,17 +13,17 @@ SRC_URI="mirror://pypi/${PN:0:1}/oslo.messaging/oslo.messaging-${PV}.tar.gz"
 S="${WORKDIR}/oslo.messaging-${PV}"
 
 LICENSE="Apache-2.0"
-SLOT="2.x"
+SLOT="3.x"
 KEYWORDS="~amd64 ~x86"
 IUSE="test"
 
 CDEPEND="
-	>=dev-python/pbr-1.4[${PYTHON_USEDEP}]
+	>=dev-python/pbr-1.6[${PYTHON_USEDEP}]
 "
 DEPEND="
 	!dev-python/oslo-messaging:0
 	!dev-python/oslo-messaging:1.x
-	!dev-python/oslo-messaging:3.x
+	!dev-python/oslo-messaging:2.x
 	!dev-python/oslo-messaging:4.x
 	dev-python/setuptools[${PYTHON_USEDEP}]
 	${CDEPEND}
@@ -47,23 +47,30 @@ DEPEND="
 RDEPEND="
 	${CDEPEND}
 	>=dev-python/futurist-0.1.2[${PYTHON_USEDEP}]
-	>=dev-python/oslo-config-2.1.0:2.x[${PYTHON_USEDEP}]
+	|| (
+		>=dev-python/oslo-config-2.7.0:2.x[${PYTHON_USEDEP}]
+		>=dev-python/oslo-config-3.2.0:3.x[${PYTHON_USEDEP}]
+	)
 	>=dev-python/oslo-context-0.2.0[${PYTHON_USEDEP}]
-	>=dev-python/oslo-log-1.8.0[${PYTHON_USEDEP}]
-	>=dev-python/oslo-utils-2.0.0:2.x[${PYTHON_USEDEP}]
-	>=dev-python/oslo-serialization-1.4.0[${PYTHON_USEDEP}]
-	>=dev-python/oslo-service-0.6.0[${PYTHON_USEDEP}]
+	>=dev-python/oslo-log-1.12.0[${PYTHON_USEDEP}]
+	|| (
+		>=dev-python/oslo-utils-2.8.0:2.x[${PYTHON_USEDEP}]
+		>=dev-python/oslo-utils-3.3.0:3.x[${PYTHON_USEDEP}]
+	)
+	>=dev-python/oslo-serialization-1.10.0[${PYTHON_USEDEP}]
+	>=dev-python/oslo-service-0.12.0[${PYTHON_USEDEP}]
 	>=dev-python/oslo-i18n-1.5.0[${PYTHON_USEDEP}]
 	>=dev-python/stevedore-1.5.0[${PYTHON_USEDEP}]
+	>=dev-python/debtcollector-0.3.0[${PYTHON_USEDEP}]
 	>=dev-python/six-1.9.0[${PYTHON_USEDEP}]
 	>=dev-python/cachetools-1.0.0[${PYTHON_USEDEP}]
 	>=dev-python/eventlet-0.17.4[${PYTHON_USEDEP}]
 	>=dev-python/greenlet-0.3.2[${PYTHON_USEDEP}]
+	>=dev-python/webob-1.2.3[${PYTHON_USEDEP}]
 	>=dev-python/pyyaml-3.1.0[${PYTHON_USEDEP}]
 	>=dev-python/py-amqp-1.4.0[${PYTHON_USEDEP}]
 	>=dev-python/kombu-3.0.7[${PYTHON_USEDEP}]
-	>=dev-python/oslo-middleware-2.4.0:2.x[${PYTHON_USEDEP}]
-	!~dev-python/oslo-middleware-2.6.0[${PYTHON_USEDEP}]
+	>=dev-python/oslo-middleware-3.0.0:3.x[${PYTHON_USEDEP}]
 	>=dev-python/aioeventlet-0.4[${PYTHON_USEDEP}]
 	>=dev-python/trollius-1.0.0[${PYTHON_USEDEP}]
 "

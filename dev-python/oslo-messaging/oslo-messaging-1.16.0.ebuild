@@ -20,8 +20,10 @@ IUSE="test"
 DEPEND="
 	!dev-python/oslo-messaging:0
 	!dev-python/oslo-messaging:2.x
+	!dev-python/oslo-messaging:3.x
+	!dev-python/oslo-messaging:4.x
 	dev-python/setuptools[${PYTHON_USEDEP}]
-	>=dev-python/pbr-1.4[${PYTHON_USEDEP}]
+	>=dev-python/pbr-1.6[${PYTHON_USEDEP}]
 	test? (
 		>=dev-python/hacking-0.10[${PYTHON_USEDEP}]
 		>=dev-python/fixtures-0.3.14[${PYTHON_USEDEP}]
