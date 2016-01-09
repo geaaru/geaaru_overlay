@@ -20,6 +20,7 @@ IUSE="test"
 DEPEND="
 	!dev-python/oslo-config:0
 	!dev-python/oslo-config:2.x
+	!dev-python/oslo-config:3.x
 	dev-python/setuptools[${PYTHON_USEDEP}]
 	>=dev-python/pbr-0.8.0[${PYTHON_USEDEP}]
 	test? (
