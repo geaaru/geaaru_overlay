@@ -1,103 +1,103 @@
 # Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sys-auth/keystone/keystone-2014.2.2.ebuild,v 1.3 2015/02/08 01:59:11 prometheanfire Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-auth/keystone/keystone-2015.1.1.ebuild,v 1.1 2015/07/29 23:17:43 prometheanfire Exp $
 
 EAPI=5
 
-PYTHON_COMPAT=( python2_7 python3_3 python3_4 )
+PYTHON_COMPAT=( python2_7 )
 
-inherit distutils-r1 user systemd
+inherit distutils-r1 user
 
-DESCRIPTION="The Openstack authentication, authorization, and service catalog written in Python"
+DESCRIPTION="The Openstack authentication, authorization, and service catalog"
 HOMEPAGE="https://launchpad.net/keystone"
-SRC_URI="http://launchpad.net/${PN}/juno/${PV}/+download/${P}.tar.gz"
+SRC_URI="http://launchpad.net/${PN}/kilo/${PV}/+download/${P}.tar.gz"
 
 LICENSE="Apache-2.0"
-SLOT="2014.2-juno"
+SLOT="liberty"
 KEYWORDS="~amd64 ~x86"
-IUSE="+sqlite mysql postgres ldap test"
+IUSE="+sqlite memcached mongo mysql postgres ldap test"
 REQUIRED_USE="|| ( mysql postgres sqlite )"
 
 DEPEND="
 	!sys-auth/keystone:0
+	!sys-auth/keystone:2014.2-juno
 	!sys-auth/keystone:2015.1-kilo
-	!sys-auth/keystone:liberty
 	dev-python/setuptools[${PYTHON_USEDEP}]
-	>=dev-python/pbr-0.6[${PYTHON_USEDEP}]
-	!~dev-python/pbr-0.7[${PYTHON_USEDEP}]
+	>=dev-python/pbr-1.6[${PYTHON_USEDEP}]
 	test? (
 		${RDEPEND}
-		>=dev-python/hacking-0.9.2[${PYTHON_USEDEP}]
+		>=dev-python/hacking-0.10.0[${PYTHON_USEDEP}]
 		>=dev-python/bashate-0.2[${PYTHON_USEDEP}]
 		dev-lang/python[sqlite]
-		>=dev-python/python-memcached-1.48[${PYTHON_USEDEP}]
-		>=dev-python/pymongo-2.4[${PYTHON_USEDEP}]
+		memcached? (
+			>=dev-python/python-memcached-1.48[${PYTHON_USEDEP}]
+		)
+		mongo? (
+			>=dev-python/pymongo-2.6.3[${PYTHON_USEDEP}]
+		)
 		ldap? (
-			dev-python/python-ldap[${PYTHON_USEDEP}]
+			>=dev-python/python-ldap-2.4[${PYTHON_USEDEP}]
 			>=dev-python/ldappool-1.0[${PYTHON_USEDEP}]
 		)
-		dev-python/pysaml2[${PYTHON_USEDEP}]
 		>=dev-python/coverage-3.6[${PYTHON_USEDEP}]
 		>=dev-python/fixtures-0.3.14[${PYTHON_USEDEP}]
 		>=dev-python/lxml-2.3[${PYTHON_USEDEP}]
 		>=dev-python/mock-1.0[${PYTHON_USEDEP}]
-		>=dev-python/oslotest-1.1.0[${PYTHON_USEDEP}]
+		>=dev-python/oslotest-1.5.1[${PYTHON_USEDEP}]
 		>=dev-python/sphinx-1.1.2[${PYTHON_USEDEP}]
 		!~dev-python/sphinx-1.2.0[${PYTHON_USEDEP}]
 		>=dev-python/webtest-2.0[${PYTHON_USEDEP}]
 		>=dev-python/subunit-0.0.18[${PYTHON_USEDEP}]
 		>=dev-python/testrepository-0.0.18[${PYTHON_USEDEP}]
-		>=dev-python/testtools-0.9.34[${PYTHON_USEDEP}]
-		!~dev-python/testtools-1.4.0[${PYTHON_USEDEP}]
-		>=dev-python/testscenarios-0.4[${PYTHON_USEDEP}]
-		>=dev-python/httplib2-0.7.5[${PYTHON_USEDEP}]
-		>=dev-python/requests-1.2.1[${PYTHON_USEDEP}]
-		!~dev-python/requests-2.4.0[${PYTHON_USEDEP}]
-		>=dev-python/keyring-2.1[${PYTHON_USEDEP}]
-		!~dev-python/keyring-3.3[${PYTHON_USEDEP}]
-		>=dev-python/oslo-sphinx-2.2.0[${PYTHON_USEDEP}]
-		>=dev-python/kombu-2.5.0[${PYTHON_USEDEP}]
-		>=dev-python/lockfile-0.8[${PYTHON_USEDEP}]
-		>=dev-python/stevedore-1.0.0[${PYTHON_USEDEP}]
+		>=dev-python/testtools-0.9.36[${PYTHON_USEDEP}]
+		!~dev-python/testtools-1.2.0[${PYTHON_USEDEP}]
+		>=dev-python/oslo-sphinx-2.5.0[${PYTHON_USEDEP}]
+		>=dev-python/tempest-lib-0.4.0[${PYTHON_USEDEP}]
 	)"
 RDEPEND="
 	>=dev-python/webob-1.2.3-r1[${PYTHON_USEDEP}]
-	>=dev-python/eventlet-0.15.1[${PYTHON_USEDEP}]
+	>=dev-python/eventlet-0.17.4[${PYTHON_USEDEP}]
 	>=dev-python/greenlet-0.3.2[${PYTHON_USEDEP}]
 	>=dev-python/netaddr-0.7.12[${PYTHON_USEDEP}]
 	>=dev-python/pastedeploy-1.5.0[${PYTHON_USEDEP}]
 	dev-python/paste[${PYTHON_USEDEP}]
 	>=dev-python/routes-1.12.3[${PYTHON_USEDEP}]
-	>=dev-python/six-1.7.0[${PYTHON_USEDEP}]
+	!~dev-python/routes-2.0[${PYTHON_USEDEP}]
+	>=dev-python/cryptography-0.8[${PYTHON_USEDEP}]
+	>=dev-python/six-1.9.0[${PYTHON_USEDEP}]
 	sqlite? (
-		>=dev-python/sqlalchemy-0.9.7[sqlite,${PYTHON_USEDEP}]
+		>=dev-python/sqlalchemy-0.9.9[sqlite,${PYTHON_USEDEP}]
 	)
 	mysql? (
 		dev-python/mysql-python
-		>=dev-python/sqlalchemy-0.9.7[${PYTHON_USEDEP}]
+		>=dev-python/sqlalchemy-0.9.9[${PYTHON_USEDEP}]
 	)
 	postgres? (
 		dev-python/psycopg:2
-		>=dev-python/sqlalchemy-0.9.7[${PYTHON_USEDEP}]
+		>=dev-python/sqlalchemy-0.9.9[${PYTHON_USEDEP}]
 	)
-	>=dev-python/sqlalchemy-migrate-0.9.1[${PYTHON_USEDEP}]
+	>=dev-python/sqlalchemy-migrate-0.9.5[${PYTHON_USEDEP}]
 	dev-python/passlib[${PYTHON_USEDEP}]
 	>=dev-python/iso8601-0.1.9[${PYTHON_USEDEP}]
-	>=dev-python/python-keystoneclient-0.10.0[${PYTHON_USEDEP}]
-	>=dev-python/keystonemiddleware-1.0.0[${PYTHON_USEDEP}]
-	>=dev-python/oslo-config-1.4.0:1.x[${PYTHON_USEDEP}]
-	>=dev-python/oslo-messaging-1.4.0:1.x[${PYTHON_USEDEP}]
-	!~dev-python/oslo-messaging-1.5.0[${PYTHON_USEDEP}]
-	>=dev-python/oslo-db-1.0.0[${PYTHON_USEDEP}]
-	>=dev-python/oslo-i18n-1.0.0[${PYTHON_USEDEP}]
-	>=dev-python/oslo-serialization-1.0.0[${PYTHON_USEDEP}]
-	>=dev-python/oslo-utils-1.0.0:1.x[${PYTHON_USEDEP}]
-	>=dev-python/Babel-1.3[${PYTHON_USEDEP}]
+	>=dev-python/python-keystoneclient-1.6.0[${PYTHON_USEDEP}]
+	>=dev-python/keystonemiddleware-2.0.0[${PYTHON_USEDEP}]
+	>=dev-python/oslo-concurrency-2.3.0[${PYTHON_USEDEP}]
+	>=dev-python/oslo-config-2.3.0[${PYTHON_USEDEP}]
+	>=dev-python/oslo-messaging-1.16.0[${PYTHON_USEDEP}]
+	>=dev-python/oslo-db-2.4.1[${PYTHON_USEDEP}]
+	>=dev-python/oslo-i18n-1.5.0[${PYTHON_USEDEP}]
+	>=dev-python/oslo-log-1.8.0[${PYTHON_USEDEP}]
+	>=dev-python/oslo-middleware-2.8.0[${PYTHON_USEDEP}]
+	>=dev-python/oslo-policy-0.5.0[${PYTHON_USEDEP}]
+	>=dev-python/oslo-serialization-1.4.0[${PYTHON_USEDEP}]
+	>=dev-python/oslo-utils-2.0.0[${PYTHON_USEDEP}]
 	>=dev-python/oauthlib-0.6.0[${PYTHON_USEDEP}]
-	>=dev-python/dogpile-cache-0.5.3[${PYTHON_USEDEP}]
+	dev-python/pysaml2[${PYTHON_USEDEP}]
+	>=dev-python/dogpile-cache-0.5.4[${PYTHON_USEDEP}]
 	>=dev-python/jsonschema-2.0.0[${PYTHON_USEDEP}]
-	>=dev-python/pycadf-0.6.0[${PYTHON_USEDEP}]
-	dev-python/posix_ipc[${PYTHON_USEDEP}]"
+	>=dev-python/pycadf-0.8.0[${PYTHON_USEDEP}]
+	dev-python/posix_ipc[${PYTHON_USEDEP}]
+	>=dev-python/msgpack-0.4.0[${PYTHON_USEDEP}]"
 
 PATCHES=(
 )

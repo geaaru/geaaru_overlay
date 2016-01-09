@@ -21,13 +21,12 @@ REQUIRED_USE="|| ( mysql postgres sqlite )"
 DEPEND="
 	!sys-auth/keystone:0
 	!sys-auth/keystone:2014.2-juno
+	!sys-auth/keystone:liberty
 	dev-python/setuptools[${PYTHON_USEDEP}]
 	>=dev-python/pbr-0.8[${PYTHON_USEDEP}]
-	<dev-python/pbr-1.0[${PYTHON_USEDEP}]
 	test? (
 		${RDEPEND}
 		>=dev-python/hacking-0.10.0[${PYTHON_USEDEP}]
-		<dev-python/hacking-0.11[${PYTHON_USEDEP}]
 		>=dev-python/bashate-0.2[${PYTHON_USEDEP}]
 		dev-lang/python[sqlite]
 		memcached? (
@@ -35,7 +34,6 @@ DEPEND="
 		)
 		mongo? (
 			>=dev-python/pymongo-2.6.3[${PYTHON_USEDEP}]
-			<dev-python/pymongo-3.0[${PYTHON_USEDEP}]
 		)
 		ldap? (
 			>=dev-python/python-ldap-2.4[${PYTHON_USEDEP}]
@@ -43,24 +41,18 @@ DEPEND="
 		)
 		>=dev-python/coverage-3.6[${PYTHON_USEDEP}]
 		>=dev-python/fixtures-0.3.14[${PYTHON_USEDEP}]
-		<dev-python/fixtures-1.3.0[${PYTHON_USEDEP}]
 		>=dev-python/lxml-2.3[${PYTHON_USEDEP}]
 		>=dev-python/mock-1.0[${PYTHON_USEDEP}]
-		<dev-python/mock-1.1.0[${PYTHON_USEDEP}]
 		>=dev-python/oslotest-1.5.1[${PYTHON_USEDEP}]
-		<dev-python/oslotest-1.6.0[${PYTHON_USEDEP}]
 		>=dev-python/sphinx-1.1.2[${PYTHON_USEDEP}]
 		!~dev-python/sphinx-1.2.0[${PYTHON_USEDEP}]
-		<dev-python/sphinx-1.3[${PYTHON_USEDEP}]
 		>=dev-python/webtest-2.0[${PYTHON_USEDEP}]
 		>=dev-python/subunit-0.0.18[${PYTHON_USEDEP}]
 		>=dev-python/testrepository-0.0.18[${PYTHON_USEDEP}]
 		>=dev-python/testtools-0.9.36[${PYTHON_USEDEP}]
 		!~dev-python/testtools-1.2.0[${PYTHON_USEDEP}]
 		>=dev-python/oslo-sphinx-2.5.0[${PYTHON_USEDEP}]
-		<dev-python/oslo-sphinx-2.6.0[${PYTHON_USEDEP}]
 		>=dev-python/tempest-lib-0.4.0[${PYTHON_USEDEP}]
-		<dev-python/tempest-lib-0.5.0[${PYTHON_USEDEP}]
 	)"
 RDEPEND="
 	>=dev-python/webob-1.2.3-r1[${PYTHON_USEDEP}]
@@ -76,52 +68,35 @@ RDEPEND="
 	>=dev-python/six-1.9.0[${PYTHON_USEDEP}]
 	sqlite? (
 		>=dev-python/sqlalchemy-0.9.7[sqlite,${PYTHON_USEDEP}]
-		<=dev-python/sqlalchemy-0.9.99[sqlite,${PYTHON_USEDEP}]
 	)
 	mysql? (
 		dev-python/mysql-python
 		>=dev-python/sqlalchemy-0.9.7[${PYTHON_USEDEP}]
-		<=dev-python/sqlalchemy-0.9.99[${PYTHON_USEDEP}]
 	)
 	postgres? (
 		dev-python/psycopg:2
 		>=dev-python/sqlalchemy-0.9.7[${PYTHON_USEDEP}]
-		<=dev-python/sqlalchemy-0.9.99[${PYTHON_USEDEP}]
 	)
 	>=dev-python/sqlalchemy-migrate-0.9.5[${PYTHON_USEDEP}]
 	dev-python/passlib[${PYTHON_USEDEP}]
 	>=dev-python/iso8601-0.1.9[${PYTHON_USEDEP}]
 	>=dev-python/python-keystoneclient-1.2.0[${PYTHON_USEDEP}]
-	<dev-python/python-keystoneclient-1.4.0[${PYTHON_USEDEP}]
 	>=dev-python/keystonemiddleware-1.5.0[${PYTHON_USEDEP}]
-	<dev-python/keystonemiddleware-1.6.0[${PYTHON_USEDEP}]
 	>=dev-python/oslo-concurrency-1.8.0[${PYTHON_USEDEP}]
-	<dev-python/oslo-concurrency-1.9.0[${PYTHON_USEDEP}]
 	>=dev-python/oslo-config-1.9.3[${PYTHON_USEDEP}]
-	<dev-python/oslo-config-1.10.0[${PYTHON_USEDEP}]
 	>=dev-python/oslo-messaging-1.8.0[${PYTHON_USEDEP}]
-	<dev-python/oslo-messaging-1.9.0[${PYTHON_USEDEP}]
 	>=dev-python/oslo-db-1.7.0[${PYTHON_USEDEP}]
-	<dev-python/oslo-db-1.8.0[${PYTHON_USEDEP}]
 	>=dev-python/oslo-i18n-1.5.0[${PYTHON_USEDEP}]
-	<dev-python/oslo-i18n-1.6.0[${PYTHON_USEDEP}]
 	>=dev-python/oslo-log-1.0.0[${PYTHON_USEDEP}]
-	<dev-python/oslo-log-1.1.0[${PYTHON_USEDEP}]
 	>=dev-python/oslo-middleware-1.0.0[${PYTHON_USEDEP}]
-	<dev-python/oslo-middleware-1.1.0[${PYTHON_USEDEP}]
 	>=dev-python/oslo-policy-0.3.1[${PYTHON_USEDEP}]
-	<dev-python/oslo-policy-0.4.0[${PYTHON_USEDEP}]
 	>=dev-python/oslo-serialization-1.4.0[${PYTHON_USEDEP}]
-	<dev-python/oslo-serialization-1.5.0[${PYTHON_USEDEP}]
 	>=dev-python/oslo-utils-1.4.0[${PYTHON_USEDEP}]
-	<dev-python/oslo-utils-1.5.0[${PYTHON_USEDEP}]
 	>=dev-python/oauthlib-0.6.0[${PYTHON_USEDEP}]
 	dev-python/pysaml2[${PYTHON_USEDEP}]
 	>=dev-python/dogpile-cache-0.5.3[${PYTHON_USEDEP}]
 	>=dev-python/jsonschema-2.0.0[${PYTHON_USEDEP}]
-	<dev-python/jsonschema-3.0.0[${PYTHON_USEDEP}]
 	>=dev-python/pycadf-0.8.0[${PYTHON_USEDEP}]
-	<dev-python/pycadf-0.9.0[${PYTHON_USEDEP}]
 	dev-python/posix_ipc[${PYTHON_USEDEP}]
 	>=dev-python/msgpack-0.4.0[${PYTHON_USEDEP}]"
 
