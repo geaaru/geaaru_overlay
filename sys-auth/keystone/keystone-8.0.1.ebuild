@@ -63,7 +63,7 @@ RDEPEND="
 	dev-python/paste[${PYTHON_USEDEP}]
 	>=dev-python/routes-1.12.3[${PYTHON_USEDEP}]
 	!~dev-python/routes-2.0[${PYTHON_USEDEP}]
-	>=dev-python/cryptography-0.8[${PYTHON_USEDEP}]
+	>=dev-python/cryptography-1.0[${PYTHON_USEDEP}]
 	>=dev-python/six-1.9.0[${PYTHON_USEDEP}]
 	sqlite? (
 		>=dev-python/sqlalchemy-0.9.9[sqlite,${PYTHON_USEDEP}]
@@ -76,12 +76,13 @@ RDEPEND="
 		dev-python/psycopg:2
 		>=dev-python/sqlalchemy-0.9.9[${PYTHON_USEDEP}]
 	)
-	>=dev-python/sqlalchemy-migrate-0.9.5[${PYTHON_USEDEP}]
-	dev-python/passlib[${PYTHON_USEDEP}]
+	>=dev-python/sqlalchemy-migrate-0.9.6[${PYTHON_USEDEP}]
+	>=dev-python/passlib-1.6[${PYTHON_USEDEP}]
 	>=dev-python/iso8601-0.1.9[${PYTHON_USEDEP}]
 	>=dev-python/python-keystoneclient-1.6.0[${PYTHON_USEDEP}]
 	>=dev-python/keystonemiddleware-2.0.0[${PYTHON_USEDEP}]
 	>=dev-python/oslo-concurrency-2.3.0[${PYTHON_USEDEP}]
+	>=dev-python/oslo-context-0.2.0[${PYTHON_USEDEP}]
 	>=dev-python/oslo-config-2.3.0[${PYTHON_USEDEP}]
 	>=dev-python/oslo-messaging-1.16.0[${PYTHON_USEDEP}]
 	>=dev-python/oslo-db-2.4.1[${PYTHON_USEDEP}]
@@ -91,11 +92,12 @@ RDEPEND="
 	>=dev-python/oslo-policy-0.5.0[${PYTHON_USEDEP}]
 	>=dev-python/oslo-serialization-1.4.0[${PYTHON_USEDEP}]
 	>=dev-python/oslo-utils-2.0.0[${PYTHON_USEDEP}]
+	>=dev-python/oslo-service-0.7.0[${PYTHON_USEDEP}]
 	>=dev-python/oauthlib-0.6.0[${PYTHON_USEDEP}]
-	dev-python/pysaml2[${PYTHON_USEDEP}]
+	>=dev-python/pysaml2-2.4.0[${PYTHON_USEDEP}]
 	>=dev-python/dogpile-cache-0.5.4[${PYTHON_USEDEP}]
 	>=dev-python/jsonschema-2.0.0[${PYTHON_USEDEP}]
-	>=dev-python/pycadf-0.8.0[${PYTHON_USEDEP}]
+	>=dev-python/pycadf-1.1.0[${PYTHON_USEDEP}]
 	dev-python/posix_ipc[${PYTHON_USEDEP}]
 	>=dev-python/msgpack-0.4.0[${PYTHON_USEDEP}]"
 
