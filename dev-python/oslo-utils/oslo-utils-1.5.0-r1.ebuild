@@ -24,7 +24,8 @@ CDEPEND="
 "
 DEPEND="
 	!dev-python/oslo-utils:0
-	!dev-python/oslo-utils:1.x
+	!dev-python/oslo-utils:2.x
+	!dev-python/oslo-utils:3.x
 	dev-python/setuptools[${PYTHON_USEDEP}]
 	${CDEPEND}
 	test? (

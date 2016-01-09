@@ -14,17 +14,17 @@ HOMEPAGE="http://launchpad.net/oslo"
 SRC_URI="mirror://pypi/${MY_PN:0:1}/${MY_PN}/${MY_PN}-${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="Apache-2.0"
-SLOT="2.x"
+SLOT="3.x"
 KEYWORDS="~amd64 ~x86"
 IUSE="doc test"
 
 CDEPEND="
-	>=dev-python/pbr-1.4[${PYTHON_USEDEP}]
+	>=dev-python/pbr-1.6[${PYTHON_USEDEP}]
 "
 DEPEND="
 	!dev-python/oslo-utils:0
 	!dev-python/oslo-utils:1.x
-	!dev-python/oslo-utils:3.x
+	!dev-python/oslo-utils:2.x
 	dev-python/setuptools[${PYTHON_USEDEP}]
 	${CDEPEND}
 	test? (
@@ -35,7 +35,11 @@ DEPEND="
 		>=dev-python/testtools-1.4.0[${PYTHON_USEDEP}]
 		>=dev-python/oslotest-1.10.0[${PYTHON_USEDEP}]
 		>=dev-python/mock-1.2[${PYTHON_USEDEP}]
-		>=dev-python/oslo-config-2.1.0:2.x[${PYTHON_USEDEP}]
+		>=dev-python/bandit-0.13.2[${PYTHON_USEDEP}]
+		|| (
+			>=dev-python/oslo-config-2.7.0:2.x[${PYTHON_USEDEP}]
+			>=dev-python/oslo-config-3.2.0:3.x[${PYTHON_USEDEP}]
+		)
 	)
 	doc? (
 		>=dev-python/oslo-sphinx-2.5.0[${PYTHON_USEDEP}]
@@ -47,6 +51,7 @@ RDEPEND="
 	${CDEPEND}
 	>=dev-python/Babel-1.3[${PYTHON_USEDEP}]
 	>=dev-python/six-1.9.0[${PYTHON_USEDEP}]
+	>=dev-python/funcsigs-0.4
 	>=dev-python/iso8601-0.1.9[${PYTHON_USEDEP}]
 	>=dev-python/oslo-i18n-1.5.0[${PYTHON_USEDEP}]
 	>=dev-python/monotonic-0.3[${PYTHON_USEDEP}]
