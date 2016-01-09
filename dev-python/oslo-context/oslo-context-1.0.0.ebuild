@@ -18,7 +18,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="test"
 
 DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
-		>=dev-python/pbr-0.8[${PYTHON_USEDEP}]
+		>=dev-python/pbr-1.6[${PYTHON_USEDEP}]
 	test? (
 		>=dev-python/hacking-0.10[${PYTHON_USEDEP}]
 		>=dev-python/oslotest-1.5.1[${PYTHON_USEDEP}]
