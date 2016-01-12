@@ -6,7 +6,7 @@ EAPI="5"
 
 EGIT_REPO_URI="https://github.com/gitlabhq/gitlab-shell.git"
 EGIT_COMMIT="v${PV}"
-USE_RUBY="ruby21"
+USE_RUBY="ruby22 ruby23"
 
 inherit eutils git-2 ruby-ng user
 
@@ -16,7 +16,7 @@ LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~x86 ~arm"
 
-DEPEND="$(ruby_implementation_depend ruby21)
+DEPEND="
 	dev-vcs/git
 	virtual/ssh
 	dev-db/redis"
@@ -31,6 +31,7 @@ KEY_DIR=$(dirname "${AUTH_FILE}")
 DEST_DIR="/var/lib/${PN}"
 
 pkg_setup() {
+#	einfo "Create user/group ${GIT_USER}/${GIT_GROUP}"
 
 	enewgroup ${GIT_GROUP}
 	enewuser ${GIT_USER} -1 -1 "${HOME}" ${GIT_GROUP}
