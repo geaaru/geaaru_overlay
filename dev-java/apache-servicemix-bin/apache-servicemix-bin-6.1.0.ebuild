@@ -65,7 +65,7 @@ src_install() {
 	newexe bin/setenv "setenv"
 	newexe bin/shell "shell"
 	newexe bin/status "status"
-	newexe ${FILESDIR}/karaf_linux.sh "karaf_linux.sh"
+	newexe ${FILESDIR}/karaf_linux-6.1.sh "karaf_linux.sh"
 
 	insinto /etc/default/
 	newins ${FILESDIR}/servicemix.conf "smx-6.1.conf"
