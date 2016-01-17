@@ -6,7 +6,7 @@ EAPI=5
 
 OPENSHOT_TREE="0.0.8"
 
-inherit eutils distutils cmake-utils eutils
+inherit cmake-utils eutils
 
 DESCRIPTION="Openshot Audio Library"
 HOMEPAGE="http://www.openshot.org/"
@@ -38,16 +38,15 @@ src_unpack() {
 }
 
 src_configure() {
+	CMAKE_BUILD_TYPE=None
+	local mycmakeargs=(
+		-DCMAKE_INSTALL_LIBDIR="${EPREFIX}"/usr/$(get_libdir)
+		)
+	use doc || mycmakeargs+=( -DDOXYGEN_EXECUTABLE= )
+
 	cmake-utils_src_configure
 }
 
-src_compile() {
-	cmake-utils_src_compile
-}
-
-src_install() {
-	cmake-utils_src_install
-}
 
 # vim: ts=4 sw=4
 
