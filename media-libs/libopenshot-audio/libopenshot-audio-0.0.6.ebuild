@@ -15,12 +15,27 @@ SRC_URI="https://launchpad.net/libopenshot/0.0/${OPENSHOT_TREE}/+download/libope
 LICENSE="LGPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE=""
+IUSE="doc"
 
-DEPEND=""
+DEPEND="
+	x11-libs/libXext
+	doc? (
+		app-doc/doxygen
+	)
+"
 RDEPEND="${DEPEND}"
 
+# TODO: Check how avoid install of headers files from Juce Project for different
+#       libraries.
 
+src_unpack() {
+
+	mkdir ${S}
+
+	cd ${S}
+	unpack ${A}
+
+}
 
 src_configure() {
 	cmake-utils_src_configure
