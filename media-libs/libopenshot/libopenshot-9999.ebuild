@@ -4,6 +4,8 @@
 
 EAPI=5
 
+PYTHON_REQ_USE=xml
+PYTHON_COMPAT=( python{3_2,3_3,3_4} )
 DESCRIPTION="Openshot Library"
 HOMEPAGE="http://www.openshot.org/"
 #SRC_URI=""
@@ -12,15 +14,15 @@ HOMEPAGE="http://www.openshot.org/"
 LIVE_ECLASS="bzr"
 EBZR_REPO_URI="lp:libopenshot"
 
-LICENSE=""
+LICENSE="LGPL-3"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS=""
 IUSE=""
 
 DEPEND=""
 RDEPEND="${DEPEND}"
 
-inherit eutils ${LIVE_ECLASS} distutils cmake-utils eutils
+inherit eutils ${LIVE_ECLASS} distutils cmake-utils eutils python
 unset LIVE_ECLASS
 
 
