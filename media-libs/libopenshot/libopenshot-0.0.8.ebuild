@@ -4,14 +4,11 @@
 
 EAPI=5
 
-#PYTHON_REQ_USE=xml
-#PYTHON_COMPAT=( python{3_2,3_3,3_4} )
-
 USE_RUBY="ruby22 ruby23"
 PYTHON_REQ_USE=xml
 PYTHON_COMPAT=( python{3_2,3_3,3_4} )
 
-inherit cmake-utils eutils python
+inherit cmake-utils eutils python-r1
 
 
 DESCRIPTION="Openshot Library"
@@ -28,8 +25,15 @@ DEPEND="
 	dev-lang/swig
 	media-gfx/imagemagick
 	dev-lang/python
+	sys-devel/gcc[openmp(+)]
 "
 RDEPEND="${DEPEND}"
+
+pkg_setup() {
+	python_setup 'python3*'
+#	python_set_active_version 3
+#	python_pkg_setup
+}
 
 src_unpack() {
 
