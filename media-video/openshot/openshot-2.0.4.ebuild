@@ -27,8 +27,6 @@ RDEPEND="
 	dev-qt/qtmultimedia:5
 	dev-qt/qtwebkit:5
 	dev-qt/qtsvg:5
-	dev-python/pygoocanvas[${PYTHON_USEDEP}]
-	dev-python/pygtk[${PYTHON_USEDEP}]
 	dev-python/pyxdg[${PYTHON_USEDEP}]
 	dev-python/pillow[${PYTHON_USEDEP}]
 	ffmpeg? (
@@ -37,7 +35,6 @@ RDEPEND="
 	)
 	dev-python/httplib2[${PYTHON_USEDEP}]
 	dev-python/librsvg-python
-	x11-libs/gtk+:2
 "
 
 S="${WORKDIR}/${PN}-qt-${PV}"
