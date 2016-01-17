@@ -1,16 +1,16 @@
-# Copyright 1999-2014 Gentoo Foundation
+# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Id$
 
 EAPI=5
 
+OPENSHOT_TREE="0.0.8"
+
+inherit eutils distutils cmake-utils eutils
+
 DESCRIPTION="Openshot Audio Library"
 HOMEPAGE="http://www.openshot.org/"
-#SRC_URI=""
-
-
-LIVE_ECLASS="bzr"
-EBZR_REPO_URI="lp:~openshot.code/libopenshot/libopenshot-audio"
+SRC_URI="https://launchpad.net/libopenshot/0.0/${OPENSHOT_TREE}/+download/libopenshot-audio-${PV}.tar.gz"
 
 LICENSE="LGPL-3"
 SLOT="0"
@@ -20,14 +20,10 @@ IUSE=""
 DEPEND=""
 RDEPEND="${DEPEND}"
 
-inherit eutils ${LIVE_ECLASS} distutils cmake-utils eutils
-unset LIVE_ECLASS
 
 
 src_configure() {
-
 	cmake-utils_src_configure
-
 }
 
 src_compile() {
@@ -36,7 +32,7 @@ src_compile() {
 
 src_install() {
 	cmake-utils_src_install
-
 }
 
 # vim: ts=4 sw=4
+
