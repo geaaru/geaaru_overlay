@@ -26,6 +26,9 @@ DEPEND="
 	media-gfx/imagemagick
 	dev-lang/python
 	sys-devel/gcc[openmp(+)]
+	dev-qt/qtmultimedia:5[widgets(+)]
+	dev-qt/qtwidgets:5
+	>=dev-lang/ruby-2.0.0
 "
 RDEPEND="${DEPEND}"
 
