@@ -29,6 +29,7 @@ DEPEND="
 	dev-qt/qtmultimedia:5[widgets(+)]
 	dev-qt/qtwidgets:5
 	>=dev-lang/ruby-2.0.0
+	dev-cpp/unittest-cpp
 "
 RDEPEND="${DEPEND}"
 
@@ -44,6 +45,14 @@ src_unpack() {
 	cd ${S}
 	unpack ${A}
 
+}
+
+src_compile() {
+	# Force job to 1
+	MAKEOPTS="-j1"
+	VERBOSE=1
+
+	cmake-utils_src_configure
 }
 
 # vim: ts=4 sw=4
