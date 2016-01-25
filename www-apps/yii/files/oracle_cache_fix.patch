@@ -1,0 +1,187 @@
+--- yii.orig/framework/db/schema/oci/COciSchema.php	2014-12-21 20:33:26.000000000 +0100
++++ yii/framework/db/schema/oci/COciSchema.php	2015-12-28 18:15:58.830749299 +0100
+@@ -165,6 +165,100 @@
+ 		$tableName=$table->name;
+ 
+ 		$sql=<<<EOD
++SELECT A.COLUMN_NAME, A.DATA_TYPE ||
++    CASE
++        WHEN DATA_PRECISION IS NOT NULL
++            THEN '(' || A.DATA_PRECISION || CASE WHEN A.DATA_SCALE > 0 THEN ',' || A.DATA_SCALE ELSE '' END || ')'
++		WHEN DATA_TYPE = 'DATE'
++			THEN ''
++        WHEN DATA_TYPE = 'NUMBER'
++			THEN ''
++        ELSE '(' || TO_CHAR(A.DATA_LENGTH) || ')'
++    END AS DATA_TYPE,
++    A.NULLABLE, A.DATA_DEFAULT,
++    '' AS COLUMN_COMMENT
++FROM ALL_TAB_COLUMNS A
++INNER JOIN ALL_OBJECTS B
++ON B.OWNER = A.OWNER
++AND LTRIM(B.OBJECT_NAME) = LTRIM(A.TABLE_NAME)
++WHERE
++    A.OWNER = '{$schemaName}'
++	AND (B.OBJECT_TYPE = 'TABLE' OR B.OBJECT_TYPE = 'VIEW')
++	AND B.OBJECT_NAME = '{$tableName}'
++ORDER BY A.COLUMN_ID
++EOD;
++
++		$command=$this->getDbConnection()->createCommand($sql);
++
++		if(($columns=$command->queryAll())===array()){
++			return false;
++		}
++
++		$col_list = [];
++		$tmp = [];
++		$col_array = [];
++		
++		foreach($columns as $column) {
++			$col_list[] = "'" . $column['COLUMN_NAME'] . "'";
++		}
++		
++		$sql = "
++			SELECT C.COLUMN_NAME, D.CONSTRAINT_TYPE
++			FROM ALL_CONS_COLUMNS C
++			INNER JOIN ALL_CONSTRAINTS D
++			ON D.OWNER = C.OWNER
++			AND D.CONSTRAINT_NAME = C.CONSTRAINT_NAME
++			WHERE C.OWNER = '{$schemaName}'
++			AND C.TABLE_NAME = '{$tableName}'
++			AND C.COLUMN_NAME IN ( " . implode(',', $col_list) . ")
++			AND D.CONSTRAINT_TYPE = 'P'
++		";
++		
++		$command_1 = $this->getDbConnection()->createCommand($sql);
++		
++		$tmp = $command_1->queryAll();
++		
++		foreach($tmp as $row){
++			$col_array[$row['COLUMN_NAME']] = $row['CONSTRAINT_TYPE'];
++		}
++		
++		foreach($columns as $column)
++		{
++			$column['KEY'] = isset($col_array[$column['COLUMN_NAME']]) ? $col_array[$column['COLUMN_NAME']] : null;
++			
++			$c=$this->createColumn($column);
++
++			$table->columns[$c->name]=$c;
++			if($c->isPrimaryKey)
++			{
++				if($table->primaryKey===null)
++					$table->primaryKey=$c->name;
++				elseif(is_string($table->primaryKey))
++					$table->primaryKey=array($table->primaryKey,$c->name);
++				else
++					$table->primaryKey[]=$c->name;
++				$table->sequenceName='';
++				$c->autoIncrement=true;
++			}
++		}
++		return true;
++	}
++
++	
++	
++	
++	
++	/**
++	 * Collects the table column metadata.
++	 * @param COciTableSchema $table the table metadata
++	 * @return boolean whether the table exists in the database
++	 */
++	protected function findColumns_OLD($table)
++	{
++		$schemaName=$table->schemaName;
++		$tableName=$table->name;
++
++		$sql=<<<EOD
+ SELECT a.column_name, a.data_type ||
+     case
+         when data_precision is not null
+@@ -183,10 +277,11 @@
+            and C.table_name = B.object_name
+            and C.column_name = A.column_name
+            and D.constraint_type = 'P') as Key,
+-    com.comments as column_comment
++    -- com.comments as column_comment
++	'' as column_comment
+ FROM ALL_TAB_COLUMNS A
+ inner join ALL_OBJECTS B ON b.owner = a.owner and ltrim(B.OBJECT_NAME) = ltrim(A.TABLE_NAME)
+-LEFT JOIN all_col_comments com ON (A.owner = com.owner AND A.table_name = com.table_name AND A.column_name = com.column_name)
++-- LEFT JOIN all_col_comments com ON (A.owner = com.owner AND A.table_name = com.table_name AND A.column_name = com.column_name)
+ WHERE
+     a.owner = '{$schemaName}'
+ 	and (b.object_type = 'TABLE' or b.object_type = 'VIEW')
+@@ -246,6 +341,69 @@
+ 	protected function findConstraints($table)
+ 	{
+ 		$sql=<<<EOD
++		SELECT D.constraint_type as CONSTRAINT_TYPE, C.COLUMN_NAME, C.position, D.r_constraint_name, C.table_name, C.OWNER
++        FROM ALL_CONS_COLUMNS C
++        inner join ALL_constraints D on D.OWNER = C.OWNER and D.constraint_name = C.constraint_name
++        WHERE C.OWNER = '{$table->schemaName}'
++           and C.table_name = '{$table->name}'
++           and D.constraint_type <> 'P'
++        order by d.constraint_name, c.position
++EOD;
++		$command = $this->getDbConnection()->createCommand($sql);
++		foreach($command->queryAll() as $row)
++		{
++			$row['TABLE_REF'] = null;
++			$row['COLUMN_REF'] = null;
++			
++			if($row['R_CONSTRAINT_NAME'] != null && trim($row['R_CONSTRAINT_NAME']) != ''){
++			
++				// get table ref
++				$sql = "SELECT EE.TABLE_NAME AS TABLE_REF
++						FROM ALL_CONSTRAINTS EE 
++						WHERE EE.OWNER = '{$table->schemaName}' 
++						AND EE.R_CONSTRAINT_NAME IS NOT NULL
++						AND EE.constraint_name = '{$row['R_CONSTRAINT_NAME']}'";
++				
++				$command_1 = $this->getDbConnection()->createCommand($sql);
++				
++				$row['TABLE_REF'] = $command_1->queryScalar();
++			
++				// get columns ref
++				$sql = "SELECT FF.COLUMN_NAME AS COLUMN_REF
++						FROM ALL_CONS_COLUMNS FF
++						WHERE FF.OWNER = '{$table->schemaName}'
++						AND FF.POSITION IS NOT NULL
++						AND FF.OWNER = '{$row['OWNER']}'
++						AND FF.CONSTRAINT_NAME = '{$row['R_CONSTRAINT_NAME']}' 
++						AND FF.POSITION = '{$row['POSITION']}'
++				";
++				
++				$command_2 = $this->getDbConnection()->createCommand($sql);
++				
++				$row['COLUMN_REF'] = $command_2->queryScalar();
++			
++			}
++			
++			if($row['CONSTRAINT_TYPE']==='R')   // foreign key
++			{
++				$name = $row["COLUMN_NAME"];
++				$table->foreignKeys[$name]=array($row["TABLE_REF"], $row["COLUMN_REF"]);
++				if(isset($table->columns[$name]))
++					$table->columns[$name]->isForeignKey=true;
++			}
++
++		}
++	}
++	
++	
++	
++	/**
++	 * Collects the primary and foreign key column details for the given table.
++	 * @param COciTableSchema $table the table metadata
++	 */
++	protected function findConstraints_OLD($table)
++	{
++		$sql=<<<EOD
+ 		SELECT D.constraint_type as CONSTRAINT_TYPE, C.COLUMN_NAME, C.position, D.r_constraint_name,
+                 E.table_name as table_ref, f.column_name as column_ref,
+             	C.table_name
