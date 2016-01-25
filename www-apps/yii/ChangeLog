@@ -3,5 +3,5 @@
 
 	25 Jan 2016: Geaaru <geaaru@gmail.com>
 	+yii-1.1.7.ebuild
-	+files/oracle_cache_fix.patch (Thanks to Alessandro Esciana akafor this fix)
+	+files/oracle_cache_fix.patch (Thanks to Alessandro Esciana aka esciox for this fix)
 
