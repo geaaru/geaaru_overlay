@@ -46,7 +46,6 @@ GEMS_DEPEND="
 	mysql? ( virtual/mysql )
 	memcached? ( net-misc/memcached )"
 DEPEND="${GEMS_DEPEND}
-	$(ruby_implementation_depend ruby19 '=' -1.9.3*)[readline,ssl,yaml]
 	sys-devel/gcc
 	sys-libs/glibc
 	sys-devel/make
