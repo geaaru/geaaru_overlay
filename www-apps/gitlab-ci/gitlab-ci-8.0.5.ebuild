@@ -74,10 +74,10 @@ RAILS_ENV=${RAILS_ENV:-production}
 RUBY=${RUBY:-ruby20}
 BUNDLE="${RUBY} /usr/bin/bundle"
 
-#pkg_setup() {
-    #enewgroup ${GITLABCI_GROUP}
-    #enewuser ${GITLABCI_USER} -1 -1 ${DEST_DIR} "$GITLABCI_GROUP"
-#}
+pkg_setup() {
+    enewgroup ${GITLABCI_GROUP}
+    enewuser ${GITLABCI_USER} -1 -1 ${DEST_DIR} "$GITLABCI_GROUP"
+}
 
 all_ruby_unpack() {
 	git-2_src_unpack
