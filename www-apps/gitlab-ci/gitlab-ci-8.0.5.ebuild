@@ -66,12 +66,12 @@ ruby_add_bdepend "
 
 GITLABCI_USER="gitlab_ci"
 GITLABCI_GROUP="gitlab_ci"
-GITLABCI_HOME=$(if [ -n "$(getent passwd gitlab_ci | cut -d: -f6)" ]; then (getent passwd gitlab_ci | cut -d: -f6); else (echo /var/lib/gitlab-ci); fi)
 DEST_DIR="/opt/${PN}-${SLOT}"
 CONF_DIR="/etc/${PN}-${SLOT}"
+GITLABCI_HOME=$(if [ -n "$(getent passwd gitlab_ci | cut -d: -f6)" ]; then (getent passwd gitlab_ci | cut -d: -f6); else (echo ${DEST_DIR}); fi)
 
 RAILS_ENV=${RAILS_ENV:-production}
-RUBY=${RUBY:-ruby20}
+RUBY=${RUBY:-ruby21}
 BUNDLE="${RUBY} /usr/bin/bundle"
 
 pkg_setup() {
