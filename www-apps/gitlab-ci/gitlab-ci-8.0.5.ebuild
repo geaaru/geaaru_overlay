@@ -11,7 +11,7 @@ EAPI="5"
 #   difficult to maintain them via ebuilds.
 #
 
-USE_RUBY="ruby20"
+USE_RUBY="ruby21"
 PYTHON_DEPEND="2:2.5"
 
 EGIT_REPO_URI="https://gitlab.com/gitlab-org/gitlab-ci.git"
@@ -75,10 +75,10 @@ RAILS_ENV=${RAILS_ENV:-production}
 RUBY=${RUBY:-ruby20}
 BUNDLE="${RUBY} /usr/bin/bundle"
 
-pkg_setup() {
-    enewgroup ${GITLABCI_GROUP}
-    enewuser ${GITLABCI_USER} -1 -1 ${DEST_DIR} "$GITLABCI_GROUP"
-}
+#pkg_setup() {
+    #enewgroup ${GITLABCI_GROUP}
+    #enewuser ${GITLABCI_USER} -1 -1 ${DEST_DIR} "$GITLABCI_GROUP"
+#}
 
 all_ruby_unpack() {
 	git-2_src_unpack
