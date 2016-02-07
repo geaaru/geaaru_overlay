@@ -91,6 +91,7 @@ RDEPEND="
 	l3? (
 		net-proxy/haproxy
 		sys-cluster/ipvsadm
+		sys-cluster/keepalived
 	)
 	openvswitch? ( net-misc/openvswitch )
 	dhcp? ( net-dns/dnsmasq[dhcp-tools] )"
@@ -118,6 +119,8 @@ src_prepare() {
 	#it's /bin/ip not /sbin/ip
 	sed -i 's/sbin\/ip\,/bin\/ip\,/g' etc/neutron/rootwrap.d/*
 	distutils-r1_src_prepare
+
+	epatch ${FILESDIR}/iproute2_4.3.0.patch
 }
 
 python_compile_all() {

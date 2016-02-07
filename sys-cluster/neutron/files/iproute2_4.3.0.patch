@@ -1,0 +1,44 @@
+--- a/neutron/agent/linux/ip_lib.py.orig  2016-02-05 18:10:37.980925752 +0100
++++ b/neutron/agent/linux/ip_lib.py 2016-02-05 19:19:18.163976233 +0100
+@@ -14,12 +14,12 @@
+ #    under the License.
+ 
+ import netaddr
++import re
+ from oslo.config import cfg
+ 
+ from neutron.agent.linux import utils
+ from neutron.common import exceptions
+ 
+-
+ OPTS = [
+     cfg.BoolOpt('ip_lib_force_root',
+                 default=False,
+@@ -193,7 +193,12 @@
+     @classmethod
+     def get_namespaces(cls, root_helper):
+         output = cls._execute('', 'netns', ('list',), root_helper=root_helper)
+-        return [l.strip() for l in output.split('\n')]
++        ans = []
++        for l in output.split('\n'):
++            if len(l) > 0:
++                m = re.match('\S+', l)
++                ans.append(m.group(0))
++        return ans
+ 
+ 
+ class IpRule(IPWrapper):
+@@ -551,10 +556,11 @@
+ 
+     def exists(self, name):
+         output = self._parent._execute('o', 'netns', ['list'])
+-
+         for line in output.split('\n'):
+-            if name == line.strip():
+-                return True
++            if len(line) > 0:
++                m = re.match('\S+', line)
++                if name == m.group(0):
++                    return True
+         return False
+ 
