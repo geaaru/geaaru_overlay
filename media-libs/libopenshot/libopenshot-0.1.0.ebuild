@@ -13,7 +13,7 @@ inherit cmake-utils eutils python-r1
 
 DESCRIPTION="Openshot Library"
 HOMEPAGE="http://www.openshot.org/"
-SRC_URI="https://launchpad.net/libopenshot/0.0/${PV}/+download/libopenshot-${PV}.tar.gz"
+SRC_URI="https://launchpad.net/libopenshot/0.1/${PV}/+download/libopenshot-${PV}.tar.gz"
 
 LICENSE="LGPL-3"
 SLOT="0"
