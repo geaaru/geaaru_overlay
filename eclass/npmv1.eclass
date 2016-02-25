@@ -23,7 +23,7 @@ _npmv1_set_metadata() {
         NPM_DEFAULT_OPTS="-E --no-optional"
     fi
     if [[ -z "${NPM_PACKAGEDIR}" ]] ; then
-        NPM_PACKAGEDIR="${EROOT}/usr/$(get_libdir)/node_modules/${PN}"
+        NPM_PACKAGEDIR="${EROOT}usr/$(get_libdir)/node_modules/${PN}"
     fi
 
 }
@@ -68,9 +68,10 @@ npmv1_src_install() {
             # Install only
             for f in ${NPM_BINS} ; do
 
-                exeinto /usr/bin/
                 if [ -e ${S}/bin/${f} ] ; then
+                    exeinto ${NPM_PACKAGEDIR}/bin/
                     doexe ${S}/bin/${f} || die "Error on install $f."
+                    dosym ${NPM_PACKAGEDIR}/bin/${f} /usr/bin/${f}
                 else
                     die "Binary ${f} is not present."
                 fi
@@ -79,10 +80,12 @@ npmv1_src_install() {
 
         else
 
-            exeinto /usr/bin/
             for f in ${S}/bin/* ; do
+                local fname=$(basename ${f})
                 if [ -e ${f} ] ; then
+                    exeinto ${NPM_PACKAGEDIR}/bin/
                     doexe ${f} || die "Error on install $f."
+                    dosym ${NPM_PACKAGEDIR}/bin/${fname} /usr/bin/${fname}
                 fi
             done # end for
 
