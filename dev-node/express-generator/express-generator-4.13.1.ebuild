@@ -18,8 +18,6 @@ S="${WORKDIR}/${PN/express-/}-${PV}"
 DEPEND=""
 RDEPEND="${DEPEND}"
 
-NPM_PKG_NAME="${PN}"
-
 inherit npmv1
 
 # TODO check if rename express in express-node to avoid conflict
