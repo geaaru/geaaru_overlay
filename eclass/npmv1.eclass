@@ -28,6 +28,9 @@ _npmv1_set_metadata() {
     if [[ -z "${NPM_PACKAGEDIR}" ]] ; then
         NPM_PACKAGEDIR="${EROOT}usr/$(get_libdir)/node_modules/${PN}"
     fi
+    if [[ -z "${NPM_PKG_NAME}" ]] ; then
+        NPM_PKG_NAME="${PN}"
+    fi
 
 }
 
