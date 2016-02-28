@@ -248,7 +248,7 @@ ${bindir}/${binfile} \$@
         done
 
     else
-        if [[ ${npm_pkg_mods[@]} -gt 0 ]] ; then
+        if [[ ${#npm_pkg_mods[@]} -gt 0 ]] ; then
             # Install package modules
             dodir ${NPM_PACKAGEDIR}/node_modules/
 
