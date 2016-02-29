@@ -1,0 +1,35 @@
+# Copyright 1999-2016 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Id$
+
+EAPI=5
+
+DESCRIPTION="Recursively mkdir, like 'mkdir -p'"
+HOMEPAGE="https://www.npmjs.com/package/mkdirp"
+
+LICENSE="MIT"
+SLOT="0"
+KEYWORDS="~amd64 ~arm"
+IUSE=""
+
+DEPEND="
+dev-node/minimist
+"
+RDEPEND="${DEPEND}"
+
+S="${WORKDIR}/node-${PF}"
+
+NPM_SYSTEM_MODULES="
+minimist
+"
+# Avoid install of files under bin directory
+NPM_BINS="
+"
+
+NPM_GITHUP_MOD="substack/node-mkdirp"
+SRC_URI="https://github.com/${NPM_GITHUP_MOD}/archive/${PV}.zip"
+
+
+inherit npmv1
+
+
