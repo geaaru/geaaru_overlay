@@ -15,8 +15,22 @@ IUSE=""
 
 S="${WORKDIR}/${PN/express-/}-${PV}"
 
-DEPEND=""
+DEPEND="
+    dev-node/mkdirp
+    dev-node/minimist
+    dev-node/sorted-object
+    dev-node/commander
+    dev-node/graceful-readlink
+"
 RDEPEND="${DEPEND}"
+
+NPM_SYSTEM_MODULES="
+minimist
+graceful-readlink
+sorted-object
+mkdirp
+commander
+"
 
 inherit npmv1
 
