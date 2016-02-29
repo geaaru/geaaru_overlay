@@ -34,6 +34,7 @@ inherit multilib
 #                              For binary under /usr/bin is created a bash script where is
 #                              initialized NODE_PATH variable to use first ${NPM_PACKAGEDIR}/node_modules
 #                              directory and then system node_modules directory.
+#                        To avoid install of all binaries use NPM_BINS="".
 #  * NPM_SYSTEM_MODULES: If defined permit to avoid install of the packages modules to insert
 #                        on this variable. This permit to use module installed from another ebuild.
 #  * NPM_PKG_DIRS:       Permit of defines additional directories to intall. Default install directory
@@ -130,6 +131,9 @@ ${bindir}/${binfile} \$@
         local mod=$1
         local mod2install=true
         local i=0
+        local sym=""
+        local words=""
+        local f=""
 
         # Check if present on system module
         for i in ${!npm_sys_mods[@]} ; do
@@ -181,6 +185,7 @@ ${bindir}/${binfile} \$@
         while read line ; do
             words=$(c() { echo $#; }; c $line)
             sym=""
+            f=""
 
             if [ ${#line} -gt 1 ] ; then
                 if [[ $line =~ .*\=\>.* ]] ; then
@@ -188,22 +193,30 @@ ${bindir}/${binfile} \$@
                     [ ${#words[@]} -lt 3 ] && \
                         die "Invalid binary row $line."
                     sym=${words[2]}
+                    f=${words[0]}
                 else
                     # Without rename
                     [ ${#words[@]} -gt 1 ] && \
                         die "Invalid binary row $line."
                     sym=${line}
+                    f=${line}
 
                 fi
             fi
 
-            if [ -e ${S}/bin/${f} ] ; then
+            if [[ x"${f}" = x ]] ; then
+                # Handle NPM_BINS empty for avoid install
+                # of binaries files
+                continue
+            fi
+
+            if [ -f ${S}/bin/${f} ] ; then
                 exeinto ${NPM_PACKAGEDIR}/bin/
                 doexe ${S}/bin/${f} || die "Error on install $f."
                 _npmv1_create_bin_script "${f}" "${NPM_PACKAGEDIR}/bin" "${sym}" || \
                     die "Error on create binary script for ${f}."
             else
-                if [ -e ${S}/${f} ] ; then
+                if [ -f ${S}/${f} ] ; then
                     exeinto ${NPM_PACKAGEDIR}/
                     doexe ${S}/${f} || die "Error on install $f."
                     _npmv1_create_bin_script "${f}" "${NPM_PACKAGEDIR}" "${sym}" || \
@@ -219,6 +232,7 @@ ${bindir}/${binfile} \$@
 
         for f in ${S}/bin/* ; do
             local fname=$(basename ${f})
+
             if [ -e ${f} ] ; then
                 exeinto ${NPM_PACKAGEDIR}/bin/
                 doexe ${f} || die "Error on install $f."
@@ -270,7 +284,7 @@ ${bindir}/${binfile} \$@
         _npmv1_copy_dirs
     fi
 
-    for f in ChangeLog LICENSE REAME README.md ; do
+    for f in ChangeLog LICENSE LICENSE.txt REAME README.md ; do
         [[ -e ${f} ]] && dodoc ${f}
     done # end for
 
