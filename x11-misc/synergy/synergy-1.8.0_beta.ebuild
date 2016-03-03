@@ -3,14 +3,17 @@
 # $Header: /var/cvsroot/gentoo-x86/x11-misc/synergy/synergy-1.7.0.ebuild,v 1.1 2015/03/09 11:15:41 jer Exp $
 
 EAPI=5
-inherit eutils flag-o-matic gnome2-utils cmake-utils qt4-r2
+inherit eutils flag-o-matic gnome2-utils cmake-utils qt4-r2 git-2
 
 DESCRIPTION="Lets you easily share a single mouse and keyboard between multiple computers"
 HOMEPAGE="http://synergy-project.org/ https://github.com/synergy/synergy"
 SRC_URI="
-	https://github.com/${PN}/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz
 	http://dev.gentoo.org/~hasufell/distfiles/${PN}.png
 "
+
+EGIT_REPO_URI="https://github.com/symless/synergy.git"
+EGIT_PROJECT="synergy"
+EGIT_COMMIT="v1.8.0-beta"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -50,8 +53,7 @@ RDEPEND="
 PATCHES=(
 	"${FILESDIR}/${PN}-1.4.16_p1969-pthread.patch"
 	"${FILESDIR}/${PN}-1.4.17_p2055-test.patch"
-	"${FILESDIR}/${PN}-1.4.17_p2055-gentoo.patch"
-	"${FILESDIR}/${PN}-1.4.17_p2055-CSocketMultiplexer.patch"
+	"${FILESDIR}/${PN}-1.8.0_beta-gentoo.patch"
 )
 
 src_prepare() {
