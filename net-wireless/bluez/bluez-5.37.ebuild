@@ -14,7 +14,7 @@ SRC_URI="mirror://kernel/linux/bluetooth/${P}.tar.xz"
 LICENSE="GPL-2+ LGPL-2.1+"
 SLOT="0/3"
 KEYWORDS="amd64 arm hppa ~mips ~ppc ppc64 ~x86"
-IUSE="cups doc debug extra-tools +obex +readline selinux systemd test test-programs +udev"
+IUSE="cups doc debug extra-tools +obex +readline selinux systemd test test-programs +udev gatt-example"
 REQUIRED_USE="test? ( ${PYTHON_REQUIRED_USE} ) test-programs? ( ${PYTHON_REQUIRED_USE} )"
 
 CDEPEND="
@@ -95,6 +95,10 @@ src_prepare() {
 	# bug 574092
 	epatch "${FILESDIR}"/${PN}-5.37-endian.patch
 
+	if use gatt-example ; then
+		epatch "${FILESDIR}"/${PN}-enable-gatt_example.patch
+	fi
+
 	if use cups; then
 		sed -i \
 			-e "s:cupsdir = \$(libdir)/cups:cupsdir = $(cups-config --serverbin):" \
@@ -133,7 +137,6 @@ multilib_src_configure() {
 		--enable-tools \
 		--enable-manpages \
 		--enable-monitor \
-		--enable-maintainer-mode \
 		$(multilib_native_use_enable cups) \
 		$(multilib_native_use_enable obex) \
 		$(multilib_native_use_enable readline client) \

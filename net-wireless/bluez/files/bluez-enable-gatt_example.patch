@@ -1,0 +1,13 @@
+--- Makefile.plugins.orig	2016-03-03 21:51:15.377040813 +0100
++++ Makefile.plugins	2016-03-03 21:53:11.705236983 +0100
+@@ -11,10 +11,8 @@
+ builtin_modules += policy
+ builtin_sources += plugins/policy.c
+ 
+-if MAINTAINER_MODE
+ builtin_modules += gatt_example
+ builtin_sources += plugins/gatt-example.c
+-endif
+ 
+ if EXPERIMENTAL
+ builtin_modules += neard
