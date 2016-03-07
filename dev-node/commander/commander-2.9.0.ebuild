@@ -26,10 +26,6 @@ graceful-readlink
 NPM_BINS="
 "
 
-NPM_GITHUP_MOD="substack/node-mkdirp"
-SRC_URI="http://registry.npmjs.org/${PN}/-/${PF}.tgz"
-
-
 inherit npmv1
 
 
