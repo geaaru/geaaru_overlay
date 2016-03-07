@@ -187,7 +187,7 @@ ${bindir}/${binfile} \$@
         # Install only defined binaries
 
         while read line ; do
-            words=$(c() { echo $#; }; c $line)
+            words=( ${line} )
             sym=""
             f=""
 
@@ -195,7 +195,7 @@ ${bindir}/${binfile} \$@
                 if [[ $line =~ .*\=\>.* ]] ; then
                     # With rename
                     [ ${#words[@]} -lt 3 ] && \
-                        die "Invalid binary row $line."
+                        die "Invalid binary row $line [${#words[@]}]."
                     sym=${words[2]}
                     f=${words[0]}
                 else
