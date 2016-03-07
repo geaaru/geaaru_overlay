@@ -54,8 +54,12 @@ _npmv1_set_metadata() {
     if [[ -z "${NPM_PACKAGEDIR}" ]] ; then
         NPM_PACKAGEDIR="${EROOT}usr/$(get_libdir)/node_modules/${NPM_PKG_NAME}"
     fi
-    if [[ -n "${NPM_GITHUP_MOD}" && -z "${SRC_URI}" ]] ; then
-        SRC_URI="https://github.com/${NPM_GITHUP_MOD}/archive/v${PV}.zip"
+    if [[ -z "${SRC_URI}" ]] ; then
+        if [[ -n "${NPM_GITHUP_MOD}" ]] ; then
+            SRC_URI="https://github.com/${NPM_GITHUP_MOD}/archive/v${PV}.zip"
+        else
+            SRC_URI="http://registry.npmjs.org/${PN}/-/${PF}.tgz"
+        fi
     fi
 
 }
@@ -284,7 +288,7 @@ ${bindir}/${binfile} \$@
         _npmv1_copy_dirs
     fi
 
-    for f in ChangeLog LICENSE LICENSE.txt REAME README.md ; do
+    for f in ChangeLog CHANGELOG.md LICENSE LICENSE.txt REAME README.md ; do
         [[ -e ${f} ]] && dodoc ${f}
     done # end for
 
