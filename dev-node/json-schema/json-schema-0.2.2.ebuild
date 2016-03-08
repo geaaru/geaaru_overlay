@@ -16,6 +16,16 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
+NPM_PKG_DIRS="
+draft-00
+draft-01
+draft-02
+draft-03
+draft-04
+draft-zyp-json-schema-03.xml
+draft-zyp-json-schema-04.xml
+"
+
 S="${WORKDIR}/package"
 
 inherit npmv1
