@@ -37,8 +37,10 @@ inherit multilib
 #                        To avoid install of all binaries use NPM_BINS="".
 #  * NPM_SYSTEM_MODULES: If defined permit to avoid install of the packages modules to insert
 #                        on this variable. This permit to use module installed from another ebuild.
-#  * NPM_PKG_DIRS:       Permit of defines additional directories to intall. Default install directory
+#  * NPM_PKG_DIRS:       Permit of defines additional directories or files to intall. Default install directory
 #                        if available is lib directory.
+#  * NPM_NO_DEPS:        If present and with value equal to 1 then disable download of node modules
+#                        dependencies and install of node_modules directory.
 
 _npmv1_set_metadata() {
 
@@ -86,7 +88,9 @@ npmv1_src_prepare() {
 # Implementation of src_compile() phase. This function is exported.
 npmv1_src_compile() {
 
-    npm ${NPM_DEFAULT_OPTS} install || die "Error on download node modules!"
+    if [[ x"${NPM_NO_DEPS}" != x"1" ]] ; then
+        npm ${NPM_DEFAULT_OPTS} install || die "Error on download node modules!"
+    fi
 
 }
 
@@ -250,29 +254,31 @@ ${bindir}/${binfile} \$@
     insinto ${NPM_PACKAGEDIR}
     doins package.json
 
-    # Store list of package modules on npm_pkg_mods array
-    npm_pkg_mods=( $(ls --color=none node_modules/) )
+    if [[ x"${NPM_NO_DEPS}" != x"1" ]] ; then
+        # Store list of package modules on npm_pkg_mods array
+        npm_pkg_mods=( $(ls --color=none node_modules/) )
 
-    if [[ -n "${NPM_SYSTEM_MODULES}" ]] ; then
+        if [[ -n "${NPM_SYSTEM_MODULES}" ]] ; then
 
-        # Install package modules
-        dodir ${NPM_PACKAGEDIR}/node_modules/
-
-        # Create an array with all modules to exclude from copy
-        npm_sys_mods=( ${NPM_SYSTEM_MODULES} )
-
-        for i in ${!npm_pkg_mods[@]} ; do
-            _npmv1_install_module "${npm_pkg_mods[$i]}"
-        done
-
-    else
-        if [[ ${#npm_pkg_mods[@]} -gt 0 ]] ; then
             # Install package modules
             dodir ${NPM_PACKAGEDIR}/node_modules/
 
-            cp -rf node_modules/* ${D}/${NPM_PACKAGEDIR}/node_modules/
+            # Create an array with all modules to exclude from copy
+            npm_sys_mods=( ${NPM_SYSTEM_MODULES} )
+
+            for i in ${!npm_pkg_mods[@]} ; do
+                _npmv1_install_module "${npm_pkg_mods[$i]}"
+            done
+
+        else
+            if [[ ${#npm_pkg_mods[@]} -gt 0 ]] ; then
+                # Install package modules
+                dodir ${NPM_PACKAGEDIR}/node_modules/
+
+                cp -rf node_modules/* ${D}/${NPM_PACKAGEDIR}/node_modules/
+            fi
         fi
-    fi
+    fi # End if x"${NPM_NO_DEPS}" != x"1" ...
 
     # Copy all .js from root directory
     npm_root_js_files=( $(ls --color=none . | grep --color=none "\.js$") )
