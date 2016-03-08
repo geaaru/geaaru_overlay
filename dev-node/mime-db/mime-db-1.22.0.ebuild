@@ -5,7 +5,7 @@
 EAPI=5
 
 DESCRIPTION="Media Type Database"
-HOMEPAGE="https://www.npmjs.com/package/media-db"
+HOMEPAGE="https://www.npmjs.com/package/mime-db"
 
 LICENSE="MIT"
 SLOT="0"
