@@ -13,7 +13,7 @@ KEYWORDS="~amd64 ~arm"
 IUSE=""
 
 DEPEND="
->=dev-node/extprintf-1.0.2
+>=dev-node/extsprintf-1.0.2
 >=dev-node/json-schema-0.2.2
 >=dev-node/verror-1.3.6
 "
