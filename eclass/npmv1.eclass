@@ -111,14 +111,12 @@ npmv1_src_install() {
         local binfile=$1
         local bindir="$2"
         local scriptname="$3"
+        local has_envheader="$4"
         local nodecmd=""
 
         if [[ ! -e ${ED}usr/bin ]] ; then
             mkdir -p ${ED}usr/bin
         fi
-
-        # Check if binary has right header
-        has_envheader=$(head -n 1 ${binfile} | grep node --color=none  | wc -l)
 
         if [[ ${has_envheader} -eq 0 ]] ; then
             nodecmd="node "
@@ -229,13 +227,20 @@ ${nodecmd}${bindir}/${binfile} \$@
             if [ -f ${S}/bin/${f} ] ; then
                 exeinto ${NPM_PACKAGEDIR}/bin/
                 doexe ${S}/bin/${f} || die "Error on install $f."
-                _npmv1_create_bin_script "${f}" "${NPM_PACKAGEDIR}/bin" "${sym}" || \
+
+                # Check if binary has right header
+                has_envheader=$(head -n 1 ${S}/bin/${f} | grep node --color=none  | wc -l)
+
+                _npmv1_create_bin_script "${f}" "${NPM_PACKAGEDIR}/bin" "${sym}" "${has_envheader}" || \
                     die "Error on create binary script for ${f}."
             else
                 if [ -f ${S}/${f} ] ; then
                     exeinto ${NPM_PACKAGEDIR}/
                     doexe ${S}/${f} || die "Error on install $f."
-                    _npmv1_create_bin_script "${f}" "${NPM_PACKAGEDIR}" "${sym}" || \
+
+                    # Check if binary has right header
+                    has_envheader=$(head -n 1 ${S}/${f} | grep node --color=none  | wc -l)
+                    _npmv1_create_bin_script "${f}" "${NPM_PACKAGEDIR}" "${sym}" "${has_envheader}" || \
                         die "Error on create binary script for ${f}."
                 else
                     die "Binary ${f} is not present."
