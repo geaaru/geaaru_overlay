@@ -111,9 +111,17 @@ npmv1_src_install() {
         local binfile=$1
         local bindir="$2"
         local scriptname="$3"
+        local nodecmd=""
 
         if [[ ! -e ${ED}usr/bin ]] ; then
             mkdir -p ${ED}usr/bin
+        fi
+
+        # Check if binary has right header
+        has_envheader=$(head -n 1 ${binfile} | grep node --color=none  | wc -l)
+
+        if [[ ${has_envheader} -eq 0 ]] ; then
+            nodecmd="node "
         fi
 
         echo \
@@ -126,7 +134,7 @@ app_node_path="${NPM_PACKAGEDIR}/node_modules/"
 
 export NODE_PATH=\${app_node_path}:\${def_node_path}
 
-${bindir}/${binfile} \$@
+${nodecmd}${bindir}/${binfile} \$@
 " >     ${ED}/usr/bin/${scriptname} || return 1
 
         chmod a+x ${ED}/usr/bin/${scriptname} || return 1
