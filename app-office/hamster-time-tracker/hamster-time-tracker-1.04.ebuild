@@ -11,7 +11,6 @@ inherit git-r3 python-single-r1 waf-utils
 DESCRIPTION="Time tracking for the masses"
 HOMEPAGE="http://projecthamster.wordpress.com"
 EGIT_REPO_URI="https://github.com/projecthamster/hamster.git"
-EGIT_PROJECT="hamster"
 EGIT_COMMIT="hamster-time-tracker-1.04"
 LICENSE="GPL-3"
 SLOT="0"
