@@ -4,13 +4,14 @@
 
 EAPI=5
 
-OPENSHOT_TREE="0.0.8"
+OPENSHOT_PTREE="0.1"
+OPENSHOT_TREE="${OPENSHOT_PTREE}.1"
 
 inherit cmake-utils eutils
 
 DESCRIPTION="Openshot Audio Library"
 HOMEPAGE="http://www.openshot.org/"
-SRC_URI="https://launchpad.net/libopenshot/0.0/${OPENSHOT_TREE}/+download/libopenshot-audio-${PV}.tar.gz"
+SRC_URI="https://launchpad.net/libopenshot/${OPENSHOT_PTREE}/${OPENSHOT_TREE}/+download/libopenshot-audio-${PV}.tar.gz"
 
 LICENSE="LGPL-3"
 SLOT="0"
