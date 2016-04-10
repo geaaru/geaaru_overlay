@@ -39,22 +39,22 @@ RDEPEND="
 
 S="${WORKDIR}/${PN}-qt-${PV}"
 
+src_unpack() {
+	mkdir ${S}
+	cd ${S}
+	unpack ${A}
+}
+
 src_prepare() {
 	sed -ie '/launcher/,+1d' setup.py || die
 	sed -ie '/FAILED = /,$d' setup.py || die
-
-	# Rename binary to bin/openshot
-	sed -ie 's/launch-openshot/openshot/g' setup.py || die
-
-	# Rename launch script.
-	mv ${S}/openshot_qt/launch-openshot ${S}/openshot_qt/openshot
-	# Fix up launchers to not throw an error.
-#	sed -i 's/\(from \)\(openshot import main\)/\1openshot.\2/' bin/openshot || die
-#	sed -i 's/\(from \)\(openshot_render import main\)/\1openshot.\2/' bin/openshot-render || die
 }
 
 python_install() {
 	distutils-r1_python_install
+
+	# Do link to openshot-qt as openstho
+	dosym ${EROOT}usr/bin/openshot-qt ${EROOT}usr/bin/openshot
 }
 
 pkg_postinst() {
