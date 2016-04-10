@@ -21,7 +21,7 @@ KEYWORDS="~amd64"
 IUSE=""
 
 DEPEND="
-	>=media-libs/libopenshot-audio-0.0.6
+	>=media-libs/libopenshot-audio-0.1.1
 	dev-lang/swig
 	media-gfx/imagemagick
 	dev-lang/python
