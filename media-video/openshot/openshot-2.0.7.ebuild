@@ -21,7 +21,7 @@ IUSE="+ffmpeg libav +python"
 REQUIRED_USE="|| ( python ffmpeg )"
 
 RDEPEND="
-	>=media-libs/libopenshot-0.0.8
+	>=media-libs/libopenshot-0.1.1
 	dev-python/PyQt5[${PYTHON_USEDEP}]
 	dev-python/simplejson[${PYTHON_USEDEP}]
 	dev-qt/qtmultimedia:5
