@@ -9,16 +9,14 @@ inherit versionator
 DESCRIPTION="A dependancy manager for PHP"
 HOMEPAGE="http://getcomposer.org"
 
-MY_PV=$(replace_version_separator _ -)
-
-SRC_URI="http://getcomposer.org/download/${MY_PV}/composer.phar -> ${PN}-${MY_PV}.phar"
+SRC_URI="http://getcomposer.org/download/${PV}/composer.phar -> ${PN}-${PV}.phar"
 
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
 IUSE=""
 
-DEPEND=">=dev-lang/php-5.3.4"
+DEPEND="dev-lang/php"
 RDEPEND="dev-lang/php[zip]"
 
 src_unpack() {
@@ -27,7 +25,7 @@ src_unpack() {
 }
 
 src_install() {
-        newbin ${A} composer-${MY_PV}
-        dosym composer-${MY_PV} /usr/bin/composer
+        newbin ${A} composer-${PV}
+        dosym composer-${PV} /usr/bin/composer
 }
 
