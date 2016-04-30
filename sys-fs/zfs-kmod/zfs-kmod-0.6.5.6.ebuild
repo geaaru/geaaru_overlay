@@ -22,7 +22,7 @@ else
 		#https://dev.gentoo.org/~ryao/dist/${P}-patches-p${PR#r}.tar.xz"
 
 	S="${WORKDIR}"
-	ZFS_S="${WORKDIR}/zfs-zfs-${MY_PV}"
+	ZFS_S="${WORKDIR}/zfs-${MY_PV}"
 	SPL_S="${WORKDIR}/spl-spl-${MY_PV}"
 	KEYWORDS="~amd64"
 fi
