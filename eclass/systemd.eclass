@@ -173,6 +173,7 @@ systemd_install_serviced() {
 
 	local src=${1}
 	local service=${2}
+	local conf=${3:-00gentoo.conf}
 
 	[[ ${src} ]] || die "No file specified"
 
@@ -186,7 +187,7 @@ systemd_install_serviced() {
 
 	(
 		insinto /etc/systemd/system/"${service}".d
-		newins "${src}" 00gentoo.conf
+		newins "${src}" ${conf}
 	)
 }
 

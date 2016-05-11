@@ -37,10 +37,16 @@ inherit multilib
 #                        To avoid install of all binaries use NPM_BINS="".
 #  * NPM_SYSTEM_MODULES: If defined permit to avoid install of the packages modules to insert
 #                        on this variable. This permit to use module installed from another ebuild.
+#                        When this options is used NPM_NO_DEPS must be with value a 0 or not present.
 #  * NPM_PKG_DIRS:       Permit of defines additional directories or files to intall. Default install directory
 #                        if available is lib directory.
 #  * NPM_NO_DEPS:        If present and with value equal to 1 then disable download of node modules
 #                        dependencies and install of node_modules directory.
+#  * NPM_GYP_BIN:        Path of node-gyp program.
+#  * NPM_GYP_PKG:        Identify if package has source to compile with node-gyp (value 1) or not (value 0).
+#                        Default value is 0
+
+NPMV1_ECLASS_VERSION="0.1.0"
 
 _npmv1_set_metadata() {
 
@@ -60,10 +66,13 @@ _npmv1_set_metadata() {
         if [[ -n "${NPM_GITHUP_MOD}" ]] ; then
             SRC_URI="https://github.com/${NPM_GITHUP_MOD}/archive/v${PV}.zip"
         else
-            SRC_URI="http://registry.npmjs.org/${PN}/-/${PF}.tgz"
+            SRC_URI="http://registry.npmjs.org/${NPM_PKG_NAME}/-/${NPM_PKG_NAME}-${PV}.tgz"
         fi
     fi
 
+    if [[ -z "${NPM_GYP_BIN}" ]] ; then
+        NPM_GYP_BIN="${EROOT}usr/$(get_libdir)/node_modules/npm/bin/node-gyp-bin/node-gyp"
+    fi
 }
 
 _npmv1_set_metadata
@@ -81,6 +90,13 @@ npmv1_src_prepare() {
     # Check if present package.json
     test -f package.json || die "package.json not found in package ${PN}"
 
+    # Check if there are source to compile with node-gyp
+    # TODO: 
+    if [ -f binding.gyp ] ; then
+        NPM_GYP_PKG=1
+    else
+        NPM_GYP_PKG=0
+    fi
 }
 
 # @FUNCTION: npmv1_src_configure
@@ -90,6 +106,10 @@ npmv1_src_compile() {
 
     if [[ x"${NPM_NO_DEPS}" != x"1" ]] ; then
         npm ${NPM_DEFAULT_OPTS} install || die "Error on download node modules!"
+    else
+        if [[ "${NPM_GYP_PKG}" -eq 1 ]] ; then
+            ${NPM_GYP_BIN} rebuild || die "Error on compile package ${PN} sources!."
+        fi
     fi
 
 }
@@ -105,6 +125,14 @@ npmv1_src_install() {
     local npm_root_js_files=""
     local npm_pkg_mods=""
     local npm_sys_mods=""
+
+    _npmv1_install_native_objs () {
+
+        cp -rf build/ ${D}/${NPM_PACKAGEDIR}/ || \
+            die "Error on install native objects."
+
+        return 0
+    }
 
     _npmv1_create_bin_script () {
 
@@ -307,7 +335,11 @@ ${nodecmd}${bindir}/${binfile} \$@
         _npmv1_copy_dirs
     fi
 
-    for f in ChangeLog CHANGELOG.md LICENSE LICENSE.txt REAME README.md ; do
+    if [[ ${NPM_GYP_PKG} -eq 1 ]] ; then
+        _npmv1_install_native_objs
+    fi
+
+    for f in ChangeLog CHANGELOG.md LICENSE.md LICENSE LICENSE.txt REAME README.md ; do
         [[ -e ${f} ]] && dodoc ${f}
     done # end for
 
@@ -315,6 +347,7 @@ ${nodecmd}${bindir}/${binfile} \$@
     unset -f _npmv1_install_module
     unset -f _npmv1_copy_root_js_files
     unset -f _npmv1_copy_dirs
+    unset -f _npmv1_install_native_objs
 
 }
 
