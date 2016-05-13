@@ -17,7 +17,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="doc examples"
 
-DEPEND=">=dev-db/oracle-instantclient-basic-12.1.2.0"
+DEPEND=">=dev-db/oracle-instantclient-basic-12.1.0.2"
 RDEPEND="${DEPEND}"
 
 S=${WORKDIR}/${MY_P}
