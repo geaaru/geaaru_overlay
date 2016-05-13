@@ -16,7 +16,7 @@ MY_BITS_amd64=64
 MY_A_amd64="${PN/oracle-}-linux.x64-${PV}.0.zip"
 MY_ASDK_amd64="${MY_A_amd64/basic/sdk}"
 
-DESCRIPTION="Oracle 11g Instant Client with SDK"
+DESCRIPTION="Oracle 12c Instant Client with SDK"
 HOMEPAGE="http://www.oracle.com/technetwork/database/features/instant-client/index.html"
 SRC_URI="
 	x86?   ( ${MY_A_x86}   ${MY_ASDK_x86}                             )
@@ -42,7 +42,7 @@ S="${WORKDIR}"
 QA_PREBUILT="usr/lib*/oracle/${PV}/client/lib*/lib*"
 
 set_my_abivars() {
-	S="${WORKDIR}/${ABI}/instantclient_11_2"
+	S="${WORKDIR}/${ABI}/instantclient_12_1"
 
 	local abi=${ABI}
 	[[ ${abi} == 'default' ]] && abi=${ARCH}
@@ -96,7 +96,7 @@ src_prepare() {
 	# need to patch for the final ABI only
 	set_my_abivars || die "${ABI} ABI not supported!"
 	cd "${S}" || die
-	epatch "${FILESDIR}"/11.2.0.3-makefile.patch
+	epatch "${FILESDIR}"/12.1.0.1-makefile.patch
 }
 
 src_install() {
@@ -120,10 +120,10 @@ src_install() {
 
 		# ensure to be linkable
 		[[ -e libocci$(get_libname) ]] ||
-		dosym libocci$(get_libname 11.1) \
+		dosym libocci$(get_libname 12.1) \
 			"${oracle_home}"/$(get_libdir)/libocci$(get_libname)
 		[[ -e libclntsh$(get_libname) ]] ||
-		dosym libclntsh$(get_libname 11.1) \
+		dosym libclntsh$(get_libname 12.1) \
 			"${oracle_home}"/$(get_libdir)/libclntsh$(get_libname)
 
 		# java archives
