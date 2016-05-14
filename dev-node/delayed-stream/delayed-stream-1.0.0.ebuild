@@ -1,11 +1,12 @@
 # Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
+# Ebuild automatically produced by node-ebuilder.
 
 EAPI=5
 
 DESCRIPTION="Buffers events from a stream until you are ready to handle them."
-HOMEPAGE="https://www.npmjs.com/package/delayed-stream"
+HOMEPAGE="https://github.com/felixge/node-delayed-stream"
 
 LICENSE="MIT"
 SLOT="0"
@@ -15,6 +16,8 @@ IUSE=""
 DEPEND="
 "
 RDEPEND="${DEPEND}"
+
+NPM_NO_DEPS=1
 
 S="${WORKDIR}/package"
 
