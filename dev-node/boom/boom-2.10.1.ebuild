@@ -1,19 +1,20 @@
 # Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
+# Ebuild automatically produced by node-ebuilder.
 
 EAPI=5
 
 DESCRIPTION="HTTP-friendly error objects"
-HOMEPAGE="https://www.npmjs.com/package/boom"
+HOMEPAGE="https://github.com/hapijs/boom#readme"
 
-LICENSE="MIT"
+LICENSE="BSD-3-Clause"
 SLOT="0"
 KEYWORDS="~amd64 ~arm"
 IUSE=""
 
 DEPEND="
-dev-node/hoek
+	>=dev-node/hoek-2.16.3
 "
 RDEPEND="${DEPEND}"
 
