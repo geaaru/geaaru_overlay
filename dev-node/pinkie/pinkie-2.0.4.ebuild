@@ -1,19 +1,23 @@
 # Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
+# Ebuild automatically produced by node-ebuilder.
 
 EAPI=5
 
 DESCRIPTION="Itty bitty little widdle twinkie pinkie ES2015 Promise implementation"
-HOMEPAGE="https://www.npmjs.com/package/pinkie"
+HOMEPAGE="https://github.com/floatdrop/pinkie"
 
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~arm"
 IUSE=""
 
-DEPEND=""
+DEPEND="
+"
 RDEPEND="${DEPEND}"
+
+NPM_NO_DEPS=1
 
 S="${WORKDIR}/package"
 
