@@ -6,24 +6,20 @@
 EAPI=5
 
 DESCRIPTION="simple to use, blazing fast and thoroughly tested websocket client, server and console for node.js, up-to-date against RFC-6455"
-HOMEPAGE="https://github.com/einaros/ws"
+HOMEPAGE="http://www.npmjs.com/package/ws"
 
+LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="~amd64"
 IUSE=""
 
 DEPEND="
-	>=dev-node/commander-2.1.0
-	>=dev-node/nan-1.0.0
 	>=dev-node/options-0.0.6
-	>=dev-node/tinycolor-0.0.1
+	>=dev-node/ultron-1.0.2
 "
 RDEPEND="${DEPEND}"
 
-NPM_PKG_DIRS="
-build/Release
-"
-NPM_GYP_PKG=1
+NPM_NO_DEPS=1
 
 S="${WORKDIR}/package"
 
