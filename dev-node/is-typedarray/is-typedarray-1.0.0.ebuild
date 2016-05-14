@@ -1,11 +1,12 @@
 # Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
+# Ebuild automatically produced by node-ebuilder.
 
 EAPI=5
 
 DESCRIPTION="Detect whether or not an object is a Typed Array"
-HOMEPAGE="https://www.npmjs.com/package/is-typedarray"
+HOMEPAGE="https://github.com/hughsk/is-typedarray"
 
 LICENSE="MIT"
 SLOT="0"
@@ -15,6 +16,8 @@ IUSE=""
 DEPEND="
 "
 RDEPEND="${DEPEND}"
+
+NPM_NO_DEPS=1
 
 S="${WORKDIR}/package"
 
