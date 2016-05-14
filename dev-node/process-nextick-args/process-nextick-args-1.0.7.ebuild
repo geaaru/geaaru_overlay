@@ -1,11 +1,12 @@
 # Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
+# Ebuild automatically produced by node-ebuilder.
 
 EAPI=5
 
 DESCRIPTION="process.nextTick but always with args"
-HOMEPAGE="https://www.npmjs.com/package/process-nextick-args"
+HOMEPAGE="https://github.com/calvinmetcalf/process-nextick-args"
 
 LICENSE="MIT"
 SLOT="0"
@@ -16,9 +17,9 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
-S="${WORKDIR}/package"
-
 NPM_NO_DEPS=1
+
+S="${WORKDIR}/package"
 
 inherit npmv1
 
