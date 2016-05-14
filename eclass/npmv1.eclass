@@ -312,11 +312,19 @@ ${nodecmd}${bindir}/${binfile} \$@
             done
 
         else
-            if [[ ${#npm_pkg_mods[@]} -gt 0 ]] ; then
-                # Install package modules
-                dodir ${NPM_PACKAGEDIR}/node_modules/
 
-                cp -rf node_modules/* ${D}/${NPM_PACKAGEDIR}/node_modules/
+            if [[ ${NPM_GYP_PKG} -ne 1 ]] ; then
+                # If NPM_SYSTEM_MODULES is not present
+                # and NPM_GYP_PKG is equal to 1
+                # then doesn't install dependencies.
+
+                if [[ ${#npm_pkg_mods[@]} -gt 0 ]] ; then
+                    # Install package modules
+                    dodir ${NPM_PACKAGEDIR}/node_modules/
+
+                    cp -rf node_modules/* ${D}/${NPM_PACKAGEDIR}/node_modules/
+                fi
+
             fi
         fi
     fi # End if x"${NPM_NO_DEPS}" != x"1" ...
