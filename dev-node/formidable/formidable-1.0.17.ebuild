@@ -1,24 +1,24 @@
 # Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
+# Ebuild automatically produced by node-ebuilder.
 
 EAPI=5
 
-DESCRIPTION="A node.js module for parsing form data, especially file uploads."
-HOMEPAGE="https://www.npmjs.com/package/formidable"
+DESCRIPTION="formidable nodejs module"
+HOMEPAGE="http://www.npmjs.com/package/formidable"
 
-LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~arm"
 IUSE=""
 
-S="${WORKDIR}/node-${PF}"
-
-DEPEND=""
+DEPEND="
+"
 RDEPEND="${DEPEND}"
 
-NPM_GITHUP_MOD="felixge/node-formidable"
+NPM_NO_DEPS=1
+
+S="${WORKDIR}/package"
 
 inherit npmv1
-
 
