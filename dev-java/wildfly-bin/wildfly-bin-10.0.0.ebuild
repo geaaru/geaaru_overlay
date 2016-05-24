@@ -22,7 +22,7 @@ DEPEND=">=virtual/jdk-1.8
 	app-arch/unzip
 "
 
-S="${PN}-${MY_PV}"
+S="${PN/-bin/}-${MY_PV}"
 
 pkg_setup() {
 	ebegin "Creating jboss group and user"
