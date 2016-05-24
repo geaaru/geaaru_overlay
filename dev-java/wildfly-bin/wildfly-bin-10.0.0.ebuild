@@ -32,36 +32,40 @@ pkg_setup() {
 }
 
 src_install() {
-	INSTDIR="/opt"
+	INSTDIR="opt/${PF}"
 
-	cp -r {appclient,domain,modules,standalone} ${D}/${INSTDIR}/${PF}/
+	dodir ${INSTDIR}
+
+	for dir in appclient domain modules standalone ; do
+		cp -r ${dir} ${D}${INSTDIR}/
+	done
 
 	for f in bin/*.properties ; do
-		insinto ${INSTDIR}/${PF}/bin
+		insinto ${INSTDIR}/bin
 		doins ${f}
 	done
 
 	for f in bin/*.sh ; do
-		insinto ${INSTDIR}/${PF}/bin
+		exeinto ${INSTDIR}/bin
 	    doexe ${f}
 	done
 
 	for f in bin/*.ps1 ; do
-		insinto ${INSTDIR}/${PF}/bin
+		insinto ${INSTDIR}/bin
 		doins ${f}
 	done
 
-	dodir ${INSTDIR}/${PF}/bin/client
-	cp -r bin/client ${D}/${INSTDIR}/${PF}
+	dodir ${INSTDIR}/bin/client
+	cp -r bin/client ${D}${INSTDIR}
 
 	for f in jboss-modules.jar README.txt ; do
-		insinto ${INSTDIR}/${PF}/
+		insinto ${INSTDIR}/
 		doins ${f}
 	done
 
 	dodoc LICENSE.txt copyright.txt
 
-	use doc && cp -r ${S}/docs/ ${D}/${INSTDIR}/${PF}/
+	use doc && cp -r docs/ ${D}/${INSTDIR}/
 
 	dodir /var/log/wildfly
 
