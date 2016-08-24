@@ -79,15 +79,15 @@ src_prepare() {
 	use pam || rm -r src/modules/rlm_pam
 	use python || rm -r src/modules/rlm_python
 	# Do not install ruby rlm module, bug #483108
-	rm -r src/modules/rlm_ruby
+	rm -r src/modules/rlm_ruby || die
 
 	# these are all things we don't have in portage/I don't want to deal
 	# with myself
-	rm -r src/modules/rlm_eap/types/rlm_eap_tnc # requires TNCS library
-	rm -r src/modules/rlm_eap/types/rlm_eap_ikev2 # requires libeap-ikev2
-	rm -r src/modules/rlm_opendirectory # requires some membership.h
+	rm -r src/modules/rlm_eap/types/rlm_eap_tnc || die # requires TNCS library
+	rm -r src/modules/rlm_eap/types/rlm_eap_ikev2 || die  # requires libeap-ikev2
+	rm -r src/modules/rlm_opendirectory || die # requires some membership.h
 
-	rm -r src/modules/rlm_sql/drivers/rlm_sql_{db2,freetds}
+	rm -r src/modules/rlm_sql/drivers/rlm_sql_{db2,freetds} || die
 
 	if ! use redis ; then
 		rm -r src/modules/rlm_redis{,who} # requires redis
