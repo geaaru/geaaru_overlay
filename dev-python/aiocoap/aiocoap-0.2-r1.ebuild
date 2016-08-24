@@ -12,8 +12,8 @@ HOMEPAGE="https://pypi.python.org/pypi/aiocoap"
 
 EGIT_PROJECT="aiocoap"
 EGIT_REPO_URI="https://github.com/chrysn/aiocoap.git"
-# Commit of Aug 8, 2016
-EGIT_COMMIT="a61677e"
+# Commit of Aug 23 (geaaru), 2016
+EGIT_COMMIT="c988e8b"
 
 LICENSE="MIT"
 SLOT="0"
