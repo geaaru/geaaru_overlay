@@ -50,7 +50,9 @@ RDEPEND="!net-dialup/cistronradius
 	odbc? ( dev-db/unixODBC )
 	iodbc? ( dev-db/libiodbc )
 	redis? ( dev-db/redis )
-	oracle? ( dev-db/oracle-instantclient-basic )"
+	oracle? ( dev-db/oracle-instantclient-basic )
+	cassandra? ( dev-db/cpp-driver )
+"
 DEPEND="${RDEPEND}"
 
 S="${WORKDIR}/${MY_P}"
