@@ -19,7 +19,7 @@ HOMEPAGE="http://www.freeradius.org/"
 
 KEYWORDS="~amd64 ~arm"
 LICENSE="GPL-2"
-SLOT="0"
+SLOT="3.1"
 
 IUSE="
 	bindist debug firebird iodbc kerberos ldap mysql odbc oracle pam pcap
@@ -30,6 +30,7 @@ REQUIRED_USE="bindist? ( !firebird )"
 
 RDEPEND="!net-dialup/cistronradius
 	!net-dialup/gnuradius
+	!net-dialup/freeradius[0]
 	sys-devel/libtool
 	dev-lang/perl
 	sys-libs/gdbm
