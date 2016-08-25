@@ -14,14 +14,11 @@ RESTRICT="nomirror"
 LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
+IUSE="libressl"
 
 RDEPEND="
 	dev-libs/libuv
-	dev-libs/openssl
+	!libressl? ( dev-libs/openssl:0= )
+	libressl? ( dev-libs/libressl:0= )
 "
-DEPEND="
-	dev-util/cmake
-${RDEPEND}
-"
-
+DEPEND="${RDEPEND}"
