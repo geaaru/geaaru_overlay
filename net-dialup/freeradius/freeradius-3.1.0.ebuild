@@ -30,7 +30,7 @@ REQUIRED_USE="bindist? ( !firebird )"
 
 RDEPEND="!net-dialup/cistronradius
 	!net-dialup/gnuradius
-	!net-dialup/freeradius[0]
+	!net-dialup/freeradius:0
 	sys-devel/libtool
 	dev-lang/perl
 	sys-libs/gdbm
