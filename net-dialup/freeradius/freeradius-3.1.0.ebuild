@@ -85,8 +85,6 @@ src_prepare() {
 
 	# these are all things we don't have in portage/I don't want to deal
 	# with myself
-	rm -r src/modules/rlm_eap/types/rlm_eap_tnc # requires TNCS library
-	rm -r src/modules/rlm_eap/types/rlm_eap_ikev2 # requires libeap-ikev2
 	rm -r src/modules/rlm_opendirectory # requires some membership.h
 
 	rm -r src/modules/rlm_sql/drivers/rlm_sql_{db2,freetds}
