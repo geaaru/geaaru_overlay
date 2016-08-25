@@ -4,25 +4,26 @@
 
 EAPI=5
 
-PYTHON_COMPAT=( python2_7 )
-inherit autotools eutils pam python-any-r1 user systemd
+PYTHON_COMPAT=( python2_7 python3_4 python3_5)
+inherit autotools eutils pam python-any-r1 user systemd git-2
 
 MY_P="${PN}-server-${PV}"
 
+EGIT_REPO_URI="https://github.com/FreeRADIUS/freeradius-server.git"
+EGIT_PROJECT="freeradius-server"
+EGIT_BRANCH="v3.1.x"
+EGIT_COMMIT="6b460d2"
+
 DESCRIPTION="Highly configurable free RADIUS server"
-SRC_URI="
-	ftp://ftp.freeradius.org/pub/radius/${MY_P}.tar.gz
-	ftp://ftp.freeradius.org/pub/radius/old/${MY_P}.tar.gz
-"
 HOMEPAGE="http://www.freeradius.org/"
 
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~arm"
 LICENSE="GPL-2"
 SLOT="0"
 
 IUSE="
 	bindist debug firebird iodbc kerberos ldap mysql odbc oracle pam pcap
-	postgres python readline sqlite ssl redis
+	postgres python readline sqlite ssl redis cassandra
 "
 
 REQUIRED_USE="bindist? ( !firebird )"
@@ -77,15 +78,15 @@ src_prepare() {
 	use pam || rm -r src/modules/rlm_pam
 	use python || rm -r src/modules/rlm_python
 	# Do not install ruby rlm module, bug #483108
-	rm -r src/modules/rlm_ruby || die
+	rm -r src/modules/rlm_ruby
 
 	# these are all things we don't have in portage/I don't want to deal
 	# with myself
-	rm -r src/modules/rlm_eap/types/rlm_eap_tnc || die # requires TNCS library
-	rm -r src/modules/rlm_eap/types/rlm_eap_ikev2 || die  # requires libeap-ikev2
-	rm -r src/modules/rlm_opendirectory || die # requires some membership.h
+	rm -r src/modules/rlm_eap/types/rlm_eap_tnc # requires TNCS library
+	rm -r src/modules/rlm_eap/types/rlm_eap_ikev2 # requires libeap-ikev2
+	rm -r src/modules/rlm_opendirectory # requires some membership.h
 
-	rm -r src/modules/rlm_sql/drivers/rlm_sql_{db2,freetds} || die
+	rm -r src/modules/rlm_sql/drivers/rlm_sql_{db2,freetds}
 
 	if ! use redis ; then
 		rm -r src/modules/rlm_redis{,who} # requires redis
@@ -134,6 +135,7 @@ src_prepare() {
 	usesqldriver odbc unixodbc
 	usesqldriver oracle
 	usesqldriver sqlite
+	usesqldriver cassandra
 
 	epatch_user
 
