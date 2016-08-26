@@ -54,7 +54,7 @@ src_install() {
 if [ -z "\${CQLSH_NO_BUNDLED}" ]; then
 	CQLSH_NO_BUNDLED=TRUE
 fi
-${EROOT}usr/$(get_libdir)/python2.7/site-packages/cqlsh/cqlsh.py
+${EROOT}usr/$(get_libdir)/python2.7/site-packages/cqlsh/cqlsh.py \$@
 exit \$?" > ${D}/usr/bin/cqlsh
 
 	fperms 0755 /usr/bin/cqlsh
