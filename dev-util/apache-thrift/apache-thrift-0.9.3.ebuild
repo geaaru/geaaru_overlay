@@ -18,11 +18,10 @@ RESTRICT="mirror"
 LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
-IUSE="+pic gnu-ld +cpp +libevent +zlib qt4 qt5 +c_glib csharp erlang +python
+IUSE="+pic gnu-ld +cpp +libevent +zlib qt5 +c_glib csharp erlang +python
 perl php php_extension ruby haskell go nodejs dart haxe zlib lua test static-libs libressl"
 # Temporary disable java support. I need fix it.
 #IUSE="+java"
-
 #	java? (
 #		dev-java/ant-ivy:=
 #		dev-java/commons-lang:=
@@ -37,7 +36,6 @@ DEPEND="
 	cpp? (
 		zlib? ( sys-libs/zlib )
 		libevent? ( dev-libs/libevent )
-		qt4? ( dev-qt/qtcore:4 dev-qt/qtnetwork:4 )
 		qt5? ( dev-qt/qtcore:5 dev-qt/qtnetwork:5 )
 	)
 	csharp? ( >=dev-lang/mono-1.2.4 )
@@ -73,6 +71,7 @@ src_configure() {
 	# or byzantine runtime behaviour.
 	filter-flags -fwhole-program -fwhopr
 
+	# Disable qt4. I use only qt5.
 	#local mycmakeargs+=(
 	#	$(use_with java) \
 	econf \
@@ -81,12 +80,12 @@ src_configure() {
 		--without-d \
 		--with-boost \
 		--without-java \
+		--without-qt4 \
 		$(use_with pic) \
 		$(use_with gnu-ld) \
 		$(use_with cpp) \
 		$(use_with libevent) \
 		$(use_with zlib) \
-		$(use_with qt4) \
 		$(use_with qt5) \
 		$(use_with c_glib) \
 		$(use_with csharp) \
