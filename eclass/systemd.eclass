@@ -15,13 +15,12 @@
 # inherit systemd
 #
 # src_configure() {
-#	local myeconfargs=(
+#	local myconf=(
 #		--enable-foo
-#		--disable-bar
-#		"$(systemd_with_unitdir)"
+#		--with-systemdsystemunitdir="$(systemd_get_systemunitdir)"
 #	)
 #
-#	econf "${myeconfargs[@]}"
+#	econf "${myconf[@]}"
 # }
 # @CODE
 
@@ -132,7 +131,7 @@ systemd_dounit() {
 	debug-print-function ${FUNCNAME} "${@}"
 
 	(
-		insinto "$(_systemd_get_unitdir)"
+		insinto "$(_systemd_get_systemunitdir)"
 		doins "${@}"
 	)
 }
@@ -146,7 +145,7 @@ systemd_newunit() {
 	debug-print-function ${FUNCNAME} "${@}"
 
 	(
-		insinto "$(_systemd_get_unitdir)"
+		insinto "$(_systemd_get_systemunitdir)"
 		newins "${@}"
 	)
 }
@@ -258,7 +257,7 @@ systemd_enable_service() {
 
 	local target=${1}
 	local service=${2}
-	local ud=$(_systemd_get_unitdir)
+	local ud=$(_systemd_get_systemunitdir)
 	local destname=${service##*/}
 
 	dodir "${ud}"/"${target}".wants && \
@@ -292,7 +291,7 @@ systemd_enable_ntpunit() {
 		die "The .list suffix is appended implicitly to ntpunit.d name."
 	fi
 
-	local unitdir=$(systemd_get_unitdir)
+	local unitdir=$(systemd_get_systemunitdir)
 	local s
 	for s in "${services[@]}"; do
 		if [[ ! -f "${D}${unitdir}/${s}" ]]; then
@@ -315,6 +314,9 @@ systemd_enable_ntpunit() {
 # @FUNCTION: systemd_with_unitdir
 # @USAGE: [<configure-option-name>]
 # @DESCRIPTION:
+# Note: deprecated and banned in EAPI 6. Please use full --with-...=
+# parameter for improved ebuild readability.
+
 # Output '--with-systemdsystemunitdir' as expected by systemd-aware configure
 # scripts. This function always succeeds. Its output may be quoted in order
 # to preserve whitespace in paths. systemd_to_myeconfargs() is preferred over
@@ -325,6 +327,8 @@ systemd_enable_ntpunit() {
 # argument to this function (`$(systemd_with_unitdir systemdunitdir)'). Please
 # remember to report a bug upstream as well.
 systemd_with_unitdir() {
+	[[ ${EAPI:-0} != [012345] ]] && die "${FUNCNAME} is banned in EAPI ${EAPI}, use --with-${1:-systemdsystemunitdir}=\"\$(systemd_get_systemunitdir)\" instead"
+
 	debug-print-function ${FUNCNAME} "${@}"
 	local optname=${1:-systemdsystemunitdir}
 
@@ -333,36 +337,24 @@ systemd_with_unitdir() {
 
 # @FUNCTION: systemd_with_utildir
 # @DESCRIPTION:
+# Note: deprecated and banned in EAPI 6. Please use full --with-...=
+# parameter for improved ebuild readability.
+#
 # Output '--with-systemdsystemutildir' as used by some packages to install
 # systemd helpers. This function always succeeds. Its output may be quoted
 # in order to preserve whitespace in paths.
 systemd_with_utildir() {
+	[[ ${EAPI:-0} != [012345] ]] && die "${FUNCNAME} is banned in EAPI ${EAPI}, use --with-systemdutildir=\"\$(systemd_get_utildir)\" instead"
+
 	debug-print-function ${FUNCNAME} "${@}"
 
 	echo --with-systemdutildir="$(systemd_get_utildir)"
 }
 
-# @FUNCTION: systemd_to_myeconfargs
-# @DESCRIPTION:
-# Add '--with-systemdsystemunitdir' as expected by systemd-aware configure
-# scripts to the myeconfargs variable used by autotools-utils eclass. Handles
-# quoting automatically.
-systemd_to_myeconfargs() {
-	debug-print-function ${FUNCNAME} "${@}"
-
-	eqawarn 'systemd_to_myeconfargs() is deprecated and will be removed on 2013-10-11.'
-	eqawarn 'Please use $(systemd_with_unitdir) instead.'
-
-	myeconfargs=(
-		"${myeconfargs[@]}"
-		--with-systemdsystemunitdir="$(systemd_get_unitdir)"
-	)
-}
-
 # @FUNCTION: systemd_update_catalog
 # @DESCRIPTION:
 # Update the journald catalog. This needs to be called after installing
-# or removing catalog files.
+# or removing catalog files. This must be called in pkg_post* phases.
 #
 # If systemd is not installed, no operation will be done. The catalog
 # will be (re)built once systemd is installed.
@@ -370,6 +362,9 @@ systemd_to_myeconfargs() {
 # See: http://www.freedesktop.org/wiki/Software/systemd/catalog
 systemd_update_catalog() {
 	debug-print-function ${FUNCNAME} "${@}"
+
+	[[ ${EBUILD_PHASE} == post* ]] \
+		|| die "${FUNCNAME} disallowed during ${EBUILD_PHASE_FUNC:-${EBUILD_PHASE}}"
 
 	# Make sure to work on the correct system.
 
