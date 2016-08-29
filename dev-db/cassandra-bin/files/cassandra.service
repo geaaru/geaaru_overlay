@@ -1,0 +1,16 @@
+[Unit]
+Description=Cassandra
+After=network.target
+
+[Service]
+Type=forking
+PIDFile=/var/lib/cassandra/cassandra.pid
+User=cassandra
+Group=cassandra
+ExecStart=/usr/bin/cassandra -p /var/lib/cassandra/cassandra.pid
+StandardOutput=journal
+StandardError=journal
+LimitNOFILE=infinity
+
+[Install]
+WantedBy=multi-user.target
