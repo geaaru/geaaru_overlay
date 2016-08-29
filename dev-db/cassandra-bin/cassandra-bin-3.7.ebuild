@@ -24,10 +24,10 @@ RDEPEND="${DEPEND}
 S="${WORKDIR}/apache-cassandra-${PV}"
 INSTALL_DIR="/opt/cassandra"
 
-#pkg_setup() {
-#	enewgroup cassandra
-#	enewuser cassandra -1 /bin/bash ${INSTALL_DIR} cassandra
-#}
+pkg_setup() {
+	enewgroup cassandra
+	enewuser cassandra -1 /bin/bash ${INSTALL_DIR} cassandra
+}
 
 src_prepare() {
 	cd "${S}"
