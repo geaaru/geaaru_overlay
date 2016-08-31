@@ -5,12 +5,18 @@ After=network.target
 [Service]
 Type=forking
 PIDFile=/var/lib/cassandra/cassandra.pid
+Environment=CASSANDRA_CONF=/etc/cassandra/
+Environment=CASSANDRA_HOME=/opt/cassandra/
+# Avoid ldconfig for found jemalloc library
+Environment=CASSANDRA_LIBJEMALLOC=/usr/lib64/libjemalloc.so
 User=cassandra
 Group=cassandra
 ExecStart=/usr/bin/cassandra -p /var/lib/cassandra/cassandra.pid
 StandardOutput=journal
 StandardError=journal
 LimitNOFILE=infinity
+# It's java!
+TimeoutStartSec=3min
 
 [Install]
 WantedBy=multi-user.target

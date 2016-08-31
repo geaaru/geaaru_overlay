@@ -17,6 +17,7 @@ IUSE="+systemd"
 
 DEPEND="
 	>=virtual/jdk-1.8
+	dev-libs/jemalloc
 "
 RDEPEND="${DEPEND}
 "
@@ -37,7 +38,8 @@ src_prepare() {
 	# Remove cqlsh staff (present of csqsh package)
 	rm -rf pylib bin/cqlsh*
 
-	# Temporary remove sigar library. I will investigate if it is needed
+	# Copy libsigar-amd64-linux.so to home
+	cp -f "${S}"/lib/sigar-bin/libsigar-amd64-linux.so "${S}"
 	rm -rf lib/sigar-bin/
 }
 
@@ -45,9 +47,15 @@ src_install() {
 	insinto ${INSTALL_DIR}
 
 	sed -e "s|cassandra_storagedir=\"\$CASSANDRA_HOME/data\"|cassandra_storagedir=\"/var/lib/cassandra/\"|g" \
-		-i bin/cassandra.in.sh || die
+		-i bin/cassandra.in.sh || die "Error on initialize bin/cassandra.in.sh"
+	sed -e 's:cassandra.logdir=.*:cassandra.logdir=/var/log/cassandra/":' \
+		-i bin/cassandra || die "Error on fix bin/cassandra"
 
 	doins -r bin conf interface lib tools
+	dodir ${INSTALL_DIR}/lib/sigar-bin
+	insinto ${INSTALL_DIR}/lib/sigar-bin
+	# Check if I can avoid this.
+	doins libsigar-amd64-linux.so
 
 	for i in bin/* ; do
 		if [[ $i == *.in.sh ]]; then
