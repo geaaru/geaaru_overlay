@@ -15,6 +15,7 @@ Group=cassandra
 ExecStart=/usr/bin/cassandra -p /var/lib/cassandra/cassandra.pid
 StandardOutput=journal
 StandardError=journal
+CapabilityBoundingSet=CAP_NET_BIND_SERVICE CAP_IPC_LOCK
 LimitNOFILE=infinity
 # It's java!
 TimeoutStartSec=3min

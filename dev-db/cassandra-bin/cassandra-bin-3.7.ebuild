@@ -54,7 +54,9 @@ src_install() {
 		-i bin/cassandra || die "Error on fix bin/cassandra"
 	sed -e 's:\$NUMACTL\ \"\$JAVA\":\$NUMACTL\ \"\$JAVA\" $JAVA_OPTS:g' \
 		-i bin/cassandra || die "Error on fix bin/cassandra"
+	sed -e 's:\${CASSANDRA_HOME}/logs/:/var/log/cassandra/:g' -i conf/cassandra-env.sh
 
+	# Temporary copy conf directory. In the future I can remove it.
 	doins -r bin conf interface lib tools
 	dodir ${INSTALL_DIR}/lib/sigar-bin
 	insinto ${INSTALL_DIR}/lib/sigar-bin
@@ -71,6 +73,9 @@ src_install() {
 
 	insinto /etc/cassandra
 	doins conf/*.{properties,yaml,xml} || die "doins failed"
+	# Temporary before a more clean startup script
+	doins conf/cassandra-env.sh || die "Error on copy cassandra-env.sh"
+	doins conf/jvm.options || die "Error on copy jvm.options"
 
 	if use systemd; then
 		systemd_dounit "${FILESDIR}/cassandra.service"
@@ -84,8 +89,10 @@ src_install() {
 	# Runtime dirs needed
 	keepdir /var/lib/cassandra/
 	keepdir /var/log/cassandra/ /var/lib/cassandra/commitlog /var/lib/cassandra/data || die "keepdir failed"
+
 	fowners -R cassandra:cassandra ${INSTALL_DIR}
 	fowners -R cassandra:cassandra /var/lib/cassandra
+	fowners -R cassandra:cassandra /var/log/cassandra
 
 
 }
