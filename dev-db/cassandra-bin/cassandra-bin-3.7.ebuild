@@ -57,10 +57,6 @@ src_install() {
 		make_wrapper "$(basename ${i})" "${INSTALL_DIR}/${i}"
 	done
 
-	keepdir /var/lib/cassandra/
-	fowners -R cassandra:cassandra ${INSTALL_DIR}
-	fowners -R cassandra:cassandra /var/lib/cassandra
-
 	insinto /etc/cassandra
 	doins conf/*.{properties,yaml} || die "doins failed"
 
@@ -74,7 +70,11 @@ src_install() {
 	doenvd "${T}/25cassandra"
 
 	# Runtime dirs needed
+	keepdir /var/lib/cassandra/
 	keepdir /var/log/cassandra/ /var/lib/cassandra/commitlog /var/lib/cassandra/data || die "keepdir failed"
+	fowners -R cassandra:cassandra ${INSTALL_DIR}
+	fowners -R cassandra:cassandra /var/lib/cassandra
+
 
 }
 
