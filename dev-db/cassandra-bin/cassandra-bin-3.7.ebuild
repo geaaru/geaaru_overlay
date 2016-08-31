@@ -48,7 +48,11 @@ src_install() {
 
 	sed -e "s|cassandra_storagedir=\"\$CASSANDRA_HOME/data\"|cassandra_storagedir=\"/var/lib/cassandra/\"|g" \
 		-i bin/cassandra.in.sh || die "Error on initialize bin/cassandra.in.sh"
-	sed -e 's:cassandra.logdir=.*:cassandra.logdir=/var/log/cassandra/":' \
+	sed -e 's|JAVA_OPTS:|JAVA_OPTS |g' \
+		-i bin/cassandra.in.sh || die "Error on initialize bin/cassandra.in.sh"
+	sed -e 's:cassandra.logdir=.*:cassandra.logdir=/var/log/cassandra":' \
+		-i bin/cassandra || die "Error on fix bin/cassandra"
+	sed -e 's:\$NUMACTL\ \"\$JAVA\":\$NUMACTL\ \"\$JAVA\" $JAVA_OPTS:g' \
 		-i bin/cassandra || die "Error on fix bin/cassandra"
 
 	doins -r bin conf interface lib tools
@@ -66,7 +70,7 @@ src_install() {
 	done
 
 	insinto /etc/cassandra
-	doins conf/*.{properties,yaml} || die "doins failed"
+	doins conf/*.{properties,yaml,xml} || die "doins failed"
 
 	if use systemd; then
 		systemd_dounit "${FILESDIR}/cassandra.service"
