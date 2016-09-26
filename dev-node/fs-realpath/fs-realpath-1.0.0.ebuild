@@ -1,0 +1,26 @@
+# Copyright 1999-2016 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Id$
+# Ebuild automatically produced by node-ebuilder.
+
+EAPI=5
+
+DESCRIPTION="Use node's fs.realpath, but fall back to the JS implementation if the native one fails"
+HOMEPAGE="https://github.com/isaacs/fs.realpath#readme"
+
+LICENSE="ISC"
+SLOT="0"
+KEYWORDS="~amd64 ~arm"
+IUSE=""
+
+DEPEND="
+"
+RDEPEND="${DEPEND}"
+
+NPM_PKG_NAME="fs.realpath"
+NPM_NO_DEPS=1
+
+S="${WORKDIR}/package"
+
+inherit npmv1
+
