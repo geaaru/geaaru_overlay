@@ -7,7 +7,7 @@ EAPI=5
 
 MY_V=${PV/_rc/-rc}
 
-DESCRIPTION="A library to create readable "multipart/form-data" streams. Can be used to submit forms and file uploads to other web applications."
+DESCRIPTION="A library to create readable 'multipart/form-data' streams. Can be used to submit forms and file uploads to other web applications."
 HOMEPAGE="https://github.com/form-data/form-data#readme"
 SRC_URI="http://registry.npmjs.org/${PN}/-/${PN}-${MY_V}.tgz"
 
