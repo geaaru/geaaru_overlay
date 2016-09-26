@@ -17,7 +17,8 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 NPM_PKG_DIRS="
-types
+build
+types.json
 "
 NPM_NO_DEPS=1
 
