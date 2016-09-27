@@ -17,6 +17,13 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 NPM_NO_DEPS=1
+NPM_BINS="
+uglifyjs
+"
+
+NPM_PKG_DIRS="
+tools
+"
 
 S="${WORKDIR}/package"
 
