@@ -64,7 +64,7 @@ _npmv1_set_metadata() {
     fi
     if [[ -z "${SRC_URI}" ]] ; then
         if [[ -n "${NPM_GITHUP_MOD}" ]] ; then
-            SRC_URI="https://github.com/${NPM_GITHUP_MOD}/archive/v${PV}.zip"
+            SRC_URI="https://github.com/${NPM_GITHUP_MOD}/archive/v${PV}.zip -> ${PF}.zip"
         else
             SRC_URI="http://registry.npmjs.org/${NPM_PKG_NAME}/-/${NPM_PKG_NAME}-${PV}.tgz"
         fi
