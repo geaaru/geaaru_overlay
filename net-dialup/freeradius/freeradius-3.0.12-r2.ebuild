@@ -1,13 +1,11 @@
-# Copyright 1999-2014 Gentoo Foundation
+# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-dialup/freeradius/freeradius-3.0.3.ebuild,v 1.3 2014/12/28 16:14:40 titanofold Exp $
+# $Id$
 
-EAPI=5
+EAPI=6
 
 PYTHON_COMPAT=( python2_7 )
-inherit autotools eutils pam python-any-r1 user systemd
-
-PATCHSET=4
+inherit autotools eutils pam python-any-r1 systemd user
 
 MY_P="${PN}-server-${PV}"
 
@@ -23,28 +21,26 @@ LICENSE="GPL-2"
 SLOT="0"
 
 IUSE="
-	bindist debug firebird iodbc kerberos ldap mysql odbc oracle pam pcap
+	debug firebird iodbc kerberos ldap mysql odbc oracle pam pcap
 	postgres python readline sqlite ssl redis
 "
-
-REQUIRED_USE="bindist? ( !firebird )"
+RESTRICT="test firebird? ( bindist )"
 
 RDEPEND="!net-dialup/cistronradius
-	!net-dialup/gnuradius
 	!net-dialup/freeradius:3.1
+	!net-dialup/gnuradius
 	sys-devel/libtool
-	dev-lang/perl
+	dev-lang/perl:=
 	sys-libs/gdbm
-	net-libs/libpcap
 	sys-libs/talloc
 	python? ( ${PYTHON_DEPS} )
-	readline? ( sys-libs/readline )
+	readline? ( sys-libs/readline:0= )
 	pcap? ( net-libs/libpcap )
 	mysql? ( virtual/mysql )
-	postgres? ( dev-db/postgresql )
+	postgres? ( dev-db/postgresql:= )
 	firebird? ( dev-db/firebird )
 	pam? ( virtual/pam )
-	ssl? ( dev-libs/openssl )
+	ssl? ( dev-libs/openssl:0= )
 	ldap? ( net-nds/openldap )
 	kerberos? ( virtual/krb5 )
 	sqlite? ( dev-db/sqlite:3 )
@@ -55,8 +51,6 @@ RDEPEND="!net-dialup/cistronradius
 DEPEND="${RDEPEND}"
 
 S="${WORKDIR}/${MY_P}"
-
-RESTRICT="test"
 
 pkg_setup() {
 	enewgroup radius
@@ -74,25 +68,24 @@ src_prepare() {
 	# automagic dependencies, we just remove all the modules that we're
 	# not interested in using.
 
-	use ssl || rm -r src/modules/rlm_eap/types/rlm_eap_{tls,ttls,peap}
-	use ldap || rm -r src/modules/rlm_ldap
-	use kerberos || rm -r src/modules/rlm_krb5
-	use pam || rm -r src/modules/rlm_pam
-	use python || rm -r src/modules/rlm_python
+	use ssl || { rm -r src/modules/rlm_eap/types/rlm_eap_{tls,ttls,peap} || die ; }
+	use ldap || { rm -r src/modules/rlm_ldap || die ; }
+	use kerberos || { rm -r src/modules/rlm_krb5 || die ; }
+	use pam || { rm -r src/modules/rlm_pam || die ; }
+	use python || { rm -r src/modules/rlm_python || die ; }
 	# Do not install ruby rlm module, bug #483108
-	rm -r src/modules/rlm_ruby
+	rm -r src/modules/rlm_ruby || die
 
 	# these are all things we don't have in portage/I don't want to deal
 	# with myself
-	rm -r src/modules/rlm_eap/types/rlm_eap_tnc # requires TNCS library
-	rm -r src/modules/rlm_eap/types/rlm_eap_ikev2 # requires libeap-ikev2
-	rm -r src/modules/rlm_opendirectory # requires some membership.h
-
-	rm -r src/modules/rlm_sql/drivers/rlm_sql_{db2,freetds}
+	rm -r src/modules/rlm_eap/types/rlm_eap_tnc || die # requires TNCS library
+	rm -r src/modules/rlm_eap/types/rlm_eap_ikev2 || die # requires libeap-ikev2
+	rm -r src/modules/rlm_opendirectory || die # requires some membership.h
 
 	if ! use redis ; then
 		rm -r src/modules/rlm_redis{,who} # requires redis
 	fi
+	rm -r src/modules/rlm_sql/drivers/rlm_sql_{db2,freetds} || die
 
 	# sql drivers that are not part of experimental are loaded from a
 	# file, so we have to remove them from the file itself when we
@@ -108,6 +101,8 @@ src_prepare() {
 	}
 
 	sed -i \
+		-e 's:^#\tuser = :\tuser = :g' \
+		-e 's:^#\tgroup = :\tgroup = :g' \
 		-e 's:/var/run/radiusd:/run/radiusd:g' \
 		-e '/^run_dir/s:${localstatedir}::g' \
 		raddb/radiusd.conf.in || die
@@ -138,12 +133,7 @@ src_prepare() {
 	usesqldriver oracle
 	usesqldriver sqlite
 
-	# Dynamic clients patch
-	epatch "${FILESDIR}"/freeradius-3.0.8_3ed8cadfd3033cea67769454415aca65469ea5c5.patch
-	# Patch to bypass empty strings in rlm_sqlippool
-	epatch "${FILESDIR}"/freeradius-3.0.8_speedup_rlm_sqlippool_bfb0cad.patch
-	# Patch remove mandatory parameters from rlm_sqlippool
-	epatch "${FILESDIR}"/freeradius-3.0.8_sqlippool_mandatory_params.patch
+	default
 
 	epatch_user
 
@@ -153,7 +143,7 @@ src_prepare() {
 src_configure() {
 	# fix bug #77613
 	if has_version app-crypt/heimdal; then
-		myconf="${myconf} --enable-heimdal-krb5"
+		myconf+=( --enable-heimdal-krb5 )
 	fi
 
 	use readline || export ac_cv_lib_readline=no
@@ -178,7 +168,7 @@ src_configure() {
 		$(use_enable debug developer) \
 		$(use_with ldap edir) \
 		$(use_with ssl openssl) \
-		${myconf}
+		${myconf[@]}
 }
 
 src_compile() {
@@ -198,7 +188,7 @@ src_install() {
 	diropts
 
 	# verbose, do not install certificates
-	emake -j1 \
+	emake \
 		Q='' ECHO=true \
 		LOCAL_CERT_PRODUCTS='' \
 		R="${D}" \
@@ -210,13 +200,15 @@ src_install() {
 
 	dodoc CREDITS
 
-	rm "${D}/usr/sbin/rc.radiusd"
+	rm "${D}/usr/sbin/rc.radiusd" || die
 
 	newinitd "${FILESDIR}/radius.init-r3" radiusd
-	newconfd "${FILESDIR}/radius.conf-r3" radiusd
+	newconfd "${FILESDIR}/radius.conf-r4" radiusd
 
-	# Systemd files
+	# Systemd stuff
+	systemd_newtmpfilesd "${FILESDIR}"/freeradius.tmpfiles freeradius.conf
 	systemd_dounit "${FILESDIR}"/freeradius.service
+	systemd_install_serviced "${FILESDIR}"/freeradius.service.conf
 
 	# Remove all default sites under site-enables.
 	# Administrator install all sites when configure freeradius.
@@ -225,8 +217,6 @@ src_install() {
 	# from mods-enabled directory.
 	rm ${D}/etc/raddb/mods-enabled/{cache_eap,digest,eap,mschap,ntlm_auth}
 
-	systemd_install_serviced "${FILESDIR}"/freeradius.service.conf
-
 	prune_libtool_files
 }
 
@@ -234,6 +224,8 @@ pkg_config() {
 	if use ssl; then
 		cd "${ROOT}"/etc/raddb/certs
 		./bootstrap
+
+		chown -R root:radius "${ROOT}"/etc/raddb/certs
 	fi
 }
 
