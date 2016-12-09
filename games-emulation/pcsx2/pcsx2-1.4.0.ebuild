@@ -57,7 +57,7 @@ pkg_setup() {
 }
 
 src_prepare() {
-	epatch ${FILES}/gcc5_cpudetect.diff
+	epatch ${FILESDIR}/gcc5_cpudetect.diff
 
 	cmake-utils_src_prepare
 	l10n_for_each_disabled_locale_do clean_locale
