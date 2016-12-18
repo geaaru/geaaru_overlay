@@ -14,7 +14,7 @@ SRC_URI="http://openvswitch.org/releases/${P}.tar.gz"
 
 LICENSE="Apache-2.0 GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~arm64 ~x86"
+KEYWORDS="~amd64 ~arm64 ~x86 ~arm"
 IUSE="debug modules monitor +ssl"
 
 RDEPEND="
@@ -24,6 +24,7 @@ RDEPEND="
 	)
 	ssl? ( dev-libs/openssl:0= )
 	${PYTHON_DEPS}
+	~dev-python/ovs-${PV}
 	dev-python/twisted-core
 	dev-python/twisted-conch
 	dev-python/twisted-web
@@ -90,22 +91,13 @@ src_install() {
 
 	local SCRIPT
 	for SCRIPT in ovs-{pcap,parse-backtrace,dpctl-top,l3ping,tcpundump,test,vlan-test} bugtool/ovs-bugtool; do
-		python_replicate_script utilities/"${SCRIPT}"
+		sed -e '1s|^.*$|#!/usr/bin/python|' -i utilities/"${SCRIPT}" || die
+		python_foreach_impl python_doscript utilities/"${SCRIPT}"
 	done
 
-	# monitor is statically enabled for bug 596206
-	#if use monitor ; then
-	python_install() {
-		python_domodule "${ED%/}"/usr/share/openvswitch/python/*
-		python_optimize "${ED%/}"/usr/share/ovsdbmonitor
-	}
-	python_foreach_impl python_install
-	rm -r "${ED%/}"/usr/share/openvswitch/python || die
-	#fi
+	python_foreach_impl python_optimize "${ED%/}"/usr/share/ovsdbmonitor
 
-	# not working without the brcompat_mod kernel module which did not get
-	# included in the kernel and we can't build it anymore
-	rm "${ED%/}"/usr/sbin/ovs-brcompatd "${ED%/}"/usr/share/man/man8/ovs-brcompatd.8 || die
+	rm -r "${ED%/}"/usr/share/openvswitch/python || die
 
 	keepdir /var/{lib,log}/openvswitch
 	keepdir /etc/ssl/openvswitch
