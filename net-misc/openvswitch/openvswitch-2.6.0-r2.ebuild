@@ -108,9 +108,6 @@ src_install() {
 	#if ! use monitor ; then
 	#	rm -r "${ED%/}"/usr/share/ovsdbmonitor || die
 	#fi
-	if ! use debug ; then
-		rm "${ED%/}"/usr/bin/ovs-parse-leaks || die
-	fi
 
 	newconfd "${FILESDIR}/ovsdb-server_conf2" ovsdb-server
 	newconfd "${FILESDIR}/ovs-vswitchd_conf" ovs-vswitchd
