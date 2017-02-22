@@ -5,7 +5,7 @@
 
 DESCRIPTION="OCILib opensource Library"
 HOMEPAGE="http://orclib.sourceforge.net"
-SRC_URI="http://downloads.sourceforge.net/project/orclib/OCILIB%20Sources/${PV}/${PF}-gnu.tar.gz"
+SRC_URI="https://github.com/vrogier/ocilib/releases/download/v${PV}/${PF}-gnu.tar.gz"
 
 RESTRICT="nomirror"
 
