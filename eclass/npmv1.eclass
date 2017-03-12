@@ -12,7 +12,12 @@
 # Purpose: Manage installation of nodejs application with automatic
 #          download of the modules defined on package.json file.
 
-inherit multilib
+if has "${EAPI:-0}" 5; then
+    inherit multilib
+#else
+    # POST: get_libdir is now part of EAPI.
+    # https://blogs.gentoo.org/mgorny/2015/11/13/the-ultimate-guide-to-eapi-6/
+fi
 
 # TODO:
 #  * support multi slot ebuilds
@@ -46,33 +51,36 @@ inherit multilib
 #  * NPM_GYP_PKG:        Identify if package has source to compile with node-gyp (value 1) or not (value 0).
 #                        Default value is 0
 
-NPMV1_ECLASS_VERSION="0.1.0"
+NPMV1_ECLASS_VERSION="0.2.0"
 
 _npmv1_set_metadata() {
 
-    DEPEND="${DEPEND}
-        net-libs/nodejs[npm(+)]
-    "
-    if [[ -z "${NPM_DEFAULT_OPTS}" ]] ; then
-        NPM_DEFAULT_OPTS="-E --no-optional --production"
-    fi
-    if [[ -z "${NPM_PKG_NAME}" ]] ; then
-        NPM_PKG_NAME="${PN}"
-    fi
-    if [[ -z "${NPM_PACKAGEDIR}" ]] ; then
-        NPM_PACKAGEDIR="${EROOT}usr/$(get_libdir)/node_modules/${NPM_PKG_NAME}"
-    fi
-    if [[ -z "${SRC_URI}" ]] ; then
-        if [[ -n "${NPM_GITHUP_MOD}" ]] ; then
-            SRC_URI="https://github.com/${NPM_GITHUP_MOD}/archive/v${PV}.zip -> ${PF}.zip"
-        else
-            SRC_URI="http://registry.npmjs.org/${NPM_PKG_NAME}/-/${NPM_PKG_NAME}-${PV}.tgz"
+    if has "${EAPI:-0}" 5 6; then
+
+        DEPEND="${DEPEND}
+            net-libs/nodejs[npm(+)]
+        "
+        if [[ -z "${NPM_DEFAULT_OPTS}" ]] ; then
+            NPM_DEFAULT_OPTS="-E --no-optional --production"
         fi
+        if [[ -z "${NPM_PKG_NAME}" ]] ; then
+            NPM_PKG_NAME="${PN}"
+        fi
+        if [[ -z "${SRC_URI}" ]] ; then
+            if [[ -n "${NPM_GITHUP_MOD}" ]] ; then
+                SRC_URI="https://github.com/${NPM_GITHUP_MOD}/archive/v${PV}.zip -> ${PF}.zip"
+            else
+                SRC_URI="http://registry.npmjs.org/${NPM_PKG_NAME}/-/${NPM_PKG_NAME}-${PV}.tgz"
+            fi
+        fi
+
+    else
+
+        die "EAPI ${EAPI} is not supported!"
+
     fi
 
-    if [[ -z "${NPM_GYP_BIN}" ]] ; then
-        NPM_GYP_BIN="${EROOT}usr/$(get_libdir)/node_modules/npm/bin/node-gyp-bin/node-gyp"
-    fi
+
 }
 
 _npmv1_set_metadata
@@ -97,12 +105,18 @@ npmv1_src_prepare() {
     else
         NPM_GYP_PKG=0
     fi
+
+    eapply_user
 }
 
 # @FUNCTION: npmv1_src_configure
 # @DESCRIPTION:
 # Implementation of src_compile() phase. This function is exported.
 npmv1_src_compile() {
+
+    if [[ -z "${NPM_GYP_BIN}" ]] ; then
+        NPM_GYP_BIN="${EROOT}usr/$(get_libdir)/node_modules/npm/bin/node-gyp-bin/node-gyp"
+    fi
 
     if [[ x"${NPM_NO_DEPS}" != x"1" ]] ; then
         npm ${NPM_DEFAULT_OPTS} install || die "Error on download node modules!"
@@ -125,6 +139,10 @@ npmv1_src_install() {
     local npm_root_js_files=""
     local npm_pkg_mods=""
     local npm_sys_mods=""
+
+    if [[ -z "${NPM_PACKAGEDIR}" ]] ; then
+        NPM_PACKAGEDIR="${EROOT}usr/$(get_libdir)/node_modules/${NPM_PKG_NAME}"
+    fi
 
     _npmv1_install_native_objs () {
 
