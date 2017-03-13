@@ -18,6 +18,9 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 NPM_NO_DEPS=1
+NPM_BINS="
+	which => node-which
+"
 
 S="${WORKDIR}/package"
 
