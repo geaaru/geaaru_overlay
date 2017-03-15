@@ -29,6 +29,10 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
+NPM_BINS="
+	gulp.js => gulp
+"
+
 NPM_NO_DEPS=1
 
 S="${WORKDIR}/package"
