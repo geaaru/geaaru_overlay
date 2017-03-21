@@ -1,9 +1,8 @@
 # Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Caseless object set/get/has, very useful when working with HTTP headers."
 HOMEPAGE="https://github.com/mikeal/caseless#readme"
