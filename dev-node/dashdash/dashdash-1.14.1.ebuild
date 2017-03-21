@@ -1,12 +1,11 @@
 # Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="A light, featureful and explicit option parsing library."
-HOMEPAGE="https://github.com/trentm/node-dashdash"
+HOMEPAGE="https://github.com/trentm/node-dashdash#readme"
 
 LICENSE="MIT"
 SLOT="0"
