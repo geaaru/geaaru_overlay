@@ -1,11 +1,11 @@
 # Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
+# Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
-DESCRIPTION="JSON for the ES5 era"
-HOMEPAGE="https://www.npmjs.com/package/json5"
+DESCRIPTION="JSON for the ES5 era."
+HOMEPAGE="http://json5.org/"
 
 LICENSE="MIT"
 SLOT="0"
@@ -15,6 +15,8 @@ IUSE=""
 DEPEND="
 "
 RDEPEND="${DEPEND}"
+
+NPM_NO_DEPS=1
 
 S="${WORKDIR}/package"
 
