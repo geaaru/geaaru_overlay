@@ -1,13 +1,13 @@
 # Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
-DESCRIPTION="Tiny ms conversion utility"
-HOMEPAGE="https://github.com/guille/ms.js"
+DESCRIPTION="Tiny milisecond conversion utility"
+HOMEPAGE="https://github.com/zeit/ms#readme"
 
+LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~arm"
 IUSE=""
