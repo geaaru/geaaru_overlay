@@ -1,11 +1,11 @@
 # Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
+# Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Parse, validate, manipulate, and display dates"
-HOMEPAGE="https://www.npmjs.com/package/moment"
+HOMEPAGE="http://momentjs.com"
 
 LICENSE="MIT"
 SLOT="0"
@@ -16,15 +16,9 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
-S="${WORKDIR}/package"
-
-NPM_PKG_DIRS="
-locale
-min
-src
-"
-
 NPM_NO_DEPS=1
+
+S="${WORKDIR}/package"
 
 inherit npmv1
 
