@@ -50,6 +50,8 @@ fi
 #  * NPM_GYP_BIN:        Path of node-gyp program.
 #  * NPM_GYP_PKG:        Identify if package has source to compile with node-gyp (value 1) or not (value 0).
 #                        Default value is 0
+#  * NPM_NO_MIRROR:      Boolean value that add RESTRICT="mirror" for download package from SRC_URI.
+#                        Default is True. Set to False to try to download package from gentoo mirrors.
 
 NPMV1_ECLASS_VERSION="0.2.0"
 
@@ -65,6 +67,12 @@ _npmv1_set_metadata() {
         fi
         if [[ -z "${NPM_PKG_NAME}" ]] ; then
             NPM_PKG_NAME="${PN}"
+        fi
+
+        if [[ -z "${RESTRICT}" ]] ; then
+            if [[ -z "${NPM_NO_MIRROR}" || "${NPM_NO_MIRROR}" == true  ]] ; then
+                RESTRICT="mirror"
+            fi
         fi
         if [[ -z "${SRC_URI}" ]] ; then
             if [[ -n "${NPM_GITHUP_MOD}" ]] ; then
