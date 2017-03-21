@@ -1,13 +1,13 @@
 # Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
+# Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Port of TweetNaCl cryptographic library to JavaScript"
-HOMEPAGE="https://www.npmjs.com/package/tweetnacl"
+HOMEPAGE="https://tweetnacl.js.org"
 
-LICENSE="MIT"
+LICENSE="Unlicense"
 SLOT="0"
 KEYWORDS="~amd64 ~arm"
 IUSE=""
@@ -16,9 +16,9 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
-S="${WORKDIR}/package"
-
 NPM_NO_DEPS=1
+
+S="${WORKDIR}/package"
 
 inherit npmv1
 
