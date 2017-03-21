@@ -1,9 +1,8 @@
 # Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="The ultimate javascript content-type utility."
 HOMEPAGE="https://github.com/jshttp/mime-types#readme"
@@ -14,7 +13,7 @@ KEYWORDS="~amd64 ~arm"
 IUSE=""
 
 DEPEND="
-	>=dev-node/mime-db-1.24.0
+	>=dev-node/mime-db-1.26.0
 "
 RDEPEND="${DEPEND}"
 
