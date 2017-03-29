@@ -14,9 +14,12 @@ BASE_URI="https://github.com/${PN}/${PN}"
 #commit from Thu, 02 Jun 2016
 #CONTRIB_URI="75b3ea9f72fdb083140fc63855b7677d67748376"
 #CONTRIB_P="${P}_contrib-${CONTRIB_URI:0:7}"
+CONTRIB_P="${P}_contrib-${PV}"
+CONTRIB_URI="${PV}"
+#https://github.com/opencv/opencv_contrib/archive/3.2.0.tar.gz
 
-SRC_URI="${BASE_URI}/archive/${PV}.tar.gz -> ${P}.tar.gz"
-#	contrib? ( ${BASE_URI}_contrib/archive/${CONTRIB_URI}.tar.gz -> ${CONTRIB_P}.tar.gz )"
+SRC_URI="${BASE_URI}/archive/${PV}.tar.gz -> ${P}.tar.gz
+	contrib? ( ${BASE_URI}_contrib/archive/${CONTRIB_URI}.tar.gz -> ${CONTRIB_P}.tar.gz )"
 LICENSE="BSD"
 SLOT="0/3.2" # subslot = libopencv* soname version
 KEYWORDS="~amd64 ~arm ~ppc ~ppc64 ~x86 ~amd64-linux"
