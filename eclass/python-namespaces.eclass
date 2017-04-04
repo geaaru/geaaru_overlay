@@ -14,9 +14,7 @@
 
 # Use PYTHON_NAMESPACES variable to catch namespace to handle.
 
-if [[ -z "${_PYTHON_ECLASS_INHERITED}" ]]; then
-    inherit python
-fi
+inherit python-any-r1 python-utils-r1
 
 if [[ -z "${PYTHON_NAMESPACES}" ]]; then
     die "PYTHON_NAMESPACES variable not set"
@@ -51,9 +49,14 @@ _python-namespaces_set_metadata
 unset -f _python-namespaces_set_metadata
 
 
-EXPORT_FUNCTIONS src_install pkg_postinst pkg_postrm
+EXPORT_FUNCTIONS pkg_setup src_install pkg_postinst pkg_postrm
 
 
+python-namespaces_pkg_setup() {
+
+    python-any-r1_pkg_setup
+
+}
 
 python-namespaces_src_install() {
 
@@ -67,18 +70,24 @@ python-namespaces_src_install() {
 
     python-namespaces_installation() {
 
+        local impl=${@}
         local namespace
         for namespace in ${_PYTHON_NAMESPACES}; do
-            dodir $(python_get_sitedir)/${namespace//.//} || return 1
+
+            dodir $(python_get_sitedir "${impl}")/${namespace//.//} || return 1
             echo \
 "
 import pkg_resources
 pkg_resources.declare_namespace(__name__)
-" > "${ED}$(python_get_sitedir)/${namespace//.//}/__init__.py" || return 1
+" > "${ED}$(python_get_sitedir "${impl}")/${namespace//.//}/__init__.py" || return 1
         done
     }
 
-    python-namespaces_installation
+    for i in "${PYTHON_COMPAT[@]}"; do
+        python_is_installed ${i} || die "Python ${i} is not installed"
+        python_export ${i} EPYTHON PYTHON
+        python-namespaces_installation ${i}
+    done
 
     unset -f python-namespaces_installation
 
@@ -93,13 +102,10 @@ python-namespaces_pkg_postinst() {
         die "${FUNCNAME}() can be used only in pkg_postinst() phase"
     fi
 
-    _python_check_python_pkg_setup_execution
-
     if [[ "$#" -ne 0 ]]; then
         die "${FUNCNAME}() does not accept arguments"
     fi
 
-    #python_byte-compile_modules $(for namespace in ${_PYTHON_NAMESPACES}; do echo ${namespace//.//}/__init__.py; done)
 }
 
 # @FUNCTION: python-namespaces_pkg_postrm
@@ -111,13 +117,10 @@ python-namespaces_pkg_postrm() {
         die "${FUNCNAME}() can be used only in pkg_postrm() phase"
     fi
 
-    _python_check_python_pkg_setup_execution
-
     if [[ "$#" -ne 0 ]]; then
         die "${FUNCNAME}() does not accept arguments"
     fi
 
-    #python_clean_byte-compiled_modules $(for namespace in ${_PYTHON_NAMESPACES}; do echo ${namespace//.//}/__init__.py; done)
 }
 
 # vim: ts=4 sw=4 expandtab
