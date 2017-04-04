@@ -12,12 +12,12 @@ EAPI="5"
 #
 
 USE_RUBY="ruby21"
-PYTHON_DEPEND="2:2.5"
+PYTHON_COMPAT=( python{2_7,3_4,3_5})
 
 EGIT_REPO_URI="https://gitlab.com/gitlab-org/gitlab-ci.git"
 EGIT_COMMIT="v${PV}"
 
-inherit eutils git-2 python ruby-ng versionator user
+inherit eutils git-2 python-r1 ruby-ng versionator user
 
 DESCRIPTION="Continuous integration server for GitLab"
 HOMEPAGE="https://gitlab.com/gitlab-org/gitlab-ci"
