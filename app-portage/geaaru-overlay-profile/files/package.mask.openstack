@@ -47,7 +47,6 @@ dev-python/sqlalchemy-migrate::gentoo
 dev-python/glance_store::gentoo
 dev-python/taskflow::gentoo
 
-
 dev-python/python-keystoneclient::gentoo
 dev-python/python-glanceclient::gentoo
 dev-python/python-cinderclient::gentoo
@@ -65,4 +64,11 @@ dev-python/django-compressor::gentoo
 dev-python/django-appconf::gentoo
 dev-python/django::gentoo
 
+
+# FOR LIBERTY:
+# keystone
+#
+
+# Dependency of >=python-keystoneclient-1.8.1
+dev-python/keystoneauth::gentoo
 
