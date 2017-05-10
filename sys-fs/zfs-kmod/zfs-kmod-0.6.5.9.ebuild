@@ -39,6 +39,10 @@ AUTOTOOLS_IN_SOURCE_BUILD="1"
 
 DOCS=( AUTHORS COPYRIGHT DISCLAIMER README.markdown )
 
+PATCHES=(
+	${FILESDIR}/${P}-dmu-kmap.patch
+)
+
 pkg_setup() {
 	linux-info_pkg_setup
 	CONFIG_CHECK="!DEBUG_LOCK_ALLOC
