@@ -1,8 +1,16 @@
 diff --git a/module/zfs/dmu.c b/module/zfs/dmu.c
-index 5e2a1db..2cca1ed 100644
+index 5e2a1db..9baeb01 100644
 --- a/module/zfs/dmu.c
 +++ b/module/zfs/dmu.c
-@@ -1056,6 +1056,7 @@ dmu_bio_copy(void *arg_buf, int size, struct bio *bio, size_t bio_offset)
+@@ -49,6 +49,7 @@
+ #ifdef _KERNEL
+ #include <sys/vmsystm.h>
+ #include <sys/zfs_znode.h>
++#include <linux/kmap_compat.h>
+ #endif
+ 
+ /*
+@@ -1056,6 +1057,7 @@ dmu_bio_copy(void *arg_buf, int size, struct bio *bio, size_t bio_offset)
  	char *bv_buf;
  	int tocpy, bv_len, bv_offset;
  	int offset = 0;
@@ -10,7 +18,7 @@ index 5e2a1db..2cca1ed 100644
  
  	bio_for_each_segment4(bv, bvp, bio, iter) {
  
-@@ -1080,14 +1081,15 @@ dmu_bio_copy(void *arg_buf, int size, struct bio *bio, size_t bio_offset)
+@@ -1080,14 +1082,15 @@ dmu_bio_copy(void *arg_buf, int size, struct bio *bio, size_t bio_offset)
  		tocpy = MIN(bv_len, size - offset);
  		ASSERT3S(tocpy, >=, 0);
  
