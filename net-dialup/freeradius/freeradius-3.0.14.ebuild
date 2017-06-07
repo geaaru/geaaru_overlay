@@ -135,8 +135,6 @@ src_prepare() {
 
 	default
 
-	epatch "${FILESDIR}"/freeradius-3.0.12_timestamp.patch
-
 	epatch_user
 
 	eautoreconf
