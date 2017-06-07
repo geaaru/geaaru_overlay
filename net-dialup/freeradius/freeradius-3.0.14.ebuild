@@ -4,8 +4,8 @@
 
 EAPI=6
 
-PYTHON_COMPAT=( python2_7 )
-inherit autotools eutils pam python-any-r1 systemd user
+PYTHON_COMPAT=( python3_4 )
+inherit eutils autotools pam python-any-r1 systemd user
 
 MY_P="${PN}-server-${PV}"
 
@@ -22,7 +22,7 @@ SLOT="0"
 
 IUSE="
 	debug firebird iodbc kerberos ldap mysql odbc oracle pam pcap
-	postgres python readline sqlite ssl redis
+	postgres python readline sqlite ssl redis memcache
 "
 RESTRICT="test firebird? ( bindist )"
 
@@ -47,6 +47,7 @@ RDEPEND="!net-dialup/cistronradius
 	odbc? ( dev-db/unixODBC )
 	iodbc? ( dev-db/libiodbc )
 	redis? ( dev-db/redis )
+	memcache? ( dev-libs/libmemcached )
 	oracle? ( dev-db/oracle-instantclient-basic )"
 DEPEND="${RDEPEND}"
 
@@ -135,7 +136,7 @@ src_prepare() {
 
 	default
 
-	epatch_user
+	eapply_user
 
 	eautoreconf
 }
