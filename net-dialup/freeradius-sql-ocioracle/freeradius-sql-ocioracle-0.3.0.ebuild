@@ -5,7 +5,7 @@
 EAPI=5
 
 FREERADIUS_MOD_TYPE="sql"
-FREERADIUS_VERSION="3.0.7"
+FREERADIUS_VERSION="3.0.14"
 
 SLOT="3.0"
 
@@ -18,7 +18,7 @@ HOMEPAGE="https://github.com/geaaru/rlm_sql_ocioracle"
 
 EGIT_REPO_URI="https://github.com/geaaru/rlm_sql_ocioracle.git"
 EGIT_PROJECT="rlm_sql_ocioracle"
-EGIT_COMMIT="0.2.0"
+EGIT_COMMIT="0.3.0"
 
 KEYWORDS="~amd64"
 LICENSE="GPL-2"
