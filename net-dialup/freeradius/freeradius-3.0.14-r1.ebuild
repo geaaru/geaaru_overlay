@@ -53,6 +53,10 @@ DEPEND="${RDEPEND}"
 
 S="${WORKDIR}/${MY_P}"
 
+PATCHES=(
+	${FILESDIR}/freeradius-${PV}-proxy-timestamp.patch
+)
+
 pkg_setup() {
 	enewgroup radius
 	enewuser radius -1 -1 /var/log/radius radius
