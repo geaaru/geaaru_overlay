@@ -199,7 +199,8 @@ src_install() {
 		R="${D}" \
 		install
 
-	fowners -R root:radius /etc/raddb
+	fowners -R radius:radius /etc/raddb
+	fowners -R radius:radius /var/log/radius
 
 	pamd_mimic_system radiusd auth account password session
 
