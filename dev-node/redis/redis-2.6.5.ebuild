@@ -1,9 +1,8 @@
 # Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Redis client library"
 HOMEPAGE="https://github.com/NodeRedis/node_redis"
@@ -15,8 +14,8 @@ IUSE=""
 
 DEPEND="
 	>=dev-node/double-ended-queue-2.1.0
-	>=dev-node/redis-commands-1.2.0
-	>=dev-node/redis-parser-2.0.4
+	>=dev-node/redis-commands-1.3.1
+	>=dev-node/redis-parser-2.6.0
 "
 RDEPEND="${DEPEND}"
 
