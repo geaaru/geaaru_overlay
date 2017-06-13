@@ -13,7 +13,7 @@ KEYWORDS="~amd64 ~arm"
 IUSE=""
 
 DEPEND="
-	>=dev-node/moment-2.18.0
+	>=dev-node/moment-2.18.1
 "
 RDEPEND="${DEPEND}"
 
