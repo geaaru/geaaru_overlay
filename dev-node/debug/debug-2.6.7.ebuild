@@ -13,7 +13,7 @@ KEYWORDS="~amd64 ~arm"
 IUSE=""
 
 DEPEND="
-	>=dev-node/ms-0.7.2
+	>=dev-node/ms-2.0.0
 "
 RDEPEND="${DEPEND}"
 
