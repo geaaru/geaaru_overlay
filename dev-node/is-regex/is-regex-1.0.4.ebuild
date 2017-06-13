@@ -1,9 +1,8 @@
 # Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Is this value a JS regex? Works cross-realm/iframe, and despite ES6 @@toStringTag"
 HOMEPAGE="https://github.com/ljharb/is-regex"
@@ -14,6 +13,7 @@ KEYWORDS="~amd64 ~arm"
 IUSE=""
 
 DEPEND="
+	>=dev-node/has-1.0.1
 "
 RDEPEND="${DEPEND}"
 
