@@ -114,7 +114,11 @@ npmv1_src_prepare() {
         NPM_GYP_PKG=0
     fi
 
-    eapply_user
+    if [[ ${EAPI} == 6 ]]; then
+        eapply_user
+    else
+        epatch_user
+    fi
 }
 
 # @FUNCTION: npmv1_src_configure
