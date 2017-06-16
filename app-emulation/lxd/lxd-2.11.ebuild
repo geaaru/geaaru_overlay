@@ -91,7 +91,7 @@ ERROR_NF_NAT_MASQUERADE_IPV4="NF_NAT_MASQUERADE_IPV4: needed for network command
 ERROR_NF_NAT_MASQUERADE_IPV6="NF_NAT_MASQUERADE_IPV6: needed for network commands"
 ERROR_VXLAN="VXLAN: needed for network commands"
 
-PATCHES=("${FILESDIR}/${P}-dont-go-get.patch")
+PATCHES=("${FILESDIR}/${PN}-dont-go-get.patch")
 
 # KNOWN ISSUES:
 # - Translations may not work.  I've been unsuccessful in forcing
@@ -174,8 +174,8 @@ src_install() {
 	fi
 
 	if use daemon; then
-		newinitd "${FILESDIR}"/${P}.initd lxd
-		newconfd "${FILESDIR}"/${P}.confd lxd
+		newinitd "${FILESDIR}"/${PN}.initd lxd
+		newconfd "${FILESDIR}"/${PN}.confd lxd
 
 		systemd_dounit "${FILESDIR}"/${PN}.service
 	fi
