@@ -108,7 +108,7 @@ ERROR_NF_NAT_MASQUERADE_IPV6="NF_NAT_MASQUERADE_IPV6: needed for network command
 ERROR_VXLAN="VXLAN: needed for network commands"
 
 PATCHES=(
-	"${FILESDIR}/${PN}-dont-go-get.patch"
+	"${FILESDIR}/${P}-dont-go-get.patch"
 	# See https://github.com/lxc/lxd/pull/3390
 	"${FILESDIR}/${PN}-fix-fr-po.patch"
 )
