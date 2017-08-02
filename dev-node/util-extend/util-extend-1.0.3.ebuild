@@ -4,7 +4,7 @@
 
 EAPI=6
 
-DESCRIPTION="util-extend nodejs module"
+DESCRIPTION="Node's internal object extension function"
 HOMEPAGE="https://github.com/isaacs/util-extend#readme"
 
 LICENSE="MIT"
