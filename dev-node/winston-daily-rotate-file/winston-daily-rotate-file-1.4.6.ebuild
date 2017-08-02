@@ -4,7 +4,7 @@
 
 EAPI=6
 
-DESCRIPTION="winston-daily-rotate-file nodejs module"
+DESCRIPTION="A transport for winston which logs to a rotating file each day."
 HOMEPAGE="https://github.com/winstonjs/winston-daily-rotate-file#readme"
 
 LICENSE="MIT"
