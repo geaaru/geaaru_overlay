@@ -4,7 +4,7 @@
 
 EAPI=6
 
-DESCRIPTION="shortid nodejs module"
+DESCRIPTION="Amazingly short non-sequential url-friendly unique id generator."
 HOMEPAGE="https://github.com/dylang/shortid"
 
 LICENSE="MIT"
