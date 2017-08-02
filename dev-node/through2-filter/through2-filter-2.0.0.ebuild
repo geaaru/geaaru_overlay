@@ -4,7 +4,7 @@
 
 EAPI=6
 
-DESCRIPTION="through2-filter nodejs module"
+DESCRIPTION="A through2 to create an Array.prototype.filter analog for streams."
 HOMEPAGE="https://github.com/brycebaril/through2-filter#readme"
 
 LICENSE="MIT"
