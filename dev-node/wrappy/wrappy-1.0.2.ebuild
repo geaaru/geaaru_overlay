@@ -1,9 +1,8 @@
 # Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Callback wrapping utility"
 HOMEPAGE="https://github.com/npm/wrappy"
