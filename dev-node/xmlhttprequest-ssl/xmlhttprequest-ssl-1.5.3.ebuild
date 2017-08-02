@@ -4,7 +4,7 @@
 
 EAPI=6
 
-DESCRIPTION="xmlhttprequest-ssl nodejs module"
+DESCRIPTION="XMLHttpRequest for Node"
 HOMEPAGE="https://github.com/mjwwit/node-XMLHttpRequest#readme"
 
 SLOT="0"
