@@ -4,7 +4,7 @@
 
 EAPI=6
 
-DESCRIPTION="socket.io nodejs module"
+DESCRIPTION="node.js realtime framework server"
 HOMEPAGE="https://github.com/socketio/socket.io#readme"
 
 LICENSE="MIT"
