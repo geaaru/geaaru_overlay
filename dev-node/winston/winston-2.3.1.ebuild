@@ -18,7 +18,7 @@ DEPEND="
 	>=dev-node/cycle-1.0.3
 	>=dev-node/eyes-0.1.8
 	>=dev-node/isstream-0.1.2
-	>=dev-node/stack-trace-0.0.9
+	>=dev-node/stack-trace-0.0.10
 "
 RDEPEND="${DEPEND}"
 
