@@ -1,12 +1,11 @@
 # Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Simple RFC 6838 media type parser and formatter"
-HOMEPAGE="https://github.com/jshttp/media-typer"
+HOMEPAGE="https://github.com/jshttp/media-typer#readme"
 
 LICENSE="MIT"
 SLOT="0"
