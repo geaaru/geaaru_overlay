@@ -4,7 +4,7 @@
 
 EAPI=6
 
-DESCRIPTION="sax nodejs module"
+DESCRIPTION="An evented streaming XML parser in JavaScript"
 HOMEPAGE="https://github.com/isaacs/sax-js#readme"
 
 LICENSE="ISC"
