@@ -1,12 +1,11 @@
 # Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Parse HTTP X-Forwarded-For header"
-HOMEPAGE="https://github.com/jshttp/forwarded"
+HOMEPAGE="https://github.com/jshttp/forwarded#readme"
 
 LICENSE="MIT"
 SLOT="0"
