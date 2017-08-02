@@ -14,7 +14,7 @@ IUSE=""
 
 DEPEND="
 	>=dev-node/forwarded-0.1.0
-	>=dev-node/ipaddr-js-1.3.0
+	>=dev-node/ipaddr-js-1.4.0
 "
 RDEPEND="${DEPEND}"
 
