@@ -4,7 +4,7 @@
 
 EAPI=6
 
-DESCRIPTION="websocket-stream nodejs module"
+DESCRIPTION="Use websockets with the node streams API. Works in browser and node"
 HOMEPAGE="https://github.com/maxogden/websocket-stream#readme"
 
 LICENSE="BSD-2-Clause"
