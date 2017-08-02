@@ -4,7 +4,7 @@
 
 EAPI=6
 
-DESCRIPTION="Array#isArray for older browsers"
+DESCRIPTION="isarray nodejs module"
 HOMEPAGE="https://github.com/juliangruber/isarray"
 
 LICENSE="MIT"
