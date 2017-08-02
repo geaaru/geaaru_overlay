@@ -4,7 +4,7 @@
 
 EAPI=6
 
-DESCRIPTION="to-array nodejs module"
+DESCRIPTION="Turn an array like into an array"
 HOMEPAGE="https://github.com/Raynos/to-array"
 
 SLOT="0"
