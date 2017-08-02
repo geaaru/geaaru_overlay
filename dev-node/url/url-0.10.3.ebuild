@@ -4,7 +4,7 @@
 
 EAPI=6
 
-DESCRIPTION="url nodejs module"
+DESCRIPTION="The core url packaged standalone for use with Browserify."
 HOMEPAGE="https://github.com/defunctzombie/node-url#readme"
 
 LICENSE="MIT"
