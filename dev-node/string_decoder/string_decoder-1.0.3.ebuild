@@ -4,7 +4,7 @@
 
 EAPI=6
 
-DESCRIPTION="string_decoder nodejs module"
+DESCRIPTION="The string_decoder module from Node core"
 HOMEPAGE="https://github.com/rvagg/string_decoder"
 
 LICENSE="MIT"
@@ -13,7 +13,7 @@ KEYWORDS="~amd64 ~arm"
 IUSE=""
 
 DEPEND="
-	>=dev-node/safe-buffer-5.1.0
+	>=dev-node/safe-buffer-5.1.1
 "
 RDEPEND="${DEPEND}"
 
