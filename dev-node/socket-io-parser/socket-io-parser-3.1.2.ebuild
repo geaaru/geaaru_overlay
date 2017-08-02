@@ -4,7 +4,7 @@
 
 EAPI=6
 
-DESCRIPTION="socket.io-parser nodejs module"
+DESCRIPTION="socket.io protocol parser"
 HOMEPAGE="https://github.com/Automattic/socket.io-parser#readme"
 
 LICENSE="MIT"
@@ -14,7 +14,7 @@ IUSE=""
 
 DEPEND="
 	>=dev-node/component-emitter-1.2.1
-	>=dev-node/debug-2.6.7
+	>=dev-node/debug-2.6.8
 	>=dev-node/has-binary2-1.0.2
 	>=dev-node/isarray-2.0.1
 "
