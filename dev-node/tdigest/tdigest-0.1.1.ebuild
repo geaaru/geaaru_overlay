@@ -4,7 +4,7 @@
 
 EAPI=6
 
-DESCRIPTION="tdigest nodejs module"
+DESCRIPTION="javascript implementation of Dunning's T-Digest for streaming quantile approximation"
 HOMEPAGE="https://github.com/welch/tdigest"
 
 LICENSE="MIT"
