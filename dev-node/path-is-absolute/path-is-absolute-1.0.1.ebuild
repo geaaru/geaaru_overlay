@@ -1,12 +1,11 @@
 # Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Node.js 0.12 path.isAbsolute() ponyfill"
-HOMEPAGE="https://github.com/sindresorhus/path-is-absolute"
+HOMEPAGE="https://github.com/sindresorhus/path-is-absolute#readme"
 
 LICENSE="MIT"
 SLOT="0"
