@@ -4,7 +4,7 @@
 
 EAPI=6
 
-DESCRIPTION="stream-shift nodejs module"
+DESCRIPTION="Returns the next buffer/object in a stream's readable queue"
 HOMEPAGE="https://github.com/mafintosh/stream-shift"
 
 LICENSE="MIT"
