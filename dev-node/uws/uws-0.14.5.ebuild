@@ -4,7 +4,7 @@
 
 EAPI=6
 
-DESCRIPTION="uws nodejs module"
+DESCRIPTION="Tiny WebSockets"
 HOMEPAGE="https://github.com/uWebSockets/uWebSockets"
 
 LICENSE="Zlib"
