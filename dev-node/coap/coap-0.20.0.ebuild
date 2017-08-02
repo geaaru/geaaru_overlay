@@ -13,13 +13,13 @@ KEYWORDS="~amd64 ~arm"
 IUSE=""
 
 DEPEND="
-	>=dev-node/bl-1.2.0
+	>=dev-node/bl-1.2.1
 	>=dev-node/capitalize-1.0.0
-	>=dev-node/coap-packet-0.1.13
-	>=dev-node/debug-2.6.3
+	>=dev-node/coap-packet-0.1.14
+	>=dev-node/debug-2.6.8
 	>=dev-node/fastseries-1.7.2
-	>=dev-node/lru-cache-4.0.2
-	>=dev-node/readable-stream-2.2.6
+	>=dev-node/lru-cache-4.1.1
+	>=dev-node/readable-stream-2.3.3
 "
 RDEPEND="${DEPEND}"
 
