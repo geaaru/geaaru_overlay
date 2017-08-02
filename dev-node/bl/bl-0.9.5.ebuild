@@ -4,7 +4,7 @@
 
 EAPI=6
 
-DESCRIPTION="Buffer List: collect buffers and access with a standard readable Buffer interface, streamable too!"
+DESCRIPTION="bl nodejs module"
 HOMEPAGE="https://github.com/rvagg/bl"
 
 LICENSE="MIT"
@@ -13,7 +13,7 @@ KEYWORDS="~amd64 ~arm"
 IUSE=""
 
 DEPEND="
-	>=dev-node/readable-stream-2.2.6
+	>=dev-node/readable-stream-1.0.34
 "
 RDEPEND="${DEPEND}"
 
