@@ -4,7 +4,7 @@
 
 EAPI=6
 
-DESCRIPTION="yeast nodejs module"
+DESCRIPTION="Tiny but linear growing unique id generator"
 HOMEPAGE="https://github.com/unshiftio/yeast"
 
 LICENSE="MIT"
