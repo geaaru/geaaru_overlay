@@ -4,7 +4,7 @@
 
 EAPI=6
 
-DESCRIPTION="to-absolute-glob nodejs module"
+DESCRIPTION="Make a glob pattern absolute, ensuring that negative globs and patterns with trailing slashes are correctly handled."
 HOMEPAGE="https://github.com/jonschlinkert/to-absolute-glob"
 
 LICENSE="MIT"
