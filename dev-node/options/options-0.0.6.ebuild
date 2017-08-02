@@ -1,12 +1,11 @@
 # Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="A very light-weight in-code option parsers for node.js."
-HOMEPAGE="https://github.com/einaros/options.js"
+HOMEPAGE="https://github.com/einaros/options.js#readme"
 
 SLOT="0"
 KEYWORDS="~amd64 ~arm"
