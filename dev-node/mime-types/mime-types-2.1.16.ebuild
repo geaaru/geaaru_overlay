@@ -13,7 +13,7 @@ KEYWORDS="~amd64 ~arm"
 IUSE=""
 
 DEPEND="
-	>=dev-node/mime-db-1.27.0
+	>=dev-node/mime-db-1.29.0
 "
 RDEPEND="${DEPEND}"
 
