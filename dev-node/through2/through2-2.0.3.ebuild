@@ -9,11 +9,11 @@ HOMEPAGE="https://github.com/rvagg/through2#readme"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~arm"
 IUSE=""
 
 DEPEND="
-	>=dev-node/readable-stream-2.2.3
+	>=dev-node/readable-stream-2.3.3
 	>=dev-node/xtend-4.0.1
 "
 RDEPEND="${DEPEND}"
