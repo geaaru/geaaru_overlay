@@ -4,7 +4,7 @@
 
 EAPI=6
 
-DESCRIPTION="xml2js nodejs module"
+DESCRIPTION="Simple XML to JavaScript object converter."
 HOMEPAGE="https://github.com/Leonidas-from-XIV/node-xml2js"
 
 LICENSE="MIT"
