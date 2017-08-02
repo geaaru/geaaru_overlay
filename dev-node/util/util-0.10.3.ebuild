@@ -4,7 +4,7 @@
 
 EAPI=6
 
-DESCRIPTION="util nodejs module"
+DESCRIPTION="Node.JS util module"
 HOMEPAGE="https://github.com/defunctzombie/node-util"
 
 LICENSE="MIT"
