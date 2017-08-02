@@ -1,14 +1,13 @@
 # Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
+# Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
-DESCRIPTION="A thing that is a lot like ES6 'Map', but without iterators,
-for use in environments where 'for..of' syntax and 'Map' are not available"
-HOMEPAGE="https://www.npmjs.com/package/pseudomap"
+DESCRIPTION="A thing that is a lot like ES6 Map, but without iterators, for use in environments where for..of syntax and Map are not available."
+HOMEPAGE="https://github.com/isaacs/pseudomap#readme"
 
-LICENSE="MIT"
+LICENSE="ISC"
 SLOT="0"
 KEYWORDS="~amd64 ~arm"
 IUSE=""
@@ -16,6 +15,8 @@ IUSE=""
 DEPEND="
 "
 RDEPEND="${DEPEND}"
+
+NPM_NO_DEPS=1
 
 S="${WORKDIR}/package"
 
