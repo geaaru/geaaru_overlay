@@ -13,8 +13,8 @@ KEYWORDS="~amd64 ~arm"
 IUSE=""
 
 DEPEND="
-	>=dev-node/debug-2.6.7
-	>=dev-node/depd-1.1.0
+	>=dev-node/debug-2.6.8
+	>=dev-node/depd-1.1.1
 	>=dev-node/destroy-1.0.4
 	>=dev-node/encodeurl-1.0.1
 	>=dev-node/escape-html-1.0.3
