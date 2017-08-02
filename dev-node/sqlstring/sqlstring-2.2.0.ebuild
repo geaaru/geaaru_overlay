@@ -4,7 +4,7 @@
 
 EAPI=6
 
-DESCRIPTION="sqlstring nodejs module"
+DESCRIPTION="Simple SQL escape and format for MySQL"
 HOMEPAGE="https://github.com/mysqljs/sqlstring#readme"
 
 LICENSE="MIT"
