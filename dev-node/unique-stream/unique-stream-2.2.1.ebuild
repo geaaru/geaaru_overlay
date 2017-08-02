@@ -4,7 +4,7 @@
 
 EAPI=6
 
-DESCRIPTION="unique-stream nodejs module"
+DESCRIPTION="node.js through stream that emits a unique stream of objects based on criteria"
 HOMEPAGE="https://github.com/eugeneware/unique-stream#readme"
 
 LICENSE="MIT"
