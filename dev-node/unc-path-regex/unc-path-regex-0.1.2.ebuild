@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/regexhq/unc-path-regex"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~arm"
 IUSE=""
 
 DEPEND="
