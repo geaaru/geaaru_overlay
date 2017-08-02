@@ -4,7 +4,7 @@
 
 EAPI=6
 
-DESCRIPTION="ws nodejs module"
+DESCRIPTION="simple to use, blazing fast and thoroughly tested websocket client, server and console for node.js, up-to-date against RFC-6455"
 HOMEPAGE="https://github.com/websockets/ws#readme"
 
 LICENSE="MIT"
