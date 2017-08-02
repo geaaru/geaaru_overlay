@@ -1,12 +1,11 @@
 # Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="return the first event in a set of ee/event pairs"
-HOMEPAGE="https://github.com/jonathanong/ee-first"
+HOMEPAGE="https://github.com/jonathanong/ee-first#readme"
 
 LICENSE="MIT"
 SLOT="0"
