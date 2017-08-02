@@ -4,7 +4,7 @@
 
 EAPI=6
 
-DESCRIPTION="split2 nodejs module"
+DESCRIPTION="split a Text Stream into a Line Stream, using Stream 3"
 HOMEPAGE="https://github.com/mcollina/split2#readme"
 
 LICENSE="ISC"
