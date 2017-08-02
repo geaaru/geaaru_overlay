@@ -13,7 +13,7 @@ KEYWORDS="~amd64 ~arm"
 IUSE=""
 
 DEPEND="
-	>=dev-node/depd-1.1.0
+	>=dev-node/depd-1.1.1
 	>=dev-node/inherits-2.0.3
 	>=dev-node/setprototypeof-1.0.3
 	>=dev-node/statuses-1.3.1
