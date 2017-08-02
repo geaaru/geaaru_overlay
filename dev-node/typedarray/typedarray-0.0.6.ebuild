@@ -4,7 +4,7 @@
 
 EAPI=6
 
-DESCRIPTION="typedarray nodejs module"
+DESCRIPTION="TypedArray polyfill for old browsers"
 HOMEPAGE="https://github.com/substack/typedarray"
 
 LICENSE="MIT"
