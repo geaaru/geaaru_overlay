@@ -1,12 +1,11 @@
 # Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="HTTP methods that node supports"
-HOMEPAGE="https://github.com/jshttp/methods"
+HOMEPAGE="https://github.com/jshttp/methods#readme"
 
 LICENSE="MIT"
 SLOT="0"
