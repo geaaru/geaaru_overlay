@@ -4,7 +4,7 @@
 
 EAPI=6
 
-DESCRIPTION="serve-favicon nodejs module"
+DESCRIPTION="favicon serving middleware with caching"
 HOMEPAGE="https://github.com/expressjs/serve-favicon#readme"
 
 LICENSE="MIT"
