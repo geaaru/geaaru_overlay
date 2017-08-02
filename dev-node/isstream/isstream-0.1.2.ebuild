@@ -1,11 +1,11 @@
 # Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
+# Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Determine if an object is a Stream"
-HOMEPAGE="https://www.npmjs.com/package/isstream"
+HOMEPAGE="https://github.com/rvagg/isstream"
 
 LICENSE="MIT"
 SLOT="0"
