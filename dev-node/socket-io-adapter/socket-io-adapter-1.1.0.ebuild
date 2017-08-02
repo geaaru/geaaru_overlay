@@ -4,7 +4,7 @@
 
 EAPI=6
 
-DESCRIPTION="socket.io-adapter nodejs module"
+DESCRIPTION="Default socket.io in-memory adapter class."
 HOMEPAGE="https://github.com/Automattic/socket.io-adapter#readme"
 
 LICENSE="MIT"
