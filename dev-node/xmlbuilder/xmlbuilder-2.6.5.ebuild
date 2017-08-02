@@ -4,7 +4,7 @@
 
 EAPI=6
 
-DESCRIPTION="xmlbuilder nodejs module"
+DESCRIPTION="An XML builder for node.js"
 HOMEPAGE="http://github.com/oozcitak/xmlbuilder-js"
 
 LICENSE="MIT"
