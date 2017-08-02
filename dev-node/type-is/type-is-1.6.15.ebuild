@@ -14,7 +14,7 @@ IUSE=""
 
 DEPEND="
 	>=dev-node/media-typer-0.3.0
-	>=dev-node/mime-types-2.1.15
+	>=dev-node/mime-types-2.1.16
 "
 RDEPEND="${DEPEND}"
 
