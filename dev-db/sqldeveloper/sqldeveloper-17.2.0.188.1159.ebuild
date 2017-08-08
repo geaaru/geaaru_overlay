@@ -56,7 +56,7 @@ src_prepare() {
 
 src_install() {
 	dodir /opt/${PN}
-	cp -r {configuration,dataminer,dvt,dropins,equinox,external,ide,javavm,jdbc,jdev,jlib,jviews,modules,netbeans,ords,rdbms,sleepycat,${PN},sqlj,sqlcl,svnkit} \
+	cp -r {configuration,dataminer,dvt,dropins,equinox,external,ide,javavm,jdbc,jdev,jlib,jviews,modules,netbeans,ords,rdbms,sleepycat,${PN},sqlj,svnkit} \
 		"${D}"/opt/${PN}/ || die "Install failed"
 
 
