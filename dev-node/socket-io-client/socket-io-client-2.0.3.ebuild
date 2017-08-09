@@ -28,7 +28,9 @@ DEPEND="
 	>=dev-node/to-array-0.1.4
 "
 RDEPEND="${DEPEND}"
-
+NPM_PKG_DIRS="
+dist
+"
 NPM_PKG_NAME="socket.io-client"
 NPM_NO_DEPS=1
 
