@@ -1,0 +1,225 @@
+diff --git a/include/maxscale/filter.hh b/include/maxscale/filter.hh
+index 1cb9b90c2..513f8be9c 100644
+--- a/include/maxscale/filter.hh
++++ b/include/maxscale/filter.hh
+@@ -215,7 +215,7 @@ public:
+     static MXS_FILTER_SESSION* newSession(MXS_FILTER* pInstance, MXS_SESSION* pSession)
+     {
+         FilterType* pFilter = static_cast<FilterType*>(pInstance);
+-        FilterSessionType* pFilterSession;
++        FilterSessionType* pFilterSession = NULL;
+ 
+         MXS_EXCEPTION_GUARD(pFilterSession = pFilter->newSession(pSession));
+ 
+diff --git a/query_classifier/qc_sqlite/qc_sqlite.c b/query_classifier/qc_sqlite/qc_sqlite.c
+index 0c15dc531..1fbb4981e 100644
+--- a/query_classifier/qc_sqlite/qc_sqlite.c
++++ b/query_classifier/qc_sqlite/qc_sqlite.c
+@@ -2991,7 +2991,7 @@ static int32_t qc_sqlite_process_init(void)
+         {
+             if (this_unit.log_level != QC_LOG_NOTHING)
+             {
+-                const char* message;
++                const char* message = NULL;
+ 
+                 switch (this_unit.log_level)
+                 {
+diff --git a/server/core/buffer.c b/server/core/buffer.c
+index 1c1dcab77..c0a3b354d 100644
+--- a/server/core/buffer.c
++++ b/server/core/buffer.c
+@@ -526,8 +526,8 @@ int gwbuf_compare(const GWBUF* lhs, const GWBUF* rhs)
+ 
+             while ((rv == 0) && (i < llen))
+             {
+-                uint8_t lc;
+-                uint8_t rc;
++                uint8_t lc = 0;
++                uint8_t rc = 0;
+ 
+                 ss_debug(bool rv1 = ) gwbuf_get_byte(&lhs, &loffset, &lc);
+                 ss_debug(bool rv2 = ) gwbuf_get_byte(&rhs, &roffset, &rc);
+diff --git a/server/core/externcmd.c b/server/core/externcmd.c
+index 8df3619bc..8a4ae5451 100644
+--- a/server/core/externcmd.c
++++ b/server/core/externcmd.c
+@@ -37,7 +37,7 @@ int tokenize_arguments(char* argstr, char** argv)
+     bool escaped = false;
+     char *ptr, *start;
+     char args[strlen(argstr) + 1];
+-    char qc;
++    char qc = 0;
+ 
+     strcpy(args, argstr);
+     start = args;
+diff --git a/server/core/log_manager.cc b/server/core/log_manager.cc
+index b106c4fba..358d2bc3b 100644
+--- a/server/core/log_manager.cc
++++ b/server/core/log_manager.cc
+@@ -751,11 +751,11 @@ static int logmanager_write_log(int            priority,
+                                 size_t         str_len,
+                                 const char*    str)
+ {
+-    logfile_t*   lf;
+-    char*        wp;
++    logfile_t*   lf = NULL;
++    char*        wp = NULL;
+     int          err = 0;
+-    blockbuf_t*  bb;
+-    blockbuf_t*  bb_c;
++    blockbuf_t*  bb = NULL;
++    blockbuf_t*  bb_c = NULL;
+     size_t       timestamp_len;
+     int          i;
+ 
+diff --git a/server/core/modutil.c b/server/core/modutil.c
+index 1ac172c4d..b96a504cd 100644
+--- a/server/core/modutil.c
++++ b/server/core/modutil.c
+@@ -797,7 +797,7 @@ char* strnchr_esc(char* ptr, char c, int len)
+     char* p = (char*)ptr;
+     char* start = p;
+     bool quoted = false, escaped = false;
+-    char qc;
++    char qc = 0;
+ 
+     while (p < start + len)
+     {
+@@ -843,7 +843,7 @@ char* strnchr_esc_mysql(char* ptr, char c, int len)
+     char* p = (char*) ptr;
+     char* start = p, *end = start + len;
+     bool quoted = false, escaped = false, backtick = false, comment = false;
+-    char qc;
++    char qc = 0;
+ 
+     while (p < end)
+     {
+diff --git a/server/core/poll.c b/server/core/poll.c
+index bbc0ab076..bfc04e51d 100644
+--- a/server/core/poll.c
++++ b/server/core/poll.c
+@@ -1256,7 +1256,7 @@ void
+ dShowThreads(DCB *dcb)
+ {
+     int i, j, n;
+-    char *state;
++    char *state = NULL;
+     double avg1 = 0.0, avg5 = 0.0, avg15 = 0.0;
+     double qavg1 = 0.0, qavg5 = 0.0, qavg15 = 0.0;
+ 
+diff --git a/server/core/server.c b/server/core/server.c
+index c4f92500b..6916726a1 100644
+--- a/server/core/server.c
++++ b/server/core/server.c
+@@ -941,9 +941,9 @@ serverRowCallback(RESULTSET *set, void *data)
+ {
+     int *rowno = (int *)data;
+     int i = 0;
+-    char *stat, buf[20];
+-    RESULT_ROW *row;
+-    SERVER *server;
++    char *stat = NULL, buf[20];
++    RESULT_ROW *row = NULL;
++    SERVER *server = NULL;
+ 
+     spinlock_acquire(&server_spin);
+     server = allServers;
+diff --git a/server/core/service.c b/server/core/service.c
+index 4cc5f764b..d44805132 100644
+--- a/server/core/service.c
++++ b/server/core/service.c
+@@ -1210,8 +1210,8 @@ void serviceSetRetryOnFailure(SERVICE *service, char* value)
+ bool
+ serviceSetFilters(SERVICE *service, char *filters)
+ {
+-    MXS_FILTER_DEF **flist;
+-    char *ptr, *brkt;
++    MXS_FILTER_DEF **flist = NULL;
++    char *ptr = NULL, *brkt = NULL;
+     int n = 0;
+     bool rval = true;
+     uint64_t capabilities = 0;
+diff --git a/server/core/utils.c b/server/core/utils.c
+index b119b897f..265bfc3bc 100644
+--- a/server/core/utils.c
++++ b/server/core/utils.c
+@@ -957,7 +957,7 @@ int open_network_socket(enum mxs_socket_type type, struct sockaddr_storage *addr
+     ss_dassert(type == MXS_SOCKET_NETWORK || type == MXS_SOCKET_LISTENER);
+ #ifdef __USE_POSIX
+     struct addrinfo *ai = NULL, hint = {};
+-    int so, rc;
++    int so = 0, rc = 0;
+     hint.ai_socktype = SOCK_STREAM;
+     hint.ai_family = AF_UNSPEC;
+     hint.ai_flags = AI_ALL;
+diff --git a/server/modules/filter/cache/rules.cc b/server/modules/filter/cache/rules.cc
+index 1983862f4..9c4a09a90 100644
+--- a/server/modules/filter/cache/rules.cc
++++ b/server/modules/filter/cache/rules.cc
+@@ -596,11 +596,11 @@ static CACHE_RULE *cache_rule_create_simple_user(cache_rule_attribute_t attribut
+                                                  const char            *cvalue,
+                                                  uint32_t               debug)
+ {
++    CACHE_RULE *rule = NULL;
++
+     ss_dassert(attribute == CACHE_ATTRIBUTE_USER);
+     ss_dassert((op == CACHE_OP_EQ) || (op == CACHE_OP_NEQ));
+ 
+-    CACHE_RULE *rule = NULL;
+-
+     bool error = false;
+     size_t len = strlen(cvalue);
+ 
+@@ -911,7 +911,7 @@ static CACHE_RULE *cache_rule_create_simple(cache_rule_attribute_t attribute,
+ {
+     ss_dassert((op == CACHE_OP_EQ) || (op == CACHE_OP_NEQ));
+ 
+-    CACHE_RULE *rule;
++    CACHE_RULE *rule = NULL;
+ 
+     switch (attribute)
+     {
+@@ -1526,7 +1526,7 @@ static bool cache_rule_matches_table_regexp(CACHE_RULE *self,
+     bool matches = false;
+ 
+     int n;
+-    char **names;
++    char **names = NULL;
+     bool fullnames;
+ 
+     fullnames = true;
+@@ -1612,7 +1612,7 @@ static bool cache_rule_matches_table_simple(CACHE_RULE *self, const char *defaul
+     }
+ 
+     int n;
+-    char **names;
++    char **names = NULL;
+ 
+     names = qc_get_table_names((GWBUF*)query, &n, fullnames);
+ 
+diff --git a/server/modules/filter/dbfwfilter/dbfwfilter.c b/server/modules/filter/dbfwfilter/dbfwfilter.c
+index 8955aba64..274b7a834 100644
+--- a/server/modules/filter/dbfwfilter/dbfwfilter.c
++++ b/server/modules/filter/dbfwfilter/dbfwfilter.c
+@@ -892,7 +892,7 @@ char* get_regex_string(char** saved)
+ {
+     char *start = NULL, *ptr = *saved;
+     bool escaped = false, quoted = false;
+-    char delimiter;
++    char delimiter = 0;
+     while (*ptr != '\0')
+     {
+         if (!escaped)
+diff --git a/server/modules/routing/debugcli/debugcmd.c b/server/modules/routing/debugcli/debugcmd.c
+index a221874ca..8b7d732c3 100644
+--- a/server/modules/routing/debugcli/debugcmd.c
++++ b/server/modules/routing/debugcli/debugcmd.c
+@@ -1669,7 +1669,7 @@ static struct
+ static unsigned long
+ convert_arg(char *arg, int arg_type)
+ {
+-    unsigned long rval;
++    unsigned long rval = 0;
+ 
+     switch (arg_type)
+     {
