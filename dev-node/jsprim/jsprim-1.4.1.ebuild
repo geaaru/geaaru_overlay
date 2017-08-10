@@ -14,9 +14,9 @@ IUSE=""
 
 DEPEND="
 	>=dev-node/assert-plus-1.0.0
-	>=dev-node/extsprintf-1.0.2
+	>=dev-node/extsprintf-1.3.0
 	>=dev-node/json-schema-0.2.3
-	>=dev-node/verror-1.3.6
+	>=dev-node/verror-1.10.0
 "
 RDEPEND="${DEPEND}"
 
