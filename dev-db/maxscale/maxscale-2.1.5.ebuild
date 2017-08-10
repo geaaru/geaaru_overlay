@@ -9,7 +9,7 @@ MY_PN="MaxScale"
 MY_P="${MY_PN}-${PV}"
 
 DESCRIPTION="A content aware, plug-able MySQL proxy server"
-HOMEPAGE="http://mariadb.com/MaxScale"
+HOMEPAGE="https://mariadb.com/products/technology/maxscale"
 SRC_URI="https://github.com/mariadb-corporation/${MY_PN}/archive/${PV}.tar.gz -> ${MY_P}.tar.gz"
 LICENSE="GPL-2"
 SLOT="0"
