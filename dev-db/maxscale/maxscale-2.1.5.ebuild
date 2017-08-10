@@ -3,7 +3,7 @@
 
 EAPI=5
 
-inherit eutils cmake-utils multilib user
+inherit eutils cmake-utils multilib user systemd
 
 MY_PN="MaxScale"
 MY_P="${MY_PN}-${PV}"
@@ -61,6 +61,12 @@ src_install() {
 	rm "${D}usr/share/${PN}/Changelog.txt" \
 		"${D}usr/share/${PN}/COPYRIGHT" \
 		"${D}usr/share/${PN}/ReleaseNotes.txt" || die
+
+	# Add systemd service
+	systemd_dounit "${S}"/etc/maxscale.service
+
+	# Add init.d file
+	newinitd "${FILESDIR}"/maxscale-init.d
 
 	keepdir /var/log/maxscale /var/lib/maxscale/data \
 		/var/cache/maxscale
