@@ -62,11 +62,17 @@ src_install() {
 		"${D}usr/share/${PN}/COPYRIGHT" \
 		"${D}usr/share/${PN}/ReleaseNotes.txt" || die
 
+	# Create .service (currently is not done on CMakeLists.txt)
+	sed -e 's/@MAXSCALE_VARDIR@/\/var\/lib\/maxscale/g' \
+		-e 's/@CMAKE_INSTALL_PREFIX@//g' \
+		-e 's/@MAXSCALE_BINDIR@/usr\/bin/g' \
+		"${S}"/etc/maxscale.service.in > "${S}"/etc/maxscale.service
+
 	# Add systemd service
 	systemd_dounit "${S}"/etc/maxscale.service
 
 	# Add init.d file
-	newinitd "${FILESDIR}"/maxscale-init.d
+	newinitd "${FILESDIR}"/maxscale-init.d ${PN}
 
 	keepdir /var/log/maxscale /var/lib/maxscale/data \
 		/var/cache/maxscale
