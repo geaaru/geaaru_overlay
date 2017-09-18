@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="ES2015 Promise ponyfill"
 HOMEPAGE="https://github.com/floatdrop/pinkie-promise"
