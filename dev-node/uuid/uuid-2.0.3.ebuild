@@ -16,7 +16,10 @@ IUSE=""
 DEPEND="
 "
 RDEPEND="${DEPEND}"
-
+# To many node-uuid implementations!!
+NPM_BINS="
+uuid => node-uuid-kelektiv
+"
 NPM_NO_DEPS=1
 
 S="${WORKDIR}/package"

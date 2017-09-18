@@ -17,7 +17,10 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 NPM_NO_DEPS=1
-
+# To many node-uuid implementations!!
+NPM_BINS="
+uuid => node-uuid-kelektiv
+"
 S="${WORKDIR}/package"
 
 inherit npmv1
