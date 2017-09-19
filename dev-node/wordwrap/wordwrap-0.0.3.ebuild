@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Wrap those words. Show them at what columns to start and stop."
 HOMEPAGE="https://github.com/substack/node-wordwrap#readme"

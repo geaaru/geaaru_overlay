@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="ES2015 String#codePointAt() ponyfill"
 HOMEPAGE="https://github.com/sindresorhus/code-point-at#readme"

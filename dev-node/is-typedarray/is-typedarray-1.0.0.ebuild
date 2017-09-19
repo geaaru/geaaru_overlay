@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Detect whether or not an object is a Typed Array"
 HOMEPAGE="https://github.com/hughsk/is-typedarray"

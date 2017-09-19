@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="A transform to make UglifyJS work in browserify."
 HOMEPAGE="https://github.com/ForbesLindesay/uglify-to-browserify"

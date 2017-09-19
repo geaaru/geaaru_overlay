@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Give me a string and I'll tell you if it's a valid npm package license string"
 HOMEPAGE="https://github.com/kemitchell/validate-npm-package-license.js#readme"

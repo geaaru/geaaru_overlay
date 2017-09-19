@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="A cache object that deletes the least-recently-used items."
 HOMEPAGE="https://github.com/isaacs/node-lru-cache#readme"

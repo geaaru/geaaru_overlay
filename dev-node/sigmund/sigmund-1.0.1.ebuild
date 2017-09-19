@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Quick and dirty signatures for Objects."
 HOMEPAGE="https://github.com/isaacs/sigmund#readme"

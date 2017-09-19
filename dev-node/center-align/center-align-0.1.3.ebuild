@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Center-align the text in a string."
 HOMEPAGE="https://github.com/jonschlinkert/center-align"

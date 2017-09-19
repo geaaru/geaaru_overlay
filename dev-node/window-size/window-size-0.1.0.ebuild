@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Reliable way to to get the height and width of the terminal/console in a node.js environment."
 HOMEPAGE="https://github.com/jonschlinkert/window-size"

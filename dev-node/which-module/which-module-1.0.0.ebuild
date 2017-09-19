@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Find the module object for something that was require()d"
 HOMEPAGE="https://github.com/nexdrew/which-module#readme"

@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="A querystring parser that supports nesting and arrays, with a depth limit"
 HOMEPAGE="https://www.npmjs.com/package/qs"

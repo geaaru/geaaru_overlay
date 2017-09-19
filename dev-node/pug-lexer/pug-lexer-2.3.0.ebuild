@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="The pug lexer (takes a string and converts it to an array of tokens)"
 HOMEPAGE="https://github.com/pugjs/pug-lexer#readme"

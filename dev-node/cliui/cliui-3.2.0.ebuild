@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="easily create complex multi-column command-line-interfaces"
 HOMEPAGE="https://github.com/yargs/cliui#readme"

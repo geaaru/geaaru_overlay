@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Contains parsers and serializers for ASN.1 (currently BER only)"
 HOMEPAGE="https://github.com/mcavage/node-asn1"

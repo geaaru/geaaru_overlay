@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="High-priority task queue for Node.js and browsers"
 HOMEPAGE="http://www.npmjs.com/package/asap"

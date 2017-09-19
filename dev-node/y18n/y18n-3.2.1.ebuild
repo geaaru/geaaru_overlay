@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="the bare-bones internationalization library used by yargs"
 HOMEPAGE="https://github.com/yargs/y18n"

@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Mapping between standard locale identifiers and Windows locale identifiers (LCID)"
 HOMEPAGE="https://github.com/sindresorhus/lcid"

@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="The semantic version parser used by npm."
 HOMEPAGE="https://github.com/npm/node-semver#readme"

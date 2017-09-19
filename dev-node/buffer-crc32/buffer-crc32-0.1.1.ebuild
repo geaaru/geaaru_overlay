@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="A pure javascript CRC32 algorithm that plays nice with binary data"
 HOMEPAGE="https://github.com/brianloveswords/buffer-crc32"

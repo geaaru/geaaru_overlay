@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="the complete solution for node.js command-line programs"
 HOMEPAGE="https://github.com/tj/commander.js#readme"

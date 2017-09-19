@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Extra assertions on top of node's assert module"
 HOMEPAGE="https://github.com/mcavage/node-assert-plus#readme"

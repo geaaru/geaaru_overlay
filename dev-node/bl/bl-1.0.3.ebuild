@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Buffer List: collect buffers and access with a standard readable Buffer interface, streamable too!"
 HOMEPAGE="https://www.npmjs.com/package/bl"

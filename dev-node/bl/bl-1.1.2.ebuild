@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Buffer List: collect buffers and access with a standard readable Buffer interface, streamable too!"
 HOMEPAGE="https://github.com/rvagg/bl"

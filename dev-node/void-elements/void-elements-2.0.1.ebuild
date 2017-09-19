@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Array of 'void elements' defined by the HTML specification."
 HOMEPAGE="https://github.com/hemanth/void-elements"

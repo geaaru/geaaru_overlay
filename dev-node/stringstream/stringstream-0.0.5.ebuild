@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Encode and decode streams into string streams"
 HOMEPAGE="https://github.com/mhart/StringStream#readme"

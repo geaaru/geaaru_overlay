@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Node.js 0.12 path.isAbsolute() ponyfill"
 HOMEPAGE="https://github.com/sindresorhus/path-is-absolute"

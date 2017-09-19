@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="A library for finding and using SSH public keys"
 HOMEPAGE="https://github.com/arekinath/node-sshpk#readme"

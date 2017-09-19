@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Stylus mixins and utilities"
 HOMEPAGE="https://github.com/visionmedia/nib#readme"

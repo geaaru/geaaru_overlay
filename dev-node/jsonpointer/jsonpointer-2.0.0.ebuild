@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Simple JSON Addressing."
 HOMEPAGE="https://github.com/janl/node-jsonpointer#readme"

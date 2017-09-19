@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="OAuth 1 signing. Formerly a vendor lib in mikeal/request, now a standalone module."
 HOMEPAGE="https://github.com/mikeal/oauth-sign#readme"

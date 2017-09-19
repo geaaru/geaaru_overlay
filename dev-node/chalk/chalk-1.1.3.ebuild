@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Terminal string styling done right. Much color."
 HOMEPAGE="https://github.com/chalk/chalk#readme"

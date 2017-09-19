@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Turn an object into a persistent execution context."
 HOMEPAGE="https://github.com/brianmcd/contextify#readme"

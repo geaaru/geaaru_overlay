@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Check if a string matches the name of a Node.js builtin module"
 HOMEPAGE="https://github.com/sindresorhus/is-builtin-module"

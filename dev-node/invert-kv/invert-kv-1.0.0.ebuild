@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Invert the key/value of an object. Example: {foo: 'bar'} → {bar: 'foo'}"
 HOMEPAGE="https://github.com/sindresorhus/invert-kv"

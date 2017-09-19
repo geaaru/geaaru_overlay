@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="String/Data transformations for use in templating libraries, static site generators and web frameworks"
 HOMEPAGE="https://github.com/ForbesLindesay/transformers#readme"

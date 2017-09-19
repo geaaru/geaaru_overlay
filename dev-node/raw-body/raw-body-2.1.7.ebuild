@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Get and validate the raw body of a readable stream."
 HOMEPAGE="https://github.com/stream-utils/raw-body#readme"

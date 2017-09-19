@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="AWS signing. Originally pulled from LearnBoost/knox, maintained as vendor in request, now a standalone module."
 HOMEPAGE="https://github.com/mikeal/aws-sign#readme"

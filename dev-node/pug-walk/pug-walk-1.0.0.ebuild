@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Walk and transform a pug AST"
 HOMEPAGE="https://github.com/pugjs/pug-walk#readme"

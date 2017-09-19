@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="parse SPDX license expressions"
 HOMEPAGE="https://github.com/kemitchell/spdx-expression-parse.js#readme"

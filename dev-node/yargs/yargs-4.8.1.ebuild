@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="yargs the modern, pirate-themed, successor to optimist."
 HOMEPAGE="http://yargs.js.org/"

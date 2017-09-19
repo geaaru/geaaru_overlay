@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="a glob matcher in javascript"
 HOMEPAGE="https://github.com/isaacs/minimatch"

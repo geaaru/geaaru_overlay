@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Streams3, a user-land copy of the stream library from Node.js"
 HOMEPAGE="https://github.com/nodejs/readable-stream#readme"

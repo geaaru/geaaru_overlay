@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="resolve like require.resolve() on behalf of files asynchronously and synchronously"
 HOMEPAGE="https://github.com/substack/node-resolve#readme"

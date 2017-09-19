@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Compile time with for strict mode JavaScript"
 HOMEPAGE="https://github.com/pugjs/with#readme"

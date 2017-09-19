@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="a little globber"
 HOMEPAGE="https://github.com/isaacs/node-glob#readme"

@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Buffers events from a stream until you are ready to handle them."
 HOMEPAGE="https://github.com/felixge/node-delayed-stream"

@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Generates a base64 id"
 HOMEPAGE="https://github.com/faeldt/base64id#readme"

@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Flash Socket Policy File Server. A server to respond to Flash Socket Policy requests, both inline and through a dedicated server instance."
 HOMEPAGE="https://github.com/3rd-Eden/FlashPolicyFileServer#readme"

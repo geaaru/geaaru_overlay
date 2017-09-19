@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Native Abstractions for Node.js: C++ header for Node 0.8->0.12 compatibility"
 HOMEPAGE="https://github.com/rvagg/nan"

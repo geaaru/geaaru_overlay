@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Feature rich priority job queue backed by redis"
 HOMEPAGE="http://automattic.github.io/kue/"

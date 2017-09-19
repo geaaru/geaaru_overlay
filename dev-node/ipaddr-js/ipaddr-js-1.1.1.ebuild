@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="A library for manipulating IPv4 and IPv6 addresses in JavaScript."
 HOMEPAGE="https://github.com/whitequark/ipaddr.js#readme"

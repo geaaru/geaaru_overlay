@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Strip UTF-8 byte order mark (BOM) from a string/buffer"
 HOMEPAGE="https://github.com/sindresorhus/strip-bom"

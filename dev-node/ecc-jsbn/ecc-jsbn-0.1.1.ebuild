@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="ECC JS code based on JSBN"
 HOMEPAGE="https://www.npmjs.com/package/ecc-jsbn"

@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Lodash mixins for (deep) object accessing / manipulation."
 HOMEPAGE="https://github.com/marklagendijk/lodash-deep"

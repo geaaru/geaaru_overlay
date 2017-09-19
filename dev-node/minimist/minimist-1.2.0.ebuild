@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="This module is the guts of optimist's argument parser without all the fanciful decoration."
 HOMEPAGE="https://www.npmjs.com/package/minimist"

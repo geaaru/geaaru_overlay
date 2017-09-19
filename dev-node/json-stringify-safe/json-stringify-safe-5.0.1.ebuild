@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Like JSON.stringify, but doesn't blow up on circular refs."
 HOMEPAGE="https://github.com/isaacs/json-stringify-safe"

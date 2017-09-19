@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="utilities for primitive JavaScript types"
 HOMEPAGE="https://github.com/davepacheco/node-jsprim"

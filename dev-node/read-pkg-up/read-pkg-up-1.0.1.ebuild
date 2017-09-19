@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Read the closest package.json file"
 HOMEPAGE="https://github.com/sindresorhus/read-pkg-up"

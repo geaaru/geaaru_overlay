@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Redis script manager for node.js"
 HOMEPAGE="https://github.com/thedeveloper/scripty"

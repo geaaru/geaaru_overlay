@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="CSS parser / stringifier using css-parse and css-stringify"
 HOMEPAGE="http://www.npmjs.com/package/css"

@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Returns a copy of an object with its keys sorted"
 HOMEPAGE="https://www.npmjs.com/package/sorted-object"

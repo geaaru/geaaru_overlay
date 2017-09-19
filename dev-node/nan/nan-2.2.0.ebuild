@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Native Abstractions for Node.js: C++ header for Node 0.8 -> 4 compatibility"
 HOMEPAGE="https://www.npmjs.com/package/nan"

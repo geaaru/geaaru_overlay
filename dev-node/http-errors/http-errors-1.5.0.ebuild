@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Create HTTP error objects"
 HOMEPAGE="https://github.com/jshttp/http-errors#readme"

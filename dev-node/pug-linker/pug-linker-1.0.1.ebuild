@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Link multiple pug ASTs together using include/extends"
 HOMEPAGE="https://github.com/pugjs/pug-linker#readme"

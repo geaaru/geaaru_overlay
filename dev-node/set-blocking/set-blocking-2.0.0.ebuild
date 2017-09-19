@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="set blocking stdio and stderr ensuring that terminal output does not truncate"
 HOMEPAGE="https://github.com/yargs/set-blocking#readme"

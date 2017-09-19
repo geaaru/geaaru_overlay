@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="ANSI escape codes for styling strings in the terminal"
 HOMEPAGE="https://github.com/chalk/ansi-styles#readme"

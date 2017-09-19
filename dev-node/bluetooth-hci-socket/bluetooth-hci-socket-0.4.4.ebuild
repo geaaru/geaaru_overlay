@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Bluetooth HCI socket binding for Node.js"
 HOMEPAGE="https://github.com/sandeepmistry/node-bluetooth-hci-socket"

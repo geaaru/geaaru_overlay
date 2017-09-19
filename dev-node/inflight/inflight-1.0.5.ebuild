@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Add callbacks to requests in flight to avoid async duplication"
 HOMEPAGE="https://github.com/isaacs/inflight"

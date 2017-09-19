@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="HTTP-friendly error objects"
 HOMEPAGE="https://github.com/hapijs/boom#readme"

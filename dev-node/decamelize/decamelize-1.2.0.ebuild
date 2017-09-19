@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Convert a camelized string into a lowercased one with a custom separator: unicornRainbow → unicorn_rainbow"
 HOMEPAGE="https://github.com/sindresorhus/decamelize#readme"

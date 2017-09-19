@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Module that helps you write generated functions in Node"
 HOMEPAGE="https://github.com/mafintosh/generate-function"

@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Match balanced character pairs, like "{" and "}""
 HOMEPAGE="https://github.com/juliangruber/balanced-match"

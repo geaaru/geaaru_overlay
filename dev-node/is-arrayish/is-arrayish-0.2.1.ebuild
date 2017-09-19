@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Determines if an object can be used as an array"
 HOMEPAGE="https://github.com/qix-/node-is-arrayish#readme"

@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Shorthands for commonly used doctypes"
 HOMEPAGE="https://github.com/pugjs/doctypes#readme"

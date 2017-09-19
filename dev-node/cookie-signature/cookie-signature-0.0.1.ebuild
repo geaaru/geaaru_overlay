@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Sign and unsign cookies"
 HOMEPAGE="http://www.npmjs.com/package/cookie-signature"

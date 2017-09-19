@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Library to access USB devices"
 HOMEPAGE="https://github.com/nonolith/node-usb#readme"

@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Socket.IO client for the browser and node.js"
 HOMEPAGE="http://socket.io"

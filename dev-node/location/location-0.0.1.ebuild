@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="A Browser-esque location object"
 HOMEPAGE="https://github.com/coolaj86/node-location#readme"

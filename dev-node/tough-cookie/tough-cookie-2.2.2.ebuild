@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="RFC6265 Cookies and Cookie Jar for node.js"
 HOMEPAGE="https://github.com/SalesforceEng/tough-cookie"

@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Test whether an object looks like a promises-a+ promise"
 HOMEPAGE="https://github.com/then/is-promise"

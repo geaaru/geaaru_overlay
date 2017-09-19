@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="a to-the-point color module for node"
 HOMEPAGE="https://github.com/einaros/tinycolor#readme"

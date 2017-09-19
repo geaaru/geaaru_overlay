@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Robust, expressive, and feature-rich CSS superset"
 HOMEPAGE="https://github.com/stylus/stylus"

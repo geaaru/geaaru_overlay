@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Serve static files"
 HOMEPAGE="https://github.com/expressjs/serve-static#readme"

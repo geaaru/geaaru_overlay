@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Provides metadata and conversions from repository urls for Github, Bitbucket and Gitlab"
 HOMEPAGE="https://github.com/npm/hosted-git-info"

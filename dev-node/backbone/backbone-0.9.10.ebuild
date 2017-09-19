@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Give your JS App some Backbone with Models, Views, Collections, and Events."
 HOMEPAGE="http://www.npmjs.com/package/backbone"

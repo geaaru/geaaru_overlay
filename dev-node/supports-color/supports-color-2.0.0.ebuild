@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Detect whether a terminal supports color"
 HOMEPAGE="https://github.com/chalk/supports-color"

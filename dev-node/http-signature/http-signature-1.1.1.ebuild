@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Reference implementation of Joyent's HTTP Signature scheme."
 HOMEPAGE="https://github.com/joyent/node-http-signature/"

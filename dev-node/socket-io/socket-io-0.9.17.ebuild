@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Real-time apps made cross-browser & easy with a WebSocket-like API"
 HOMEPAGE="http://socket.io"

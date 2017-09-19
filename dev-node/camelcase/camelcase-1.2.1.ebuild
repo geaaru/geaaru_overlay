@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Convert a dash/dot/underscore/space separated string to camelCase: foo-bar → fooBar"
 HOMEPAGE="https://github.com/sindresorhus/camelcase"

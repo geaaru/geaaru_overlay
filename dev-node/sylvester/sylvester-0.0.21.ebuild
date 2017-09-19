@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="node.js implementation of James Coglan's "Sylvester" matrix math library."
 HOMEPAGE="http://www.npmjs.com/package/sylvester"

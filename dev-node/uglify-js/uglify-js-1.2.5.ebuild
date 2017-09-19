@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="JavaScript parser and compressor/beautifier toolkit"
 HOMEPAGE="https://github.com/mishoo/UglifyJS#readme"

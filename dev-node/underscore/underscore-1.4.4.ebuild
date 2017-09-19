@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="JavaScript's functional programming helper library."
 HOMEPAGE="http://underscorejs.org"

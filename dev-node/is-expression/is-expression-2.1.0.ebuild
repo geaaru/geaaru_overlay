@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Check if a string is a valid JavaScript expression"
 HOMEPAGE="https://github.com/pugjs/is-expression#readme"

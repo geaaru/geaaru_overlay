@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="An evented streaming XML parser in JavaScript"
 HOMEPAGE="https://github.com/isaacs/sax-js"

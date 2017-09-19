@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="The lodash method _.assign exported as a module."
 HOMEPAGE="https://lodash.com/"

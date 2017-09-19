@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Battle-hardened distributed locking using redis"
 HOMEPAGE="https://github.com/thedeveloper/warlock"

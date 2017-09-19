@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="CSS Object Model implementation and CSS parser"
 HOMEPAGE="https://github.com/nv/CSSOM#readme"

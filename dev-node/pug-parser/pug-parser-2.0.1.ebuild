@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="The pug parser (takes an array of tokens and converts it to an abstract syntax tree)"
 HOMEPAGE="https://github.com/pugjs/pug-parser#readme"

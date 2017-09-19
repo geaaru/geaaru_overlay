@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="The modern build of lodash modular utilities."
 HOMEPAGE="https://lodash.com/"

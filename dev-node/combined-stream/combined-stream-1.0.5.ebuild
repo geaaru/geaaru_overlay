@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="A stream that emits multiple other streams one after another."
 HOMEPAGE="https://github.com/felixge/node-combined-stream"

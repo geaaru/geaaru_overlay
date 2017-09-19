@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="A light, featureful and explicit option parsing library."
 HOMEPAGE="https://github.com/trentm/node-dashdash"

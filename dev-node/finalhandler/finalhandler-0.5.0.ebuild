@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Node.js final http responder"
 HOMEPAGE="https://github.com/pillarjs/finalhandler"

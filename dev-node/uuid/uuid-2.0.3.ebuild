@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Rigorous implementation of RFC4122 (v1 and v4) UUIDs."
 HOMEPAGE="https://github.com/defunctzombie/node-uuid#readme"

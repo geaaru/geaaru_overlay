@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Check if the character represented by a given Unicode code point is fullwidth"
 HOMEPAGE="https://github.com/sindresorhus/is-fullwidth-code-point"

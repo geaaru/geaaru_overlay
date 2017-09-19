@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Get the longest item in an array."
 HOMEPAGE="https://github.com/jonschlinkert/longest"

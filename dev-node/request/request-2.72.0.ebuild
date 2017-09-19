@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Simplified HTTP request client."
 HOMEPAGE="https://github.com/request/request#readme"

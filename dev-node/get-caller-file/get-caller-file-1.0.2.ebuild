@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="[![Build Status](https://travis-ci.org/ember-cli/ember-cli.svg?branch=master)](https://travis-ci.org/ember-cli/ember-cli) [![Build status](https://ci.appveyor.com/api/projects/status/ol2q94g1932cy14a/branch/master?svg=true)](https://ci.appveyor.com/projec"
 HOMEPAGE="https://github.com/stefanpenner/get-caller-file#readme"

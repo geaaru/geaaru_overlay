@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Recursively iterates over specified directory, require()'ing each file, and returning a nested hash structure containing those modules."
 HOMEPAGE="https://github.com/troygoode/node-require-directory/"

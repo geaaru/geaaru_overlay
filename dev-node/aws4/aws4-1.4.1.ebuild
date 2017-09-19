@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Signs and prepares requests using AWS Signature Version 4"
 HOMEPAGE="https://github.com/mhart/aws4#readme"

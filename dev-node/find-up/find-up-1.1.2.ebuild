@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Find a file by walking up parent directories"
 HOMEPAGE="https://github.com/sindresorhus/find-up"

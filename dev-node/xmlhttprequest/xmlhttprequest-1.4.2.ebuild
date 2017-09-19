@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="XMLHttpRequest for Node"
 HOMEPAGE="https://github.com/driverdan/node-XMLHttpRequest#readme"

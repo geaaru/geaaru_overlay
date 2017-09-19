@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="shim for require.main.filename() that works in as many environments as possible"
 HOMEPAGE="https://github.com/yargs/require-main-filename#readme"

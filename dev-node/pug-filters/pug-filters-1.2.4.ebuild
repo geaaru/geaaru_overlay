@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Code for processing filters in pug templates"
 HOMEPAGE="https://github.com/pugjs/pug-filters#readme"

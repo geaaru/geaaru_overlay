@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Get the native type of a value."
 HOMEPAGE="https://github.com/jonschlinkert/kind-of"

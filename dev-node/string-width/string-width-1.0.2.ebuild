@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Get the visual width of a string - the number of columns required to display it"
 HOMEPAGE="https://github.com/sindresorhus/string-width#readme"

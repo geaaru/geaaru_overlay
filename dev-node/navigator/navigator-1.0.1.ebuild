@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="A browser-esque navigator for Node.JS (for Ender.JS compatibility)"
 HOMEPAGE="https://github.com/coolaj86/node-navigator#readme"

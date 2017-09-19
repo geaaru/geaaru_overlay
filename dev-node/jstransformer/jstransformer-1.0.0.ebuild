@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Normalize the API of any jstransformer"
 HOMEPAGE="https://github.com/jstransformers/jstransformer#readme"

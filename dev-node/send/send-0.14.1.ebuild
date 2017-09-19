@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Better streaming static file server with Range and conditional-GET support"
 HOMEPAGE="https://github.com/pillarjs/send#readme"

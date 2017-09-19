@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Take an array of token and produce a more useful API to give to a parser"
 HOMEPAGE="https://github.com/jadejs/token-stream"

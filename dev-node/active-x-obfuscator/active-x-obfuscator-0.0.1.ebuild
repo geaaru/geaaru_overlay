@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="A module to (safely) obfuscate all occurrences of the string 'ActiveX' inside any JavaScript code."
 HOMEPAGE="https://github.com/felixge/node-active-x-obfuscator"

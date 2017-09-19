@@ -3,7 +3,7 @@
 # $Id$
 # Ebuild automatically produced by node-ebuilder.
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Tests if a JSON property can be accessed using . syntax"
 HOMEPAGE="https://github.com/mikolalysenko/is-property"
