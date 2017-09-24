@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
 OPENSHOT_PTREE="0.1"
 OPENSHOT_TREE="${OPENSHOT_PTREE}.1"
@@ -19,6 +19,13 @@ KEYWORDS="~amd64"
 IUSE="doc"
 
 DEPEND="
+	media-libs/alsa-lib
+	media-libs/freetype
+	x11-libs/libX11
+	x11-libs/libXcursor
+	x11-libs/libXext
+	x11-libs/libXinerama
+	x11-libs/libXrandr
 	x11-libs/libXext
 	doc? (
 		app-doc/doxygen
@@ -36,6 +43,14 @@ src_unpack() {
 	cd ${S}
 	unpack ${A}
 
+}
+
+src_prepare () {
+	# fix under-linking
+	# https://github.com/OpenShot/libopenshot-audio/issues/3
+	sed -i 's/^\(target_link_libraries(.*\))$/\1 dl pthread)/' \
+		src/CMakeLists.txt || die
+	cmake-utils_src_prepare
 }
 
 src_configure() {
