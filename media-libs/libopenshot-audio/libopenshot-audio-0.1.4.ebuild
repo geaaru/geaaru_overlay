@@ -36,15 +36,6 @@ RDEPEND="${DEPEND}"
 # TODO: Check how avoid install of headers files from Juce Project for different
 #       libraries.
 
-src_unpack() {
-
-	mkdir ${S}
-
-	cd ${S}
-	unpack ${A}
-
-}
-
 src_prepare () {
 	# fix under-linking
 	# https://github.com/OpenShot/libopenshot-audio/issues/3
