@@ -6,8 +6,7 @@ EAPI=6
 
 PYTHON_COMPAT=( python3_{4,5} )
 
-inherit cmake-utils eutils python-r1
-
+inherit cmake-utils python-single-r1 toolchain-funcs versionator
 
 DESCRIPTION="Openshot Library"
 HOMEPAGE="http://www.openshot.org/"
@@ -42,7 +41,7 @@ DEPEND="
 "
 
 # https://github.com/OpenShot/libopenshot/pull/45
-PATCHES=( ${FILESDIR}/${PN}-0.1.3-fix-tests.patch )
+#PATCHES=( ${FILESDIR}/${PN}-0.1.3-fix-tests.patch )
 
 pkg_pretend() {
 	if [[ ${MERGE_TYPE} != binary ]] && ! tc-has-openmp; then
