@@ -18,7 +18,7 @@ KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ppc64 ~x86"
 IUSE="doc"
 
 DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
-		>=dev-python/pbr-0.8.0[${PYTHON_USEDEP}]
+		>=dev-python/pbr-1.8.0[${PYTHON_USEDEP}]
 	doc? ( dev-python/sphinx[${PYTHON_USEDEP}]
 		dev-python/sphinxcontrib-issuetracker[${PYTHON_USEDEP}] )"
 RDEPEND=">=dev-python/sqlalchemy-0.7.8[${PYTHON_USEDEP}]
