@@ -1,6 +1,5 @@
 # Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
 EAPI=6
 
@@ -9,30 +8,52 @@ HOMEPAGE="https://linuxcontainers.org/lxd/introduction/"
 EGO_PN_PARENT="github.com/lxc"
 EGO_PN="${EGO_PN_PARENT}/lxd"
 
-# The source is repackaged using a script at:
-#   https://dev.gentoo.org/~stasibear/lxd_repackage.py
-# This is necessary because go's native package management assumes
-# that a build starts with checking out many git repositories, often
-# from HEAD.  This provides no way to build the same code repeatably,
-# and anyway portage requires that fetching is only done from SRC_URI.
-# The only sane alternative I've seen is in the consul ebuild, which
-# is more transparent but raises other questions.
-SRC_URI="https://dev.gentoo.org/~stasibear/distfiles/${P}.tar.bz2"
+# Maintained with https://github.com/hsoft/gentoo-ego-vendor-update
+EGO_VENDOR=(
+	"github.com/dustinkirkland/golang-petname d3c2ba80e75eeef10c5cf2fc76d2c809637376b3"
+	"github.com/golang/protobuf 130e6b02ab059e7b717a096f397c5b60111cae74"
+	"github.com/gorilla/mux 3f19343c7d9ce75569b952758bd236af94956061"
+	"github.com/gorilla/websocket 6f34763140ed8887aed6a044912009832b4733d7"
+	"github.com/gosexy/gettext 74466a0a0c4a62fea38f44aa161d4bbfbe79dd6b"
+	"github.com/jessevdk/go-flags 6cf8f02b4ae8ba723ddc64dcfd403e530c06d927"
+	"github.com/mattn/go-colorable ad5389df28cdac544c99bd7b9161a0b5b6ca9d1b"
+	"github.com/mattn/go-runewidth 97311d9f7767e3d6f422ea06661bc2c7a19e8a5d"
+	"github.com/mattn/go-sqlite3 05548ff55570cdb9ac72ff4a25a3b5e77a6fb7e5"
+	"github.com/olekukonko/tablewriter 0fd34425a5aee40ff3f260b34e6c3b0d59f58c66"
+	"github.com/pborman/uuid e790cca94e6cc75c7064b1332e63811d4aae1a53"
+	"github.com/stretchr/testify 890a5c3458b43e6104ff5da8dfa139d013d77544"
+	"github.com/syndtr/gocapability db04d3cc01c8b54962a58ec7e491717d06cfcc16"
+	"github.com/go-stack/stack 817915b46b97fd7bb80e8ab6b69f01a53ac3eebf"
+	"github.com/mattn/go-isatty fc9e8d8ef48496124e79ae0df75490096eccf6fe"
+	"github.com/juju/errors c7d06af17c68cd34c835053720b21f6549d9b0ee"
+	"golang.org/x/crypto 7d9177d70076375b9a59c8fde23d52d9c4a7ecd5 github.com/golang/crypto"
+	"golang.org/x/net 0744d001aa8470aaa53df28d32e5ceeb8af9bd70 github.com/golang/net"
+	"golang.org/x/sync f52d1811a62927559de87708c8913c1650ce4f26 github.com/golang/sync"
+	"golang.org/x/text 1cbadb444a806fd9430d14ad08967ed91da4fa0a github.com/golang/text"
+	"golang.org/x/tools e531a2a1c15f94033f6fa87666caeb19a688175f github.com/golang/tools"
+	"golang.org/x/sys 429f518978ab01db8bb6f44b66785088e7fba58b github.com/golang/sys"
+	"gopkg.in/check.v1 20d25e2804050c1cd24a7eea1e7a6447dd0e74ec github.com/go-check/check"
+	"gopkg.in/flosch/pongo2.v3 5e81b817a0c48c1c57cdf1a9056cf76bdee02ca9 github.com/flosch/pongo2"
+	"gopkg.in/inconshreveable/log15.v2 b105bd37f74e5d9dc7b6ad7806715c7a2b83fd3f github.com/inconshreveable/log15"
+	"gopkg.in/lxc/go-lxc.v2 89b06ca6fad6daea5a72a1f47e69e39716c46198 github.com/lxc/go-lxc"
+	"gopkg.in/tomb.v2 d5d1b5820637886def9eef33e03a27a9f166942c github.com/go-tomb/tomb"
+	"gopkg.in/yaml.v2 eb3733d160e74a9c7e442f435eb3bea458e1d19f github.com/go-yaml/yaml"
+)
 
+ARCHIVE_URI="https://${EGO_PN}/archive/${P}.tar.gz -> ${P}.tar.gz"
 LICENSE="Apache-2.0"
 SLOT="0"
-KEYWORDS="~amd64 ~arm ~arm64"
+KEYWORDS="~amd64"
 
-PLOCALES="de el fr ja"
-IUSE="+daemon nls test cgmanager"
+IUSE="+daemon +ipv6 +dnsmasq nls test"
 
-# IUSE and PLOCALES must be defined before l10n inherited
-inherit bash-completion-r1 golang-build l10n linux-info systemd user vcs-snapshot
+inherit bash-completion-r1 linux-info systemd user golang-vcs-snapshot
+
+SRC_URI="${ARCHIVE_URI}
+	${EGO_VENDOR_URI}"
 
 DEPEND="
 	>=dev-lang/go-1.7.1
-	dev-go/go-crypto
-	dev-go/go-net
 	dev-libs/protobuf
 	nls? ( sys-devel/gettext )
 	test? (
@@ -44,17 +65,15 @@ DEPEND="
 "
 
 RDEPEND="
-	cgmanager? (
-		app-admin/cgmanager
-		app-emulation/lxc[cgmanager,seccomp]
-	)
 	daemon? (
-		app-emulation/lxc[seccomp]
-		net-dns/dnsmasq[dhcp,ipv6]
-		net-misc/rsync[xattr]
-		sys-apps/iproute2[ipv6]
-		sys-fs/squashfs-tools
 		app-arch/xz-utils
+		>=app-emulation/lxc-2.0.7[seccomp]
+		dnsmasq? (
+			net-dns/dnsmasq[dhcp,ipv6?]
+		)
+		net-misc/rsync[xattr]
+		sys-apps/iproute2[ipv6?]
+		sys-fs/squashfs-tools
 		virtual/acl
 	)
 "
@@ -93,38 +112,29 @@ ERROR_NF_NAT_MASQUERADE_IPV4="NF_NAT_MASQUERADE_IPV4: needed for network command
 ERROR_NF_NAT_MASQUERADE_IPV6="NF_NAT_MASQUERADE_IPV6: needed for network commands"
 ERROR_VXLAN="VXLAN: needed for network commands"
 
-PATCHES=("${FILESDIR}/${P}-dont-go-get.patch")
-
-# KNOWN ISSUES:
-# - Translations may not work.  I've been unsuccessful in forcing
-#   localized output.  Anyway, upstream (Canonical) doesn't install the
-#   message files.
+PATCHES=(
+	"${FILESDIR}/lxd-dont-go-get.patch"
+)
 
 src_prepare() {
-	cd "${S}/src/${EGO_PN}" || die "Failed to change to deep src dir"
-
 	default_src_prepare
 
-	tmpgoroot="${T}/goroot"
-	mkdir -p "$tmpgoroot" || die "Failed to create temporary GOROOT"
-	cp -sR "$(get_golibdir_gopath)"/* "${tmpgoroot}" || die "Failed to copy files to temporary GOROOT"
-
-	# Warn on unhandled locale changes
-	l10n_find_plocales_changes po "" .po
+	# Examples in go-lxc make our build fail.
+	rm -rf "${S}/src/${EGO_PN}/vendor/gopkg.in/lxc/go-lxc.v2/examples" || die
 }
 
 src_compile() {
-	golang-build_src_compile
+	export GOPATH="${S}"
 
 	cd "${S}/src/${EGO_PN}" || die "Failed to change to deep src dir"
 
 	tmpgoroot="${T}/goroot"
 	if use daemon; then
 		# Build binaries
-		GOPATH="${S}:${tmpgoroot}" emake
+		emake
 	else
 		# build client tool
-		GOPATH="${S}:${tmpgoroot}" emake client
+		emake client
 	fi
 
 	use nls && emake build-mo
@@ -132,37 +142,31 @@ src_compile() {
 
 src_test() {
 	if use daemon; then
-		# Go native tests should succeed
-		golang-build_src_test
+		export GOPATH="${S}"
+		cd "${S}/src/${EGO_PN}" || die "Failed to change to deep src dir"
+
+		emake check
 	fi
 }
 
 src_install() {
-	# Installs all src,pkg to /usr/lib/go-gentoo
-	golang-build_src_install
-
-	cd "${S}"
 	dobin bin/lxc
 	if use daemon; then
 		dosbin bin/lxd
 		dobin bin/fuidshift
 	fi
 
-	cd "src/${EGO_PN}"
+	cd "src/${EGO_PN}" || die "can't cd into ${S}/src/${EGO_PN}"
 
 	if use nls; then
-		for lingua in ${PLOCALES}; do
-			if use linguas_${lingua}; then
-				domo po/${lingua}.mo
-			fi
-		done
+		domo po/*.mo
 	fi
 
 	if use daemon; then
-		newinitd "${FILESDIR}"/${P}.initd lxd
-		newconfd "${FILESDIR}"/${P}.confd lxd
+		newinitd "${FILESDIR}"/${PN}.initd lxd
+		newconfd "${FILESDIR}"/${PN}.confd lxd
 
-		systemd_dounit "${FILESDIR}"/lxd.service
+		systemd_dounit "${FILESDIR}"/${PN}.service
 	fi
 
 	newbashcomp config/bash/lxd-client lxc
