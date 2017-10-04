@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=5
+EAPI=6
 
 inherit eutils user systemd
 
@@ -12,10 +12,10 @@ and Karaf into a powerful runtime platform you can use to build your own
 integrations solutions. It provides a complete, enterprise ready ESB
 exclusively powered by OSGi."
 HOMEPAGE="http://servicemix.apache.org/"
-SRC_URI="http://apache.panu.it/servicemix/servicemix-6/${PV}/apache-servicemix-${PV}.zip"
-
+SRC_URI="http://apache.panu.it/servicemix/servicemix-7/${PV}/apache-servicemix-${PV}.zip"
+RESTRICT=primaryuri
 LICENSE="Apache License v2.0"
-SLOT="6.1"
+SLOT="7.0"
 KEYWORDS="~amd64 ~x86"
 
 IUSE=""
@@ -68,10 +68,10 @@ src_install() {
 	newexe ${FILESDIR}/karaf_linux-6.1.sh "karaf_linux.sh"
 
 	insinto /etc/default/
-	newins ${FILESDIR}/servicemix.conf "smx-6.1.conf"
+	newins ${FILESDIR}/servicemix.conf "smx-7.0.conf"
 
 	# Fix conffile path
-	sed -i -e 's/conffile=.*/conffile=\/etc\/default\/smx-6.1.conf/g' \
+	sed -i -e 's/conffile=.*/conffile=\/etc\/default\/smx-7.0.conf/g' \
 		${D}/${INSTDIR}/${PF}/bin/karaf_linux.sh
 
 	for dir in data deploy etc lib licenses system ; do
@@ -80,14 +80,14 @@ src_install() {
 	done
 
 	# Systemd files
-	systemd_dounit "${FILESDIR}"/smx-6.1.service
-	systemd_install_serviced "${FILESDIR}"/servicemix.service.conf "smx-6.1.service"
+	systemd_newunit "${FILESDIR}"/smx-6.1.service smx-7.0.service
+	systemd_install_serviced "${FILESDIR}"/servicemix.service.conf "smx-7.0.service"
 
 	dodoc LICENSE NOTICE README RELEASE-NOTES
 
-	fowners smx:smx /etc/default/smx-6.1.conf /var/log/smx/
+	fowners smx:smx /etc/default/smx-7.0.conf /var/log/smx/
 	fowners smx:smx -R ${INSTDIR}/${PF}
 
-	einfo "Configure /etc/default/smx-6.1.conf before start service."
+	einfo "Configure /etc/default/smx-7.0.conf before start service."
 }
 
