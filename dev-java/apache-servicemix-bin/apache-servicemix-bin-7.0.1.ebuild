@@ -80,7 +80,8 @@ src_install() {
 	done
 
 	# Systemd files
-	systemd_newunit "${FILESDIR}"/smx-6.1.service smx-7.0.service
+
+	systemd_dounit "${FILESDIR}"/smx-7.0.service
 	systemd_install_serviced "${FILESDIR}"/servicemix.service.conf "smx-7.0.service"
 
 	dodoc LICENSE NOTICE README RELEASE-NOTES
