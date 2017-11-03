@@ -1,6 +1,5 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
 EAPI="5"
 PYTHON_COMPAT=( python{2_7,3_4,3_5} )
@@ -11,7 +10,7 @@ if [ ${PV} == "9999" ] ; then
 	EGIT_REPO_URI="git://github.com/zfsonlinux/${PN}.git"
 else
 	SRC_URI="https://github.com/zfsonlinux/${PN}/releases/download/${P}/${P}.tar.gz"
-	KEYWORDS=" ~amd64 ~arm ~arm64"
+	KEYWORDS=" ~amd64"
 fi
 
 inherit autotools-utils bash-completion-r1 flag-o-matic linux-info python-r1 systemd toolchain-funcs udev
@@ -51,7 +50,12 @@ RDEPEND="${COMMON_DEPEND}
 		app-arch/cpio
 		app-misc/pax-utils
 		!<sys-boot/grub-2.00-r2:2
+		!<sys-kernel/genkernel-3.5.1.1
+		!<sys-kernel/genkernel-next-67
+		!<sys-kernel/bliss-initramfs-7.1.0
+		!<sys-kernel/dracut-044-r1
 		)
+	sys-fs/udev-init-scripts
 "
 
 AT_M4DIR="config"
