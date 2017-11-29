@@ -4,7 +4,7 @@
 
 EAPI=6
 
-PYTHON_COMPAT=( python3_4 )
+PYTHON_COMPAT=( python3_5 )
 inherit eutils autotools pam python-any-r1 systemd user
 
 MY_P="${PN}-server-${PV}"
