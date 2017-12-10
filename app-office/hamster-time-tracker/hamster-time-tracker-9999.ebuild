@@ -5,12 +5,13 @@
 EAPI="5"
 
 PYTHON_COMPAT=( python2_7 )
+PYTHON_REQ_USE="threads(+)"
 
 inherit git-r3 python-single-r1 waf-utils
 
 DESCRIPTION="Time tracking for the masses"
 HOMEPAGE="http://projecthamster.wordpress.com"
-EGIT_REPO_URI="https://github.com/projecthamster/hamster.git"
+EGIT_REPO_URI="https://github.com/gsobczyk/hamster.git"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS=""
@@ -20,13 +21,14 @@ RDEPEND="
 	dev-python/gconf-python
 	gnome-base/gconf[introspection]
 	dev-python/pyxdg
-	>=x11-libs/gtk+-3.10
-	sys-devel/gettext"
+	dev-python/jira
+	dev-python/beaker[${PYTHON_COMPAT}]
+	dev-python/requests[${PYTHON_COMPAT}]
+"
 DEPEND="${RDEPEND}
 	dev-util/intltool"
 
 pkg_setup() {
-	PYTHON_REQ_USE="threads"
 	python-single-r1_pkg_setup
 }
 
@@ -36,4 +38,11 @@ src_unpack() {
 
 src_prepare() {
 	python_fix_shebang .
+}
+
+src_install() {
+
+	waf-utils_src_install
+
+	dosym /usr/bin/hamster /usr/bin/hamster-service
 }
