@@ -16,6 +16,9 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
+NPM_BINS="
+	mustache => node-mustache
+"
 NPM_NO_DEPS=1
 
 S="${WORKDIR}/package"
