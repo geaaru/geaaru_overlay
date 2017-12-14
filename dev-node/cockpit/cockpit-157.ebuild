@@ -39,7 +39,13 @@ DEPEND="
 	>=dev-node/requirejs-2.1.22
 	>=dev-node/term-js-cockpit-0.0.10
 "
-RDEPEND="${DEPEND}"
+RDEPEND="sys-auth/polkit:=
+	>=dev-libs/glib-2.37.4
+	sys-libs/pam:=
+	app-crypt/mit-krb5:=
+	sys-apps/systemd:=
+	dev-util/intltool:=
+${DEPEND}"
 
 NPM_NO_DEPS=1
 NPM_PKG_DIRS="
@@ -51,4 +57,11 @@ tools
 "
 
 inherit npmv1
+
+src_configure () {
+
+	local myconf="--disable-pcp"
+
+	econf ${myconf} || die
+}
 
