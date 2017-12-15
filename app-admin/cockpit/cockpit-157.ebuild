@@ -12,7 +12,7 @@ SRC_URI="https://github.com/${PN}-project/${PN}/releases/download/${PV}/${P}.tar
 
 SLOT="0"
 KEYWORDS="~amd64 ~arm"
-IUSE=""
+IUSE="doc"
 
 DEPEND="sys-auth/polkit:=
 	>=dev-libs/glib-2.37.4
@@ -27,6 +27,9 @@ RDEPEND="${DEPEND}"
 src_configure () {
 
 	local myconf="--disable-pcp --disable-debug"
+	if ! use doc ; then
+		myconf="${myconf} --disable-doc"
+	fi
 
 	econf ${myconf} || die
 }
