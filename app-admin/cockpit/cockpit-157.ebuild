@@ -6,8 +6,8 @@ EAPI=6
 
 inherit autotools
 
-DESCRIPTION="Cockpit isn't a Node package, these are devel time deps, not needed to build tarball either"
-HOMEPAGE="http://www.npmjs.com/package/cockpit"
+DESCRIPTION="Cockpit is a server manager that makes it easy to administer"
+HOMEPAGE="http://cockpit-project.org/"
 SRC_URI="https://github.com/${PN}-project/${PN}/releases/download/${PV}/${P}.tar.xz"
 
 SLOT="0"
