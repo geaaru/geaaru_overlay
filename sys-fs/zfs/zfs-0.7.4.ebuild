@@ -55,7 +55,6 @@ RDEPEND="${COMMON_DEPEND}
 		!<sys-kernel/bliss-initramfs-7.1.0
 		!<sys-kernel/dracut-044-r1
 		)
-	sys-fs/udev-init-scripts
 "
 
 AT_M4DIR="config"
