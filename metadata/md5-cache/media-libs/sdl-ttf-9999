@@ -1,0 +1,12 @@
+DEFINED_PHASES=compile install preinst unpack
+DEPEND=X? ( x11-libs/libXt ) media-libs/libsdl >=media-libs/freetype-2.3 dev-vcs/subversion net-misc/rsync >=app-portage/elt-patches-20170422
+DESCRIPTION=Simple Direct Media Layer
+EAPI=0
+HOMEPAGE=http://www.libsdl.org/
+IUSE=X
+KEYWORDS=~x86 ~amd64
+LICENSE=LGPL-2.1
+RDEPEND=X? ( x11-libs/libXt ) media-libs/libsdl >=media-libs/freetype-2.3
+SLOT=0
+_eclasses_=desktop	2ccd1dd1dd7bfb8795eea024a4f91bb6	epatch	8233751dc5105a6ae8fcd86ce2bb0247	estack	43ddf5aaffa7a8d0482df54d25a66a1f	eutils	97ce9decef1ff4b6c5be700283f67343	flag-o-matic	02908f00f002f0f07c5b74783d778325	libtool	0081a71a261724730ec4c248494f044d	ltprune	2770eed66a9b8ef944714cd0e968182e	multilib	97f470f374f2e94ccab04a2fb21d811e	subversion	a5d5826a85609611f098c0553eb24cc1	toolchain-funcs	185a06792159ca143528e7010368e8af
+_md5_=a31ceba3648a367c1511f1c0fb86e656

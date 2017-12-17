@@ -1,0 +1,12 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=net-libs/nodejs[npm(+)]
+DESCRIPTION=Array#isArray for older browsers
+EAPI=6
+HOMEPAGE=https://github.com/juliangruber/isarray
+KEYWORDS=~amd64 ~arm
+LICENSE=MIT
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/isarray/-/isarray-1.0.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=9985ad5f43014ec592831b4704e9fb40

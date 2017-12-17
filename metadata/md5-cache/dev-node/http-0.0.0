@@ -1,0 +1,12 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=net-libs/nodejs[npm(+)]
+DESCRIPTION=http nodejs module
+EAPI=6
+HOMEPAGE=http://www.npmjs.com/package/http
+KEYWORDS=~amd64 ~arm
+LICENSE=BSD-2-Clause
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/http/-/http-0.0.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=b4c1e848acb032e5a736c307a6bfd212

@@ -1,0 +1,12 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=net-libs/nodejs[npm(+)]
+DESCRIPTION=Extremely fast double-ended queue implementation
+EAPI=6
+HOMEPAGE=https://github.com/petkaantonov/deque
+KEYWORDS=~amd64 ~arm
+LICENSE=MIT
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/double-ended-queue/-/double-ended-queue-2.1.0-0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=fa15481e59d0c4aa220acd42d6dbcb5f

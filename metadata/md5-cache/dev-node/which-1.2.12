@@ -1,0 +1,13 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=>=dev-node/isexe-1.1.2 net-libs/nodejs[npm(+)]
+DESCRIPTION=Like which(1) unix command. Find the first instance of an executable in the PATH.
+EAPI=6
+HOMEPAGE=https://github.com/isaacs/node-which#readme
+KEYWORDS=~amd64
+LICENSE=ISC
+RDEPEND=>=dev-node/isexe-1.1.2
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/which/-/which-1.2.12.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=bb9bece70f7191af940d890f35bd3e0a

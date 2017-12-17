@@ -1,0 +1,12 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=net-libs/nodejs[npm(+)]
+DESCRIPTION=Extra assertions on top of node's assert module
+EAPI=6
+HOMEPAGE=https://github.com/mcavage/node-assert-plus#readme
+KEYWORDS=~amd64 ~arm
+LICENSE=MIT
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/assert-plus/-/assert-plus-0.2.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=b37603be2411b4fbe5ebe1fa2163226d

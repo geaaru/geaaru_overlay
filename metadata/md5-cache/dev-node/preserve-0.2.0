@@ -1,0 +1,12 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=net-libs/nodejs[npm(+)]
+DESCRIPTION=Temporarily substitute tokens in the given string with placeholders, then put them back after transforming the string.
+EAPI=6
+HOMEPAGE=https://github.com/jonschlinkert/preserve
+KEYWORDS=~amd64
+LICENSE=[object Object]
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/preserve/-/preserve-0.2.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=2a096bf046dc3768f8bcdaacbb53ae35

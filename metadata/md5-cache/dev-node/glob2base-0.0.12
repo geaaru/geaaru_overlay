@@ -1,0 +1,12 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=>=dev-node/find-index-0.1.1 net-libs/nodejs[npm(+)]
+DESCRIPTION=Extracts a base path from a node-glob instance
+EAPI=6
+HOMEPAGE=http://github.com/wearefractal/glob2base
+KEYWORDS=~amd64
+RDEPEND=>=dev-node/find-index-0.1.1
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/glob2base/-/glob2base-0.0.12.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=fd0ee02cc79d8cb7a2f9eb63be672769

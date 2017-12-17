@@ -1,0 +1,12 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=net-libs/nodejs[npm(+)]
+DESCRIPTION=Returns true if the value is a primitive.
+EAPI=6
+HOMEPAGE=https://github.com/jonschlinkert/is-primitive
+KEYWORDS=~amd64
+LICENSE=[object Object]
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/is-primitive/-/is-primitive-2.0.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=483c6c0d4c217aa6490e219a4c7ee3f5

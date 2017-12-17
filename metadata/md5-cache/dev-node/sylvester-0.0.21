@@ -1,0 +1,11 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=net-libs/nodejs[npm(+)]
+DESCRIPTION=node.js implementation of James Coglan's Sylvester matrix math library.
+EAPI=6
+HOMEPAGE=http://www.npmjs.com/package/sylvester
+KEYWORDS=~amd64 ~arm
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/sylvester/-/sylvester-0.0.21.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=d09b34228f80d9a7e531e8c97cb43fb9

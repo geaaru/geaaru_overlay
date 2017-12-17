@@ -1,0 +1,11 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=net-libs/nodejs[npm(+)]
+DESCRIPTION=Node adapter for RequireJS, for loading AMD modules. Includes RequireJS optimizer
+EAPI=6
+HOMEPAGE=http://github.com/jrburke/r.js
+KEYWORDS=~amd64 ~arm
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/requirejs/-/requirejs-2.1.22.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=644861848f003df20880b6057b9d9d74

@@ -1,0 +1,13 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=>=dev-node/string-width-1.0.2 net-libs/nodejs[npm(+)]
+DESCRIPTION=Wordwrap a string with ANSI escape codes
+EAPI=6
+HOMEPAGE=https://github.com/chalk/wrap-ansi#readme
+KEYWORDS=~amd64 ~arm
+LICENSE=MIT
+RDEPEND=>=dev-node/string-width-1.0.2
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/wrap-ansi/-/wrap-ansi-2.0.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=b5b4fac1367a1efe72e2bfc83b2cc4b9

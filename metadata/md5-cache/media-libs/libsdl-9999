@@ -1,0 +1,12 @@
+DEFINED_PHASES=compile install preinst unpack
+DEPEND=audio? ( >=media-libs/audiofile-0.1.9 ) alsa? ( media-libs/alsa-lib ) nas? ( media-libs/nas x11-libs/libXt x11-libs/libXext x11-libs/libX11 ) X? ( x11-libs/libXt x11-libs/libXext x11-libs/libX11 x11-libs/libXrandr ) directfb? ( >=dev-libs/DirectFB-0.9.19 ) ggi? ( >=media-libs/libggi-2.0_beta3 ) svga? ( >=media-libs/svgalib-1.4.2 ) aalib? ( media-libs/aalib ) libcaca? ( >=media-libs/libcaca-0.9-r1 ) opengl? ( virtual/opengl virtual/glu ) ppc64? ( ps3? ( sys-libs/libspe2 ) ) tslib? ( x11-libs/tslib ) pulseaudio? ( media-sound/pulseaudio ) nas? ( x11-proto/xextproto x11-proto/xproto ) X? ( x11-proto/xextproto x11-proto/xproto ) x86? ( || ( >=dev-lang/yasm-0.6.0 >=dev-lang/nasm-0.98.39-r3 ) ) dev-vcs/subversion net-misc/rsync >=app-portage/elt-patches-20170422
+DESCRIPTION=Simple Direct Media Layer
+EAPI=0
+HOMEPAGE=http://www.libsdl.org/
+IUSE=oss alsa nas X dga xv xinerama fbcon directfb ggi svga tslib aalib opengl libcaca +audio +video +joystick custom-cflags pulseaudio ps3
+KEYWORDS=~x86 ~amd64
+LICENSE=LGPL-2.1
+RDEPEND=audio? ( >=media-libs/audiofile-0.1.9 ) alsa? ( media-libs/alsa-lib ) nas? ( media-libs/nas x11-libs/libXt x11-libs/libXext x11-libs/libX11 ) X? ( x11-libs/libXt x11-libs/libXext x11-libs/libX11 x11-libs/libXrandr ) directfb? ( >=dev-libs/DirectFB-0.9.19 ) ggi? ( >=media-libs/libggi-2.0_beta3 ) svga? ( >=media-libs/svgalib-1.4.2 ) aalib? ( media-libs/aalib ) libcaca? ( >=media-libs/libcaca-0.9-r1 ) opengl? ( virtual/opengl virtual/glu ) ppc64? ( ps3? ( sys-libs/libspe2 ) ) tslib? ( x11-libs/tslib ) pulseaudio? ( media-sound/pulseaudio )
+SLOT=0
+_eclasses_=desktop	2ccd1dd1dd7bfb8795eea024a4f91bb6	epatch	8233751dc5105a6ae8fcd86ce2bb0247	estack	43ddf5aaffa7a8d0482df54d25a66a1f	eutils	97ce9decef1ff4b6c5be700283f67343	flag-o-matic	02908f00f002f0f07c5b74783d778325	libtool	0081a71a261724730ec4c248494f044d	ltprune	2770eed66a9b8ef944714cd0e968182e	multilib	97f470f374f2e94ccab04a2fb21d811e	subversion	a5d5826a85609611f098c0553eb24cc1	toolchain-funcs	185a06792159ca143528e7010368e8af
+_md5_=ca450878a7d0e57f3dabe7f05eccf44b

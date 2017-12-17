@@ -1,0 +1,12 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=net-libs/nodejs[npm(+)]
+DESCRIPTION=Simple SQL escape and format for MySQL
+EAPI=6
+HOMEPAGE=https://github.com/mysqljs/sqlstring#readme
+KEYWORDS=~amd64 ~arm
+LICENSE=MIT
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/sqlstring/-/sqlstring-2.2.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=cadcf43160c7e6da4246330fae7580c7

@@ -1,0 +1,12 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=net-libs/nodejs[npm(+)]
+DESCRIPTION=The lodash method _.assign exported as a module.
+EAPI=6
+HOMEPAGE=https://lodash.com/
+KEYWORDS=~amd64 ~arm
+LICENSE=MIT
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/lodash.assign/-/lodash.assign-4.2.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=0a50aa55c66aa8d96c13d3791b5056af

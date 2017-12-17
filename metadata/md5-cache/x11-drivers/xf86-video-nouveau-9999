@@ -1,0 +1,11 @@
+DEFINED_PHASES=compile configure install postinst postrm prepare test unpack
+DEPEND=>=x11-libs/libdrm-2.4.34[video_cards_nouveau] x11-proto/glproto x11-proto/xf86driproto x11-proto/dri2proto >=app-portage/elt-patches-20170422 !<sys-devel/gettext-0.18.1.1-r3 || ( >=sys-devel/automake-1.15:1.15 ) >=sys-devel/autoconf-2.69 >=sys-devel/libtool-2.4 >=dev-vcs/git-1.8.2.1 ppc-aix? ( >=sys-devel/libtool-2.2.6a sys-devel/m4 >=x11-misc/util-macros-1.18 >=media-fonts/font-util-1.2.0 ) x86-winnt? ( >=sys-devel/libtool-2.2.6a sys-devel/m4 >=x11-misc/util-macros-1.18 >=media-fonts/font-util-1.2.0 ) >=sys-devel/libtool-2.2.6a sys-devel/m4 >=x11-misc/util-macros-1.18 >=media-fonts/font-util-1.2.0 virtual/pkgconfig x11-proto/xf86driproto x11-proto/glproto x11-proto/dri2proto x11-proto/fontsproto x11-proto/randrproto x11-proto/renderproto x11-proto/videoproto x11-proto/xextproto x11-proto/xineramaproto x11-proto/xproto x11-base/xorg-server[-minimal] x11-libs/libdrm x11-base/xorg-server[xorg] x11-libs/libpciaccess
+DESCRIPTION=Accelerated Open Source driver for nVidia cards
+EAPI=4
+HOMEPAGE=http://nouveau.freedesktop.org/
+KEYWORDS=amd64 ppc ppc64 x86
+LICENSE=MIT
+RDEPEND=>=x11-libs/libdrm-2.4.34[video_cards_nouveau] x11-base/xorg-server[-minimal] x11-libs/libdrm x11-base/xorg-server[xorg] x11-libs/libpciaccess
+SLOT=0
+_eclasses_=autotools	dc412f38566b91012efd58b9c203e6c3	autotools-utils	5a4611dfba155b1659528663fad4cd5e	desktop	2ccd1dd1dd7bfb8795eea024a4f91bb6	epatch	8233751dc5105a6ae8fcd86ce2bb0247	estack	43ddf5aaffa7a8d0482df54d25a66a1f	eutils	97ce9decef1ff4b6c5be700283f67343	flag-o-matic	02908f00f002f0f07c5b74783d778325	git-r3	fec09a83ae965b041b47f5ff7c8ba29a	libtool	0081a71a261724730ec4c248494f044d	ltprune	2770eed66a9b8ef944714cd0e968182e	multilib	97f470f374f2e94ccab04a2fb21d811e	toolchain-funcs	185a06792159ca143528e7010368e8af	xorg-2	234cf45e2565fab7c0dff5bd8d1f9177
+_md5_=fd9606d474e0cc14cb570de8ea00506f

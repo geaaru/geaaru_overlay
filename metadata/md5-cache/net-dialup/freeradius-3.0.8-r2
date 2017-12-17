@@ -1,0 +1,15 @@
+DEFINED_PHASES=compile config configure install preinst prepare setup
+DEPEND=!net-dialup/cistronradius !net-dialup/gnuradius !net-dialup/freeradius:3.1 sys-devel/libtool dev-lang/perl sys-libs/gdbm net-libs/libpcap sys-libs/talloc python? ( || ( >=dev-lang/python-2.7.5-r2:2.7 ) ) readline? ( sys-libs/readline ) pcap? ( net-libs/libpcap ) mysql? ( virtual/mysql ) postgres? ( dev-db/postgresql ) firebird? ( dev-db/firebird ) pam? ( virtual/pam ) ssl? ( dev-libs/openssl ) ldap? ( net-nds/openldap ) kerberos? ( virtual/krb5 ) sqlite? ( dev-db/sqlite:3 ) odbc? ( dev-db/unixODBC ) iodbc? ( dev-db/libiodbc ) redis? ( dev-db/redis ) oracle? ( dev-db/oracle-instantclient-basic ) >=app-portage/elt-patches-20170422 !<sys-devel/gettext-0.18.1.1-r3 || ( >=sys-devel/automake-1.15:1.15 ) >=sys-devel/autoconf-2.69 >=sys-devel/libtool-2.4 virtual/pkgconfig
+DESCRIPTION=Highly configurable free RADIUS server
+EAPI=5
+HOMEPAGE=http://www.freeradius.org/
+IUSE=bindist debug firebird iodbc kerberos ldap mysql odbc oracle pam pcap postgres python readline sqlite ssl redis
+KEYWORDS=~amd64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd
+LICENSE=GPL-2
+RDEPEND=!net-dialup/cistronradius !net-dialup/gnuradius !net-dialup/freeradius:3.1 sys-devel/libtool dev-lang/perl sys-libs/gdbm net-libs/libpcap sys-libs/talloc python? ( || ( >=dev-lang/python-2.7.5-r2:2.7 ) ) readline? ( sys-libs/readline ) pcap? ( net-libs/libpcap ) mysql? ( virtual/mysql ) postgres? ( dev-db/postgresql ) firebird? ( dev-db/firebird ) pam? ( virtual/pam ) ssl? ( dev-libs/openssl ) ldap? ( net-nds/openldap ) kerberos? ( virtual/krb5 ) sqlite? ( dev-db/sqlite:3 ) odbc? ( dev-db/unixODBC ) iodbc? ( dev-db/libiodbc ) redis? ( dev-db/redis ) oracle? ( dev-db/oracle-instantclient-basic )
+REQUIRED_USE=bindist? ( !firebird )
+RESTRICT=test
+SLOT=0
+SRC_URI=ftp://ftp.freeradius.org/pub/radius/freeradius-server-3.0.8.tar.gz ftp://ftp.freeradius.org/pub/radius/old/freeradius-server-3.0.8.tar.gz
+_eclasses_=autotools	dc412f38566b91012efd58b9c203e6c3	desktop	2ccd1dd1dd7bfb8795eea024a4f91bb6	epatch	8233751dc5105a6ae8fcd86ce2bb0247	estack	43ddf5aaffa7a8d0482df54d25a66a1f	eutils	97ce9decef1ff4b6c5be700283f67343	flag-o-matic	02908f00f002f0f07c5b74783d778325	libtool	0081a71a261724730ec4c248494f044d	ltprune	2770eed66a9b8ef944714cd0e968182e	multilib	97f470f374f2e94ccab04a2fb21d811e	pam	3e788d86170dfcd5b06824d898315e18	python-any-r1	27d7f9da7187d283b7f3eae8390b7b09	python-utils-r1	c9de01becf9df3f8c10aeec3dc693f5d	systemd	d99ddf02ea4a13d8dd9b2ab517276873	toolchain-funcs	185a06792159ca143528e7010368e8af	user	8bc2845510e2109af75e3eeac607ec81
+_md5_=4636eb68e97623a9de134c15012aeb9e

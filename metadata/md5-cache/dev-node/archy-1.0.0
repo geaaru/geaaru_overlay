@@ -1,0 +1,12 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=net-libs/nodejs[npm(+)]
+DESCRIPTION=render nested hierarchies npm ls style with unicode pipes
+EAPI=6
+HOMEPAGE=https://github.com/substack/node-archy
+KEYWORDS=~amd64
+LICENSE=MIT
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/archy/-/archy-1.0.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=c9d6ab31c2a10e5463019a3b3c2cfd3b

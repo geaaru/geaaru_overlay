@@ -1,0 +1,13 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=>=dev-node/inherits-2.0.3 >=dev-node/readable-stream-2.3.3 net-libs/nodejs[npm(+)]
+DESCRIPTION=A pipeable stream that calls your callback
+EAPI=6
+HOMEPAGE=https://github.com/mcollina/callback-stream#readme
+KEYWORDS=~amd64 ~arm
+LICENSE=MIT
+RDEPEND=>=dev-node/inherits-2.0.3 >=dev-node/readable-stream-2.3.3
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/callback-stream/-/callback-stream-1.1.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=32f45f0e0625277f9b8ce8c35f3e747a

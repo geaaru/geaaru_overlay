@@ -1,0 +1,13 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=>=dev-node/number-is-nan-1.0.0 net-libs/nodejs[npm(+)]
+DESCRIPTION=Check if the character represented by a given Unicode code point is fullwidth
+EAPI=6
+HOMEPAGE=https://github.com/sindresorhus/is-fullwidth-code-point
+KEYWORDS=~amd64 ~arm
+LICENSE=MIT
+RDEPEND=>=dev-node/number-is-nan-1.0.0
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/is-fullwidth-code-point/-/is-fullwidth-code-point-1.0.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=4412fb85697bb6ce1f7f92b57491e3f2

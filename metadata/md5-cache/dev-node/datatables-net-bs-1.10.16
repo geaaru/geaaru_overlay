@@ -1,0 +1,13 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=>=dev-node/datatables-net-1.10.16 >=dev-node/jquery-3.2.1 net-libs/nodejs[npm(+)]
+DESCRIPTION=DataTables for jQuery with styling for [Bootstrap 3](http://getbootstrap.com/)
+EAPI=6
+HOMEPAGE=https://datatables.net
+KEYWORDS=~amd64 ~arm
+LICENSE=MIT
+RDEPEND=>=dev-node/datatables-net-1.10.16 >=dev-node/jquery-3.2.1
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/datatables.net-bs/-/datatables.net-bs-1.10.16.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=3b3c19adcdc8983623bc37613d7f0aae

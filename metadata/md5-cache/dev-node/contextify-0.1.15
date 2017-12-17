@@ -1,0 +1,12 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=>=dev-node/bindings-1.2.1 >=dev-node/nan-2.3.3 net-libs/nodejs[npm(+)]
+DESCRIPTION=Turn an object into a persistent execution context.
+EAPI=6
+HOMEPAGE=https://github.com/brianmcd/contextify#readme
+KEYWORDS=~amd64 ~arm
+RDEPEND=>=dev-node/bindings-1.2.1 >=dev-node/nan-2.3.3
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/contextify/-/contextify-0.1.15.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=03fa22c587dff17b306daa9026793bc0

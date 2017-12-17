@@ -1,0 +1,12 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=net-libs/nodejs[npm(+)]
+DESCRIPTION=Drop-in replacement for fs.existsSync with zero dependencies. Other libs I found either have crucial differences from fs.existsSync, or unnecessary dependencies. See README.md for more info.
+EAPI=6
+HOMEPAGE=https://github.com/jonschlinkert/fs-exists-sync
+KEYWORDS=~amd64
+LICENSE=MIT
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/fs-exists-sync/-/fs-exists-sync-0.1.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=66abb01ec5596bd31a9469ac73be29b5

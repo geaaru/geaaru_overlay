@@ -1,0 +1,12 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=net-libs/nodejs[npm(+)]
+DESCRIPTION=A JavaScript visualization library for HTML and SVG.
+EAPI=6
+HOMEPAGE=http://d3js.org
+KEYWORDS=~amd64 ~arm
+LICENSE=BSD-3-Clause
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/d3/-/d3-3.5.17.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=f45d2471a7544ed91e94d94dd48d3bf7

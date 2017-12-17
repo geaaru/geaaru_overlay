@@ -1,0 +1,12 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=net-libs/nodejs[npm(+)]
+DESCRIPTION=This module is the guts of optimist's argument parser without all the fanciful decoration.
+EAPI=6
+HOMEPAGE=https://www.npmjs.com/package/minimist
+KEYWORDS=~amd64 ~arm
+LICENSE=MIT
+RESTRICT=mirror
+SLOT=0
+SRC_URI=https://github.com/substack/minimist/archive/1.2.0.zip
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=06beb917cb3930348423eccad64ea4a9

@@ -1,0 +1,13 @@
+DEFINED_PHASES=install setup
+DEPEND=>=virtual/jdk-1.8 app-arch/unzip virtual/pkgconfig
+DESCRIPTION=Wildfly Application Server
+EAPI=5
+HOMEPAGE=http://wildfly.org
+IUSE=doc
+KEYWORDS=~amd64 ~x86
+LICENSE=GPL 2.1
+RDEPEND=>=virtual/jre-1.8
+SLOT=10
+SRC_URI=http://download.jboss.org/wildfly/10.0.0.Final/wildfly-10.0.0.Final.tar.gz
+_eclasses_=desktop	2ccd1dd1dd7bfb8795eea024a4f91bb6	epatch	8233751dc5105a6ae8fcd86ce2bb0247	estack	43ddf5aaffa7a8d0482df54d25a66a1f	eutils	97ce9decef1ff4b6c5be700283f67343	ltprune	2770eed66a9b8ef944714cd0e968182e	multilib	97f470f374f2e94ccab04a2fb21d811e	systemd	d99ddf02ea4a13d8dd9b2ab517276873	toolchain-funcs	185a06792159ca143528e7010368e8af	user	8bc2845510e2109af75e3eeac607ec81
+_md5_=cb7d827750816f4b0a22b01e83b9f6ff

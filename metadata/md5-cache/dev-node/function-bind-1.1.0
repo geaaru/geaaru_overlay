@@ -1,0 +1,11 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=net-libs/nodejs[npm(+)]
+DESCRIPTION=Implementation of Function.prototype.bind
+EAPI=6
+HOMEPAGE=https://github.com/Raynos/function-bind
+KEYWORDS=~amd64 ~arm
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/function-bind/-/function-bind-1.1.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=f6bb221143d5d0de4b722d9a1c754d6c

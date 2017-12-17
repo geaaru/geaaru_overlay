@@ -1,0 +1,13 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=>=dev-node/arr-flatten-1.0.1 net-libs/nodejs[npm(+)]
+DESCRIPTION=Returns an array with only the unique values from the first array, by excluding all values from additional arrays using strict equality for comparisons.
+EAPI=6
+HOMEPAGE=https://github.com/jonschlinkert/arr-diff
+KEYWORDS=~amd64
+LICENSE=MIT
+RDEPEND=>=dev-node/arr-flatten-1.0.1
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/arr-diff/-/arr-diff-2.0.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=9257f1d8bdd4c445b058a469411eec44

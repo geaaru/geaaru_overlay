@@ -1,0 +1,12 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=net-libs/nodejs[npm(+)]
+DESCRIPTION=Walk and transform a pug AST
+EAPI=6
+HOMEPAGE=https://github.com/pugjs/pug-walk#readme
+KEYWORDS=~amd64 ~arm
+LICENSE=MIT
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/pug-walk/-/pug-walk-1.0.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=bc26b8e2b25bf30af1df2575ee9bad53

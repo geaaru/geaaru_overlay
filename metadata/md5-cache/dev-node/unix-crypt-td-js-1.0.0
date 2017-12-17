@@ -1,0 +1,12 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=net-libs/nodejs[npm(+)]
+DESCRIPTION=Javascript implementation of the Unix crypt(3) DES-based hash
+EAPI=6
+HOMEPAGE=https://github.com/TimDumol/unix-crypt-td-js#readme
+KEYWORDS=~amd64 ~arm
+LICENSE=BSD-3-Clause
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/unix-crypt-td-js/-/unix-crypt-td-js-1.0.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=38f491aeb1fb99d3bcaa7fb3c63adcc0

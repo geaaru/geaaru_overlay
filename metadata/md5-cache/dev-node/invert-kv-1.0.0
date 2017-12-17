@@ -1,0 +1,12 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=net-libs/nodejs[npm(+)]
+DESCRIPTION=Invert the key/value of an object. Example: {foo: 'bar'} → {bar: 'foo'}
+EAPI=6
+HOMEPAGE=https://github.com/sindresorhus/invert-kv
+KEYWORDS=~amd64 ~arm
+LICENSE=MIT
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/invert-kv/-/invert-kv-1.0.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=5f9ad31d0456082b0ddb9280f6684828

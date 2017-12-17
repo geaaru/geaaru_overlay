@@ -1,0 +1,12 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=net-libs/nodejs[npm(+)]
+DESCRIPTION=Create an array with values that are present in the first input array but not additional ones
+EAPI=6
+HOMEPAGE=https://github.com/sindresorhus/array-differ
+KEYWORDS=~amd64
+LICENSE=MIT
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/array-differ/-/array-differ-1.0.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=2a03b0072e81ee3d45fefdadb1a6b4ec

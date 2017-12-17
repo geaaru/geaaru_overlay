@@ -1,0 +1,13 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=>=dev-node/bl-1.2.1 >=dev-node/capitalize-1.0.0 >=dev-node/coap-packet-0.1.14 >=dev-node/debug-2.6.8 >=dev-node/fastseries-1.7.2 >=dev-node/lru-cache-4.1.1 >=dev-node/readable-stream-2.3.3 net-libs/nodejs[npm(+)]
+DESCRIPTION=A CoAP library for node modelled after 'http'
+EAPI=6
+HOMEPAGE=https://github.com/mcollina/node-coap#readme
+KEYWORDS=~amd64 ~arm
+LICENSE=MIT
+RDEPEND=>=dev-node/bl-1.2.1 >=dev-node/capitalize-1.0.0 >=dev-node/coap-packet-0.1.14 >=dev-node/debug-2.6.8 >=dev-node/fastseries-1.7.2 >=dev-node/lru-cache-4.1.1 >=dev-node/readable-stream-2.3.3
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/coap/-/coap-0.20.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=79e2b15e8e75943c516a332e3abf455c

@@ -1,0 +1,11 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=net-libs/nodejs[npm(+)]
+DESCRIPTION=A simple disk space checker module. Check out the GitHub page for more details.
+EAPI=6
+HOMEPAGE=https://github.com/keverw/diskspace.js#readme
+KEYWORDS=~amd64 ~arm
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/diskspace/-/diskspace-2.0.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=07c6852d10a72ba1b61c905c856b77cc

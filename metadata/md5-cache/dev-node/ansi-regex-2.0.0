@@ -1,0 +1,12 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=net-libs/nodejs[npm(+)]
+DESCRIPTION=Regular expression for matching ANSI escape codes
+EAPI=6
+HOMEPAGE=https://github.com/sindresorhus/ansi-regex
+KEYWORDS=~amd64 ~arm
+LICENSE=MIT
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/ansi-regex/-/ansi-regex-2.0.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=825c471c15ee57becccfbaccfe1d51c1

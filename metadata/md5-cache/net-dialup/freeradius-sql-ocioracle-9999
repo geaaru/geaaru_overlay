@@ -1,0 +1,12 @@
+DEFINED_PHASES=compile configure install prepare unpack
+DEPEND=net-dialup/freeradius sys-devel/libtool dev-lang/perl sys-libs/gdbm net-libs/libpcap sys-libs/talloc dev-db/ocilib dev-db/oracle-instantclient-basic >=app-portage/elt-patches-20170422 !<sys-devel/gettext-0.18.1.1-r3 || ( >=sys-devel/automake-1.15:1.15 ) >=sys-devel/autoconf-2.69 >=sys-devel/libtool-2.4 dev-vcs/git
+DESCRIPTION=Oracle alternative module for FreeRADIUS
+EAPI=5
+HOMEPAGE=https://github.com/geaaru/rlm_sql_ocioracle
+KEYWORDS=~amd64
+LICENSE=GPL-2
+RDEPEND=net-dialup/freeradius sys-devel/libtool dev-lang/perl sys-libs/gdbm net-libs/libpcap sys-libs/talloc dev-db/ocilib dev-db/oracle-instantclient-basic
+SLOT=3.0
+SRC_URI=ftp://ftp.freeradius.org/pub/radius/freeradius-server-3.0.14.tar.gz
+_eclasses_=autotools	dc412f38566b91012efd58b9c203e6c3	desktop	2ccd1dd1dd7bfb8795eea024a4f91bb6	epatch	8233751dc5105a6ae8fcd86ce2bb0247	estack	43ddf5aaffa7a8d0482df54d25a66a1f	eutils	97ce9decef1ff4b6c5be700283f67343	freeradius-modules	9bef9ac08f9b1e4e83cc40371087b87d	git-2	195a672bfaf52d868442171c9469bbb6	libtool	0081a71a261724730ec4c248494f044d	ltprune	2770eed66a9b8ef944714cd0e968182e	multilib	97f470f374f2e94ccab04a2fb21d811e	toolchain-funcs	185a06792159ca143528e7010368e8af
+_md5_=49a003bc8559d25d1bfc8a834552719c

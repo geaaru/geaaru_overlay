@@ -1,0 +1,13 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=>=dev-node/assert-plus-1.0.0 >=dev-node/core-util-is-1.0.2 >=dev-node/extsprintf-1.3.0 net-libs/nodejs[npm(+)]
+DESCRIPTION=richer JavaScript errors
+EAPI=6
+HOMEPAGE=https://github.com/davepacheco/node-verror#readme
+KEYWORDS=~amd64 ~arm
+LICENSE=MIT
+RDEPEND=>=dev-node/assert-plus-1.0.0 >=dev-node/core-util-is-1.0.2 >=dev-node/extsprintf-1.3.0
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/verror/-/verror-1.10.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=09b3ab87535182253aab170f1fe22d78

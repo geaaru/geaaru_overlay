@@ -1,0 +1,13 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=>=dev-node/bootstrap-3.3.7 >=dev-node/jquery-3.2.1 >=dev-node/moment-2.19.1 >=dev-node/moment-timezone-0.4.1 net-libs/nodejs[npm(+)]
+DESCRIPTION=A date/time picker component designed to work with Bootstrap 3 and Momentjs. For usage, installation and demos see Project Site on GitHub
+EAPI=6
+HOMEPAGE=http://eonasdan.github.io/bootstrap-datetimepicker/
+KEYWORDS=~amd64 ~arm
+LICENSE=MIT
+RDEPEND=>=dev-node/bootstrap-3.3.7 >=dev-node/jquery-3.2.1 >=dev-node/moment-2.19.1 >=dev-node/moment-timezone-0.4.1
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/eonasdan-bootstrap-datetimepicker/-/eonasdan-bootstrap-datetimepicker-4.17.47.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=4979a6f2ecabb19d863197c1796a6acd

@@ -1,0 +1,13 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=>=dev-node/glob-parent-2.0.0 >=dev-node/is-glob-2.0.1 net-libs/nodejs[npm(+)]
+DESCRIPTION=Returns an object with the (non-glob) base path and the actual pattern.
+EAPI=6
+HOMEPAGE=https://github.com/jonschlinkert/glob-base
+KEYWORDS=~amd64
+LICENSE=[object Object]
+RDEPEND=>=dev-node/glob-parent-2.0.0 >=dev-node/is-glob-2.0.1
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/glob-base/-/glob-base-0.3.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=8c65cc61b571450a079136ab08ae375a

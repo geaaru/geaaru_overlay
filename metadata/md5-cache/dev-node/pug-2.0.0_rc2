@@ -1,0 +1,13 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=>=dev-node/pug-code-gen-1.1.1 >=dev-node/pug-filters-2.1.3 >=dev-node/pug-lexer-3.1.0 >=dev-node/pug-linker-3.0.1 >=dev-node/pug-load-2.0.7 >=dev-node/pug-parser-3.0.0 >=dev-node/pug-runtime-2.0.3 >=dev-node/pug-strip-comments-1.0.2 net-libs/nodejs[npm(+)]
+DESCRIPTION=A clean, whitespace-sensitive template language for writing HTML
+EAPI=6
+HOMEPAGE=https://pugjs.org
+KEYWORDS=~amd64 ~arm
+LICENSE=MIT
+RDEPEND=>=dev-node/pug-code-gen-1.1.1 >=dev-node/pug-filters-2.1.3 >=dev-node/pug-lexer-3.1.0 >=dev-node/pug-linker-3.0.1 >=dev-node/pug-load-2.0.7 >=dev-node/pug-parser-3.0.0 >=dev-node/pug-runtime-2.0.3 >=dev-node/pug-strip-comments-1.0.2
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/pug/-/pug-2.0.0-rc.2.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=83350c6dca4b2f4cb8e052d674af243c

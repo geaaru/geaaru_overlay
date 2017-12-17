@@ -1,0 +1,12 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=net-libs/nodejs[npm(+)]
+DESCRIPTION=Native Abstractions for Node.js: C++ header for Node 0.8 -> 4 compatibility
+EAPI=6
+HOMEPAGE=https://www.npmjs.com/package/nan
+KEYWORDS=~amd64 ~arm
+LICENSE=MIT
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/nan/-/nan-2.2.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=de20c61fad102cc75422b033ca9b16a6

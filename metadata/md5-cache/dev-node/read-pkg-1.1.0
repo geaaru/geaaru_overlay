@@ -1,0 +1,13 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=>=dev-node/load-json-file-1.1.0 >=dev-node/normalize-package-data-2.3.5 >=dev-node/path-type-1.1.0 net-libs/nodejs[npm(+)]
+DESCRIPTION=Read a package.json file
+EAPI=6
+HOMEPAGE=https://github.com/sindresorhus/read-pkg
+KEYWORDS=~amd64 ~arm
+LICENSE=MIT
+RDEPEND=>=dev-node/load-json-file-1.1.0 >=dev-node/normalize-package-data-2.3.5 >=dev-node/path-type-1.1.0
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/read-pkg/-/read-pkg-1.1.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=85a0c726a01db4da8e045e528e1938ce

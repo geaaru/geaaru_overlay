@@ -1,0 +1,13 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=>=dev-node/got-0.2.0 net-libs/nodejs[npm(+)]
+DESCRIPTION=List of known file extensions and their MIME types
+EAPI=6
+HOMEPAGE=https://github.com/kevva/ext-list#readme
+KEYWORDS=~amd64 ~arm
+LICENSE=MIT
+RDEPEND=>=dev-node/got-0.2.0
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/ext-list/-/ext-list-0.2.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=75da7a7645a31b0f422a52242e192d90

@@ -1,0 +1,13 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=>=dev-node/object-assign-0.3.1 net-libs/nodejs[npm(+)]
+DESCRIPTION=Simplified HTTP/HTTPS requests
+EAPI=6
+HOMEPAGE=https://github.com/sindresorhus/got#readme
+KEYWORDS=~amd64 ~arm
+LICENSE=MIT
+RDEPEND=>=dev-node/object-assign-0.3.1
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/got/-/got-0.2.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=0f608d681cdfdf6ad06005577cbdeba3

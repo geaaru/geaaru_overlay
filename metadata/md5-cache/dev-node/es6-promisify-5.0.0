@@ -1,0 +1,13 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=>=dev-node/es6-promise-4.1.1 net-libs/nodejs[npm(+)]
+DESCRIPTION=Converts callback-based functions to ES6 Promises
+EAPI=6
+HOMEPAGE=https://github.com/digitaldesignlabs/es6-promisify#readme
+KEYWORDS=~amd64 ~arm
+LICENSE=MIT
+RDEPEND=>=dev-node/es6-promise-4.1.1
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/es6-promisify/-/es6-promisify-5.0.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=3ea450513e38b8590fcc76d0ba61ed9f

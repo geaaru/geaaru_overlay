@@ -1,0 +1,12 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=net-libs/nodejs[npm(+)]
+DESCRIPTION=Easier stdin
+EAPI=6
+HOMEPAGE=https://github.com/sindresorhus/get-stdin#readme
+KEYWORDS=~amd64 ~arm
+LICENSE=MIT
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/get-stdin/-/get-stdin-0.1.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=57720b7a5b4cc022b2b9c139582ba6fc

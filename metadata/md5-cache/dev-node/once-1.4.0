@@ -1,0 +1,13 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=>=dev-node/wrappy-1.0.2 net-libs/nodejs[npm(+)]
+DESCRIPTION=Run a function exactly one time
+EAPI=6
+HOMEPAGE=https://github.com/isaacs/once#readme
+KEYWORDS=~amd64 ~arm
+LICENSE=ISC
+RDEPEND=>=dev-node/wrappy-1.0.2
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/once/-/once-1.4.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=fe404f6098a5285f8c925910b289645b

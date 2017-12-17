@@ -1,0 +1,12 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=net-libs/nodejs[npm(+)]
+DESCRIPTION=Parses JavaScript objects into XML
+EAPI=6
+HOMEPAGE=http://www.kourlas.net
+KEYWORDS=~amd64 ~arm
+LICENSE=Apache-2.0
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/js2xmlparser/-/js2xmlparser-1.0.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=880c78454418f46b6e6336d3e65900e8

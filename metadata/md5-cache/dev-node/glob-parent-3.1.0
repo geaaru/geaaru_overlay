@@ -1,0 +1,13 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=>=dev-node/is-glob-3.1.0 >=dev-node/path-dirname-1.0.2 net-libs/nodejs[npm(+)]
+DESCRIPTION=Strips glob magic from a string to provide the parent directory path
+EAPI=6
+HOMEPAGE=https://github.com/es128/glob-parent
+KEYWORDS=~amd64 ~arm
+LICENSE=ISC
+RDEPEND=>=dev-node/is-glob-3.1.0 >=dev-node/path-dirname-1.0.2
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/glob-parent/-/glob-parent-3.1.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=d4c927af24a9d25e783d061ad30339b2

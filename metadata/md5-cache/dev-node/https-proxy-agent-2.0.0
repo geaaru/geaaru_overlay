@@ -1,0 +1,13 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=>=dev-node/agent-base-4.1.1 >=dev-node/debug-2.6.8 net-libs/nodejs[npm(+)]
+DESCRIPTION=An HTTP(s) proxy http.Agent implementation for HTTPS
+EAPI=6
+HOMEPAGE=https://github.com/TooTallNate/node-https-proxy-agent#readme
+KEYWORDS=~amd64 ~arm
+LICENSE=MIT
+RDEPEND=>=dev-node/agent-base-4.1.1 >=dev-node/debug-2.6.8
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/https-proxy-agent/-/https-proxy-agent-2.0.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=3c94b741286681159e21b3c7c97163dc

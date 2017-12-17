@@ -1,0 +1,13 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=>=dev-node/block-stream-0.0.9 >=dev-node/fstream-0.1.31 >=dev-node/inherits-2.0.3 net-libs/nodejs[npm(+)]
+DESCRIPTION=tar for node
+EAPI=6
+HOMEPAGE=https://github.com/isaacs/node-tar#readme
+KEYWORDS=~amd64 ~arm
+LICENSE=BSD
+RDEPEND=>=dev-node/block-stream-0.0.9 >=dev-node/fstream-0.1.31 >=dev-node/inherits-2.0.3
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/tar/-/tar-0.1.20.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=efb11f33bcbf5b6c0786b53118a654bb

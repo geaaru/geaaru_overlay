@@ -1,0 +1,13 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=>=dev-node/builtin-modules-1.1.1 net-libs/nodejs[npm(+)]
+DESCRIPTION=Check if a string matches the name of a Node.js builtin module
+EAPI=6
+HOMEPAGE=https://github.com/sindresorhus/is-builtin-module
+KEYWORDS=~amd64 ~arm
+LICENSE=MIT
+RDEPEND=>=dev-node/builtin-modules-1.1.1
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/is-builtin-module/-/is-builtin-module-1.0.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=6843fae7cf98aebfc5f3f530d3851ce1

@@ -1,0 +1,11 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=net-libs/nodejs[npm(+)]
+DESCRIPTION=access to v8's CallSites
+EAPI=6
+HOMEPAGE=http://www.npmjs.com/package/callsite
+KEYWORDS=~amd64 ~arm
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/callsite/-/callsite-1.0.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=1bd9a889026d3d6efb302674a863a83c

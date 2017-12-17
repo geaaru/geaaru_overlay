@@ -1,0 +1,13 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=>=dev-node/graceful-fs-4.1.9 >=dev-node/pify-2.3.0 >=dev-node/pinkie-promise-2.0.1 net-libs/nodejs[npm(+)]
+DESCRIPTION=Check if a path is a file, directory, or symlink
+EAPI=6
+HOMEPAGE=https://github.com/sindresorhus/path-type
+KEYWORDS=~amd64 ~arm
+LICENSE=MIT
+RDEPEND=>=dev-node/graceful-fs-4.1.9 >=dev-node/pify-2.3.0 >=dev-node/pinkie-promise-2.0.1
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/path-type/-/path-type-1.1.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=e18a092dd2e58460ff5f3ffbe1e40012

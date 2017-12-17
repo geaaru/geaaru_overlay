@@ -1,0 +1,12 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=>=dev-node/defaults-1.0.3 >=dev-node/glob-stream-3.1.18 >=dev-node/glob-watcher-0.0.6 >=dev-node/graceful-fs-3.0.11 >=dev-node/mkdirp-0.5.1 >=dev-node/strip-bom-1.0.0 >=dev-node/through2-0.6.5 >=dev-node/vinyl-0.4.6 net-libs/nodejs[npm(+)]
+DESCRIPTION=Vinyl adapter for the file system
+EAPI=6
+HOMEPAGE=http://github.com/wearefractal/vinyl-fs
+KEYWORDS=~amd64
+RDEPEND=>=dev-node/defaults-1.0.3 >=dev-node/glob-stream-3.1.18 >=dev-node/glob-watcher-0.0.6 >=dev-node/graceful-fs-3.0.11 >=dev-node/mkdirp-0.5.1 >=dev-node/strip-bom-1.0.0 >=dev-node/through2-0.6.5 >=dev-node/vinyl-0.4.6
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/vinyl-fs/-/vinyl-fs-0.3.14.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=c97eef660825e68e8079069df2e84e40

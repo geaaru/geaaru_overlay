@@ -1,0 +1,13 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=>=dev-node/leven-1.0.2 >=dev-node/minimist-1.2.0 net-libs/nodejs[npm(+)]
+DESCRIPTION=Build your commands on minimist!
+EAPI=6
+HOMEPAGE=https://github.com/mcollina/commist
+KEYWORDS=~amd64 ~arm
+LICENSE=MIT
+RDEPEND=>=dev-node/leven-1.0.2 >=dev-node/minimist-1.2.0
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/commist/-/commist-1.0.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=6ee350e9bb297eb97dd2c2bd48322bc7

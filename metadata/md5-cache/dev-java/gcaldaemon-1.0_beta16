@@ -1,0 +1,12 @@
+DEFINED_PHASES=install
+DEPEND=>=virtual/jre-1.5
+DESCRIPTION=Java program that offers two-way synchronization between Google Calendar and various iCalendar compatible calendar applications.
+EAPI=0
+HOMEPAGE=http://gcaldaemon.sourceforge.net/
+IUSE=doc
+KEYWORDS=~amd64 ~x86
+LICENSE=Apache-2.0
+RDEPEND=>=virtual/jre-1.5
+SLOT=0
+SRC_URI=mirror://sourceforge/gcaldaemon/gcaldaemon-linux-1.0-beta16.zip
+_md5_=e393c0128f182643d7d06c62340bfc4b

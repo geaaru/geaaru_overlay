@@ -1,0 +1,13 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=>=dev-node/aws-sign2-0.6.0 >=dev-node/aws4-1.4.1 >=dev-node/bl-1.1.2 >=dev-node/caseless-0.11.0 >=dev-node/combined-stream-1.0.5 >=dev-node/extend-3.0.0 >=dev-node/forever-agent-0.6.1 >=dev-node/form-data-1.0.0_rc4 >=dev-node/har-validator-2.0.6 >=dev-node/hawk-3.1.3 >=dev-node/http-signature-1.1.1 >=dev-node/is-typedarray-1.0.0 >=dev-node/isstream-0.1.2 >=dev-node/json-stringify-safe-5.0.1 >=dev-node/mime-types-2.1.11 >=dev-node/node-uuid-1.4.7 >=dev-node/oauth-sign-0.8.2 >=dev-node/qs-6.1.0 >=dev-node/stringstream-0.0.5 >=dev-node/tough-cookie-2.2.2 >=dev-node/tunnel-agent-0.4.3 net-libs/nodejs[npm(+)]
+DESCRIPTION=Simplified HTTP request client.
+EAPI=6
+HOMEPAGE=https://github.com/request/request#readme
+KEYWORDS=~amd64 ~arm
+LICENSE=Apache-2.0
+RDEPEND=>=dev-node/aws-sign2-0.6.0 >=dev-node/aws4-1.4.1 >=dev-node/bl-1.1.2 >=dev-node/caseless-0.11.0 >=dev-node/combined-stream-1.0.5 >=dev-node/extend-3.0.0 >=dev-node/forever-agent-0.6.1 >=dev-node/form-data-1.0.0_rc4 >=dev-node/har-validator-2.0.6 >=dev-node/hawk-3.1.3 >=dev-node/http-signature-1.1.1 >=dev-node/is-typedarray-1.0.0 >=dev-node/isstream-0.1.2 >=dev-node/json-stringify-safe-5.0.1 >=dev-node/mime-types-2.1.11 >=dev-node/node-uuid-1.4.7 >=dev-node/oauth-sign-0.8.2 >=dev-node/qs-6.1.0 >=dev-node/stringstream-0.0.5 >=dev-node/tough-cookie-2.2.2 >=dev-node/tunnel-agent-0.4.3
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/request/-/request-2.72.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=7b9476599d90a8eb40ee5be6ac4041ba

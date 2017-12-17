@@ -1,0 +1,12 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=net-libs/nodejs[npm(+)]
+DESCRIPTION=JSON without touching any globals
+EAPI=6
+HOMEPAGE=https://github.com/substack/jsonify#readme
+KEYWORDS=~amd64 ~arm
+LICENSE=Public Domain
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/jsonify/-/jsonify-0.0.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=81807bfab2534fb332a8259e852b83b2

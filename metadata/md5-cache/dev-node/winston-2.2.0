@@ -1,0 +1,13 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=>=dev-node/async-1.0.0 >=dev-node/colors-1.0.0 >=dev-node/cycle-1.0.0 >=dev-node/eyes-0.1.0 >=dev-node/isstream-0.1.0 >=dev-node/pkginfo-0.3.0 >=dev-node/stack-trace-0.0.1 net-libs/nodejs[npm(+)]
+DESCRIPTION=A multi-transport async logging library for Node.js
+EAPI=6
+HOMEPAGE=https://www.npmjs.com/package/winston
+KEYWORDS=~amd64 ~arm
+LICENSE=MIT
+RDEPEND=>=dev-node/async-1.0.0 >=dev-node/colors-1.0.0 >=dev-node/cycle-1.0.0 >=dev-node/eyes-0.1.0 >=dev-node/isstream-0.1.0 >=dev-node/pkginfo-0.3.0 >=dev-node/stack-trace-0.0.1
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/winston/-/winston-2.2.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=505c7946297bee8706a4686d902fecee

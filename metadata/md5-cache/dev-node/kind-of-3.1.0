@@ -1,0 +1,13 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=>=dev-node/is-buffer-1.1.4 net-libs/nodejs[npm(+)]
+DESCRIPTION=Get the native type of a value.
+EAPI=6
+HOMEPAGE=https://github.com/jonschlinkert/kind-of
+KEYWORDS=~amd64
+LICENSE=MIT
+RDEPEND=>=dev-node/is-buffer-1.1.4
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/kind-of/-/kind-of-3.1.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=bb6f61add3bf360f1a14371a84a407ae

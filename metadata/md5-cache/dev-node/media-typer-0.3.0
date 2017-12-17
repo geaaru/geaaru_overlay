@@ -1,0 +1,12 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=net-libs/nodejs[npm(+)]
+DESCRIPTION=Simple RFC 6838 media type parser and formatter
+EAPI=6
+HOMEPAGE=https://github.com/jshttp/media-typer#readme
+KEYWORDS=~amd64 ~arm
+LICENSE=MIT
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/media-typer/-/media-typer-0.3.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=604ac5a41c13697bfeb605d9e8efa213

@@ -1,0 +1,12 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=>=dev-node/glob-3.1.21 >=dev-node/lodash-1.0.2 >=dev-node/minimatch-0.2.14 net-libs/nodejs[npm(+)]
+DESCRIPTION=An easy-to-use wildcard globbing library.
+EAPI=6
+HOMEPAGE=https://github.com/cowboy/node-globule
+KEYWORDS=~amd64
+RDEPEND=>=dev-node/glob-3.1.21 >=dev-node/lodash-1.0.2 >=dev-node/minimatch-0.2.14
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/globule/-/globule-0.1.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=94236c7d2f10056845cae56699546bc5

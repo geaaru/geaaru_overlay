@@ -1,0 +1,13 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=>=dev-node/arr-diff-2.0.0 >=dev-node/array-unique-0.2.1 >=dev-node/braces-1.8.5 >=dev-node/expand-brackets-0.1.5 >=dev-node/extglob-0.3.2 >=dev-node/filename-regex-2.0.0 >=dev-node/is-extglob-1.0.0 >=dev-node/is-glob-2.0.1 >=dev-node/kind-of-3.0.4 >=dev-node/normalize-path-2.0.1 >=dev-node/object-omit-2.0.1 >=dev-node/parse-glob-3.0.4 >=dev-node/regex-cache-0.4.3 net-libs/nodejs[npm(+)]
+DESCRIPTION=Glob matching for javascript/node.js. A drop-in replacement and faster alternative to minimatch and multimatch.
+EAPI=6
+HOMEPAGE=https://github.com/jonschlinkert/micromatch
+KEYWORDS=~amd64
+LICENSE=MIT
+RDEPEND=>=dev-node/arr-diff-2.0.0 >=dev-node/array-unique-0.2.1 >=dev-node/braces-1.8.5 >=dev-node/expand-brackets-0.1.5 >=dev-node/extglob-0.3.2 >=dev-node/filename-regex-2.0.0 >=dev-node/is-extglob-1.0.0 >=dev-node/is-glob-2.0.1 >=dev-node/kind-of-3.0.4 >=dev-node/normalize-path-2.0.1 >=dev-node/object-omit-2.0.1 >=dev-node/parse-glob-3.0.4 >=dev-node/regex-cache-0.4.3
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/micromatch/-/micromatch-2.3.11.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=fd1ccc77d24c962c52f27ae79976f199

@@ -1,0 +1,11 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=net-libs/nodejs[npm(+)]
+DESCRIPTION=High-priority task queue for Node.js and browsers
+EAPI=6
+HOMEPAGE=http://www.npmjs.com/package/asap
+KEYWORDS=~amd64 ~arm
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/asap/-/asap-1.0.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=01ba33b153ca069b1be40b5ed0912901

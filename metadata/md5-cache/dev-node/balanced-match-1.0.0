@@ -1,0 +1,12 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=net-libs/nodejs[npm(+)]
+DESCRIPTION=Match balanced character pairs, like '{' and '}'
+EAPI=6
+HOMEPAGE=https://github.com/juliangruber/balanced-match
+KEYWORDS=~amd64 ~arm
+LICENSE=MIT
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/balanced-match/-/balanced-match-1.0.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=534e38c4a7a3d9d8f59e40c548a50f3b

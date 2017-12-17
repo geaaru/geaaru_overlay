@@ -1,0 +1,12 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=net-libs/nodejs[npm(+)]
+DESCRIPTION=JSON Schema for HTTP Archive (HAR)
+EAPI=6
+HOMEPAGE=https://github.com/ahmadnassri/har-schema
+KEYWORDS=~amd64 ~arm
+LICENSE=ISC
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/har-schema/-/har-schema-2.0.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=661447cf2056932329119eff510e5182

@@ -1,0 +1,13 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=>=dev-node/through2-2.0.3 >=dev-node/xtend-4.0.1 net-libs/nodejs[npm(+)]
+DESCRIPTION=A through2 to create an Array.prototype.filter analog for streams.
+EAPI=6
+HOMEPAGE=https://github.com/brycebaril/through2-filter#readme
+KEYWORDS=~amd64 ~arm
+LICENSE=MIT
+RDEPEND=>=dev-node/through2-2.0.3 >=dev-node/xtend-4.0.1
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/through2-filter/-/through2-filter-2.0.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=230440e39de9058747702ae8fb29be0b

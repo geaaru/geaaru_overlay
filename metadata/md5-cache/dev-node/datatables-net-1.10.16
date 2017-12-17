@@ -1,0 +1,13 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=>=dev-node/jquery-1.8.3 net-libs/nodejs[npm(+)]
+DESCRIPTION=DataTables for jQuery
+EAPI=6
+HOMEPAGE=https://datatables.net
+KEYWORDS=~amd64 ~arm
+LICENSE=MIT
+RDEPEND=>=dev-node/jquery-1.8.3
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/datatables.net/-/datatables.net-1.10.16.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=4c873ad092c84b8878a4dd417cedd543

@@ -1,0 +1,11 @@
+DEFINED_PHASES=install
+DESCRIPTION=Yii PHP Framework
+EAPI=5
+HOMEPAGE=www.yiiframework.com
+IUSE=symlink
+KEYWORDS=~amd64 ~arm
+LICENSE=BSD
+RDEPEND=dev-lang/php
+SLOT=1.1
+SRC_URI=https://github.com/yiisoft/yii/releases/download/1.1.16/yii-1.1.16.bca042.tar.gz
+_md5_=292850d354573047f3ceeb07b6983d9d

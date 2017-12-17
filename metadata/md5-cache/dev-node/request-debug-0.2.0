@@ -1,0 +1,13 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=>=dev-node/stringify-clone-1.1.1 net-libs/nodejs[npm(+)]
+DESCRIPTION=Library to assist with debugging HTTP(s) requests made by the request module.
+EAPI=6
+HOMEPAGE=https://github.com/request/request-debug
+KEYWORDS=~amd64 ~arm
+LICENSE=MIT
+RDEPEND=>=dev-node/stringify-clone-1.1.1
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/request-debug/-/request-debug-0.2.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=dec49243203d8e830d71fa609e671603

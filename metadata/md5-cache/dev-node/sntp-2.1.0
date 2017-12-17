@@ -1,0 +1,13 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=>=dev-node/hoek-4.2.0 net-libs/nodejs[npm(+)]
+DESCRIPTION=SNTP Client
+EAPI=6
+HOMEPAGE=https://github.com/hueniverse/sntp#readme
+KEYWORDS=~amd64 ~arm
+LICENSE=BSD-3-Clause
+RDEPEND=>=dev-node/hoek-4.2.0
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/sntp/-/sntp-2.1.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=872fc92e9e4c561842e132c474bcb6ce

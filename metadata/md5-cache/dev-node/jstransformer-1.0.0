@@ -1,0 +1,13 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=>=dev-node/is-promise-2.1.0 >=dev-node/promise-7.1.1 net-libs/nodejs[npm(+)]
+DESCRIPTION=Normalize the API of any jstransformer
+EAPI=6
+HOMEPAGE=https://github.com/jstransformers/jstransformer#readme
+KEYWORDS=~amd64 ~arm
+LICENSE=MIT
+RDEPEND=>=dev-node/is-promise-2.1.0 >=dev-node/promise-7.1.1
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/jstransformer/-/jstransformer-1.0.0.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=23808652b10dfc4bb652dbef23ae8332

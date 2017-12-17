@@ -1,0 +1,10 @@
+DEFINED_PHASES=compile install
+DESCRIPTION=FLAIM is an embeddable cross-platform database engine that provides a rich, powerful, easy-to-use feature set.
+EAPI=0
+HOMEPAGE=http://forge.novell.com/modules/xfmod/project/?flaim
+KEYWORDS=alpha amd64 ~arm hppa ~ia64 ~mips ppc ppc64 sparc x86
+LICENSE=GPL-2
+SLOT=0
+SRC_URI=http://forge.novell.com/modules/xfcontent/private.php/flaim/development/flaim/downloads/source/libflaim-4.9.989.tar.gz
+_eclasses_=mono	a59df07822fcb0dec319e09526d84c1f	multilib	97f470f374f2e94ccab04a2fb21d811e	toolchain-funcs	185a06792159ca143528e7010368e8af
+_md5_=8768fcc53742dacd94b4267535b4ef5e

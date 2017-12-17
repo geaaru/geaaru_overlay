@@ -1,0 +1,13 @@
+DEFINED_PHASES=compile install prepare
+DEPEND=>=dev-node/commander-2.8.1 >=dev-node/source-map-0.4.4 net-libs/nodejs[npm(+)]
+DESCRIPTION=A well-tested CSS minifier
+EAPI=6
+HOMEPAGE=https://github.com/jakubpawlowicz/clean-css
+KEYWORDS=~amd64 ~arm
+LICENSE=MIT
+RDEPEND=>=dev-node/commander-2.8.1 >=dev-node/source-map-0.4.4
+RESTRICT=mirror
+SLOT=0
+SRC_URI=http://registry.npmjs.org/clean-css/-/clean-css-3.4.27.tgz
+_eclasses_=npmv1	e903f72841a76e0d00cc2e8914f773fd
+_md5_=1a60d7a4dd9404f41ee558292f2df87f
