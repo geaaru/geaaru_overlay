@@ -33,6 +33,10 @@ RDEPEND="${DEPEND}
 	!sys-fs/zfs-fuse
 "
 
+PATCHES=(
+${FILESDIR}/${P}-raidz-arm.patch
+)
+
 AT_M4DIR="config"
 AUTOTOOLS_IN_SOURCE_BUILD="1"
 
