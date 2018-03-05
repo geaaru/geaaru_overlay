@@ -6,8 +6,9 @@ EAPI="6"
 
 PYTHON_COMPAT=( python2_7 )
 PYTHON_REQ_USE="threads(+)"
+DISTUTILS_SINGLE_IMPL=1
 
-inherit git-r3 python-single-r1 waf-utils
+inherit git-r3 distutils-r1 waf-utils
 
 DESCRIPTION="Time tracking for the masses"
 HOMEPAGE="http://projecthamster.wordpress.com"
@@ -28,16 +29,13 @@ RDEPEND="
 DEPEND="${RDEPEND}
 	dev-util/intltool"
 
-pkg_setup() {
-	python-single-r1_pkg_setup
-}
-
 src_unpack() {
 	git-r3_src_unpack
 }
 
 src_prepare() {
 	python_fix_shebang .
+	distutils-r1_src_prepare
 }
 
 src_install() {
