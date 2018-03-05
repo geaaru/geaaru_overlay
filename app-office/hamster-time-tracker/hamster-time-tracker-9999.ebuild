@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI="5"
+EAPI="6"
 
 PYTHON_COMPAT=( python2_7 )
 PYTHON_REQ_USE="threads(+)"
@@ -22,8 +22,8 @@ RDEPEND="
 	gnome-base/gconf[introspection]
 	dev-python/pyxdg
 	dev-python/jira
-	dev-python/beaker[${PYTHON_COMPAT}]
-	dev-python/requests[${PYTHON_COMPAT}]
+	dev-python/beaker[${PYTHON_USEDEP}]
+	dev-python/requests[${PYTHON_USEDEP}]
 "
 DEPEND="${RDEPEND}
 	dev-util/intltool"
