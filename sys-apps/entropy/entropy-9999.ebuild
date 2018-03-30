@@ -1,19 +1,17 @@
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
 
-EAPI=5
+EAPI=6
 
 PYTHON_COMPAT=( python2_7 )
 PYTHON_REQ_USE="sqlite"
 
-inherit eutils python-single-r1 user git-2
+inherit eutils python-single-r1 user git-r3
 
 DESCRIPTION="Entropy Package Manager foundation library"
 HOMEPAGE="http://www.sabayon.org"
 
 EGIT_REPO_URI="https://github.com/Sabayon/entropy.git"
-EGIT_PROJECT="entropy"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -22,7 +20,7 @@ KEYWORDS=""
 IUSE=""
 
 RDEPEND=">=app-misc/pax-utils-0.7
-	dev-db/sqlite:3[soundex(+)]
+	dev-db/sqlite
 	net-misc/rsync
 	sys-apps/diffutils
 	sys-apps/sandbox
