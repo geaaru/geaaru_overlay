@@ -11,7 +11,8 @@ inherit eutils python-single-r1 user git-r3
 DESCRIPTION="Entropy Package Manager foundation library"
 HOMEPAGE="http://www.sabayon.org"
 
-EGIT_REPO_URI="https://github.com/Sabayon/entropy.git"
+#EGIT_REPO_URI="https://github.com/Sabayon/entropy.git"
+EGIT_REPO_URI="https://github.com/geaaru/entropy.git"
 
 LICENSE="GPL-2"
 SLOT="0"
