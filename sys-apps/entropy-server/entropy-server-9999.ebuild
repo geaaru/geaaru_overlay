@@ -12,6 +12,7 @@ HOMEPAGE="http://www.sabayon.org"
 LICENSE="GPL-2"
 
 EGIT_REPO_URI="https://github.com/Sabayon/entropy.git"
+EGIT_BRANCH="fix_ask_eit_inject"
 
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~x86"
@@ -19,7 +20,7 @@ IUSE="+matter"
 
 S="${WORKDIR}/${P}/server"
 
-RDEPEND="~sys-apps/entropy-${PV}[${PYTHON_USEDEP}]
+RDEPEND="sys-apps/entropy[${PYTHON_USEDEP}]
 	matter? ( app-admin/matter[entropy] )
 	${PYTHON_DEPS}
 	"

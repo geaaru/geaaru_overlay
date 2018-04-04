@@ -19,7 +19,7 @@ EGIT_REPO_URI="https://github.com/Sabayon/entropy.git"
 S="${WORKDIR}/${P}/${PN}"
 
 DEPEND=""
-RDEPEND="entropy? ( ~sys-apps/entropy[${PYTHON_USEDEP}] )
+RDEPEND="entropy? ( sys-apps/entropy[${PYTHON_USEDEP}] )
 	sys-apps/file[python]
 	${PYTHON_DEPS}"
 
