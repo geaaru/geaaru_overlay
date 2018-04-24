@@ -1,0 +1,11 @@
+--- a/lxcfs.c
++++ b/lxcfs.c
+@@ -860,7 +860,7 @@ int main(int argc, char *argv[])
+ 	swallow_arg(&argc, argv, "-f");
+ 	debug = swallow_arg(&argc, argv, "-d");
+ 	if (swallow_option(&argc, argv, "-o", &v)) {
+-		if (strcmp(v, "allow_other") != 0) {
++		if (strncmp(v, "allow_other", 11) != 0 && strncmp(v, "nonempty", 8) != 0) {
+ 			fprintf(stderr, "Warning: unexpected fuse option %s\n", v);
+ 			exit(EXIT_FAILURE);
+ 		}
