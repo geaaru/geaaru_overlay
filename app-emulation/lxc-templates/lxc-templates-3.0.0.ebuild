@@ -3,6 +3,8 @@
 
 EAPI=6
 
+inherit autotools
+
 DESCRIPTION="Old style template scripts for LXC (prefer distrobuilder)"
 HOMEPAGE="https://github.com/lxc/lxc-templates"
 SRC_URI="https://github.com/lxc/${PN}/archive/${P}.tar.gz"
@@ -16,3 +18,8 @@ S="${WORKDIR}/${PN}-${P}"
 
 DEPEND=">=app-emulation/lxc-3.0.0"
 RDEPEND="${DEPEND}"
+
+src_prepare() {
+	default
+	eautoreconf
+}
