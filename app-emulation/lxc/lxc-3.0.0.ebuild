@@ -13,7 +13,7 @@ KEYWORDS="~amd64 ~arm ~arm64"
 
 LICENSE="LGPL-3"
 SLOT="0"
-IUSE="doc examples seccomp"
+IUSE="doc examples seccomp pam"
 
 RDEPEND="net-libs/gnutls
 	sys-libs/libcap
@@ -118,6 +118,7 @@ src_configure() {
 		--with-runtime-path=/run \
 		--disable-apparmor \
 		--disable-werror \
+		$(use_enable pam) \
 		$(use_enable doc) \
 		$(use_enable examples) \
 		$(use_enable seccomp)
