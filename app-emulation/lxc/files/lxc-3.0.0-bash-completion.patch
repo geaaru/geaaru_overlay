@@ -1,0 +1,23 @@
+--- a/config/bash/lxc.in	2018-03-28 03:48:26.000000000 +0200
++++ b/config/bash/lxc.in	2018-04-28 19:43:00.391704902 +0200
+@@ -1,4 +1,3 @@
+-_have lxc-start && {
+     _lxc_names() {
+         COMPREPLY=( $( compgen -W "$( lxc-ls )" "$cur" ) )
+     }
+@@ -108,4 +107,3 @@
+     complete -o default -F _lxc_generic_t lxc-create
+ 
+     complete -o default -F _lxc_generic_o lxc-copy
+-}
+--- a/configure.ac
++++ b/configure.ac
+@@ -395,7 +395,7 @@
+ AM_COND_IF([ENABLE_BASH],
+ 	[AC_MSG_CHECKING([bash completion directory])
+ 	PKG_CHECK_VAR(bashcompdir, [bash-completion], [completionsdir], ,
+-		bashcompdir="${sysconfdir}/bash_completion.d")
++		bashcompdir="$datadir/bash-completion/completions")
+ 	AC_MSG_RESULT([$bashcompdir])
+ 	AC_SUBST(bashcompdir)
+ 	])

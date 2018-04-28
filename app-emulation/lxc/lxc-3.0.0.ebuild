@@ -94,8 +94,7 @@ pkg_setup() {
 }
 
 src_prepare() {
-	#eapply "${FILESDIR}"/${PN}-2.0.6-bash-completion.patch
-	#558854
+	eapply "${FILESDIR}"/${PN}-3.0.0-bash-completion.patch
 	eapply "${FILESDIR}"/${PN}-2.0.5-omit-sysconfig.patch
 	eapply_user
 	eautoreconf
@@ -135,7 +134,7 @@ src_install() {
 	# start-ephemeral is no longer a command but removing it here
 	# generates QA warnings (still in upstream completion script)
 	bashcomp_alias ${PN}-start \
-		${PN}-{attach,cgroup,copy,console,create,destroy,device,execute,freeze,info,monitor,snapshot,start-ephemeral,stop,unfreeze,wait}
+		${PN}-{attach,cgroup,copy,console,create,destroy,device,execute,freeze,info,monitor,snapshot,stop,unfreeze,unshare,wait}
 
 	keepdir /etc/lxc /var/lib/lxc/rootfs /var/log/lxc
 
