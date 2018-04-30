@@ -1,31 +1,47 @@
 diff --git a/lxcfs.c b/lxcfs.c
-index 62cfd35..313c297 100644
+index 62cfd35..d283dae 100644
 --- a/lxcfs.c
 +++ b/lxcfs.c
-@@ -847,7 +847,7 @@ int main(int argc, char *argv[])
+@@ -845,9 +845,10 @@ int main(int argc, char *argv[])
+ {
+ 	int ret = EXIT_FAILURE;
  	int pidfd = -1;
- 	char *pidfile = NULL, *v = NULL;
+-	char *pidfile = NULL, *v = NULL;
++	char *pidfile = NULL, *v = NULL,
++		  *saveptr = NULL, *token = NULL;
  	size_t pidfile_len;
 -	bool debug = false;
 +	bool debug = false, nonempty = false;
  	/*
  	 * what we pass to fuse_main is:
  	 * argv[0] -s [-f|-d] -o allow_other,directio argv[1] NULL
-@@ -860,10 +860,11 @@ int main(int argc, char *argv[])
+@@ -860,12 +861,20 @@ int main(int argc, char *argv[])
  	swallow_arg(&argc, argv, "-f");
  	debug = swallow_arg(&argc, argv, "-d");
  	if (swallow_option(&argc, argv, "-o", &v)) {
 -		if (strcmp(v, "allow_other") != 0) {
-+		if (strncmp(v, "allow_other", 11) != 0 && strncmp(v, "nonempty", 8) != 0) {
- 			fprintf(stderr, "Warning: unexpected fuse option %s\n", v);
- 			exit(EXIT_FAILURE);
+-			fprintf(stderr, "Warning: unexpected fuse option %s\n", v);
+-			exit(EXIT_FAILURE);
 -		}
-+		} else if (strncmp(v, "nonempty", 8) == 0)
-+			nonempty = true;
++		/* Parse multiple values */
++		for (; (token = strtok_r(v, ",", &saveptr)); v = NULL) {
++			if (strncmp(token, "allow_other", 11) == 0) {
++				/* Noop. this is the default. Always enabled. */
++			} else if (strncmp(token, "nonempty", 8) == 0) {
++				nonempty = true;
++			} else {
++				free(v);
++				fprintf(stderr, "Warning: unexpected fuse option %s\n", v);
++				exit(EXIT_FAILURE);
++			}
++		} // end for
  		free(v);
- 		v = NULL;
+-		v = NULL;
++		v = NULL, saveptr = NULL;
  	}
-@@ -890,7 +891,10 @@ int main(int argc, char *argv[])
+ 	if (swallow_option(&argc, argv, "-p", &v))
+ 		pidfile = v;
+@@ -890,7 +899,10 @@ int main(int argc, char *argv[])
                  newargv[cnt++] = "-f";
          }
  	newargv[cnt++] = "-o";
