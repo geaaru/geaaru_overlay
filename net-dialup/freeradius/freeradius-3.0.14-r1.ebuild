@@ -25,7 +25,8 @@ IUSE="
 	postgres python readline sqlite ssl redis memcache
 "
 RESTRICT="test firebird? ( bindist )"
-
+# Remove ldap for an issue on install. Fixed on 3.0.17.
+# ldap? ( net-nds/openldap )
 RDEPEND="!net-dialup/cistronradius
 	!net-dialup/freeradius:3.1
 	!net-dialup/gnuradius
@@ -41,7 +42,6 @@ RDEPEND="!net-dialup/cistronradius
 	firebird? ( dev-db/firebird )
 	pam? ( virtual/pam )
 	ssl? ( dev-libs/openssl:0= )
-	ldap? ( net-nds/openldap )
 	kerberos? ( virtual/krb5 )
 	sqlite? ( dev-db/sqlite:3 )
 	odbc? ( dev-db/unixODBC )
@@ -74,7 +74,7 @@ src_prepare() {
 	# not interested in using.
 
 	use ssl || { rm -r src/modules/rlm_eap/types/rlm_eap_{tls,ttls,peap} || die ; }
-	use ldap || { rm -r src/modules/rlm_ldap || die ; }
+	rm -r src/modules/rlm_ldap || die
 	use kerberos || { rm -r src/modules/rlm_krb5 || die ; }
 	use pam || { rm -r src/modules/rlm_pam || die ; }
 	use python || { rm -r src/modules/rlm_python || die ; }
@@ -171,10 +171,10 @@ src_configure() {
 		--with-docdir=/usr/share/doc/${PF} \
 		--with-logdir=/var/log/radius \
 		$(use_enable debug developer) \
-		$(use_with ldap edir) \
 		$(use_with ssl openssl) \
 		${myconf[@]}
 }
+#		$(use_with ldap edir)
 
 src_compile() {
 	# verbose, do not generate certificates
@@ -231,7 +231,7 @@ pkg_config() {
 		cd "${ROOT}"/etc/raddb/certs
 		./bootstrap
 
-		chown -R root:radius "${ROOT}"/etc/raddb/certs
+		fowners -R root:radius "${ROOT}"/etc/raddb/certs
 	fi
 }
 
