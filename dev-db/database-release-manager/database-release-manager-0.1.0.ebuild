@@ -14,8 +14,8 @@ SRC_URI="https://github.com/geaaru/database-release-manager/archive/v0.1.0.tar.g
 LICENSE="GPL-2.0"
 SLOT="0"
 KEYWORDS="amd64 x86"
-IUSE="doc mysql +oracle +mongo"
-REQUIRED_USE="|| ( mysql oracle mongo )"
+IUSE="doc +mysql oracle mongo"
+REQUIRED_USE=""
 
 DEPEND="doc? (
 	>=dev-python/sphinx-1.6.3
