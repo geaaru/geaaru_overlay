@@ -5,7 +5,7 @@
 EAPI=5
 
 FREERADIUS_MOD_TYPE="sql"
-FREERADIUS_VERSION="3.0.14"
+FREERADIUS_VERSION="3.0.17"
 
 SLOT="3.0"
 
@@ -18,16 +18,17 @@ HOMEPAGE="https://github.com/geaaru/rlm_sql_ocioracle"
 
 EGIT_REPO_URI="https://github.com/geaaru/rlm_sql_ocioracle.git"
 EGIT_PROJECT="rlm_sql_ocioracle"
-EGIT_COMMIT="master"
+EGIT_COMMIT="0.3.0"
 
-KEYWORDS=""
+KEYWORDS="~amd64"
 LICENSE="GPL-2"
 IUSE=""
 
 REQUIRED_USE=""
 
 RDEPEND="
-	net-dialup/freeradius
+	>=net-dialup/freeradius-${FREERADIUS_VERSION}
+	<=net-dialup/freeradius-3.1
 	sys-devel/libtool
 	dev-lang/perl
 	sys-libs/gdbm
