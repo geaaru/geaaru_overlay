@@ -33,7 +33,7 @@ DEPEND="
 	${RDEPEND}
 "
 PATCHES=(
-	"${FILESDIR}/${P}-fusermount-path.patch"
+	"${FILESDIR}/${PN}-3.0.0-fusermount-path.patch"
 )
 
 src_prepare() {
