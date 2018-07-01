@@ -55,7 +55,7 @@ src_configure() {
 src_install() {
 	default
 	keepdir /var/lib/lxcfs
-	newinitd "${FILESDIR}"/${P}.initd lxcfs
+	newinitd "${FILESDIR}"/${PN}-3.0.0.initd lxcfs
 	systemd_dounit config/init/systemd/lxcfs.service
 }
 
