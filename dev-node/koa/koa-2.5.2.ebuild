@@ -14,6 +14,7 @@ IUSE=""
 
 DEPEND="
 	>=dev-node/accepts-1.3.5
+	>=dev-node/cache-content-type-1.0.1
 	>=dev-node/content-disposition-0.5.2
 	>=dev-node/content-type-1.0.4
 	>=dev-node/cookies-0.7.1
@@ -30,7 +31,6 @@ DEPEND="
 	>=dev-node/koa-compose-4.1.0
 	>=dev-node/koa-convert-1.2.0
 	>=dev-node/koa-is-json-1.0.0
-	>=dev-node/mime-types-2.1.18
 	>=dev-node/on-finished-2.3.0
 	>=dev-node/only-0.0.2
 	>=dev-node/parseurl-1.3.2
