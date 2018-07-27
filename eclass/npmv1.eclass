@@ -53,7 +53,7 @@ fi
 #  * NPM_NO_MIRROR:      Boolean value that add RESTRICT="mirror" for download package from SRC_URI.
 #                        Default is True. Set to False to try to download package from gentoo mirrors.
 
-NPMV1_ECLASS_VERSION="0.2.0"
+NPMV1_ECLASS_VERSION="0.2.1"
 
 _npmv1_set_metadata() {
 
@@ -74,7 +74,7 @@ _npmv1_set_metadata() {
                 RESTRICT="mirror"
             fi
         fi
-        if [[ -z "${SRC_URI}" ]] ; then
+        if [[ -z "${SRC_URI}" && -z "${EGIT_REPO_URI}" ]] ; then
             if [[ -n "${NPM_GITHUP_MOD}" ]] ; then
                 SRC_URI="https://github.com/${NPM_GITHUP_MOD}/archive/v${PV}.zip -> ${PF}.zip"
             else
