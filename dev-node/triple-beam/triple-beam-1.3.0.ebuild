@@ -17,7 +17,7 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 NPM_PKG_DIRS="
-config
+        config
 "
 
 NPM_NO_DEPS=1
