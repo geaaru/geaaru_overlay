@@ -4,8 +4,14 @@
 
 EAPI=6
 
+inherit npmv1 git-r3
+
 DESCRIPTION="A Node.js module for Oracle Database access"
 HOMEPAGE="http://oracle.github.io/node-oracledb/"
+
+EGIT_COMMIT="v2.3.0"
+EGIT_SUBMODULES=( '*' )
+EGIT_REPO_URI="https://github.com/oracle/node-oracledb.git"
 
 LICENSE="Apache-2.0"
 SLOT="0"
@@ -17,12 +23,8 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
+NPM_GITHUP_MOD="oracle/node-oracledb"
 NPM_PKG_DIRS="
 build/Release
 "
 NPM_GYP_PKG=1
-
-S="${WORKDIR}/package"
-
-inherit npmv1
-
