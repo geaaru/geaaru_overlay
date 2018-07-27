@@ -16,6 +16,10 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
+NPM_PKG_DIRS="
+config
+"
+
 NPM_NO_DEPS=1
 
 S="${WORKDIR}/package"
