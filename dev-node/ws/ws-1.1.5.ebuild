@@ -1,11 +1,11 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # Ebuild automatically produced by node-ebuilder.
 
 EAPI=6
 
-DESCRIPTION="simple to use, blazing fast and thoroughly tested websocket client, server and console for node.js, up-to-date against RFC-6455"
-HOMEPAGE="https://github.com/websockets/ws#readme"
+DESCRIPTION="Simple to use, blazing fast and thoroughly tested websocket client and server for Node.js"
+HOMEPAGE="https://github.com/websockets/ws"
 
 LICENSE="MIT"
 SLOT="0"
