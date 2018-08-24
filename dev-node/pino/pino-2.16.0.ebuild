@@ -25,6 +25,9 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 NPM_NO_DEPS=1
+NPM_BINS="
+	pretty.js => pino
+"
 
 S="${WORKDIR}/package"
 
