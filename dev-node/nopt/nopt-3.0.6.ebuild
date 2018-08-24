@@ -5,7 +5,7 @@
 EAPI=6
 
 DESCRIPTION="Option parsing for Node, supporting types, shorthands, etc. Used by npm."
-HOMEPAGE="https://github.com/isaacs/nopt#readme"
+HOMEPAGE="https://github.com/npm/nopt#readme"
 
 LICENSE="ISC"
 SLOT="0"
