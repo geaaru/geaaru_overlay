@@ -17,8 +17,8 @@ IUSE=""
 
 DEPEND="
 	>=dev-node/asynckit-0.4.0
-	>=dev-node/combined-stream-1.0.5
-	>=dev-node/mime-types-2.1.17
+	>=dev-node/combined-stream-1.0.6
+	>=dev-node/mime-types-2.1.19
 "
 RDEPEND="${DEPEND}"
 
