@@ -1,6 +1,5 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 # Ebuild automatically produced by node-ebuilder.
 
 EAPI=6
@@ -15,22 +14,24 @@ IUSE=""
 
 DEPEND="
 	>=dev-node/asn1-0.2.3
-	>=dev-node/dashdash-1.13.1
+	>=dev-node/bcrypt-pbkdf-1.0.1
+	>=dev-node/dashdash-1.14.1
 	>=dev-node/ecc-jsbn-0.1.1
-	>=dev-node/getpass-0.1.6
-	>=dev-node/jodid25519-1.0.2
-	>=dev-node/jsbn-0.1.0
-	>=dev-node/tweetnacl-0.13.3
+	>=dev-node/getpass-0.1.7
+	>=dev-node/jsbn-0.1.1
+	>=dev-node/safer-buffer-2.1.2
+	>=dev-node/tweetnacl-0.14.5
 "
 RDEPEND="${DEPEND}"
 
 NPM_SYSTEM_MODULES="
 asn1
+bcrypt-pbkdf
 dashdash
 ecc-jsbn
 getpass
-jodid25519
 jsbn
+safer-buffer
 tweetnacl
 "
 
