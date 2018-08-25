@@ -5,7 +5,7 @@
 EAPI=6
 
 DESCRIPTION="super fast, all natural json logger"
-HOMEPAGE="https://github.com/pinojs/pino#readme"
+HOMEPAGE="https://github.com/pinojs/pino"
 
 LICENSE="MIT"
 SLOT="0"
@@ -17,14 +17,45 @@ DEPEND="
 	>=dev-node/fast-json-parse-1.0.3
 	>=dev-node/fast-safe-stringify-1.2.3
 	>=dev-node/flatstr-1.0.8
-	>=dev-node/object-assign-4.1.1
 	>=dev-node/once-1.4.0
 	>=dev-node/quick-format-unescaped-1.1.2
 	>=dev-node/split2-2.2.0
 "
 RDEPEND="${DEPEND}"
 
-NPM_NO_DEPS=1
+# Required object.assign-4.1.0 because file polyfill.js
+# is no more available on v.4.1.1
+NPM_SYSTEM_MODULES="
+	chalk
+	fast-json-parse
+	flatstr
+	once
+	quick-format-unescaped
+	split2
+	ansi-regex
+	ansi-styles
+	core-util-is
+	define-properties
+	escape-string-regexp
+	fast-safe-stringify
+	function-bind
+	has-ansi
+	has-symbols
+	inherits
+	isarray
+	object-keys
+	process-nextick-args
+	readable-stream
+	safe-buffer
+	string_decoder
+	strip-ansi
+	supports-color
+	through2
+	util-deprecate
+	wrappy
+	xtend
+"
+NPM_NO_DEPS=0
 NPM_PKG_DIRS="
 	usage.txt
 "
