@@ -55,6 +55,10 @@ NPM_SYSTEM_MODULES="
 	typewiselite
 	xtend
 "
+NPM_PKG_DIRS="
+	codec
+	examples
+"
 
 S="${WORKDIR}/package"
 
