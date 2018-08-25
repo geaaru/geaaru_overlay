@@ -14,7 +14,6 @@ IUSE=""
 
 DEPEND="
 	>=dev-node/d-1.0.0
-	>=dev-node/es5-ext-0.10.46
 	>=dev-node/es6-symbol-3.1.1
 "
 RDEPEND="${DEPEND}"
