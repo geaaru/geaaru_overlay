@@ -6,6 +6,7 @@ EAPI=6
 
 DESCRIPTION="ES6 Object.assign() ponyfill"
 HOMEPAGE="https://github.com/sindresorhus/object-assign"
+SRC_URI="http://registry.npmjs.org/${PN}/-/${P}.tgz"
 
 LICENSE="MIT"
 SLOT="0"
