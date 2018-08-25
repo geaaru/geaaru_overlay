@@ -41,6 +41,8 @@ DEPEND="
 	>=dev-node/steed-1.1.3
 	>=dev-node/uuid-2.0.3
 	>=dev-node/websocket-stream-3.1.0
+	>=dev-node/define-properties-1.1.3
+	>=dev-node/has-symbols-1.0.0
 "
 RDEPEND="${DEPEND}"
 
