@@ -33,3 +33,9 @@ S="${WORKDIR}/package"
 
 inherit npmv1
 
+src_install() {
+	npmv1_src_install
+	# Fix permission of pretty.js file
+	fperms 0755 /usr/lib64/node_modules/${PN}/pretty.js
+}
+
