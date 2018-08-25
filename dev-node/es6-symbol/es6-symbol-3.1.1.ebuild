@@ -5,7 +5,7 @@
 EAPI=6
 
 DESCRIPTION="ECMAScript 6 Symbol polyfill"
-HOMEPAGE="https://github.com/medikoo/es6-symbol#readme"
+HOMEPAGE="https://github.com/medikoo/es6-symbol"
 
 LICENSE="MIT"
 SLOT="0"
@@ -14,7 +14,6 @@ IUSE=""
 
 DEPEND="
 	>=dev-node/d-1.0.0
-	>=dev-node/es5-ext-0.10.46
 "
 RDEPEND="${DEPEND}"
 
