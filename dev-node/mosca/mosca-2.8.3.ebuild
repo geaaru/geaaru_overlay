@@ -45,8 +45,8 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 NPM_NO_DEPS=1
-NPM_BINS="
-	bin/mosca => mosca
+NPM_PKG_DIRS="
+	examples
 "
 
 S="${WORKDIR}/package"
