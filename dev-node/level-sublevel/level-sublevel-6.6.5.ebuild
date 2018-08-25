@@ -14,7 +14,6 @@ IUSE=""
 
 DEPEND="
 	>=dev-node/bytewise-1.1.0
-	>=dev-node/levelup-0.19.1
 	>=dev-node/ltgt-2.1.3
 	>=dev-node/pull-defer-0.2.3
 	>=dev-node/pull-level-2.0.4
@@ -24,7 +23,38 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
-NPM_NO_DEPS=1
+# Levelup 0.19.x is not available on portage
+# and it's required for: Cannot find module 'levelup/lib/errors'
+NPM_NO_DEPS=0
+NPM_SYSTEM_MODULES="
+	abstract-leveldown
+	bl
+	bytewise
+	bytewise-core
+	core-util-is
+	deferred-leveldown
+	errno
+	inherits
+	isarray
+	level-post
+	looper
+	ltgt
+	prr
+	pull-cat
+	pull-defer
+	pull-level
+	pull-live
+	pull-pushable
+	pull-stream
+	pull-window
+	readable-stream
+	semver
+	string_decoder
+	typewise
+	typewise-core
+	typewiselite
+	xtend
+"
 
 S="${WORKDIR}/package"
 
