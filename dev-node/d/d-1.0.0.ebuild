@@ -12,10 +12,10 @@ SLOT="0"
 KEYWORDS="~amd64 ~arm"
 IUSE=""
 
-DEPEND="
-	>=dev-node/es5-ext-0.10.46
-"
-RDEPEND="${DEPEND}"
+DEPEND=""
+RDEPEND=""
+# Avoid circular dependencies
+# >=dev-node/es5-ext-0.10.46
 
 NPM_NO_DEPS=1
 
