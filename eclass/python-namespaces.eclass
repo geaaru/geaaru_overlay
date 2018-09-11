@@ -1,4 +1,4 @@
-# Copyright 1999-2014 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -14,7 +14,7 @@
 
 # Use PYTHON_NAMESPACES variable to catch namespace to handle.
 
-inherit python-any-r1 python-utils-r1
+inherit python-r1 python-utils-r1
 
 if [[ -z "${PYTHON_NAMESPACES}" ]]; then
     die "PYTHON_NAMESPACES variable not set"
@@ -49,14 +49,8 @@ _python-namespaces_set_metadata
 unset -f _python-namespaces_set_metadata
 
 
-EXPORT_FUNCTIONS pkg_setup src_install pkg_postinst pkg_postrm
+EXPORT_FUNCTIONS src_install pkg_postinst pkg_postrm
 
-
-python-namespaces_pkg_setup() {
-
-    python-any-r1_pkg_setup
-
-}
 
 python-namespaces_src_install() {
 
@@ -72,25 +66,21 @@ python-namespaces_src_install() {
 
         local impl=${@}
         local namespace
+
         for namespace in ${_PYTHON_NAMESPACES}; do
 
-            dodir $(python_get_sitedir "${impl}")/${namespace//.//} || return 1
+            dodir $(python_get_sitedir "${EPYTHON}")/${namespace//.//} || return 1
             echo \
 "
 import pkg_resources
 pkg_resources.declare_namespace(__name__)
-" > "${ED}$(python_get_sitedir "${impl}")/${namespace//.//}/__init__.py" || return 1
+" > "${ED}$(python_get_sitedir "${EPYTHON}")/${namespace//.//}/__init__.py" || return 1
         done
     }
 
-    for i in "${PYTHON_COMPAT[@]}"; do
-        python_is_installed ${i} || die "Python ${i} is not installed"
-        python_export ${i} EPYTHON PYTHON
-        python-namespaces_installation ${i}
-    done
+    python_foreach_impl python-namespaces_installation
 
     unset -f python-namespaces_installation
-
 }
 
 # @FUNCTION: python-namespaces_pkg_postinst
