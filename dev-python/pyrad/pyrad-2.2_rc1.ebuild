@@ -19,10 +19,11 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86 ~arm"
 IUSE="doc test"
 
+RDEPEND="dev-python/netaddr[${PYTHON_USEDEP}]
+		dev-python/six[${PYTHON_USEDEP}]"
+
 DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
 		>=dev-python/pbr-0.6[${PYTHON_USEDEP}]
-		dev-python/netaddr[${PYTHON_USEDEP}]
-		dev-python/six[${PYTHON_USEDEP}]
 	test? ( dev-python/nose[${PYTHON_USEDEP}]
 			>=dev-python/mock-1.0[${PYTHON_USEDEP}]
 			>=dev-python/mox-0.5.3[${PYTHON_USEDEP}]
@@ -30,9 +31,6 @@ DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
 			>=dev-python/testrepository-0.0.18[${PYTHON_USEDEP}]
 			>=dev-python/testscenarios-0.4[${PYTHON_USEDEP}]
 			>=dev-python/testtools-0.9.34[${PYTHON_USEDEP}] )
-	doc? ( dev-python/sphinx[${PYTHON_USEDEP}] )"
-
-RDEPEND="
-"
-
+	doc? ( dev-python/sphinx[${PYTHON_USEDEP}] )
+${RDEPEND}"
 
