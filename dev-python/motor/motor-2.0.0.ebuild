@@ -16,12 +16,11 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86 ~arm"
 IUSE="doc test"
 
+RDEPEND=">=dev-python/pymongo-3.7.0[${PYTHON_USEDEP}]"
+
 DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
 ${RDEPEND}
 "
 
-RDEPEND="
-	>=dev-python/pymongo-3.7.0[${PYTHON_USEDEP}]
-"
 
 
