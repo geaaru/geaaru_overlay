@@ -22,5 +22,10 @@ NPM_NO_DEPS=1
 
 S="${WORKDIR}/package"
 
-inherit npmv1
+inherit npmv1 eutils
 
+src_prepare() {
+	npmv1_src_prepare
+
+	epatch "${FILESDIR}"/support_onem2m_ct.patch || die "Error on apply patch"
+}
