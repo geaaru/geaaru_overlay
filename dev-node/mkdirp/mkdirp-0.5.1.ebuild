@@ -27,7 +27,7 @@ NPM_BINS="
 "
 
 NPM_GITHUP_MOD="substack/node-mkdirp"
-SRC_URI="https://github.com/${NPM_GITHUP_MOD}/archive/${PV}.zip"
+SRC_URI="https://github.com/${NPM_GITHUP_MOD}/archive/${PV}.zip -> ${P}.zip"
 
 
 inherit npmv1
