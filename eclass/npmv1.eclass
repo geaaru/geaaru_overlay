@@ -43,6 +43,10 @@ fi
 #  * NPM_SYSTEM_MODULES: If defined permit to avoid install of the packages modules to insert
 #                        on this variable. This permit to use module installed from another ebuild.
 #                        When this options is used NPM_NO_DEPS must be with value a 0 or not present.
+#  * NPM_LOCAL_MODULES:  It works in opposite of NPM_SYSTEM_MODULES to define modules that are installed
+#                        locally on package directory and avoid use of system installed packages.
+#                        It used always for sub-packages/sub-directories modules.
+#                        When this options is used NPM_NO_DEPS must be with value a 0 or not present.
 #  * NPM_PKG_DIRS:       Permit of defines additional directories or files to intall. Default install directory
 #                        if available is lib directory.
 #  * NPM_NO_DEPS:        If present and with value equal to 1 then disable download of node modules
@@ -53,7 +57,7 @@ fi
 #  * NPM_NO_MIRROR:      Boolean value that add RESTRICT="mirror" for download package from SRC_URI.
 #                        Default is True. Set to False to try to download package from gentoo mirrors.
 
-NPMV1_ECLASS_VERSION="0.2.1"
+NPMV1_ECLASS_VERSION="0.3.0"
 
 _npmv1_set_metadata() {
 
@@ -88,6 +92,9 @@ _npmv1_set_metadata() {
 
     fi
 
+    # Avoid use of both NPM_SYSTEM_MODULES and NPM_LOCAL_MODULES
+    [[ -n "${NPM_SYSTEM_MODULES}" && -n "${NPM_LOCAL_MODULES}" ]] && \
+        die "Both NPM_LOCAL_MODULES and NPM_SYSTEM_MODULES variables defined!"
 
 }
 
@@ -201,19 +208,32 @@ ${nodecmd}${bindir}/${binfile} \$@
     _npmv1_install_module () {
 
         local mod=$1
+        # mode: 0 -> use NPM_SYSTEM_MODULES, 1 -> use NPM_LOCAL_MODULES
+        local mode=${2:-0}
         local mod2install=true
         local i=0
         local sym=""
         local words=""
         local f=""
 
-        # Check if present on system module
-        for i in ${!npm_sys_mods[@]} ; do
-            if [[ ${mod} = ${npm_sys_mods[$i]} ]] ; then
-                mod2install=false
-                break
-            fi
-        done
+        if [ $mode = "0" ] ; then
+            # Check if present on system module
+            for i in ${!npm_sys_mods[@]} ; do
+                if [[ ${mod} = ${npm_sys_mods[$i]} ]] ; then
+                    mod2install=false
+                    break
+                fi
+            done
+        else
+            mod2install=false
+            # Check if present on local module
+            for i in ${!npm_local_mods[@]} ; do
+                if [[ ${mod} = ${npm_local_mods[$i]} ]] ; then
+                    mod2install=true
+                    break
+                fi
+            done
+        fi
 
         if [[ $mod2install = true ]] ; then
             cp -rf node_modules/${mod} ${D}/${NPM_PACKAGEDIR}/node_modules/ || \
@@ -343,16 +363,29 @@ ${nodecmd}${bindir}/${binfile} \$@
 
         else
 
-            if [[ ${NPM_GYP_PKG} -ne 1 ]] ; then
-                # If NPM_SYSTEM_MODULES is not present
-                # and NPM_GYP_PKG is equal to 1
-                # then doesn't install dependencies.
+            if [ -n "${NPM_LOCAL_MODULES}" ] ; then
 
-                if [[ ${#npm_pkg_mods[@]} -gt 0 ]] ; then
-                    # Install package modules
-                    dodir ${NPM_PACKAGEDIR}/node_modules/
+                # Create an array with all modules to include locally
+                npm_local_mods=( ${NPM_LOCAL_MODULES} )
 
-                    cp -rf node_modules/* ${D}/${NPM_PACKAGEDIR}/node_modules/
+                for i in ${!npm_pkg_mods[@]} ; do
+                    _npmv1_install_module "${npm_pkg_mods[$i]}" "1"
+                done
+
+            else
+
+                if [[ ${NPM_GYP_PKG} -ne 1 ]] ; then
+                    # If NPM_SYSTEM_MODULES is not present
+                    # and NPM_GYP_PKG is equal to 1
+                    # then doesn't install dependencies.
+
+                    if [[ ${#npm_pkg_mods[@]} -gt 0 ]] ; then
+                        # Install package modules
+                        dodir ${NPM_PACKAGEDIR}/node_modules/
+
+                        cp -rf node_modules/* ${D}/${NPM_PACKAGEDIR}/node_modules/
+                    fi
+
                 fi
 
             fi
