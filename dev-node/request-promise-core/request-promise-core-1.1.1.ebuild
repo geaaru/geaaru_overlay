@@ -25,5 +25,9 @@ NPM_NO_DEPS=1
 
 S="${WORKDIR}/package"
 
+src_configure() {
+	echo "Skipping configure"
+}
+
 inherit npmv1
 
