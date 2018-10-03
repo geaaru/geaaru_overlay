@@ -17,6 +17,9 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
+NPM_PKG_DIRS="
+	encodings
+"
 NPM_NO_DEPS=1
 
 S="${WORKDIR}/package"
