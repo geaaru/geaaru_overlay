@@ -24,7 +24,7 @@ NPM_PKG_DIRS="
 	es6
 	es7
 	fn
-	libraries
+	library
 	modules
 	stage
 	web
