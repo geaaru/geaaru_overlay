@@ -106,30 +106,24 @@ PATCHES=(
 src_configure() {
 	append-flags -fno-strict-aliasing
 
-	# I am not sure about the --with-rootfs-path
-	# /var/lib/lxc is probably more appropriate than
-	# /usr/lib/lxc.
-	# Note by holgersson: Why is apparmor disabled?
-	econf \
-		--localstatedir=/var \
-		--bindir=/usr/bin \
-		--sbindir=/usr/bin \
-		--with-config-path=/var/lib/lxc \
-		--with-rootfs-path=/var/lib/lxc/rootfs \
-		--with-distro=gentoo \
-		--with-runtime-path=/run \
-		--disable-werror \
-		$(use_enable pam) \
-		$(use_enable doc) \
-		$(use_enable examples) \
-		$(use_with pam pamdir $(getpam_mod_dir)) \
-		$(use_enable seccomp) \
-		$(use_enable apparmor) \
+	local myeconfargs=(
+		--localstatedir=/var
+		--bindir=/usr/bin
+		--sbindir=/usr/bin
+		--with-config-path=/var/lib/lxc
+		--with-rootfs-path=/var/lib/lxc/rootfs
+		--with-distro=sabayon
+		--with-runtime-path=/run
+		--disable-werror
+		$(use_enable doc)
+		$(use_enable examples)
+		$(use_enable pam)
+		$(use_with pam pamdir $(getpam_mod_dir))
+		$(use_enable seccomp)
+		$(use_enable apparmor)
 		$(use_enable selinux)
-}
-
-src_compile() {
-	default
+	)
+	econf "${myeconfargs[@]}"
 }
 
 src_install() {
