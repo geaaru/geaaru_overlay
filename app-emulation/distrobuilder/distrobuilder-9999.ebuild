@@ -21,6 +21,8 @@ SLOT="0"
 KEYWORDS="~amd64 ~arm"
 IUSE=""
 
+DEPEND="dev-go/dep"
+
 src_compile() {
 	GOPATH="${WORKDIR}/${P}:$(get_golibdir_gopath)" make
 }
