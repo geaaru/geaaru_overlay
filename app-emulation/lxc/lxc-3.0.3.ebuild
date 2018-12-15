@@ -103,6 +103,11 @@ PATCHES=(
 	"${FILESDIR}"/${PN}-2.0.5-omit-sysconfig.patch # bug 558854
 )
 
+src_prepare() {
+	default
+	eautoreconf
+}
+
 src_configure() {
 	append-flags -fno-strict-aliasing
 
