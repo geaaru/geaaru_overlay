@@ -14,37 +14,48 @@ EGIT_REPO_URI="https://github.com/geaaru/database-release-manager.git"
 LICENSE="GPL-2.0"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="doc mysql +oracle +sqlite"
-REQUIRED_USE="|| ( mysql oracle )"
+IUSE="doc +mysql oracle mongo"
+REQUIRED_USE=""
 
-DEPEND=""
-
-RDEPEND="
-		>=dev-db/sqlite-3.8.6
-		app-shells/bash
-		mysql? (
-			virtual/mysql
+DEPEND="doc? (
+	>=dev-python/sphinx-1.6.3
+	>=dev-python/sphinx-bootstrap-theme-0.6.0
+)
+"
+RDEPEND=">=dev-db/sqlite-3.8.6
+	app-shells/bash:=
+	mysql? (
+		|| (
+			dev-db/mysql-connector-c:=
+			dev-db/mariadb-connector-c:=
 		)
-		oracle? (
-			dev-db/oracle-instantclient-sqlplus
-		)
-		doc? (
-			app-text/robodoc
-		)
+	)
+	oracle? (
+		dev-db/oracle-instantclient-sqlplus
+	)
+	mongo? (
+		dev-db/mongodb:=
+		>=app-misc/jq-1.5
+	)
 "
 
-PATCHES=(
-)
+PATCHES=()
 
 src_prepare() {
 	eautoreconf
 }
 
 src_compile() {
-	local myconf="--with-configfile-path=/etc/dbrm.conf"
-
-#	use doc && myconf="${myconf} --docdir=/usr/share/doc/${PN}/
-	econf ${myconf}
+	emake || die 'Error on make'
+	if use doc ; then
+		emake docs || die 'Error on create documentation'
+	fi
 }
 
-# TODO: create robodoc documentation and copy documentation
+src_install() {
+	default_src_install
+	if use doc ; then
+		dodoc -r ${S}/docs/_build/*
+	fi
+	dodoc README.md
+}
