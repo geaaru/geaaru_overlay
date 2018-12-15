@@ -16,9 +16,6 @@ IUSE=""
 
 S="${WORKDIR}/${PN}-${P}"
 
-DEPEND=">=app-emulation/lxc-3.0.0"
-RDEPEND="${DEPEND}"
-
 PATCHES=( "${FILESDIR}/${PN}-3.0.1-no-cache-dir.patch" )
 DOCS=()
 
