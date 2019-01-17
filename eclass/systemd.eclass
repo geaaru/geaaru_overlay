@@ -232,6 +232,7 @@ systemd_install_serviced() {
 	[[ ${service} == *.d ]] && die "Service must not have .d suffix"
 
 	(
+		insopts -m 0644
 		insinto /etc/systemd/system/"${service}".d
 		newins "${src}" ${conf}
 	)
@@ -468,8 +469,8 @@ systemd_reenable() {
 	type systemctl &>/dev/null || return 0
 	local x
 	for x; do
-		if systemctl --quiet --root="${ROOT}" is-enabled "${x}"; then
-			systemctl --root="${ROOT}" reenable "${x}"
+		if systemctl --quiet --root="${ROOT:-/}" is-enabled "${x}"; then
+			systemctl --root="${ROOT:-/}" reenable "${x}"
 		fi
 	done
 }
