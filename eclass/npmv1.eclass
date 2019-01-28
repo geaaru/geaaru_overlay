@@ -1,4 +1,4 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
@@ -56,8 +56,10 @@ fi
 #                        Default value is 0
 #  * NPM_NO_MIRROR:      Boolean value that add RESTRICT="mirror" for download package from SRC_URI.
 #                        Default is True. Set to False to try to download package from gentoo mirrors.
+#  * NPM_PV              Define version used for download sources when NPM_GITHUP_MOD is used.
+#                        Default value is "v${PV}".
 
-NPMV1_ECLASS_VERSION="0.3.0"
+NPMV1_ECLASS_VERSION="0.3.1"
 
 _npmv1_set_metadata() {
 
@@ -73,6 +75,10 @@ _npmv1_set_metadata() {
             NPM_PKG_NAME="${PN}"
         fi
 
+        if [ -z "${NPM_PV}" ] ; then
+            NPM_PV="v${PV}"
+        fi
+
         if [[ -z "${RESTRICT}" ]] ; then
             if [[ -z "${NPM_NO_MIRROR}" || "${NPM_NO_MIRROR}" == true  ]] ; then
                 RESTRICT="mirror"
@@ -80,7 +86,7 @@ _npmv1_set_metadata() {
         fi
         if [[ -z "${SRC_URI}" && -z "${EGIT_REPO_URI}" ]] ; then
             if [[ -n "${NPM_GITHUP_MOD}" ]] ; then
-                SRC_URI="https://github.com/${NPM_GITHUP_MOD}/archive/v${PV}.zip -> ${PF}.zip"
+                SRC_URI="https://github.com/${NPM_GITHUP_MOD}/archive/${NPM_PV}.zip -> ${PF}.zip"
             else
                 SRC_URI="http://registry.npmjs.org/${NPM_PKG_NAME}/-/${NPM_PKG_NAME}-${PV}.tgz"
             fi
