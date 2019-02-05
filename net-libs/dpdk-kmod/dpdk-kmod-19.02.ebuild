@@ -14,18 +14,10 @@ SRC_URI="http://fast.${MY_PN}.org/rel/${MY_PN}-${PV}.tar.xz"
 LICENSE="BSD-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="libressl static-libs"
+IUSE=""
 
-DEPEND="net-libs/dpdk
-	sys-process/numactl
-	dev-libs/jansson
-	!libressl? ( dev-libs/openssl:0= )
-	libressl? ( dev-libs/libressl:0= )
-"
+DEPEND="net-libs/dpdk"
 RDEPEND="${DEPEND}"
-DEPEND="${DEPEND}
-	dev-lang/nasm
-"
 
 S="${WORKDIR}/${MY_PN}-${PV}"
 
