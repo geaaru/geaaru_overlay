@@ -2,17 +2,14 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/net-dialup/freeradius/freeradius-3.0.3.ebuild,v 1.3 2014/12/28 16:14:40 titanofold Exp $
 
-EAPI=5
+EAPI=6
 
 PYTHON_COMPAT=( python2_7 )
-inherit autotools eutils pam python-any-r1 user systemd git-2
-
-PATCHSET=4
+inherit autotools eutils pam python-any-r1 user systemd git-r3
 
 MY_P="${PN}-server-${PV}"
 
 EGIT_REPO_URI="https://github.com/FreeRADIUS/freeradius-server.git"
-EGIT_PROJECT="freeradius-server"
 EGIT_BRANCH="v3.0.x"
 
 DESCRIPTION="Highly configurable free RADIUS server"
@@ -27,29 +24,33 @@ IUSE="
 	postgres python readline sqlite ssl redis
 "
 
-REQUIRED_USE="bindist? ( !firebird )"
+RESTRICT="test firebird? ( bindist )"
 
 RDEPEND="!net-dialup/cistronradius
+	!net-dialup/freeradius:3.1
 	!net-dialup/gnuradius
 	sys-devel/libtool
-	dev-lang/perl
+	dev-lang/perl:=
 	sys-libs/gdbm
-	net-libs/libpcap
 	sys-libs/talloc
 	python? ( ${PYTHON_DEPS} )
-	readline? ( sys-libs/readline )
+	readline? ( sys-libs/readline:0= )
 	pcap? ( net-libs/libpcap )
-	mysql? ( virtual/mysql )
-	postgres? ( dev-db/postgresql )
+	mysql? ( dev-db/mysql-connector-c )
+	postgres? ( dev-db/postgresql:= )
 	firebird? ( dev-db/firebird )
 	pam? ( virtual/pam )
-	ssl? ( dev-libs/openssl )
+	ssl? (
+		!libressl? ( dev-libs/openssl:0= )
+		libressl? ( dev-libs/libressl:0= )
+	)
 	ldap? ( net-nds/openldap )
 	kerberos? ( virtual/krb5 )
 	sqlite? ( dev-db/sqlite:3 )
 	odbc? ( dev-db/unixODBC )
 	iodbc? ( dev-db/libiodbc )
 	redis? ( dev-db/redis )
+	memcache? ( dev-libs/libmemcached )
 	oracle? ( dev-db/oracle-instantclient-basic )"
 DEPEND="${RDEPEND}"
 
@@ -107,6 +108,8 @@ src_prepare() {
 	}
 
 	sed -i \
+		-e 's:^#\tuser = :\tuser = :g' \
+		-e 's:^#\tgroup = :\tgroup = :g' \
 		-e 's:/var/run/radiusd:/run/radiusd:g' \
 		-e '/^run_dir/s:${localstatedir}::g' \
 		raddb/radiusd.conf.in || die
@@ -140,15 +143,35 @@ src_prepare() {
 	# Add preproxy/postproxy methods to sqlippool module
 	epatch "${FILESDIR}"/freeradius-3.0.9-add_proxy2sqlippool.patch
 
-	epatch_user
+	default
+
+	eapply_user
 
 	eautoreconf
 }
 
 src_configure() {
+	local myeconfargs=(
+		--enable-shared
+		--disable-static
+		--disable-ltdl-install
+		--with-system-libtool
+		--with-system-libltdl
+		--with-ascend-binary
+		--with-udpfromto
+		--with-dhcp
+		--with-iodbc-include-dir=/usr/include/iodbc
+		--with-experimental-modules
+		--with-docdir=/usr/share/doc/${PF}
+		--with-logdir=/var/log/radius
+		$(use_enable debug developer)
+		$(use_with ldap edir)
+		$(use_with ssl openssl)
+	)
+
 	# fix bug #77613
 	if has_version app-crypt/heimdal; then
-		myconf="${myconf} --enable-heimdal-krb5"
+		myeconfargs+=( --enable-heimdal-krb5 )
 	fi
 
 	use readline || export ac_cv_lib_readline=no
@@ -157,23 +180,7 @@ src_configure() {
 	# do not try to enable static with static-libs; upstream is a
 	# massacre of libtool best practices so you also have to make sure
 	# to --enable-shared explicitly.
-	econf \
-		--enable-shared \
-		--disable-static \
-		--disable-ltdl-install \
-		--with-system-libtool \
-		--with-system-libltdl \
-		--with-ascend-binary \
-		--with-udpfromto \
-		--with-dhcp \
-		--with-iodbc-include-dir=/usr/include/iodbc \
-		--with-experimental-modules \
-		--with-docdir=/usr/share/doc/${PF} \
-		--with-logdir=/var/log/radius \
-		$(use_enable debug developer) \
-		$(use_with ldap edir) \
-		$(use_with ssl openssl) \
-		${myconf}
+	econf "${myeconfargs[@]}"
 }
 
 src_compile() {
@@ -199,7 +206,8 @@ src_install() {
 		R="${D}" \
 		install
 
-	fowners -R root:radius /etc/raddb
+	fowners -R radius:radius /etc/raddb
+	fowners -R radius:radius /var/log/radius
 
 	pamd_mimic_system radiusd auth account password session
 
@@ -211,7 +219,9 @@ src_install() {
 	newconfd "${FILESDIR}/radius.conf-r3" radiusd
 
 	# Systemd files
+	systemd_newtmpfilesd "${FILESDIR}"/freeradius.tmpfiles freeradius.conf
 	systemd_dounit "${FILESDIR}"/freeradius.service
+	systemd_install_serviced "${FILESDIR}"/freeradius.service.conf
 
 	# Remove all default sites under site-enables.
 	# Administrator install all sites when configure freeradius.
@@ -220,8 +230,6 @@ src_install() {
 	# from mods-enabled directory.
 	rm ${D}/etc/raddb/mods-enabled/{cache_eap,digest,eap,mschap,ntlm_auth}
 
-	systemd_install_serviced "${FILESDIR}"/freeradius.service.conf
-
 	prune_libtool_files
 }
 
@@ -229,6 +237,7 @@ pkg_config() {
 	if use ssl; then
 		cd "${ROOT}"/etc/raddb/certs
 		./bootstrap
+		fowners -R root:radius "${ROOT}"/etc/raddb/certs
 	fi
 }
 
