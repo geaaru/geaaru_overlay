@@ -4,7 +4,7 @@
 EAPI=6
 PYTHON_COMPAT=( python2_7 python3_{5,6} )
 
-inherit distutils-r1
+inherit distutils-r1 systemd user
 
 DESCRIPTION="OpenFlow controller for multi table OpenFlow 1.3 switches"
 HOMEPAGE="https://github.com/faucetsdn/faucet"
@@ -31,3 +31,48 @@ RDEPEND="$DEPEND"
 DEPEND="$DEPEND
 	dev-python/setuptools[${PYTHON_USEDEP}]
 	dev-python/pbr[${PYTHON_USEDEP}]"
+
+pkg_setup() {
+	enewgroup faucet
+	enewuser faucet -1 -1 /var/log/faucet faucet
+}
+
+src_prepare() {
+	sed -e 's:^EnvironmentFile.*:EnvironmentFile=/etc/conf.d/faucet:' \
+		-i "${S}"/debian/faucet.service
+	sed -e 's:^EnvironmentFile.*:EnvironmentFile=/etc/conf.d/gauge:' \
+		-i "${S}"/debian/gauge.service
+
+	# Drop data_files section handled manually on src_install section
+	sed -e 's/etc\/*.*//' -e 's/^data_files =//' -i setup.cfg
+
+	distutils-r1_src_prepare
+}
+
+src_install() {
+	DEBINSTALL=1 distutils-r1_src_install
+
+	dodir /etc/${PN}
+	diropts -m0750 -o root -g faucet
+	dodir /var/log/${PN}
+	keepdir /var/log/${PN}
+	diropts
+
+	fowners -R root:faucet /etc/faucet
+	fowners -R root:faucet /var/log/faucet
+
+	for conf in "${S}"/etc/${PN}/* ; do
+		insinto /etc/${PN}
+		doins ${conf}
+	done
+
+	insinto /etc/logrotate.d
+	newins "${S}"/etc/logrotate.d/faucet faucet
+	newins "${S}"/etc/logrotate.d/gauge gauge
+
+	newconfd "${S}"/debian/faucet.default faucet
+	newconfd "${S}"/debian/gauge.default gauge
+
+	systemd_dounit "${S}"/debian/faucet.service
+	systemd_dounit "${S}"/debian/gauge.service
+}
