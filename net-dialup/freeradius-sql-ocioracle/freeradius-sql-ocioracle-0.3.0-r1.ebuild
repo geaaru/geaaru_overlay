@@ -28,7 +28,6 @@ REQUIRED_USE=""
 
 RDEPEND="
 	>=net-dialup/freeradius-${FREERADIUS_VERSION}
-	<=net-dialup/freeradius-3.1
 	sys-devel/libtool
 	dev-lang/perl
 	sys-libs/gdbm
