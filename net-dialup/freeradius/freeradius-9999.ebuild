@@ -19,7 +19,7 @@ KEYWORDS=""
 LICENSE="GPL-2"
 SLOT="0"
 
-IUSE="debug firebird iodbc kerberos ldap libressl memcached mysql odbc oracle pam
+IUSE="debug firebird iodbc kerberos ldap libressl memcache mysql odbc oracle pam
 	pcap postgres python readline rest samba sqlite ssl redis
 "
 
@@ -49,7 +49,7 @@ RDEPEND="!net-dialup/cistronradius
 	odbc? ( dev-db/unixODBC )
 	iodbc? ( dev-db/libiodbc )
 	redis? ( dev-db/redis )
-	memcached? ( dev-libs/libmemcached )
+	memcache? ( dev-libs/libmemcached )
 	oracle? ( dev-db/oracle-instantclient-basic )"
 DEPEND="${RDEPEND}"
 
