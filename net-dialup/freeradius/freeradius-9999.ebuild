@@ -7,8 +7,6 @@ EAPI=6
 PYTHON_COMPAT=( python2_7 )
 inherit autotools eutils pam python-any-r1 user systemd git-r3
 
-MY_P="${PN}-server-${PV}"
-
 EGIT_REPO_URI="https://github.com/FreeRADIUS/freeradius-server.git"
 EGIT_BRANCH="v3.0.x"
 
@@ -53,9 +51,11 @@ RDEPEND="!net-dialup/cistronradius
 	oracle? ( dev-db/oracle-instantclient-basic )"
 DEPEND="${RDEPEND}"
 
-S="${WORKDIR}/${MY_P}"
-
 RESTRICT="test"
+
+PATCHES=(
+	${FILESDIR}/freeradius-3.0.14-proxy-timestamp.patch
+)
 
 pkg_setup() {
 	enewgroup radius
@@ -139,9 +139,6 @@ src_prepare() {
 	usesqldriver oracle
 	usesqldriver sqlite
 
-	# Add preproxy/postproxy methods to sqlippool module
-	epatch "${FILESDIR}"/freeradius-3.0.9-add_proxy2sqlippool.patch
-
 	default
 
 	eapply_user
@@ -167,7 +164,6 @@ src_configure() {
 		$(use_with ldap edir)
 		$(use_with ssl openssl)
 	)
-
 	# fix bug #77613
 	if has_version app-crypt/heimdal; then
 		myeconfargs+=( --enable-heimdal-krb5 )
