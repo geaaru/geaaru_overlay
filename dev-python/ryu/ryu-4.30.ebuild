@@ -17,8 +17,7 @@ IUSE=""
 
 DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
 	dev-python/pbr[${PYTHON_USEDEP}]"
-RDEPEND=">=dev-python/msgpack-0.3.0[${PYTHON_USEDEP}]
-	dev-python/sortedcontainers[${PYTHON_USEDEP}]
+RDEPEND="dev-python/sortedcontainers[${PYTHON_USEDEP}]
 	dev-python/oslo-config[${PYTHON_USEDEP}]
 	>=dev-python/msgpack-0.5.6[${PYTHON_USEDEP}]
 	dev-python/tinyrpc[${PYTHON_USEDEP}]"
