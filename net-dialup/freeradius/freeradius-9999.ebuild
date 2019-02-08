@@ -19,9 +19,8 @@ KEYWORDS=""
 LICENSE="GPL-2"
 SLOT="0"
 
-IUSE="
-	bindist debug firebird iodbc kerberos ldap mysql odbc oracle pam pcap
-	postgres python readline sqlite ssl redis
+IUSE="debug firebird iodbc kerberos ldap libressl memcached mysql odbc oracle pam
+	pcap postgres python readline rest samba sqlite ssl redis
 "
 
 RESTRICT="test firebird? ( bindist )"
@@ -50,7 +49,7 @@ RDEPEND="!net-dialup/cistronradius
 	odbc? ( dev-db/unixODBC )
 	iodbc? ( dev-db/libiodbc )
 	redis? ( dev-db/redis )
-	memcache? ( dev-libs/libmemcached )
+	memcached? ( dev-libs/libmemcached )
 	oracle? ( dev-db/oracle-instantclient-basic )"
 DEPEND="${RDEPEND}"
 
