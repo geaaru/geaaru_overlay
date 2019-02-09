@@ -19,4 +19,18 @@ RDEPEND=">=dev-python/mkdocs-1[${PYTHON_USEDEP}]"
 DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
 	${RDEPEND}"
 
+src_prepare() {
+	sed -e 's:cinder = cinder:cinder = mkdocs_cinder:g' \
+		-i "${S}"/setup.py
 
+	# Avoid conflict with sys-cluster/cinder package
+	mv "${S}"/cinder "${S}"/mkdocs_cinder
+
+	sed -e 's:cinder/:mkdocs_cinder/:g' -i \
+		"${S}"/mkdocs_cinder.egg-info/SOURCES.txt
+
+	sed -e 's:cinder = cinder:cinder = mkdocs_cinder:g' -i \
+		"${S}"/mkdocs_cinder.egg-info/entry_points.txt
+
+	distutils-r1_src_prepare
+}
