@@ -1,24 +1,21 @@
-# Copyright 1999-2014 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-dialup/freeradius/freeradius-3.0.3.ebuild,v 1.3 2014/12/28 16:14:40 titanofold Exp $
 
-EAPI=5
+EAPI=6
 
 FREERADIUS_MOD_TYPE="sql"
-FREERADIUS_VERSION="3.0.14"
+FREERADIUS_VERSION="9999"
+FREERADIUS_BRANCH="v3.0.x"
 
 SLOT="3.0"
 
-inherit autotools eutils git-2
-
-PATCHSET=4
+inherit autotools eutils git-r3
 
 DESCRIPTION="Oracle alternative module for FreeRADIUS"
 HOMEPAGE="https://github.com/geaaru/rlm_sql_ocioracle"
 
 EGIT_REPO_URI="https://github.com/geaaru/rlm_sql_ocioracle.git"
-EGIT_PROJECT="rlm_sql_ocioracle"
-EGIT_COMMIT="master"
+EGIT_BRANCH="master"
 
 KEYWORDS=""
 LICENSE="GPL-2"
@@ -36,8 +33,6 @@ RDEPEND="
 	dev-db/ocilib
 	dev-db/oracle-instantclient-basic"
 DEPEND="${RDEPEND}"
-
-S="${WORKDIR}/${MY_P}"
 
 inherit freeradius-modules
 
