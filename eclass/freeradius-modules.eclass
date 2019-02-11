@@ -16,6 +16,8 @@ case ${EAPI:-0} in
 	*) die "${ECLASS}.eclass API in EAPI ${EAPI} not supported."
 esac
 
+FREERADIUS_MODULES_VERSION="0.2.0"
+
 # FREERADIUS_MOD_TYPE identify type of modules.
 # Possible values are: sql | normal
 # Currently are supported only sql modules.
@@ -27,17 +29,16 @@ if [[ -z "${FREERADIUS_VERSION}" ]] ; then
     die "FREERADIUS_VERSION variable not set"
 fi
 
-# TODO: add check for EAPI 5
-
 _freeradius-modules_set_metadata() {
 
 	# Retrieve current version of freeradius server
 	local fr_version="${FREERADIUS_VERSION}"
 
 	FR_P="freeradius-server-${fr_version}"
-	SRC_URI+="ftp://ftp.freeradius.org/pub/radius/${FR_P}.tar.gz"
 
-	S="${WORKDIR}/${FR_P}"
+	if [ "${FREERADIUS_VERSION}" != "9999" ] ; then
+		SRC_URI+="ftp://ftp.freeradius.org/pub/radius/${FR_P}.tar.gz"
+	fi
 }
 
 _freeradius-modules_set_metadata
@@ -53,11 +54,54 @@ freeradius-modules_src_unpack() {
 	local module_dirname=""
 	local module_dirpath=""
 
+	local S_OLD=${S}
+	S="${WORKDIR}/${FR_P}"
+
 	if [[ ${PV} = "9999" || -n "${EGIT_COMMIT}" ]] ; then
-		local S_OLD=${S}
-		S="${WORKDIR}/${PN}"
-		git-2_src_unpack
-		S=${S_OLD}
+
+		# Retrieve data from package git repository
+		git-r3_src_unpack
+
+		if [ "${FREERADIUS_VERSION}" == "9999" ] ; then
+			# Note: Currently I support only EGIT_REPO_URI, EGIT_COMMIT,
+			#       EGIT_CHECKOUT_DIR, EGIT_SUBMODULES, EGIT_BRANCH
+
+			local old_egit_repo_uri="${EGIT_REPO_URI}"
+			local old_egit_commit="${EGIT_COMMIT}"
+			local old_egit_checkout_dir="${EGIT_CHECKOUT_DIR}"
+			local old_egit_sub_modules=${EGIT_SUBMODULES}
+			local old_egit_branch="${EGIT_BRANCH}"
+
+
+			# Reset EGIT fields
+			EGIT_SUBMODULES=()
+			EGIT_COMMIT=""
+			EGIT_BRANCH=""
+			EGIT_REPO_URI="https://github.com/FreeRADIUS/freeradius-server.git"
+			EGIT_CHECKOUT_DIR="${WORKDIR}/${FR_P}"
+			if [ -n "${FREERADIUS_BRANCH}" ] ; then
+				EGIT_BRANCH="${FREERADIUS_BRANCH}"
+			else
+				if [ -n "${FREERADIUS_COMMIT}" ] ; then
+					EGIT_COMMIT="${FREERADIUS_COMMIT}"
+				else
+					EGIT_BRANCH="master"
+				fi
+			fi
+
+			# Retrieve data from freeradius-server project
+			git-r3_src_unpack
+			
+			# Restore EGIT package variables
+			EGIT_SUBMODULES=${old_egit_sub_modules}
+			EGIT_COMMIT="${old_egit_commit}"
+			EGIT_BRANCH="${old_egit_branch}"
+			EGIT_REPO_URI="${old_egit_repo_uri}"
+			EGIT_CHECKOUT_DIR="${old_egit_checkout_dir}"
+		else
+			default_src_unpack
+		fi
+
 	else
 		default_src_unpack
 	fi
@@ -94,13 +138,7 @@ freeradius-modules_src_unpack() {
 	rm -rf ${S}/src/modules/rlm_{unix,unpack,utf8,wimax,yubikey} || true
 	rm -rf ${S}/src/modules/rlm_{detail,pap} || true
 
-	mv ${WORKDIR}/${PN}/ ${S}/${module_dirpath}/${module_dirname}
-
-	if [ "${EAPI}" == 5 ]; then
-		epatch_user
-	else
-		eapply_user
-	fi
+	mv ${S_OLD} ${S}/${module_dirpath}/${module_dirname}
 }
 
 
@@ -108,8 +146,13 @@ freeradius-modules_src_unpack() {
 # @DESCRIPTION:
 # Implementation of src_prepare() phase. This function is exported.
 freeradius-modules_src_prepare() {
+	# I'm on ${S} => work/freeradius-server-${FREERADIUS_VERSION}
 
-	# I'm on ${S}
+	if [ "${EAPI}" == 5 ]; then
+		epatch_user
+	else
+		eapply_user
+	fi
 
 	eautoreconf
 
