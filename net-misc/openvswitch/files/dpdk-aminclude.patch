@@ -1,0 +1,27 @@
+diff --git a/acinclude.m4 b/acinclude.m4
+index ef0039d08..c443f14eb 100644
+--- a/acinclude.m4
++++ b/acinclude.m4
+@@ -226,6 +226,8 @@ AC_DEFUN([OVS_CHECK_DPDK], [
+         PKG_CHECK_MODULES([DPDK], [libdpdk],
+                           [DPDK_INCLUDE="$DPDK_CFLAGS"],
+                           [DPDK_INCLUDE="-I/usr/local/include/dpdk -I/usr/include/dpdk"])
++        DPDK_LIB="$DPDK_LIBS"
++        DPDK_INCLUDE="$DPDK_CFLAGS"
+         ;;
+       *)
+         DPDK_AUTO_DISCOVER="false"
+@@ -238,12 +240,10 @@ AC_DEFUN([OVS_CHECK_DPDK], [
+            DPDK_INCLUDE="-I$DPDK_INCLUDE_PATH/dpdk"
+         fi
+         DPDK_LIB_DIR="$with_dpdk/lib"
++        DPDK_LIB=$(PKG_CONFIG_PATH=$with_dpdk pkg-config --libs libdpdk)
+         ;;
+     esac
+ 
+-    DPDK_LIB="-ldpdk"
+-    DPDK_EXTRA_LIB=""
+-
+     ovs_save_CFLAGS="$CFLAGS"
+     ovs_save_LDFLAGS="$LDFLAGS"
+     CFLAGS="$CFLAGS $DPDK_INCLUDE"
