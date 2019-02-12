@@ -24,7 +24,7 @@ COMMON_DEP=""
 
 RDEPEND=">=virtual/jre-1.8
 	${COMMON_DEP}"
-DEPEND=">=virtual/jdk-1.8
+	DEPEND=">=virtual/jdk-1.8
 	app-arch/unzip
 	${COMMON_DEP}"
 
@@ -76,6 +76,7 @@ src_install() {
 
 	for dir in data deploy etc lib licenses system ; do
 		cp -r ${S}/${dir} ${D}/${INSTDIR}/${PF}/${dir}/
+		
 	done
 
 	# Systemd files

@@ -12,7 +12,8 @@ and Karaf into a powerful runtime platform you can use to build your own
 integrations solutions. It provides a complete, enterprise ready ESB
 exclusively powered by OSGi."
 HOMEPAGE="http://servicemix.apache.org/"
-SRC_URI="http://apache.panu.it/servicemix/servicemix-7/${PV}/apache-servicemix-${PV}.zip"
+SRC_URI="http://archive.apache.org/dist/servicemix/servicemix-7/${PV}/apache-servicemix-${PV}.zip"
+
 RESTRICT=primaryuri
 LICENSE="Apache License v2.0"
 SLOT="7.0"
@@ -23,10 +24,10 @@ IUSE=""
 COMMON_DEP=""
 
 RDEPEND=">=virtual/jre-1.8
-  ${COMMON_DEP}"
-DEPEND=">=virtual/jdk-1.8
-  app-arch/unzip
-  ${COMMON_DEP}"
+	${COMMON_DEP}"
+	DEPEND=">=virtual/jdk-1.8
+	app-arch/unzip
+	${COMMON_DEP}"
 
 pkg_setup() {
 	ebegin "Creating smx group and user"
