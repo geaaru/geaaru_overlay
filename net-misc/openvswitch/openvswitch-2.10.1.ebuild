@@ -26,7 +26,7 @@ RDEPEND="
 		dev-python/twisted-web[${PYTHON_USEDEP}]
 	)
 	dev-python/zope-interface[${PYTHON_USEDEP}]
-	dpdk? ( net-libs/dpdk )
+	dpdk? ( =net-libs/dpdk-18.11 )
 	debug? ( dev-lang/perl )"
 DEPEND="${RDEPEND}
 	virtual/pkgconfig"
