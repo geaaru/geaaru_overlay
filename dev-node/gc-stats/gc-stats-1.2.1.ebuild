@@ -20,6 +20,7 @@ RDEPEND="${DEPEND}"
 
 NPM_PKG_DIRS="
 build/Release
+src
 "
 NPM_GYP_PKG=1
 
