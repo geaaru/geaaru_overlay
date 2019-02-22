@@ -26,6 +26,7 @@ RDEPEND="
 		dev-python/twisted-web[${PYTHON_USEDEP}]
 	)
 	dev-python/zope-interface[${PYTHON_USEDEP}]
+	sys-apps/util-linux[caps]
 	dpdk? ( =net-libs/dpdk-18.11 )
 	debug? ( dev-lang/perl )"
 DEPEND="${RDEPEND}
