@@ -146,7 +146,8 @@ freeradius-modules_src_unpack() {
 	rm -rf ${S}/src/modules/rlm_{detail,pap} || true
 
 	if [ "${FREERADIUS_MOD_SRC_WITH_TREE}" = "1" ] ; then
-		cp -rf ${S_OLD} ${S}
+		cp -rf ${S_OLD}/* ${S}
+		rm -rf ${S_OLD}
 	else
 		mv ${S_OLD} ${S}/${module_dirpath}/${module_dirname}
 	fi
@@ -169,7 +170,9 @@ freeradius-modules_src_prepare() {
 
 	for driver in src/modules/rlm_sql/drivers/rlm_* ; do
 		cd ${driver}
-		eautoreconf
+		if [[ -e configure || -e configure.ac ]] ; then
+			eautoreconf
+		fi
 	done
 }
 
