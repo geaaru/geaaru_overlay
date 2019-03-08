@@ -16,7 +16,7 @@ case ${EAPI:-0} in
 	*) die "${ECLASS}.eclass API in EAPI ${EAPI} not supported."
 esac
 
-FREERADIUS_MODULES_VERSION="0.2.0"
+FREERADIUS_MODULES_VERSION="0.2.1"
 
 # FREERADIUS_MOD_TYPE identify type of modules.
 # Possible values are: sql | normal
@@ -29,6 +29,13 @@ if [[ -z "${FREERADIUS_VERSION}" ]] ; then
     die "FREERADIUS_VERSION variable not set"
 fi
 
+# Define if source file contains all freeradius tree or not.
+# If this value is 0 then for sql module type means
+# that eclass copy directory inside src/modules/rlm_sql/drivers
+# or src/modules.
+# If value is 1 then eclass copy directly all source inside ${FR_P}.
+FREERADIUS_MOD_SRC_WITH_TREE="${FREERADIUS_MOD_SRC_WITH_TREE:-0}"
+
 _freeradius-modules_set_metadata() {
 
 	# Retrieve current version of freeradius server
@@ -37,7 +44,7 @@ _freeradius-modules_set_metadata() {
 	FR_P="freeradius-server-${fr_version}"
 
 	if [ "${FREERADIUS_VERSION}" != "9999" ] ; then
-		SRC_URI+="ftp://ftp.freeradius.org/pub/radius/${FR_P}.tar.gz"
+        SRC_URI+=" ftp://ftp.freeradius.org/pub/radius/${FR_P}.tar.gz"
 	fi
 }
 
@@ -138,7 +145,11 @@ freeradius-modules_src_unpack() {
 	rm -rf ${S}/src/modules/rlm_{unix,unpack,utf8,wimax,yubikey} || true
 	rm -rf ${S}/src/modules/rlm_{detail,pap} || true
 
-	mv ${S_OLD} ${S}/${module_dirpath}/${module_dirname}
+	if [ "${FREERADIUS_MOD_SRC_WITH_TREE}" = "1" ] ; then
+		cp -rf ${S_OLD} ${S}
+	else
+		mv ${S_OLD} ${S}/${module_dirpath}/${module_dirname}
+	fi
 }
 
 
