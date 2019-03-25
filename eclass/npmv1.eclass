@@ -63,44 +63,44 @@ NPMV1_ECLASS_VERSION="0.3.1"
 
 _npmv1_set_metadata() {
 
-    if has "${EAPI:-0}" 5 6; then
+	if has "${EAPI:-0}" 5 6; then
 
-        DEPEND="${DEPEND}
-            net-libs/nodejs[npm(+)]
-        "
-        if [[ -z "${NPM_DEFAULT_OPTS}" ]] ; then
-            NPM_DEFAULT_OPTS="-E --no-optional --production"
-        fi
-        if [[ -z "${NPM_PKG_NAME}" ]] ; then
-            NPM_PKG_NAME="${PN}"
-        fi
+		DEPEND="${DEPEND}
+		net-libs/nodejs[npm(+)]
+		"
+		if [[ -z "${NPM_DEFAULT_OPTS}" ]] ; then
+			NPM_DEFAULT_OPTS="-E --no-optional --production"
+		fi
+		if [[ -z "${NPM_PKG_NAME}" ]] ; then
+			NPM_PKG_NAME="${PN}"
+		fi
 
-        if [ -z "${NPM_PV}" ] ; then
-            NPM_PV="v${PV}"
-        fi
+		if [ -z "${NPM_PV}" ] ; then
+			NPM_PV="v${PV}"
+		fi
 
-        if [[ -z "${RESTRICT}" ]] ; then
-            if [[ -z "${NPM_NO_MIRROR}" || "${NPM_NO_MIRROR}" == true  ]] ; then
-                RESTRICT="mirror"
-            fi
-        fi
-        if [[ -z "${SRC_URI}" && -z "${EGIT_REPO_URI}" ]] ; then
-            if [[ -n "${NPM_GITHUP_MOD}" ]] ; then
-                SRC_URI="https://github.com/${NPM_GITHUP_MOD}/archive/${NPM_PV}.zip -> ${PF}.zip"
-            else
-                SRC_URI="http://registry.npmjs.org/${NPM_PKG_NAME}/-/${NPM_PKG_NAME}-${PV}.tgz"
-            fi
-        fi
+		if [[ -z "${RESTRICT}" ]] ; then
+			if [[ -z "${NPM_NO_MIRROR}" || "${NPM_NO_MIRROR}" == true  ]] ; then
+				RESTRICT="mirror"
+			fi
+		fi
+		if [[ -z "${SRC_URI}" && -z "${EGIT_REPO_URI}" ]] ; then
+			if [[ -n "${NPM_GITHUP_MOD}" ]] ; then
+				SRC_URI="https://github.com/${NPM_GITHUP_MOD}/archive/${NPM_PV}.zip -> ${PF}.zip"
+			else
+				SRC_URI="http://registry.npmjs.org/${NPM_PKG_NAME}/-/${NPM_PKG_NAME}-${PV}.tgz"
+			fi
+		fi
 
-    else
+	else
 
-        die "EAPI ${EAPI} is not supported!"
+		die "EAPI ${EAPI} is not supported!"
 
-    fi
+	fi
 
-    # Avoid use of both NPM_SYSTEM_MODULES and NPM_LOCAL_MODULES
-    [[ -n "${NPM_SYSTEM_MODULES}" && -n "${NPM_LOCAL_MODULES}" ]] && \
-        die "Both NPM_LOCAL_MODULES and NPM_SYSTEM_MODULES variables defined!"
+	# Avoid use of both NPM_SYSTEM_MODULES and NPM_LOCAL_MODULES
+	[[ -n "${NPM_SYSTEM_MODULES}" && -n "${NPM_LOCAL_MODULES}" ]] && \
+		die "Both NPM_LOCAL_MODULES and NPM_SYSTEM_MODULES variables defined!"
 
 }
 
@@ -114,24 +114,24 @@ EXPORT_FUNCTIONS src_prepare src_compile src_install
 # Implementation of src_prepare() phase. This function is exported.
 npmv1_src_prepare() {
 
-    # I'm on ${S}
+	# I'm on ${S}
 
-    # Check if present package.json
-    test -f package.json || die "package.json not found in package ${PN}"
+	# Check if present package.json
+	test -f package.json || die "package.json not found in package ${PN}"
 
-    # Check if there are source to compile with node-gyp
-    # TODO: 
-    if [ -f binding.gyp ] ; then
-        NPM_GYP_PKG=1
-    else
-        NPM_GYP_PKG=0
-    fi
+	# Check if there are source to compile with node-gyp
+	# TODO: 
+	if [ -f binding.gyp ] ; then
+		NPM_GYP_PKG=1
+	else
+		NPM_GYP_PKG=0
+	fi
 
-    if [[ ${EAPI} == 6 ]]; then
-        eapply_user
-    else
-        epatch_user
-    fi
+	if [[ ${EAPI} == 6 ]]; then
+		eapply_user
+	else
+		epatch_user
+	fi
 }
 
 # @FUNCTION: npmv1_src_configure
@@ -139,17 +139,17 @@ npmv1_src_prepare() {
 # Implementation of src_compile() phase. This function is exported.
 npmv1_src_compile() {
 
-    if [[ -z "${NPM_GYP_BIN}" ]] ; then
-        NPM_GYP_BIN="${EROOT}usr/$(get_libdir)/node_modules/npm/bin/node-gyp-bin/node-gyp"
-    fi
+	if [[ -z "${NPM_GYP_BIN}" ]] ; then
+		NPM_GYP_BIN="${EROOT}usr/$(get_libdir)/node_modules/npm/bin/node-gyp-bin/node-gyp"
+	fi
 
-    if [[ x"${NPM_NO_DEPS}" != x"1" ]] ; then
-        npm ${NPM_DEFAULT_OPTS} install || die "Error on download node modules!"
-    else
-        if [[ "${NPM_GYP_PKG}" -eq 1 ]] ; then
-            ${NPM_GYP_BIN} rebuild || die "Error on compile package ${PN} sources!."
-        fi
-    fi
+	if [[ x"${NPM_NO_DEPS}" != x"1" ]] ; then
+		npm ${NPM_DEFAULT_OPTS} install || die "Error on download node modules!"
+	else
+		if [[ "${NPM_GYP_PKG}" -eq 1 ]] ; then
+			${NPM_GYP_BIN} rebuild || die "Error on compile package ${PN} sources!."
+		fi
+	fi
 
 }
 
@@ -158,42 +158,42 @@ npmv1_src_compile() {
 # Implementation of src_compile() phase. This function is exported.
 npmv1_src_install() {
 
-    local words=""
-    local sym=""
-    local i=0
-    local npm_root_js_files=""
-    local npm_pkg_mods=""
-    local npm_sys_mods=""
+	local words=""
+	local sym=""
+	local i=0
+	local npm_root_js_files=""
+	local npm_pkg_mods=""
+	local npm_sys_mods=""
 
-    if [[ -z "${NPM_PACKAGEDIR}" ]] ; then
-        NPM_PACKAGEDIR="${EROOT}usr/$(get_libdir)/node_modules/${NPM_PKG_NAME}"
-    fi
+	if [[ -z "${NPM_PACKAGEDIR}" ]] ; then
+		NPM_PACKAGEDIR="${EROOT}usr/$(get_libdir)/node_modules/${NPM_PKG_NAME}"
+	fi
 
-    _npmv1_install_native_objs () {
+	_npmv1_install_native_objs () {
 
-        cp -rf build/ ${D}/${NPM_PACKAGEDIR}/ || \
-            die "Error on install native objects."
+		cp -rf build/ ${D}/${NPM_PACKAGEDIR}/ || \
+			die "Error on install native objects."
 
-        return 0
-    }
+		return 0
+	}
 
-    _npmv1_create_bin_script () {
+	_npmv1_create_bin_script () {
 
-        local binfile=$1
-        local bindir="$2"
-        local scriptname="$3"
-        local has_envheader="$4"
-        local nodecmd=""
+		local binfile=$1
+		local bindir="$2"
+		local scriptname="$3"
+		local has_envheader="$4"
+		local nodecmd=""
 
-        if [[ ! -e ${ED}usr/bin ]] ; then
-            mkdir -p ${ED}usr/bin
-        fi
+		if [[ ! -e ${ED}usr/bin ]] ; then
+			mkdir -p ${ED}usr/bin
+		fi
 
-        if [[ ${has_envheader} -eq 0 ]] ; then
-            nodecmd="node "
-        fi
+		if [[ ${has_envheader} -eq 0 ]] ; then
+			nodecmd="node "
+		fi
 
-        echo \
+		echo \
 "#!/bin/bash
 # Author: geaaru@gmail.com
 # Description: Autogenerated script from npmv1 eclass for package ${PN}.
@@ -206,225 +206,233 @@ export NODE_PATH=\${app_node_path}:\${def_node_path}
 ${nodecmd}${bindir}/${binfile} \$@
 " >     ${ED}/usr/bin/${scriptname} || return 1
 
-        chmod a+x ${ED}/usr/bin/${scriptname} || return 1
+		chmod a+x ${ED}/usr/bin/${scriptname} || return 1
 
-        return 0
-    }
+		return 0
+	}
 
-    _npmv1_install_module () {
+	_npmv1_install_module () {
 
-        local mod=$1
-        # mode: 0 -> use NPM_SYSTEM_MODULES, 1 -> use NPM_LOCAL_MODULES
-        local mode=${2:-0}
-        local mod2install=true
-        local i=0
-        local sym=""
-        local words=""
-        local f=""
+		local mod=$1
+		# mode: 0 -> use NPM_SYSTEM_MODULES, 1 -> use NPM_LOCAL_MODULES
+		local mode=${2:-0}
+		local mod2install=true
+		local i=0
+		local sym=""
+		local words=""
+		local f=""
 
-        if [ $mode = "0" ] ; then
-            # Check if present on system module
-            for i in ${!npm_sys_mods[@]} ; do
-                if [[ ${mod} = ${npm_sys_mods[$i]} ]] ; then
-                    mod2install=false
-                    break
-                fi
-            done
-        else
-            mod2install=false
-            # Check if present on local module
-            for i in ${!npm_local_mods[@]} ; do
-                if [[ ${mod} = ${npm_local_mods[$i]} ]] ; then
-                    mod2install=true
-                    break
-                fi
-            done
-        fi
+		if [ $mode = "0" ] ; then
+			# Check if present on system module
+			for i in ${!npm_sys_mods[@]} ; do
+				if [[ ${mod} = ${npm_sys_mods[$i]} ]] ; then
+					mod2install=false
+					break
+				fi
+			done
+		else
+			mod2install=false
+			# Check if present on local module
+			for i in ${!npm_local_mods[@]} ; do
+				if [[ ${mod} = ${npm_local_mods[$i]} ]] ; then
+					mod2install=true
+					break
+				fi
+			done
+		fi
 
-        if [[ $mod2install = true ]] ; then
-            cp -rf node_modules/${mod} ${D}/${NPM_PACKAGEDIR}/node_modules/ || \
-                die "Error on install module ${mod}."
-        fi
+		if [[ $mod2install = true ]] ; then
+			# Install package modules
+			dodir ${NPM_PACKAGEDIR}/node_modules/
 
-        return 0
-    }
+			echo "Injecting node_modules ${mod}..."
+			cp -rf ./node_modules/"${mod}" "${D}""${NPM_PACKAGEDIR}"/node_modules/ || \
+				die "Error on install module ${mod}."
+		fi
 
-    _npmv1_copy_root_js_files () {
+		return 0
+	}
 
-        local i=0
-        if [[ ${#npm_root_js_files[@]} -gt 0 ]] ; then
+	_npmv1_copy_root_js_files () {
 
-            for i in ${!npm_root_js_files[@]} ; do
-                into ${NPM_PACKAGEDIR}
-                doins ${npm_root_js_files[$i]} || \
-                    die "Error on install file ${npm_root_js_files[$i]}"
-            done # end for i ..
-        fi
-    }
+		local i=0
+		if [[ ${#npm_root_js_files[@]} -gt 0 ]] ; then
 
-    _npmv1_copy_dirs() {
+			for i in ${!npm_root_js_files[@]} ; do
+				into ${NPM_PACKAGEDIR}
+				doins ${npm_root_js_files[$i]} || \
+					die "Error on install file ${npm_root_js_files[$i]}"
+			done # end for i ..
+		fi
+	}
 
-        local i=0
-        local npm_other_dirs=( ${NPM_PKG_DIRS} )
+	_npmv1_copy_dirs() {
 
-        if [[ ${#npm_other_dirs[@]} -gt 0 ]] ; then
+		local i=0
+		local npm_other_dirs=( ${NPM_PKG_DIRS} )
 
-            for i in ${!npm_other_dirs[@]} ; do
-                cp -rf ${npm_other_dirs[$i]} ${D}/${NPM_PACKAGEDIR} || \
-                    die "Error on copy directory ${npm_other_dirs[$i]}!"
-            done # end for i ..
-        fi
-    }
+		if [[ ${#npm_other_dirs[@]} -gt 0 ]] ; then
 
-    if [ -n "${NPM_BINS}" ] ; then
+			# Install package modules
+			dodir ${NPM_PACKAGEDIR}
 
-        # Install only defined binaries
+			for i in ${!npm_other_dirs[@]} ; do
+				cp -rf ${npm_other_dirs[$i]} ${D}/${NPM_PACKAGEDIR} || \
+					die "Error on copy directory ${npm_other_dirs[$i]}!"
+			done # end for i ..
+		fi
+	}
 
-        while read line ; do
-            words=( ${line} )
-            sym=""
-            f=""
+	if [ -n "${NPM_BINS}" ] ; then
 
-            if [ ${#line} -gt 1 ] ; then
-                if [[ $line =~ .*\=\>.* ]] ; then
-                    # With rename
-                    [ ${#words[@]} -lt 3 ] && \
-                        die "Invalid binary row $line [${#words[@]}]."
-                    sym=${words[2]}
-                    f=${words[0]}
-                else
-                    # Without rename
-                    [ ${#words[@]} -gt 1 ] && \
-                        die "Invalid binary row $line."
-                    sym=${line}
-                    f=${line}
+		# Install only defined binaries
 
-                fi
-            fi
+		while read line ; do
+			words=( ${line} )
+			sym=""
+			f=""
 
-            if [[ x"${f}" = x ]] ; then
-                # Handle NPM_BINS empty for avoid install
-                # of binaries files
-                continue
-            fi
+			if [ ${#line} -gt 1 ] ; then
 
-            if [ -f ${S}/bin/${f} ] ; then
-                exeinto ${NPM_PACKAGEDIR}/bin/
-                doexe ${S}/bin/${f} || die "Error on install $f."
+				if [[ $line =~ .*\=\>.* ]] ; then
+					# With rename
+					[ ${#words[@]} -lt 3 ] && \
+						die "Invalid binary row $line [${#words[@]}]."
+					sym=${words[2]}
+					f=${words[0]}
+				else
+					# Without rename
+					[ ${#words[@]} -gt 1 ] && \
+						die "Invalid binary row $line."
+					sym=${line}
+					f=${line}
+				fi
 
-                # Check if binary has right header
-                has_envheader=$(head -n 1 ${S}/bin/${f} | grep node --color=none  | wc -l)
+			fi
 
-                _npmv1_create_bin_script "${f}" "${NPM_PACKAGEDIR}/bin" "${sym}" "${has_envheader}" || \
-                    die "Error on create binary script for ${f}."
-            else
-                if [ -f ${S}/${f} ] ; then
-                    exeinto ${NPM_PACKAGEDIR}/
-                    doexe ${S}/${f} || die "Error on install $f."
+			if [[ x"${f}" = x ]] ; then
+				# Handle NPM_BINS empty for avoid install
+				# of binaries files
+				continue
+			fi
 
-                    # Check if binary has right header
-                    has_envheader=$(head -n 1 ${S}/${f} | grep node --color=none  | wc -l)
-                    _npmv1_create_bin_script "${f}" "${NPM_PACKAGEDIR}" "${sym}" "${has_envheader}" || \
-                        die "Error on create binary script for ${f}."
-                else
-                    die "Binary ${f} is not present."
-                fi
-            fi # end if [ -e ${S}/bin/${f}
+			if [ -f ${S}/bin/${f} ] ; then
+				exeinto ${NPM_PACKAGEDIR}/bin/
+				doexe ${S}/bin/${f} || die "Error on install $f."
 
-        done <<<"${NPM_BINS}"
+				# Check if binary has right header
+				has_envheader=$(head -n 1 ${S}/bin/${f} | grep node --color=none  | wc -l)
 
-    else
+				_npmv1_create_bin_script "${f}" "${NPM_PACKAGEDIR}/bin" "${sym}" "${has_envheader}" || \
+					die "Error on create binary script for ${f}."
+			else
+				if [ -f ${S}/${f} ] ; then
+					exeinto ${NPM_PACKAGEDIR}/
+					doexe ${S}/${f} || die "Error on install $f."
 
-        for f in ${S}/bin/* ; do
-            local fname=$(basename ${f})
+					# Check if binary has right header
+					has_envheader=$(head -n 1 ${S}/${f} | grep node --color=none  | wc -l)
+					_npmv1_create_bin_script "${f}" "${NPM_PACKAGEDIR}" "${sym}" "${has_envheader}" || \
+						die "Error on create binary script for ${f}."
+				else
+					die "Binary ${f} is not present."
+				fi
+			fi # end if [ -e ${S}/bin/${f}
 
-            if [ -e ${f} ] ; then
-                exeinto ${NPM_PACKAGEDIR}/bin/
-                doexe ${f} || die "Error on install $f."
-                _npmv1_create_bin_script "${fname}" "${NPM_PACKAGEDIR}/bin" "${fname}" || \
-                    die "Error on create binary script for ${fname}."
-            fi
-        done # end for
+		done <<<"${NPM_BINS}"
 
-    fi
+	else
 
-    insinto ${NPM_PACKAGEDIR}
-    doins package.json
+		for f in ${S}/bin/* ; do
+			local fname=$(basename ${f})
 
-    if [[ x"${NPM_NO_DEPS}" != x"1" ]] ; then
-        # Store list of package modules on npm_pkg_mods array
-        npm_pkg_mods=( $(ls --color=none node_modules/) )
+			if [ -e ${f} ] ; then
+				exeinto ${NPM_PACKAGEDIR}/bin/
+				doexe ${f} || die "Error on install $f."
+				_npmv1_create_bin_script "${fname}" "${NPM_PACKAGEDIR}/bin" "${fname}" || \
+					die "Error on create binary script for ${fname}."
+			fi
+		done # end for
 
-        if [[ -n "${NPM_SYSTEM_MODULES}" ]] ; then
+	fi
 
-            # Install package modules
-            dodir ${NPM_PACKAGEDIR}/node_modules/
+	insinto ${NPM_PACKAGEDIR}
+	doins package.json
 
-            # Create an array with all modules to exclude from copy
-            npm_sys_mods=( ${NPM_SYSTEM_MODULES} )
+	if [[ x"${NPM_NO_DEPS}" != x"1" ]] ; then
+		# Store list of package modules on npm_pkg_mods array
+		npm_pkg_mods=( $(ls --color=none node_modules/) )
 
-            for i in ${!npm_pkg_mods[@]} ; do
-                _npmv1_install_module "${npm_pkg_mods[$i]}"
-            done
+		if [[ -n "${NPM_SYSTEM_MODULES}" ]] ; then
 
-        else
+			# Install package modules
+			dodir ${NPM_PACKAGEDIR}/node_modules/
 
-            if [ -n "${NPM_LOCAL_MODULES}" ] ; then
+			# Create an array with all modules to exclude from copy
+			npm_sys_mods=( ${NPM_SYSTEM_MODULES} )
 
-                # Create an array with all modules to include locally
-                npm_local_mods=( ${NPM_LOCAL_MODULES} )
+			for i in ${!npm_pkg_mods[@]} ; do
+				_npmv1_install_module "${npm_pkg_mods[$i]}"
+			done
 
-                for i in ${!npm_pkg_mods[@]} ; do
-                    _npmv1_install_module "${npm_pkg_mods[$i]}" "1"
-                done
+		else
 
-            else
+			if [ -n "${NPM_LOCAL_MODULES}" ] ; then
 
-                if [[ ${NPM_GYP_PKG} -ne 1 ]] ; then
-                    # If NPM_SYSTEM_MODULES is not present
-                    # and NPM_GYP_PKG is equal to 1
-                    # then doesn't install dependencies.
+				# Create an array with all modules to include locally
+				npm_local_mods=( ${NPM_LOCAL_MODULES} )
 
-                    if [[ ${#npm_pkg_mods[@]} -gt 0 ]] ; then
-                        # Install package modules
-                        dodir ${NPM_PACKAGEDIR}/node_modules/
+				for i in ${!npm_pkg_mods[@]} ; do
+					_npmv1_install_module "${npm_pkg_mods[$i]}" "1"
+				done
 
-                        cp -rf node_modules/* ${D}/${NPM_PACKAGEDIR}/node_modules/
-                    fi
+			else
 
-                fi
+				if [[ ${NPM_GYP_PKG} -ne 1 ]] ; then
+					# If NPM_SYSTEM_MODULES is not present
+					# and NPM_GYP_PKG is equal to 1
+					# then doesn't install dependencies.
 
-            fi
-        fi
-    fi # End if x"${NPM_NO_DEPS}" != x"1" ...
+					if [[ ${#npm_pkg_mods[@]} -gt 0 ]] ; then
+						# Install package modules
+						dodir ${NPM_PACKAGEDIR}/node_modules/
 
-    # Copy all .js from root directory
-    npm_root_js_files=( $(ls --color=none . | grep --color=none "\.js$") )
-    _npmv1_copy_root_js_files
+						cp -rf node_modules/* ${D}/${NPM_PACKAGEDIR}/node_modules/
+					fi
 
-    # Copy library directory
-    if [[ -d lib ]] ; then
-        cp -rf lib ${D}/${NPM_PACKAGEDIR} || die "Error on copy directory lib!"
-    fi
+				fi
 
-    # Check if are present additional directories to copy
-    if [[ -n "${NPM_PKG_DIRS}" ]] ; then
-        _npmv1_copy_dirs
-    fi
+			fi
+		fi
+	fi # End if x"${NPM_NO_DEPS}" != x"1" ...
 
-    if [[ ${NPM_GYP_PKG} -eq 1 ]] ; then
-        _npmv1_install_native_objs
-    fi
+	# Copy all .js from root directory
+	npm_root_js_files=( $(ls --color=none . | grep --color=none "\.js$") )
+	_npmv1_copy_root_js_files
 
-    for f in ChangeLog CHANGELOG.md LICENSE.md LICENSE LICENSE.txt REAME README.md ; do
-        [[ -e ${f} ]] && dodoc ${f}
-    done # end for
+	# Copy library directory
+	if [[ -d lib ]] ; then
+		cp -rf lib ${D}/${NPM_PACKAGEDIR} || die "Error on copy directory lib!"
+	fi
 
-    unset -f _npmv1_create_bin_script
-    unset -f _npmv1_install_module
-    unset -f _npmv1_copy_root_js_files
-    unset -f _npmv1_copy_dirs
-    unset -f _npmv1_install_native_objs
+	# Check if are present additional directories to copy
+	if [[ -n "${NPM_PKG_DIRS}" ]] ; then
+		_npmv1_copy_dirs
+	fi
+
+	if [[ ${NPM_GYP_PKG} -eq 1 ]] ; then
+		_npmv1_install_native_objs
+	fi
+
+	for f in ChangeLog CHANGELOG.md LICENSE.md LICENSE LICENSE.txt REAME README.md ; do
+		[[ -e ${f} ]] && dodoc ${f}
+	done # end for
+
+	unset -f _npmv1_create_bin_script
+	unset -f _npmv1_install_module
+	unset -f _npmv1_copy_root_js_files
+	unset -f _npmv1_copy_dirs
+	unset -f _npmv1_install_native_objs
 
 }
 
