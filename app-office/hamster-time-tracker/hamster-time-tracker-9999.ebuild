@@ -22,7 +22,7 @@ RDEPEND="
 	dev-python/gconf-python
 	gnome-base/gconf[introspection]
 	dev-python/pyxdg
-	dev-python/jira
+	dev-python/jira[kerberos]
 	dev-python/beaker[${PYTHON_USEDEP}]
 	dev-python/requests[${PYTHON_USEDEP}]
 "
