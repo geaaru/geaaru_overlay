@@ -25,8 +25,8 @@ IUSE=""
 DEPEND="dev-go/dep"
 
 src_compile() {
-	GOPATH="${WORKDIR}/${P}:$(get_golibdir_gopath)" \
-		dep ensure
+#	GOPATH="${WORKDIR}/${P}:$(get_golibdir_gopath)" \
+#		dep ensure
 	GOPATH="${WORKDIR}/${P}:$(get_golibdir_gopath)" \
 		go build -v -x ${EGO_BUILD_FLAGS} "${EGO_PN}" ./...
 }
