@@ -1,0 +1,16 @@
+# arangodb3.service
+
+[Unit]
+Description=ArangoDB v3 Database
+
+[Service]
+Type=simple
+PIDFile=/var/run/arangod3/arangod3.pid
+User=root
+ExecStartPre=/bin/mkdir -p /var/run/arangod3 /var/lib/arangodb3 /var/lib/arangodb3-apps
+ExecStartPre=/bin/chown -R arangodb3:arangodb3 /var/run/arangod3 /var/lib/arangodb3 /var/lib/arangodb3-apps
+ExecStart=/usr/sbin/arangod --pid-file /var/run/arangod3/arangod.pid --server.uid arangodb3
+ExecStop=/bin/kill -2 $MAINPID
+
+[Install]
+WantedBy=multi-user.target
