@@ -1,7 +1,7 @@
 # Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=5
+EAPI=6
 CMAKE_BUILD_TYPE=Release
 PYTHON_COMPAT=( python2_7 )
 
@@ -12,16 +12,17 @@ HOMEPAGE="http://www.arangodb.org/"
 
 GITHUB_USER="arangodb"
 GITHUB_TAG="v${PV}"
-
 SRC_URI="https://github.com/${GITHUB_USER}/${PN}/archive/${GITHUB_TAG}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="Apache-2.0"
 SLOT="3"
-KEYWORDS="amd64"
-IUSE=""
+KEYWORDS="~amd64 ~arm"
+IUSE="system-boost jemalloc"
 
 DEPEND=">=sys-libs/readline-6.2_p1
 	>=dev-libs/openssl-1.0.1g[-bindist]
+	system-boost? ( dev-libs/boost )
+	jemalloc? ( dev-libs/jemalloc )
 	${PYTHON_DEPEND}"
 RDEPEND="${DEPEND}"
 
@@ -38,25 +39,56 @@ src_prepare() {
 
 	sed -i 's?@PKGDATADIR@?/usr/share/arangodb3?' etc/arangodb3/arangod.conf.in || die 'sed arangod.conf failed'
 	sed -i 's?@PKGDATADIR@?/usr/share/arangodb3?' etc/arangodb3/arangosh.conf.in || die 'sed arangosh.conf failed'
+
+	sed -i -e 's: arangodb : arangodb3 :g' Installation/logrotate.d/arangod.systemd || die 'sed logrotate file failed'
 }
 
 src_configure() {
 	local mycmakeargs=(
-		-DVERBOSE=On
+		#-DVERBOSE=On
 		-DUSE_OPTIMIZE_FOR_ARCHITECTURE=Off
 		-DCMAKE_BUILD_TYPE=RelWithDebInfo
 		#-DCMAKE_C_FLAGS="$(CFLAGS)"
 		#-DCMAKE_CXX_FLAGS="$(CXXFLAGS)"
-		-DETCDIR=/etc
+		#-DETCDIR=/etc
 		-DVARDIR=/var
+		-DCMAKE_INSTALL_SYSCONFDIR=/etc
 		-DCMAKE_INSTALL_PREFIX:PATH=/usr
 		-DCMAKE_SKIP_RPATH:BOOL=ON
+		-DLOGROTATE_GROUP=arangodb3
+		-DOPENSSL_ROOT_DIR=/usr/include/openssl
 	)
+	if use system-boost ; then
+		mycmakeargs+=( -DUSE_BOOST_SYSTEM_LIBS=ON )
+	fi
+
+	if use jemalloc ; then
+		mycmakeargs+=( -DUSE_JEMALLOC=ON )
+	else
+		mycmakeargs+=( -DUSE_JEMALLOC=OFF )
+	fi
+
 	cmake-utils_src_configure
 }
 
 src_install() {
+	diropts -m0750 -o arangodb3 -g arangodb3
+	dodir /var/log/arangodb3
+	dodir /var/lib/arangodb3
+	dodir /var/lib/arangodb3-apps
+	diropts
+	fowners -R arangodb3:arangodb3 /var/log/arangodb3
+	fowners -R arangodb3:arangodb3 /var/lib/arangodb3
+	fowners -R arangodb3:arangodb3 /var/lib/arangodb3-apps
+
 	cmake-utils_src_install
+
+	# I use our systemd service
+	rm "${D}/usr/lib/systemd/system/arangodb3.service"
+
+	# TODO: Check how fix this at configure level.
+	mv "${D}/usr/etc/arangodb3/" "${D}/etc/"
+	rm -rf "${D}/usr/etc"
 
 	newinitd "${FILESDIR}"/arangodb3.initd arangodb3
 
