@@ -51,15 +51,19 @@ src_configure() {
 		#-DCMAKE_C_FLAGS="$(CFLAGS)"
 		#-DCMAKE_CXX_FLAGS="$(CXXFLAGS)"
 		#-DETCDIR=/etc
-		-DVARDIR=/var
+		#-DVARDIR=/var
+		-DCMAKE_INSTALL_DOCDIR=/usr/share/arangodb3
 		-DCMAKE_INSTALL_SYSCONFDIR=/etc
 		-DCMAKE_INSTALL_PREFIX:PATH=/usr
+		-DCMAKE_INSTALL_LOCALSTATEDIR=/var
 		-DCMAKE_SKIP_RPATH:BOOL=ON
 		-DLOGROTATE_GROUP=arangodb3
 		-DOPENSSL_ROOT_DIR=/usr/include/openssl
 	)
 	if use system-boost ; then
 		mycmakeargs+=( -DUSE_BOOST_SYSTEM_LIBS=ON )
+	else
+		mycmakeargs+=( -DUSE_BOOST_SYSTEM_LIBS=OFF )
 	fi
 
 	if use jemalloc ; then
@@ -74,8 +78,11 @@ src_configure() {
 src_install() {
 	diropts -m0750 -o arangodb3 -g arangodb3
 	dodir /var/log/arangodb3
+	keepdir /var/log/arangodb3
 	dodir /var/lib/arangodb3
+	keepdir /var/lib/arangodb3
 	dodir /var/lib/arangodb3-apps
+	keepdir /var/lib/arangodb3-apps
 	diropts
 	fowners -R arangodb3:arangodb3 /var/log/arangodb3
 	fowners -R arangodb3:arangodb3 /var/lib/arangodb3
@@ -85,10 +92,6 @@ src_install() {
 
 	# I use our systemd service
 	rm "${D}/usr/lib/systemd/system/arangodb3.service"
-
-	# TODO: Check how fix this at configure level.
-	mv "${D}/usr/etc/arangodb3/" "${D}/etc/"
-	rm -rf "${D}/usr/etc"
 
 	newinitd "${FILESDIR}"/arangodb3.initd arangodb3
 
