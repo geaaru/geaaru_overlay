@@ -28,6 +28,10 @@ RDEPEND="${DEPEND}"
 
 NPM_NO_DEPS=1
 
+NPM_BINS="
+cmd.js => ${PN}-cmd
+"
+
 S="${WORKDIR}/package"
 
 inherit npmv1
