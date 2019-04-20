@@ -15,11 +15,8 @@ TasksMax=131072
 Environment=GLIBCXX_FORCE_NEW=1
 
 #PIDFile=/var/run/arangod3/arangod3.pid
-User=root
-User=arangod3
-Group=arangod3
 RuntimeDirectory=arangod3
-ExecStart=/usr/sbin/arangod --server.uid arangodb3 --log.foreground-tty true
+ExecStart=/usr/sbin/arangod --server.uid arangodb3 --server.gid arangodb3
 #ExecStart=/usr/sbin/arangod --pid-file /var/run/arangod3/arangod.pid --server.uid arangodb3 --log.foreground-tty true
 ExecStop=/bin/kill -2 $MAINPID
 
