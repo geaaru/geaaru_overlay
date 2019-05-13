@@ -18,7 +18,7 @@ LICENSE="GPL-2"
 SLOT="0"
 
 IUSE="debug firebird iodbc kerberos ldap libressl memcache mysql odbc oracle pam
-	pcap postgres python readline rest samba sqlite ssl redis
+	pcap postgres python readline rest samba sqlite ssl redis systemd
 "
 
 RESTRICT="test firebird? ( bindist )"
@@ -48,6 +48,7 @@ RDEPEND="!net-dialup/cistronradius
 	iodbc? ( dev-db/libiodbc )
 	redis? ( dev-db/redis )
 	memcache? ( dev-libs/libmemcached )
+	systemd? ( sys-apps/systemd )
 	oracle? ( dev-db/oracle-instantclient-basic )"
 DEPEND="${RDEPEND}"
 
@@ -163,6 +164,7 @@ src_configure() {
 		$(use_enable debug developer)
 		$(use_with ldap edir)
 		$(use_with ssl openssl)
+		$(use_with systemd systemd)
 	)
 	# fix bug #77613
 	if has_version app-crypt/heimdal; then

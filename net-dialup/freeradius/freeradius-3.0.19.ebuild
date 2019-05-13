@@ -22,12 +22,11 @@ SLOT="0"
 
 IUSE="
 	debug firebird iodbc kerberos ldap libressl mysql odbc oracle pam pcap
-	postgres python readline sqlite ssl redis memcache
+	postgres python readline sqlite ssl redis memcache systemd
 "
 RESTRICT="test firebird? ( bindist )"
 
 RDEPEND="!net-dialup/cistronradius
-	!net-dialup/freeradius:3.1
 	!net-dialup/gnuradius
 	dev-lang/perl:=
 	sys-libs/gdbm
@@ -50,6 +49,7 @@ RDEPEND="!net-dialup/cistronradius
 	iodbc? ( dev-db/libiodbc )
 	redis? ( dev-db/redis )
 	memcache? ( dev-libs/libmemcached )
+	systemd? ( sys-apps/systemd )
 	oracle? ( dev-db/oracle-instantclient-basic )"
 DEPEND="${RDEPEND}"
 
@@ -164,6 +164,7 @@ src_configure() {
 		$(use_enable debug developer)
 		$(use_with ldap edir)
 		$(use_with ssl openssl)
+		$(use_with systemd systemd)
 	)
 
 	# fix bug #77613
