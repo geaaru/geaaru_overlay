@@ -1,0 +1,25 @@
+diff --git a/src/main/radiusd.c b/src/main/radiusd.c
+index 0b35d76ef5..60830a36d7 100644
+--- a/src/main/radiusd.c
++++ b/src/main/radiusd.c
+@@ -401,6 +401,10 @@ int main(int argc, char *argv[])
+ 			INFO("systemd watchdog is disabled");
+ 		}
+ 	}
++
++	if (sd_notify(0, "READY=1") <=0) {
++		WARN("Something goes wrong on send READY event to systemd");
++	}
+ #else
+ 	/*
+ 	 *	Some users get frustrated due to can't handle the service using "systemctl start radiusd"
+@@ -480,9 +484,6 @@ int main(int argc, char *argv[])
+ 				exit(EXIT_FAILURE);
+ 			}
+ 
+-#  ifdef HAVE_SYSTEMD
+-			sd_notify(0, "READY=1");
+-#  endif
+ 
+ 			exit(EXIT_SUCCESS);
+ 		}
