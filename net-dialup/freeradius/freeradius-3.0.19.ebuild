@@ -57,7 +57,7 @@ S="${WORKDIR}/${MY_P}"
 
 PATCHES=(
 	${FILESDIR}/freeradius-3.0.14-proxy-timestamp.patch
-	${FILESDIR}/freearadius-3.0.19-systemd-ready-event.patch
+	${FILESDIR}/freeradius-3.0.19-systemd-ready-event.patch
 )
 
 pkg_setup() {
