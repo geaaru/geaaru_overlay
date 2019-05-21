@@ -22,7 +22,7 @@ RDEPEND="${DEPEND}"
 BDEPEND=""
 
 PATCHES=(
-	${FILESDIR}/dep-0.5.3-fix-vcs-submodule.patch
+	${FILESDIR}/dep-0.5.3-fix-vcs-repo.patch
 )
 
 src_install() {

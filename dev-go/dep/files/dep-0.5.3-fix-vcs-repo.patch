@@ -1,0 +1,20 @@
+commit 0fbd74eb73061f58f2b31e331ce2769df764fd6d
+Author: Daniele Rondina <geaaru@sabayonlinux.org>
+Date:   Mon May 20 23:41:24 2019 +0200
+
+    Fix clean of submodules
+
+diff --git a/gps/vcs_repo.go b/gps/vcs_repo.go
+index 0835b357..55ba20aa 100644
+--- a/gps/vcs_repo.go
++++ b/gps/vcs_repo.go
+@@ -146,8 +146,7 @@ func (r *gitRepo) defendAgainstSubmodules(ctx context.Context) error {
+ 			"submodule",
+ 			"foreach",
+ 			"--recursive",
+-			"git",
+-			"clean", "-x", "-d", "-f", "-f",
++			"git clean -x -d -f -f",
+ 		)
+ 		cmd.SetDir(r.LocalPath())
+ 		if out, err := cmd.CombinedOutput(); err != nil {
