@@ -81,7 +81,11 @@ _npmv1_set_metadata() {
 
 		if [[ -z "${RESTRICT}" ]] ; then
 			if [[ -z "${NPM_NO_MIRROR}" || "${NPM_NO_MIRROR}" == true  ]] ; then
-				RESTRICT="mirror"
+				if [ -n "$RESTRICT" ] ; then
+					RESTRICT="$RESTRICT mirror"
+				else
+					RESTRICT="mirror"
+				fi
 			fi
 		fi
 		if [[ -z "${SRC_URI}" && -z "${EGIT_REPO_URI}" ]] ; then
