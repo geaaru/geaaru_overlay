@@ -1,0 +1,13 @@
+[Unit]
+Description=FreeRADIUS Exporter
+After=network.target
+
+[Service]
+User=radius
+Group=radius
+Environment=RADIUS_SECRET=
+Environment=RADIUS_ADDR=
+ExecStart=/usr/bin/freeradius_exporter
+
+[Install]
+WantedBy=multi-user.target

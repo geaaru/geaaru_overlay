@@ -6,7 +6,7 @@ EAPI=6
 EGO_PN="github.com/bvantagelimited/freeardius_exporter/..."
 S="${WORKDIR}/${P}/src/${EGO_PN}"
 
-inherit golang-build golang-vcs
+inherit golang-build golang-vcs systemd user
 
 DESCRIPTION="FreeRADIUS Prometheus Exporter"
 HOMEPAGE="https://github.com/bvantagelimited/freeradius_exporter"
@@ -20,8 +20,15 @@ DEPEND=""
 RDEPEND="${DEPEND}"
 BDEPEND=""
 
+pkg_setup() {
+	enewgroup radius
+	enewuser radius -1 -1 /var/log/radius radius
+}
+
 src_install() {
 	GOPATH="${WORKDIR}/${P}:$(get_golibdir_gopath)" \
 		go install -v -x ${EGO_BUILD_FLAGS} "${EGO_PN}"
 	dobin ${WORKDIR}/${P}/freeradius_exporter
+
+	systemd_dounit "${FILESDIR}"/freeradius_exporter.servce
 }
