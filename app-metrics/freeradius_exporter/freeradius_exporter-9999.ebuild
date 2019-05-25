@@ -16,7 +16,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND=""
+DEPEND="dev-go/dep"
 RDEPEND="${DEPEND}"
 BDEPEND=""
 
@@ -26,22 +26,21 @@ pkg_setup() {
 }
 
 src_prepare() {
-
 	eapply_user
 
 	GOPATH="${WORKDIR}/${P}:$(get_golibdir_gopath)" \
-		dep init
+		dep init || die "Error on dep init"
 	GOPATH="${WORKDIR}/${P}:$(get_golibdir_gopath)" \
-		dep ensure
+		dep ensure || die "Error on dep ensure"
 }
 
 src_compile() {
 	GOPATH="${WORKDIR}/${P}:$(get_golibdir_gopath)" \
-		go install -v -x ${EGO_BUILD_FLAGS} "${EGO_PN}" ./...
+		go install -v -x ${EGO_BUILD_FLAGS} "${EGO_PN}" ./... || die "Error on go install"
 }
 
 src_install() {
 	dobin ${WORKDIR}/${P}/bin/freeradius_exporter
 
-	systemd_dounit "${FILESDIR}"/freeradius_exporter.servce
+	systemd_dounit "${FILESDIR}"/freeradius_exporter.service
 }
