@@ -1,11 +1,10 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
-EAPI=6
+EAPI=7
 
-PYTHON_COMPAT=( python{3_5,3_6} )
-inherit eutils autotools pam python-any-r1 systemd user
+PYTHON_COMPAT=( python{2_7,3_{5,6,7}} )
+inherit autotools pam python-single-r1 systemd user
 
 MY_P="${PN}-server-${PV}"
 
@@ -16,31 +15,37 @@ SRC_URI="
 "
 HOMEPAGE="http://www.freeradius.org/"
 
-KEYWORDS="~amd64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
+KEYWORDS="~amd64 ~arm ~arm64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
 LICENSE="GPL-2"
 SLOT="0"
 
 IUSE="
-	debug firebird iodbc kerberos ldap libressl mysql odbc oracle pam pcap
-	postgres python readline sqlite ssl redis memcache
+	debug firebird iodbc kerberos ldap libressl memcached mysql odbc oracle pam
+	pcap postgres python readline rest samba sqlite ssl redis
 "
 RESTRICT="test firebird? ( bindist )"
 
+# NOTE: Temporary freeradius doesn't support linking with mariadb client
+#       libs also if code is compliant, will be available in the next release.
+#       (http://lists.freeradius.org/pipermail/freeradius-devel/2018-October/013228.html)
 RDEPEND="!net-dialup/cistronradius
-	!net-dialup/freeradius:3.1
 	!net-dialup/gnuradius
 	dev-lang/perl:=
-	sys-libs/gdbm
+	sys-libs/gdbm:=
 	sys-libs/talloc
 	python? ( ${PYTHON_DEPS} )
 	readline? ( sys-libs/readline:0= )
 	pcap? ( net-libs/libpcap )
+	memcached? ( dev-libs/libmemcached )
 	mysql? ( dev-db/mysql-connector-c )
 	postgres? ( dev-db/postgresql:= )
 	firebird? ( dev-db/firebird )
 	pam? ( virtual/pam )
+	rest? ( dev-libs/json-c:= )
+	samba? ( net-fs/samba )
+	redis? ( dev-libs/hiredis:= )
 	ssl? (
-		!libressl? ( dev-libs/openssl:0= )
+		!libressl? ( dev-libs/openssl:0=[-bindist] )
 		libressl? ( dev-libs/libressl:0= )
 	)
 	ldap? ( net-nds/openldap )
@@ -48,23 +53,27 @@ RDEPEND="!net-dialup/cistronradius
 	sqlite? ( dev-db/sqlite:3 )
 	odbc? ( dev-db/unixODBC )
 	iodbc? ( dev-db/libiodbc )
-	redis? ( dev-db/redis )
-	memcache? ( dev-libs/libmemcached )
 	oracle? ( dev-db/oracle-instantclient-basic )"
 DEPEND="${RDEPEND}"
+
+REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
 
 S="${WORKDIR}/${MY_P}"
 
 PATCHES=(
 	${FILESDIR}/freeradius-3.0.14-proxy-timestamp.patch
+	"${FILESDIR}"/${P}-libressl.patch
+	"${FILESDIR}"/${P}-systemd-service.patch
 )
 
 pkg_setup() {
 	enewgroup radius
 	enewuser radius -1 -1 /var/log/radius radius
 
-	python-any-r1_pkg_setup
-	export PYTHONBIN="${EPYTHON}"
+	if use python ; then
+		python-single-r1_pkg_setup
+		export PYTHONBIN="${EPYTHON}"
+	fi
 }
 
 src_prepare() {
@@ -78,8 +87,13 @@ src_prepare() {
 	use ssl || { rm -r src/modules/rlm_eap/types/rlm_eap_{tls,ttls,peap} || die ; }
 	use ldap || { rm -r src/modules/rlm_ldap || die ; }
 	use kerberos || { rm -r src/modules/rlm_krb5 || die ; }
+	use memcached || { rm -r src/modules/rlm_cache/drivers/rlm_cache_memcached || die ; }
 	use pam || { rm -r src/modules/rlm_pam || die ; }
 	use python || { rm -r src/modules/rlm_python || die ; }
+	use rest || { rm -r src/modules/rlm_rest || die ; }
+	use redis || { rm -r src/modules/rlm_redis{,who} || die ; }
+	# can't just nuke rlm_mschap because many modules rely on smbdes.h
+	use samba || { rm -r src/modules/rlm_mschap/{configure,*.mk} || die ; }
 	# Do not install ruby rlm module, bug #483108
 	rm -r src/modules/rlm_ruby || die
 
@@ -88,10 +102,6 @@ src_prepare() {
 	rm -r src/modules/rlm_eap/types/rlm_eap_tnc || die # requires TNCS library
 	rm -r src/modules/rlm_eap/types/rlm_eap_ikev2 || die # requires libeap-ikev2
 	rm -r src/modules/rlm_opendirectory || die # requires some membership.h
-
-	if ! use redis ; then
-		rm -r src/modules/rlm_redis{,who} # requires redis
-	fi
 	rm -r src/modules/rlm_sql/drivers/rlm_sql_{db2,freetds} || die
 
 	# sql drivers that are not part of experimental are loaded from a
@@ -142,12 +152,13 @@ src_prepare() {
 
 	default
 
-	eapply_user
-
 	eautoreconf
 }
 
 src_configure() {
+	# do not try to enable static with static-libs; upstream is a
+	# massacre of libtool best practices so you also have to make sure
+	# to --enable-shared explicitly.
 	local myeconfargs=(
 		--enable-shared
 		--disable-static
@@ -165,7 +176,6 @@ src_configure() {
 		$(use_with ldap edir)
 		$(use_with ssl openssl)
 	)
-
 	# fix bug #77613
 	if has_version app-crypt/heimdal; then
 		myeconfargs+=( --enable-heimdal-krb5 )
@@ -174,9 +184,6 @@ src_configure() {
 	use readline || export ac_cv_lib_readline=no
 	use pcap || export ac_cv_lib_pcap_pcap_open_live=no
 
-	# do not try to enable static with static-libs; upstream is a
-	# massacre of libtool best practices so you also have to make sure
-	# to --enable-shared explicitly.
 	econf "${myeconfargs[@]}"
 }
 
@@ -196,28 +203,25 @@ src_install() {
 	keepdir /var/log/radius/radacct
 	diropts
 
-	# verbose, do not install certificates
-	emake -j1 \
-		Q='' ECHO=true \
+	emake Q='' ECHO=true \
 		LOCAL_CERT_PRODUCTS='' \
 		R="${D}" \
 		install
 
-	fowners -R radius:radius /etc/raddb
+	fowners -R root:radius /etc/raddb
 	fowners -R radius:radius /var/log/radius
 
 	pamd_mimic_system radiusd auth account password session
 
 	dodoc CREDITS
 
-	rm "${D}/usr/sbin/rc.radiusd" || die
+	rm "${ED}/usr/sbin/rc.radiusd" || die
 
 	newinitd "${FILESDIR}/radius.init-r3" radiusd
 	newconfd "${FILESDIR}/radius.conf-r4" radiusd
 
-	# Systemd stuff
 	systemd_newtmpfilesd "${FILESDIR}"/freeradius.tmpfiles freeradius.conf
-	systemd_dounit "${FILESDIR}"/freeradius.service
+	systemd_dounit "${S}"/debian/freeradius.service
 	systemd_install_serviced "${FILESDIR}"/freeradius.service.conf
 
 	# Remove all default sites under site-enables.
@@ -227,14 +231,13 @@ src_install() {
 	# from mods-enabled directory.
 	rm ${D}/etc/raddb/mods-enabled/{cache_eap,digest,eap,mschap,ntlm_auth}
 
-	prune_libtool_files
+	find "${ED}" \( -name "*.a" -o -name "*.la" \) -delete || die
 }
 
 pkg_config() {
 	if use ssl; then
-		cd "${ROOT}"/etc/raddb/certs
-		./bootstrap
-
+		cd "${ROOT}"/etc/raddb/certs || die
+		./bootstrap || die "Error while running ./bootstrap script."
 		fowners -R root:radius "${ROOT}"/etc/raddb/certs
 	fi
 }
