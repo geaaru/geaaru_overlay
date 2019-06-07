@@ -198,9 +198,9 @@ src_compile() {
 
 src_install() {
 	dodir /etc
-#	diropts -m0750 -o root -g radius
+	diropts -m0750 -o root -g radius
 	dodir /etc/raddb
-#	diropts -m0750 -o radius -g radius
+	diropts -m0750 -o radius -g radius
 	dodir /var/log/radius
 	keepdir /var/log/radius/radacct
 	diropts
@@ -210,8 +210,8 @@ src_install() {
 		R="${D}" \
 		install
 
-#	fowners -R root:radius /etc/raddb
-#	fowners -R radius:radius /var/log/radius
+	fowners -R root:radius /etc/raddb
+	fowners -R radius:radius /var/log/radius
 
 	pamd_mimic_system radiusd auth account password session
 
