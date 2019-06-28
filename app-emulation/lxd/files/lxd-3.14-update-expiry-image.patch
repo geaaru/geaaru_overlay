@@ -1,11 +1,11 @@
-commit b3e6015516bb9f8b67a1e7674d3a7326d4133873
+commit 05d6caacd3aa53a3125675511dca3ea9269357fa
 Author: Daniele Rondina <geaaru@sabayonlinux.org>
 Date:   Tue Jun 25 23:34:05 2019 +0200
 
     Add update of expire_date on image
 
 diff --git a/lxd/images.go b/lxd/images.go
-index 8342a9e4..b8d47fca 100644
+index 8342a9e4..3a83ea80 100644
 --- a/lxd/images.go
 +++ b/lxd/images.go
 @@ -1578,6 +1578,12 @@ func imagePatch(d *Daemon, r *http.Request) Response {
@@ -15,7 +15,7 @@ index 8342a9e4..b8d47fca 100644
 +	// Get Expiry
 +	expiry, err := reqRaw.GetInt64("expiry_date")
 +	if err == nil {
-+		info.ExpiresAt = expiry
++		info.ExpiresAt = time.Unix(expiry, 0)
 +	}
 +
  	// Get Properties
