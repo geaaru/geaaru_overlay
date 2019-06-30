@@ -1,14 +1,31 @@
-commit 05d6caacd3aa53a3125675511dca3ea9269357fa
+commit 3a92d28246ac2c1f5c27bfbbde841e85fa523b2d
 Author: Daniele Rondina <geaaru@sabayonlinux.org>
 Date:   Tue Jun 25 23:34:05 2019 +0200
 
     Add update of expire_date on image
 
 diff --git a/lxd/images.go b/lxd/images.go
-index 8342a9e4..3a83ea80 100644
+index 8342a9e4..0029baf7 100644
 --- a/lxd/images.go
 +++ b/lxd/images.go
-@@ -1578,6 +1578,12 @@ func imagePatch(d *Daemon, r *http.Request) Response {
+@@ -1524,6 +1524,16 @@ func imagePut(d *Daemon, r *http.Request) Response {
+ 		return BadRequest(err)
+ 	}
+ 
++	if req.ExpiryDate > 0 {
++		info.ExpiresAt = time.Unix(req.ExpiryDate, 0)
++		// Only cached image are removed when expire date is reached.
++		err = d.cluster.ImageLastAccessInit(fingerprint)
++		if err != nil {
++			logger.Error("Error setting cached flag", log.Ctx{"err": err, "fp": fingerprint})
++			return SmartError(err)
++		}
++	}
++
+ 	err = d.cluster.ImageUpdate(id, info.Filename, info.Size, req.Public, req.AutoUpdate, info.Architecture, info.CreatedAt, info.ExpiresAt, req.Properties)
+ 	if err != nil {
+ 		return SmartError(err)
+@@ -1578,6 +1588,12 @@ func imagePatch(d *Daemon, r *http.Request) Response {
  		info.Public = public
  	}
  
@@ -21,8 +38,20 @@ index 8342a9e4..3a83ea80 100644
  	// Get Properties
  	_, ok := reqRaw["properties"]
  	if ok {
+diff --git a/shared/api/image.go b/shared/api/image.go
+index 3f1834d1..9fbd828a 100644
+--- a/shared/api/image.go
++++ b/shared/api/image.go
+@@ -39,6 +39,7 @@ type ImagesPostSource struct {
+ // ImagePut represents the modifiable fields of a LXD image
+ type ImagePut struct {
+ 	AutoUpdate bool              `json:"auto_update" yaml:"auto_update"`
++	ExpiryDate int64             `json:"expiry" yaml:"expiry_date"`
+ 	Properties map[string]string `json:"properties" yaml:"properties"`
+ 	Public     bool              `json:"public" yaml:"public"`
+ }
 diff --git a/shared/json.go b/shared/json.go
-index 09f10666..51268950 100644
+index 09f10666..68c40d21 100644
 --- a/shared/json.go
 +++ b/shared/json.go
 @@ -40,6 +40,16 @@ func (m Jmap) GetInt(key string) (int, error) {
@@ -30,9 +59,9 @@ index 09f10666..51268950 100644
  }
  
 +func (m Jmap) GetInt64(key string) (int64, error) {
-+    if val, ok := m[key]; !ok {
++	if val, ok := m[key]; !ok {
 +		return -1, fmt.Errorf("Response was missing `%s`", key)
-+	} else if val, ok := val.(int64); !ok {
++	} else if val, ok := val.(float64); !ok {
 +		return -1, fmt.Errorf("`%s` was not an int64", key)
 +	} else {
 +		return int64(val), nil
