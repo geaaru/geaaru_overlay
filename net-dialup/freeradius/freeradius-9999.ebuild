@@ -18,7 +18,7 @@ LICENSE="GPL-2"
 SLOT="0"
 
 IUSE="debug firebird iodbc kerberos ldap libressl memcache mysql odbc oracle pam
-	pcap postgres python readline rest samba sqlite ssl redis systemd
+	pcap postgres python readline rest samba sqlite ssl redis systemd mongo
 "
 
 RESTRICT="test firebird? ( bindist )"
@@ -34,6 +34,7 @@ RDEPEND="!net-dialup/cistronradius
 	readline? ( sys-libs/readline:0= )
 	pcap? ( net-libs/libpcap )
 	mysql? ( dev-db/mysql-connector-c )
+	mongo? ( >=dev-libs/mongo-c-driver-1.13.0-r1 )
 	postgres? ( dev-db/postgresql:= )
 	firebird? ( dev-db/firebird )
 	pam? ( virtual/pam )
@@ -139,6 +140,7 @@ src_prepare() {
 	usesqldriver odbc unixodbc
 	usesqldriver oracle
 	usesqldriver sqlite
+	usesqldriver mongo
 
 	default
 
