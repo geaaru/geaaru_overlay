@@ -28,6 +28,10 @@ NPM_LOCAL_MODULES="
 @oresoftware
 "
 
+NPM_PKG_DIRS="
+	dist
+"
+
 S="${WORKDIR}/package"
 
 inherit npmv1 eutils
