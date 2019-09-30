@@ -1,0 +1,15 @@
+diff --git a/src/main/detail.c b/src/main/detail.c
+index 3c0e95cc04..4f22d57891 100644
+--- a/src/main/detail.c
++++ b/src/main/detail.c
+@@ -353,6 +353,10 @@ int detail_recv(rad_listen_t *listener)
+ 		fun = rad_coa_recv;
+ 		break;
+ 
++	case PW_CODE_ACCESS_REQUEST:
++		fun = rad_authenticate;
++		break;
++
+ 	default:
+ 		rad_free(&packet);
+ 		data->state = STATE_REPLIED;
