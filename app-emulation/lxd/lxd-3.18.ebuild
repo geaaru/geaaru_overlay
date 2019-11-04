@@ -128,6 +128,8 @@ src_compile() {
 
 	cd "${GOPATH}/deps/libco" || die "Can't cd to libco dir"
 	emake
+	# Makefile create only libco.so.0.1.0 and linking fail because libco.so is not present.
+	ln -s libco.so.0* libco.so
 
 	cd "${GOPATH}/deps/dqlite" || die "Can't cd to dqlite dir"
 	emake CFLAGS="-I${GOPATH}/deps/sqlite -I${GOPATH}/deps/raft/include -I${GOPATH}/deps/libco/include" \
@@ -144,8 +146,8 @@ src_compile() {
 		# LXD depends on a patched, bundled sqlite with replication
 		# capabilities.
 		export CGO_CFLAGS="${CGO_CFLAGS} -I${GOPATH}/deps/sqlite/ -I${GOPATH}/deps/dqlite/include/ -I${GOPATH}/deps/raft/include/ -I${GOPATH}/deps/libco/"
-		export CGO_LDFLAGS="${CGO_LDFLAGS} -L${GOPATH}/deps/sqlite/.libs/ -L${GOPATH}/deps/dqlite/.libs/ -L${GOPATH}/deps/raft/.libs -L${GOPATH}/deps/libco/.libs -Wl,-rpath,${EPREFIX}/usr/lib/lxd"
-		export LD_LIBRARY_PATH="${GOPATH}/deps/sqlite/.libs/:${GOPATH}/deps/dqlite/.libs/:${GOPATH}/deps/raft/.libs:${GOPATH}/deps/libco/.libs:${LD_LIBRARY_PATH}"
+		export CGO_LDFLAGS="${CGO_LDFLAGS} -L${GOPATH}/deps/sqlite/.libs/ -L${GOPATH}/deps/dqlite/.libs/ -L${GOPATH}/deps/raft/.libs -L${GOPATH}/deps/libco/ -Wl,-rpath,${EPREFIX}/usr/lib/lxd"
+		export LD_LIBRARY_PATH="${GOPATH}/deps/sqlite/.libs/:${GOPATH}/deps/dqlite/.libs/:${GOPATH}/deps/raft/.libs:${GOPATH}/deps/libco/:${LD_LIBRARY_PATH}"
 
 		go install -v -x -tags libsqlite3 ${EGO_PN}/lxd || die "Failed to build the daemon"
 	fi
@@ -190,7 +192,8 @@ src_install() {
 		emake DESTDIR="${D}" install
 
 		cd "${GOPATH}/deps/libco" || die "Can't cd to libco dir"
-		dolib.so libco.so || die "Can't install libco.so"
+		#dolib.so libco.so || die "Can't install libco.so"
+		emake DESTDIR="${D}" LIBDIR="${EPREFIX}/lib/lxd" install
 
 		cd "${GOPATH}/deps/dqlite" || die "Can't cd to dqlite dir"
 		emake DESTDIR="${D}" install
