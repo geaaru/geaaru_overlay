@@ -3,7 +3,7 @@
 # $Heade$
 
 EAPI=6
-PYTHON_COMPAT=( python{3_5,3_6} )
+PYTHON_COMPAT=( python{3_5,3_6,3_7} )
 
 inherit distutils-r1 git-r3
 
@@ -12,7 +12,7 @@ HOMEPAGE="https://pypi.python.org/pypi/pyrad"
 
 EGIT_REPO_URI="https://github.com/geaaru/pyrad.git"
 EGIT_BRANCH="master"
-EGIT_COMMIT="d3db68cb00d47dd0b4e8b59024beb4a2d5e115ca"
+EGIT_COMMIT="c9edcca29d460d09cb41623fe75f7f1931738e79"
 
 LICENSE="BSD"
 SLOT="0"
