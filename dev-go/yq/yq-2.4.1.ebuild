@@ -21,6 +21,7 @@ KEYWORDS="~amd64 ~arm ~arm64"
 IUSE=""
 
 DEPEND=""
+RDEPEND="!app-misc/yq"
 src_prepare() {
 	GOPATH="${WORKDIR}/${P}:$(get_golibdir_gopath)" \
 		GO111MODULE="on" go mod vendor
