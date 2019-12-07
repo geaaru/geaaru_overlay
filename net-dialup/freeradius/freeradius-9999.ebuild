@@ -25,12 +25,12 @@ RESTRICT="test firebird? ( bindist )"
 
 RDEPEND="!net-dialup/cistronradius
 	!net-dialup/freeradius:3.1
-	!net-dialup/gnuradius
 	sys-devel/libtool
 	dev-lang/perl:=
 	sys-libs/gdbm
 	sys-libs/talloc
 	python? ( ${PYTHON_DEPS} )
+	rest? ( dev-libs/json-c:= )
 	readline? ( sys-libs/readline:0= )
 	pcap? ( net-libs/libpcap )
 	mysql? ( dev-db/mysql-connector-c )
@@ -58,6 +58,7 @@ RESTRICT="test"
 PATCHES=(
 	${FILESDIR}/freeradius-3.0.14-proxy-timestamp.patch
 	${FILESDIR}/freeradius-detail-access-req.patch
+	"${FILESDIR}"/${PN}-3.0.20-python3.patch
 )
 
 pkg_setup() {
@@ -80,7 +81,11 @@ src_prepare() {
 	use ldap || rm -r src/modules/rlm_ldap
 	use kerberos || rm -r src/modules/rlm_krb5
 	use pam || rm -r src/modules/rlm_pam
-	use python || rm -r src/modules/rlm_python
+	# Drop support of python2
+	rm -r src/modules/rlm_python || die
+	use python || { rm -r src/modules/rlm_python3 || die ; }
+	use rest || { rm -r src/modules/rlm_rest || die ; }
+	use redis || { rm -r src/modules/rlm_redis{,who} || die ; }
 	# Do not install ruby rlm module, bug #483108
 	rm -r src/modules/rlm_ruby
 
@@ -172,6 +177,13 @@ src_configure() {
 	# fix bug #77613
 	if has_version app-crypt/heimdal; then
 		myeconfargs+=( --enable-heimdal-krb5 )
+	fi
+
+	if use python; then
+		myeconfargs+=(
+			--with-rlm-python3-bin=${EPYTHON}
+			--with-rlm-python3-config-bin=${EPYTHON}-config
+		)
 	fi
 
 	use readline || export ac_cv_lib_readline=no
