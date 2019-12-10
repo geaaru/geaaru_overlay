@@ -65,6 +65,7 @@ S="${WORKDIR}/${MY_P}"
 PATCHES=(
 	"${FILESDIR}"/${PN}-3.0.14-proxy-timestamp.patch
 	"${FILESDIR}"/${P}-python3.patch
+	"${FILESDIR}"/${P}-python3-initialize.patch
 	"${FILESDIR}"/${P}-systemd-service.patch
 	"${FILESDIR}"/${P}-libressl.patch
 )
