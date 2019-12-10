@@ -58,7 +58,6 @@ RESTRICT="test"
 PATCHES=(
 	${FILESDIR}/freeradius-3.0.14-proxy-timestamp.patch
 	${FILESDIR}/freeradius-detail-access-req.patch
-	"${FILESDIR}"/${PN}-3.0.20-python3.patch
 )
 
 pkg_setup() {
