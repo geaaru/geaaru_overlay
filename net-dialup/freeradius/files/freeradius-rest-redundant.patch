@@ -1,0 +1,13 @@
+diff --git a/src/modules/rlm_rest/rest.c b/src/modules/rlm_rest/rest.c
+index 8b85df0662..86670319f6 100644
+--- a/src/modules/rlm_rest/rest.c
++++ b/src/modules/rlm_rest/rest.c
+@@ -2025,7 +2025,7 @@ int rest_request_config(rlm_rest_t *instance, rlm_rest_section_t *section,
+ 
+ 	fr_cursor_init(&headers, &request->config);
+ 	while (fr_cursor_next_by_num(&headers, PW_REST_HTTP_HEADER, 0, TAG_ANY)) {
+-		header = fr_cursor_remove(&headers);
++		header = fr_cursor_copy(&headers);
+ 		if (!strchr(header->vp_strvalue, ':')) {
+ 			RWDEBUG("Invalid HTTP header \"%s\" must be in format '<attribute>: <value>'.  Skipping...",
+ 				header->vp_strvalue);

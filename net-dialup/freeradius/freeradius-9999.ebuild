@@ -57,7 +57,8 @@ RESTRICT="test"
 
 PATCHES=(
 	${FILESDIR}/freeradius-3.0.14-proxy-timestamp.patch
-	${FILESDIR}/freeradius-detail-access-req.patch
+#	${FILESDIR}/freeradius-detail-access-req.patch
+	${FILESDIR}/freeradius-rest-redundant.patch
 )
 
 pkg_setup() {
@@ -75,6 +76,8 @@ src_prepare() {
 	# various libraries, in which case they are not built.  To avoid
 	# automagic dependencies, we just remove all the modules that we're
 	# not interested in using.
+
+	eapply_user
 
 	use ssl || rm -r src/modules/rlm_eap/types/rlm_eap_{tls,ttls,peap}
 	use ldap || rm -r src/modules/rlm_ldap
@@ -148,8 +151,6 @@ src_prepare() {
 	usesqldriver mongo
 
 	default
-
-	eapply_user
 
 	eautoreconf
 }
