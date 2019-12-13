@@ -87,6 +87,8 @@ src_prepare() {
 	# automagic dependencies, we just remove all the modules that we're
 	# not interested in using.
 
+	eapply_user
+
 	use ssl || { rm -r src/modules/rlm_eap/types/rlm_eap_{tls,ttls,peap} || die ; }
 	use ldap || { rm -r src/modules/rlm_ldap || die ; }
 	use kerberos || { rm -r src/modules/rlm_krb5 || die ; }
