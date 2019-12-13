@@ -99,10 +99,6 @@ src_prepare() {
 
 	rm -r src/modules/rlm_sql/drivers/rlm_sql_{db2,freetds}
 
-	if ! use redis ; then
-		rm -r src/modules/rlm_redis{,who} # requires redis
-	fi
-
 	# sql drivers that are not part of experimental are loaded from a
 	# file, so we have to remove them from the file itself when we
 	# remove them.
