@@ -17,8 +17,8 @@ SLOT="0"
 IUSE=""
 
 DEPEND="
-	>=dev-lang/go-1.12
-	>=dev-util/promu-0.3.0"
+	>=dev-lang/go-1.13
+	>=dev-util/promu-0.5.0"
 
 PROMETHEUS_HOME="/var/lib/prometheus"
 
@@ -32,6 +32,7 @@ pkg_setup() {
 src_prepare() {
 	default
 	sed -i -e "s/{{.Revision}}/${PROMETHEUS_COMMIT}/" src/${EGO_PN}/.promu.yml || die
+	#sed -i -e "s:tags netgo,builtinassets:tags='netgo builtinassets':g" src/${EGO_PN}/.promu.yml || die
 }
 
 src_compile() {
