@@ -14,7 +14,8 @@ HOMEPAGE="https://github.com/lxc/distrobuilder"
 
 EGIT_REPO_URI="https://github.com/geaaru/distrobuilder.git"
 #EGIT_REPO_URI="https://${EGO_PN}.git"
-EGIT_BRANCH="dep-integration"
+#EGIT_BRANCH="dep-integration"
+EGIT_BRANCH="luet-with-dep-integration"
 EGIT_CHECKOUT_DIR="${S}"
 
 LICENSE="Apache-2.0"
