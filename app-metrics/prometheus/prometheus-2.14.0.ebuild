@@ -16,9 +16,10 @@ LICENSE="Apache-2.0 BSD BSD-2 ISC MIT MPL-2.0"
 SLOT="0"
 IUSE=""
 
-DEPEND="
-	>=dev-lang/go-1.13
+BDEPEND=">=dev-lang/go-1.13
+	>=sys-apps/yarn-1.13.0
 	>=dev-util/promu-0.5.0"
+DEPEND=""
 
 PROMETHEUS_HOME="/var/lib/prometheus"
 
@@ -37,6 +38,7 @@ src_prepare() {
 
 src_compile() {
 	pushd src/${EGO_PN} || die
+	GO111MODULE=on GOPATH="${S}" GOCACHE="${T}/go-cache" make assets || die
 	GO111MODULE=on GOPATH="${S}" GOCACHE="${T}/go-cache" promu build --prefix bin -v || die
 	popd || die
 }
