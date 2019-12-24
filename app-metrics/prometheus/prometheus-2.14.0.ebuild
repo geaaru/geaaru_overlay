@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-inherit user golang-build golang-vcs-snapshot
+inherit user golang-build golang-vcs-snapshot systemd
 
 EGO_PN="github.com/prometheus/prometheus"
 MY_PV=v${PV/_rc/-rc.}
@@ -33,7 +33,9 @@ pkg_setup() {
 src_prepare() {
 	default
 	sed -i -e "s/{{.Revision}}/${PROMETHEUS_COMMIT}/" src/${EGO_PN}/.promu.yml || die
-	#sed -i -e "s:tags netgo,builtinassets:tags='netgo builtinassets':g" src/${EGO_PN}/.promu.yml || die
+	sed -i -e "s/--frozen-lockfile/--frozen-lockfile --no-default-rc/" src/${EGO_PN}/Makefile
+
+	eapply_user
 }
 
 src_compile() {
