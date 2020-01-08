@@ -3,8 +3,8 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{5,6,7,8} )
-inherit autotools pam python-single-r1 systemd user
+PYTHON_COMPAT=( python3_{6,7,8} )
+inherit autotools pam python-single-r1 systemd
 
 MY_P="${PN}-server-${PV}"
 
@@ -15,7 +15,7 @@ SRC_URI="
 "
 HOMEPAGE="http://www.freeradius.org/"
 
-KEYWORDS="~amd64 ~arm ~arm64 ~ppc ~ppc64 ~sparc ~x86 ~x86-fbsd"
+KEYWORDS="~amd64 ~arm ~arm64 ~ppc ~ppc64 ~sparc ~x86"
 LICENSE="GPL-2"
 SLOT="0"
 
@@ -27,9 +27,13 @@ RESTRICT="test firebird? ( bindist )"
 
 # NOTE: Temporary freeradius doesn't support linking with mariadb client
 #       libs also if code is compliant, will be available in the next release.
-#       (http://lists.freeradius.org/pipermail/freeradius-devel/2018-October/013228.html)
-RDEPEND="!net-dialup/cistronradius
-	!net-dialup/gnuradius
+#       (http://lists.freeradius.org/pipermail/freeradius-devel/2018-October/013228.html)a
+
+# TODO: rlm_mschap works with both samba library or without. I need to avoid
+#       linking of samba library if -samba is used.
+RDEPEND="acct-group/radius
+	acct-user/radius
+	!net-dialup/cistronradius
 	dev-lang/perl:=
 	sys-libs/gdbm:=
 	sys-libs/talloc
@@ -41,7 +45,7 @@ RDEPEND="!net-dialup/cistronradius
 	mongo? ( >=dev-libs/mongo-c-driver-1.13.0-r1 )
 	postgres? ( dev-db/postgresql:= )
 	firebird? ( dev-db/firebird )
-	pam? ( virtual/pam )
+	pam? ( sys-libs/pam )
 	rest? ( dev-libs/json-c:= )
 	samba? ( net-fs/samba )
 	redis? ( dev-libs/hiredis:= )
@@ -64,18 +68,17 @@ S="${WORKDIR}/${MY_P}"
 
 PATCHES=(
 	"${FILESDIR}"/${PN}-3.0.14-proxy-timestamp.patch
-	"${FILESDIR}"/${P}-python3.patch
-	"${FILESDIR}"/${P}-python3-initialize.patch
-	"${FILESDIR}"/${P}-systemd-service.patch
 	"${FILESDIR}"/${P}-libressl.patch
+	"${FILESDIR}"/${P}-systemd-service.patch
+	# Fix rlm_python3 build
+	# Backport from rlm_python changes to rlm_python3
+	"${FILESDIR}"/${P}-py3-fixes.patch
 )
 
 pkg_setup() {
-	enewgroup radius
-	enewuser radius -1 -1 /var/log/radius radius
-
 	if use python ; then
 		python-single-r1_pkg_setup
+		export PYTHONBIN="${EPYTHON}"
 	fi
 }
 
@@ -210,20 +213,19 @@ src_compile() {
 
 src_install() {
 	dodir /etc
-	#diropts -m0750 -o root -g radius
+	diropts -m0750 -o root -g radius
 	dodir /etc/raddb
-	#diropts -m0750 -o radius -g radius
+	diropts -m0750 -o radius -g radius
 	dodir /var/log/radius
 	keepdir /var/log/radius/radacct
 	diropts
 
+	# verbose, do not install certificates
+	# Parallel install fails (#509498)
 	emake -j1 Q='' ECHO=true \
 		LOCAL_CERT_PRODUCTS='' \
 		R="${D}" \
 		install
-
-	#fowners -R root:radius /etc/raddb
-	#fowners -R radius:radius /var/log/radius
 
 	pamd_mimic_system radiusd auth account password session
 
@@ -234,8 +236,6 @@ src_install() {
 	newinitd "${FILESDIR}/radius.init-r3" radiusd
 	newconfd "${FILESDIR}/radius.conf-r4" radiusd
 
-	systemd_newtmpfilesd "${FILESDIR}"/freeradius.tmpfiles freeradius.conf
-
 	if ! use systemd ; then
 		# If systemd builtin is not enabled we need use Type=Simple
 		# as systemd .service
@@ -243,6 +243,7 @@ src_install() {
 			-e 's:^WatchdogSec=.*::g' -e 's:^NotifyAccess=all.*::g' \
 			"${S}"/debian/freeradius.service
 	fi
+	systemd_newtmpfilesd "${FILESDIR}"/freeradius.tmpfiles freeradius.conf
 	systemd_dounit "${S}"/debian/freeradius.service
 	systemd_install_serviced "${FILESDIR}"/freeradius.service.conf
 
@@ -260,7 +261,9 @@ pkg_config() {
 	if use ssl; then
 		cd "${ROOT}"/etc/raddb/certs || die
 		./bootstrap || die "Error while running ./bootstrap script."
-		fowners -R root:radius "${ROOT}"/etc/raddb/certs
+		fowners root:radius "${ROOT}"/etc/raddb/certs
+		fowners root:radius "${ROOT}"/etc/raddb/certs/ca.pem
+		fowners root:radius "${ROOT}"/etc/raddb/certs/server.{key,crt,pem}
 	fi
 }
 
