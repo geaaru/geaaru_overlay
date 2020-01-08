@@ -58,7 +58,7 @@ RESTRICT="test"
 PATCHES=(
 	${FILESDIR}/freeradius-3.0.14-proxy-timestamp.patch
 #	${FILESDIR}/freeradius-detail-access-req.patch
-	${FILESDIR}/freeradius-rest-redundant.patch
+#   ${FILESDIR}/freeradius-rest-redundant.patch
 )
 
 pkg_setup() {
