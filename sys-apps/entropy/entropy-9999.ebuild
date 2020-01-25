@@ -3,7 +3,7 @@
 
 EAPI=6
 
-PYTHON_COMPAT=( python2_7 )
+PYTHON_COMPAT=( python{2_7,3_6} )
 PYTHON_REQ_USE="sqlite"
 
 inherit eutils python-single-r1 user git-r3
@@ -52,9 +52,14 @@ pkg_setup() {
 }
 
 src_install() {
-	emake DESTDIR="${D}" LIBDIR="usr/lib" install || die "make install failed"
+	emake DESTDIR="${D}" LIBDIR="usr/lib" PYTHON_SITEDIR="$(python_get_sitedir)" \
+		install || die "make install failed"
+	python_optimize
+}
 
-	python_optimize "${D}/usr/lib/entropy/lib/entropy"
+pkg_preinst() {
+	local pyc=${EROOT}/usr/lib/entropy/lib/kswitch/__init__.pyc
+	rm -fv "${pyc}"
 }
 
 pkg_postinst() {
@@ -106,8 +111,6 @@ pkg_postinst() {
 	chown root:entropy "${ROOT}/var/lib/entropy/client/packages" # no recursion
 	chown root:entropy "${ROOT}/var/log/entropy" # no recursion
 
-	echo
 	elog "If you want to enable Entropy packages delta download support, please"
 	elog "install dev-util/bsdiff."
-	echo
 }
