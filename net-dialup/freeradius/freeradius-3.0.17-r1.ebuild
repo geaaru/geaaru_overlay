@@ -2,10 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=6
+EAPI=7
 
-PYTHON_COMPAT=( python{3_5,3_6} )
-inherit eutils autotools pam python-any-r1 systemd user
+PYTHON_COMPAT=( python{2_7} )
+inherit autotools pam python-single-r1 systemd
 
 MY_P="${PN}-server-${PV}"
 
@@ -26,9 +26,9 @@ IUSE="
 "
 RESTRICT="test firebird? ( bindist )"
 
-RDEPEND="!net-dialup/cistronradius
-	!net-dialup/freeradius:3.1
-	!net-dialup/gnuradius
+RDEPEND="acct-group/radius
+	acct-user/radius
+	!net-dialup/cistronradius
 	sys-devel/libtool
 	dev-lang/perl:=
 	sys-libs/gdbm
@@ -39,7 +39,7 @@ RDEPEND="!net-dialup/cistronradius
 	mysql? ( dev-db/mysql-connector-c )
 	postgres? ( dev-db/postgresql:= )
 	firebird? ( dev-db/firebird )
-	pam? ( virtual/pam )
+	pam? ( sys-libs/pam )
 	ssl? (
 		!libressl? ( dev-libs/openssl:0= )
 		libressl? ( dev-libs/libressl:0= )
@@ -61,11 +61,10 @@ PATCHES=(
 )
 
 pkg_setup() {
-	enewgroup radius
-	enewuser radius -1 -1 /var/log/radius radius
-
-	python-any-r1_pkg_setup
-	export PYTHONBIN="${EPYTHON}"
+	if use python ; then
+		python-any-r1_pkg_setup
+		export PYTHONBIN="${EPYTHON}"
+	fi
 }
 
 src_prepare() {
@@ -75,6 +74,8 @@ src_prepare() {
 	# various libraries, in which case they are not built.  To avoid
 	# automagic dependencies, we just remove all the modules that we're
 	# not interested in using.
+
+	eapply_user
 
 	use ssl || { rm -r src/modules/rlm_eap/types/rlm_eap_{tls,ttls,peap} || die ; }
 	use ldap || { rm -r src/modules/rlm_ldap || die ; }
@@ -142,8 +143,6 @@ src_prepare() {
 	usesqldriver sqlite
 
 	default
-
-	eapply_user
 
 	eautoreconf
 }
@@ -228,7 +227,7 @@ src_install() {
 	# from mods-enabled directory.
 	rm ${D}/etc/raddb/mods-enabled/{cache_eap,digest,eap,mschap,ntlm_auth}
 
-	prune_libtool_files
+	find "${ED}" \( -name "*.a" -o -name "*.la" \) -delete || die
 }
 
 pkg_config() {
