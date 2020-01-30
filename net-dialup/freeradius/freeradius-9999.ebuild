@@ -47,7 +47,7 @@ RDEPEND="acct-group/radius
 	odbc? ( dev-db/unixODBC )
 	iodbc? ( dev-db/libiodbc )
 	redis? ( dev-db/redis )
-	memcache? ( dev-libs/libmemcached )
+	memcached? ( dev-libs/libmemcached )
 	systemd? ( sys-apps/systemd )
 	oracle? ( dev-db/oracle-instantclient-basic )"
 DEPEND="${RDEPEND}"
