@@ -2,10 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/net-dialup/freeradius/freeradius-3.0.3.ebuild,v 1.3 2014/12/28 16:14:40 titanofold Exp $
 
-EAPI=6
+EAPI=7
 
 PYTHON_COMPAT=( python3_6 )
-inherit autotools eutils pam python-any-r1 user systemd git-r3
+inherit autotools pam python-single-r1 systemd
 
 EGIT_REPO_URI="https://github.com/FreeRADIUS/freeradius-server.git"
 EGIT_BRANCH="v3.0.x"
@@ -17,15 +17,14 @@ KEYWORDS=""
 LICENSE="GPL-2"
 SLOT="0"
 
-IUSE="debug firebird iodbc kerberos ldap libressl memcache mysql odbc oracle pam
-	pcap postgres python readline rest samba sqlite ssl redis systemd mongo
-"
+IUSE="debug firebird iodbc kerberos ldap libressl memcached mysql odbc oracle pam
+	pcap postgres python readline rest samba sqlite ssl redis systemd mongo"
 
 RESTRICT="test firebird? ( bindist )"
 
-RDEPEND="!net-dialup/cistronradius
-	!net-dialup/freeradius:3.1
-	sys-devel/libtool
+RDEPEND="acct-group/radius
+	acct-user/radius
+	!net-dialup/cistronradius
 	dev-lang/perl:=
 	sys-libs/gdbm
 	sys-libs/talloc
@@ -37,7 +36,7 @@ RDEPEND="!net-dialup/cistronradius
 	mongo? ( >=dev-libs/mongo-c-driver-1.13.0-r1 )
 	postgres? ( dev-db/postgresql:= )
 	firebird? ( dev-db/firebird )
-	pam? ( virtual/pam )
+	pam? ( sys-libs/pam )
 	ssl? (
 		!libressl? ( dev-libs/openssl:0= )
 		libressl? ( dev-libs/libressl:0= )
