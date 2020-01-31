@@ -63,7 +63,7 @@ PATCHES=(
 
 pkg_setup() {
 	if use python ; then
-		python-any-r1_pkg_setup
+		python-single-r1_pkg_setup
 		export PYTHONBIN="${EPYTHON}"
 	fi
 }
