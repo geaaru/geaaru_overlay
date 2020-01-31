@@ -5,7 +5,7 @@
 EAPI=7
 
 PYTHON_COMPAT=( python3_6 )
-inherit autotools pam python-single-r1 systemd
+inherit autotools pam python-single-r1 git-r3 systemd
 
 EGIT_REPO_URI="https://github.com/FreeRADIUS/freeradius-server.git"
 EGIT_BRANCH="v3.0.x"
@@ -56,16 +56,16 @@ RESTRICT="test"
 
 PATCHES=(
 	${FILESDIR}/freeradius-3.0.14-proxy-timestamp.patch
+	"${FILESDIR}"/${PN}-3.0.20-systemd-service.patch
 #	${FILESDIR}/freeradius-detail-access-req.patch
 #   ${FILESDIR}/freeradius-rest-redundant.patch
 )
 
 pkg_setup() {
-	enewgroup radius
-	enewuser radius -1 -1 /var/log/radius radius
-
-	python-any-r1_pkg_setup
-	export PYTHONBIN="${EPYTHON}"
+	if use python ; then
+		python-any-r1_pkg_setup
+		export PYTHONBIN="${EPYTHON}"
+	fi
 }
 
 src_prepare() {
