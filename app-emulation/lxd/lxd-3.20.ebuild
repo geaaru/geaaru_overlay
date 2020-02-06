@@ -159,6 +159,8 @@ src_compile() {
 		go install -v -x ${EGO_PN}/lxd-p2c || die "Failed to build lxd-p2c"
 	fi
 
+	go install -v -x ${EGO_PN}/lxd-agent || die "Failed to build lxd-agent"
+
 	use nls && emake build-mo
 }
 
