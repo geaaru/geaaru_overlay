@@ -15,7 +15,7 @@ EGIT_REPO_URI="https://github.com/projecthamster/hamster.git"
 EGIT_COMMIT="v3.0-beta"
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64 ~arm"
 IUSE=""
 
 RDEPEND="
