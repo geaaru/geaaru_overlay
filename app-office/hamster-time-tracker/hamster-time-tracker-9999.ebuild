@@ -8,7 +8,7 @@ PYTHON_COMPAT=( python{2_7,3_6,3_7} )
 PYTHON_REQ_USE="threads(+)"
 DISTUTILS_SINGLE_IMPL=1
 
-inherit git-r3 distutils-r1 waf-utils
+inherit git-r3 distutils-r1 waf-utils xdg-utils
 
 DESCRIPTION="Time tracking for the masses"
 HOMEPAGE="http://projecthamster.wordpress.com"
@@ -55,12 +55,14 @@ src_configure() {
 src_install() {
 	waf-utils_src_install
 	dosym /usr/bin/hamster /usr/bin/hamster-service
+
+	rm -rf ${D}/usr/share/glib-2.0/ || die "Error on remove glib-2.0 schemas"
 }
 
 pkg_postinst() {
->---gnome2_icon_cache_update
+	xdg_icon_cache_update
 }
 
 pkg_postrm() {
->---gnome2_icon_cache_update
+	xdg_icon_cache_update
 }
