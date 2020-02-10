@@ -12,7 +12,8 @@ inherit git-r3 distutils-r1 waf-utils
 
 DESCRIPTION="Time tracking for the masses"
 HOMEPAGE="http://projecthamster.wordpress.com"
-EGIT_REPO_URI="https://github.com/gsobczyk/hamster.git"
+EGIT_REPO_URI="https://github.com/projecthamster/hamster.git"
+#EGIT_REPO_URI="https://github.com/gsobczyk/hamster.git"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS=""
