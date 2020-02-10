@@ -35,13 +35,32 @@ src_unpack() {
 }
 
 src_prepare() {
+	# Fix python2 legacy
+	sed -i -e 's:python2:python:g' po/wscript || die "Error on fix wscript"
+	sed -i -e 's:python2:python:g' setup.py || die "Error on fix setup.py"
+	# Disable update of the icon cache. I will do it directly.
+	sed -i -e 's:bld.add_post_fun:#bld.add_post_fun:g' wscript || die "Error on block update of the icons cache"
 	python_fix_shebang .
 	distutils-r1_src_prepare
 }
 
+src_configure() {
+	local mywafconfargs=(
+		--prefix=/usr
+		--datadir=/usr/share
+	)
+	waf-utils_src_configure ${mywafconfargs[@]}
+}
+
 src_install() {
-
 	waf-utils_src_install
-
 	dosym /usr/bin/hamster /usr/bin/hamster-service
+}
+
+pkg_postinst() {
+>---gnome2_icon_cache_update
+}
+
+pkg_postrm() {
+>---gnome2_icon_cache_update
 }
