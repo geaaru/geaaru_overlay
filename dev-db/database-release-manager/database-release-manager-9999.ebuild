@@ -4,12 +4,14 @@
 
 EAPI=5
 
-inherit autotools eutils git-2 multilib user
+inherit autotools eutils git-r3 user
 
 DESCRIPTION="Software for manage database scripts to support an
 easy installation/development"
 HOMEPAGE="https://github.com/geaaru/database-release-manager/"
+
 EGIT_REPO_URI="https://github.com/geaaru/database-release-manager.git"
+EGIT_BRANCH="master"
 
 LICENSE="GPL-2.0"
 SLOT="0"
