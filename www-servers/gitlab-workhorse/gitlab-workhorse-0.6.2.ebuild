@@ -7,7 +7,7 @@ EAPI="5"
 EGIT_REPO_URI="https://gitlab.com/gitlab-org/gitlab-workhorse.git"
 EGIT_COMMIT="${PV}"
 
-inherit eutils git-2 user
+inherit eutils git-r3 user
 
 DESCRIPTION="Handles slow HTTP requests for GitLab"
 HOMEPAGE="https://about.gitlab.com/gitlab-ci/"
@@ -18,8 +18,7 @@ KEYWORDS="~amd64 ~x86 ~arm"
 DEPEND=">=dev-lang/go-1.5.1"
 RDEPEND="${DEPEND}"
 
-src_install()
-{
-  into "/usr"
-  dobin "gitlab-workhorse"
+src_install() {
+	into "/usr"
+	dobin "gitlab-workhorse"
 }
