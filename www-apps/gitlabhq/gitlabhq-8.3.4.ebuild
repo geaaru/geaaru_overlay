@@ -13,7 +13,7 @@ EAPI="5"
 USE_RUBY="ruby21"
 PYTHON_COMPAT=( python{2_7,3_3,3_4,3_5} )
 
-inherit eutils git-2 python ruby-ng versionator user
+inherit eutils python ruby-ng versionator user
 
 DESCRIPTION="GitLab is a free project and repository management application"
 HOMEPAGE="https://github.com/gitlabhq/gitlabhq/"
@@ -80,15 +80,6 @@ GITLAB_SHELL_HOOKS="${GITLAB_SHELL}/hooks"
 RAILS_ENV=${RAILS_ENV:-production}
 RUBY=${RUBY:-ruby21}
 BUNDLE="${RUBY} /usr/bin/bundle"
-
-#pkg_setup() {
-#	enewgroup ${GIT_GROUP}
-#	enewuser ${GIT_USER} -1 -1 ${DEST_DIR} "$GIT_GROUP}"
-#}
-
-#all_ruby_unpack() {
-#	git-2_src_unpack
-#}
 
 each_ruby_prepare() {
 
