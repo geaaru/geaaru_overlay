@@ -5,12 +5,11 @@
 EAPI=5
 PYTHON_COMPAT=( python2_7 )
 
-inherit distutils-r1 eutils git-2
+inherit distutils-r1 eutils git-r3
 
 DESCRIPTION="Authentication Libarary for OpenStack Identity"
 HOMEPAGE="https://pypi.python.org/pypi/keystoneauth"
 
-EGIT_PROJECT="keystoneauth"
 EGIT_REPO_URI="https://git.openstack.org/openstack/keystoneauth"
 EGIT_COMMIT="2.1.0"
 
