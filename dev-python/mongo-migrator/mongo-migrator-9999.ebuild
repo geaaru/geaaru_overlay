@@ -5,12 +5,11 @@
 EAPI=5
 PYTHON_COMPAT=( python3_{6,7} )
 
-inherit distutils-r1 eutils git-2
+inherit distutils-r1 eutils git-r3
 
 DESCRIPTION="Migrator tool for migrate data from Oracle to Mongo"
 HOMEPAGE="https://github.com/geaaru/mongo-migrator"
 
-EGIT_PROJECT="mongo-migrator"
 EGIT_REPO_URI="https://github.com/geaaru/mongo-migrator.git"
 EGIT_COMMIT="master"
 
@@ -24,7 +23,4 @@ DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
 	>=dev-python/cx-oracle-5.2.1[${PYTHON_USEDEP}]
 	>=dev-python/pymongo-3.1.1[${PYTHON_USEDEP}]
 	"
-RDEPEND="
-${DEPEND}
-"
-
+RDEPEND=${DEPEND}
