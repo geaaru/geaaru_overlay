@@ -5,11 +5,10 @@
 EAPI=5
 PYTHON_COMPAT=( python2_7 )
 
-inherit distutils-r1 eutils git-2
+inherit distutils-r1 eutils git-r3
 
 DESCRIPTION="A Django-based project aimed at providing a complete OpenStack Dashboard"
 HOMEPAGE="https://launchpad.net/horizon"
-EGIT_PROJECT="horizon"
 EGIT_REPO_URI="https://github.com/openstack/horizon.git"
 EGIT_COMMIT="8.0.0.0rc2"
 
