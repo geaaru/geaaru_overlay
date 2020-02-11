@@ -5,15 +5,13 @@
 EAPI=5
 PYTHON_COMPAT=( python2_7 )
 
-inherit distutils-r1 git-2
+inherit distutils-r1 git-r3
 
 DESCRIPTION="CoAPthon is a python library to the CoAP protocol compliant with the RFC."
 HOMEPAGE="https://github.com/Tanganelli/CoAPthon"
 
-EGIT_PROJECT="coapthon"
 EGIT_REPO_URI="https://github.com/Tanganelli/CoAPthon.git"
 EGIT_COMMIT="3.0"
-
 
 LICENSE="MIT"
 SLOT="0"
