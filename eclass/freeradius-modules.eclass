@@ -152,7 +152,7 @@ freeradius-modules_src_unpack() {
 	rm -rf ${S}/src/modules/rlm_{cram,date,digest,dynamic_clients,eap,example,exec} || true
 	rm -rf ${S}/src/modules/rlm_{expiration,expr,files,idn,ippool,krb5,ldap,linelog} || true
 	rm -rf ${S}/src/modules/rlm_{logintime,opendirectory,otp,pam,passwd,perl} || true
-	rm -rf ${S}/src/modules/rlm_{preprocess,python,radutmp,realm,redis,rediswho} || true
+	rm -rf ${S}/src/modules/rlm_{preprocess,python,python3,radutmp,realm,redis,rediswho} || true
 	rm -rf ${S}/src/modules/rlm_{replicate,rest,ruby,securid,smsotp,soh,sometimes} || true
 	rm -rf ${S}/src/modules/rlm_{sqlcounter,sqlhpwippool,sqlippool,test,unbound} || true
 	rm -rf ${S}/src/modules/rlm_{unix,unpack,utf8,wimax,yubikey} || true
