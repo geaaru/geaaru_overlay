@@ -13,7 +13,7 @@ LICENSE="Apache-2.0 BSD BSD-2 MIT"
 SLOT="0"
 KEYWORDS="~amd64"
 
-BDEPEND="dev-go/go
+DEPEND="dev-go/go
 	dev-util/promu"
 
 RESTRICT="strip"
