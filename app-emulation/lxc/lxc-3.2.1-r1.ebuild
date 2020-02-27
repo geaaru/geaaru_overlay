@@ -13,7 +13,7 @@ KEYWORDS="~amd64 ~arm ~arm64"
 
 LICENSE="LGPL-3"
 SLOT="0"
-IUSE="doc examples seccomp selinux apparmor pam +templates python"
+IUSE="doc examples seccomp selinux apparmor pam +templates"
 
 RDEPEND="net-libs/gnutls
 	sys-libs/libcap
@@ -29,7 +29,6 @@ DEPEND="${RDEPEND}
 
 RDEPEND="${RDEPEND}
 	templates? ( app-emulation/lxc-templates )
-	python? ( dev-python/python3-lxc )
 	sys-process/criu
 	sys-apps/util-linux
 	app-misc/pax-utils
