@@ -4,7 +4,7 @@
 
 EAPI="6"
 
-PYTHON_COMPAT=( python{2_7,3_6,3_7} )
+PYTHON_COMPAT=( python{3_6,3_7} )
 PYTHON_REQ_USE="threads(+)"
 DISTUTILS_SINGLE_IMPL=1
 
@@ -24,8 +24,10 @@ RDEPEND="
 	gnome-base/gconf[introspection]
 	dev-python/pyxdg
 	dev-python/jira[kerberos]
-	dev-python/beaker[${PYTHON_USEDEP}]
-	dev-python/requests[${PYTHON_USEDEP}]
+	$(python_gen_cond_dep '
+		dev-python/beaker[${PYTHON_MULTI_USEDEP}]
+		dev-python/requests[${PYTHON_MULTI_USEDEP}]
+	')
 "
 DEPEND="${RDEPEND}
 	dev-util/intltool"
