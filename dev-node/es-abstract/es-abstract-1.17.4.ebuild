@@ -29,6 +29,16 @@ RDEPEND="${DEPEND}"
 
 NPM_NO_DEPS=1
 
+NPM_PKG_DIRS="
+	2015
+	2016
+	2017
+	2018
+	2019
+	5
+	helpers
+"
+
 S="${WORKDIR}/package"
 
 inherit npmv1
