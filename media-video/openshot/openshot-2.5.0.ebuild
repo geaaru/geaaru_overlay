@@ -10,6 +10,8 @@ DISTUTILS_SINGLE_IMPL=1
 
 inherit distutils-r1 gnome2-utils versionator xdg-utils
 
+MY_PN="${PN}-qt"
+
 DESCRIPTION="Free, open-source, non-linear video editor to create and edit videos and movies"
 HOMEPAGE="http://www.openshotvideo.com"
 SRC_URI="https://github.com/OpenShot/${MY_PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
@@ -36,13 +38,7 @@ BDEPEND="
 	')
 "
 
-S="${WORKDIR}/${PN}-qt-${PV}"
-
-src_unpack() {
-	mkdir ${S}
-	cd ${S}
-	unpack ${A}
-}
+S="${WORKDIR}/${MY_PN}-${PV}"
 
 src_prepare() {
 	distutils-r1_python_prepare_all
