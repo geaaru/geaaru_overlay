@@ -5,8 +5,6 @@ EAPI=7
 
 inherit cmake
 
-COMMIT="77edb1f14dde35e1facecc309dbc4fb7f07d7014"
-
 DESCRIPTION="Library for audio editing and playback used by OpenShot"
 HOMEPAGE="https://www.openshot.org/"
 SRC_URI="https://github.com/OpenShot/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
@@ -24,5 +22,3 @@ RDEPEND="
 	x11-libs/libXrandr
 "
 DEPEND="${RDEPEND}"
-
-S="${WORKDIR}/${PN}-${COMMIT}"
