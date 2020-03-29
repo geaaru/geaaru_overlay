@@ -19,9 +19,7 @@ SRC_URI="https://github.com/OpenShot/${MY_PN}/archive/v${PV}.tar.gz -> ${P}.tar.
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
-
-IUSE="+ffmpeg libav +python"
-REQUIRED_USE="|| ( python ffmpeg )"
+IUSE="doc"
 
 RDEPEND="
 	$(python_gen_cond_dep '
@@ -46,7 +44,11 @@ src_prepare() {
 	sed -i 's/^ROOT =.*/ROOT = False/' setup.py || die
 }
 
-python_install() {
+python_compile_all() {
+	use doc && emake -C doc html
+}
+
+python_install_all() {
 	use doc && local HTML_DOCS=( doc/_build/html/. )
 	distutils-r1_python_install_all
 
