@@ -5,7 +5,7 @@
 
 DESCRIPTION="OCILib opensource Library"
 HOMEPAGE="http://orclib.sourceforge.net"
-SRC_URI="https://github.com/vrogier/ocilib/releases/download/v${PV}/${PF}-gnu.tar.gz"
+SRC_URI="https://github.com/vrogier/ocilib/releases/download/v${PV}/${P}-gnu.tar.gz"
 
 RESTRICT="nomirror"
 
@@ -27,12 +27,12 @@ src_compile() {
 	myconf="${myconf} --enable-shared"
 
 	myconf="${myconf} \
-			--with-oracle-headers-path=/usr/lib/oracle/${oracle_version}/client/include"
+			--with-oracle-headers-path=/usr/lib64/oracle/${oracle_version}/client/include"
 	myconf="${myconf} \
-			--with-oracle-lib-path=/usr/lib/oracle/${oracle_version}/client/lib"
+			--with-oracle-lib-path=/usr/lib64/oracle/${oracle_version}/client/lib"
 
 	myconf="${myconf} \
-			--with-oracle-home=/usr/lib/oracle/${oracle_version}/client/"
+			--with-oracle-home=/usr/lib64/oracle/${oracle_version}/client/"
 
 	econf ${myconf} || die
 	emake || die
