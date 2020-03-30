@@ -7,11 +7,9 @@ PYTHON_COMPAT=( python3_{6,7} )
 
 inherit cmake python-single-r1 toolchain-funcs
 
-COMMIT="0d4ea7fe71e88bcee4a7fd1404bd52c8e2169997"
-
 DESCRIPTION="Video editing library used by OpenShot"
 HOMEPAGE="https://www.openshot.org/"
-SRC_URI="https://github.com/OpenShot/${PN}/archive/${COMMIT}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/OpenShot/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3+"
 SLOT="0/17"
@@ -39,13 +37,11 @@ BDEPEND="
 	test? ( dev-libs/unittest++ )
 "
 
-S="${WORKDIR}/${PN}-${COMMIT}"
-
 PATCHES=(
 	# From Mageia
 	# https://github.com/OpenShot/libopenshot/issues/60
-	${FILESDIR}/${PN}-0.2.2-imagemagick7.patch
-	${FILESDIR}/pylib64.patch
+	#${FILESDIR}/${PN}-0.2.2-imagemagick7.patch
+	#${FILESDIR}/pylib64.patch
 )
 
 check_compiler() {
