@@ -1,0 +1,12 @@
+--- a/src/bindings/python/CMakeLists.txt	2020-03-30 11:12:28.353733814 +0200
++++ b/src/bindings/python/CMakeLists.txt	2020-03-30 11:12:52.035097703 +0200
+@@ -78,7 +78,7 @@
+                         PUBLIC ${PYTHON_LIBRARIES} openshot)
+ 
+ 	### Check if the following Debian-friendly python module path exists
+-	SET(PYTHON_MODULE_PATH "${CMAKE_INSTALL_PREFIX}/lib/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/dist-packages")
++	SET(PYTHON_MODULE_PATH "${CMAKE_INSTALL_PREFIX}/lib64/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/dist-packages")
+ 	if (NOT EXISTS ${PYTHON_MODULE_PATH})
+ 
+ 		### Calculate the python module path (using distutils)
+

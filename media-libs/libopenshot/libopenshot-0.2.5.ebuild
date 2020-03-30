@@ -41,7 +41,7 @@ PATCHES=(
 	# From Mageia
 	# https://github.com/OpenShot/libopenshot/issues/60
 	#${FILESDIR}/${PN}-0.2.2-imagemagick7.patch
-	#${FILESDIR}/pylib64.patch
+	${FILESDIR}/${P}-pylib64.patch
 )
 
 check_compiler() {
