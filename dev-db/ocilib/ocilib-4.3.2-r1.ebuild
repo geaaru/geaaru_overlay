@@ -29,7 +29,7 @@ src_compile() {
 	myconf="${myconf} \
 			--with-oracle-headers-path=/usr/lib64/oracle/${oracle_version}/client/include"
 	myconf="${myconf} \
-			--with-oracle-lib-path=/usr/lib64/oracle/${oracle_version}/client/lib"
+			--with-oracle-lib-path=/usr/lib64/oracle/${oracle_version}/client/lib64"
 
 	myconf="${myconf} \
 			--with-oracle-home=/usr/lib64/oracle/${oracle_version}/client/"
