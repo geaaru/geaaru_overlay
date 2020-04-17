@@ -21,6 +21,8 @@ src_compile() {
 	local myconf="${myconf} "
 	local oracle_version=$(best_version dev-db/oracle-instantclient-basic \
 						   | sed -e 's/dev-db\/oracle-instantclient-basic-//')
+	# Drop revision
+	oracle_version=${oracle_version/-r*/}
 
 	einfo "Use oracle version ${oracle_version}"
 
