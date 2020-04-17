@@ -46,6 +46,8 @@ src_configure() {
 	local oracle_version=$(best_version dev-db/oracle-instantclient-basic \
 		| sed -e 's/dev-db\/oracle-instantclient-basic-//')
 
+	# Drop revision
+	oracle_version=${oracle_version/-r*/}
 	einfo "Use oracle version ${oracle_version}"
 
 	# do not try to enable static with static-libs; upstream is a
