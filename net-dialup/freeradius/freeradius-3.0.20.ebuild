@@ -83,6 +83,9 @@ pkg_setup() {
 }
 
 src_prepare() {
+
+	default
+
 	# most of the configuration options do not appear as ./configure
 	# switches. Instead it identifies the directories that are available
 	# and run through them. These might check for the presence of
@@ -158,8 +161,6 @@ src_prepare() {
 	usesqldriver oracle
 	usesqldriver sqlite
 	usesqldriver mongo
-
-	default
 
 	eautoreconf
 }
