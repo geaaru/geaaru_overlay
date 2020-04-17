@@ -1,0 +1,26 @@
+commit 69eb74fb1f66e111ec0c8d458eae3752cf3c5260
+Author: Daniele Rondina <geaaru@sabayonlinux.org>
+Date:   Mon Apr 6 12:10:07 2020 +0200
+
+    auth: respect log_reject attribute with proxy
+    
+    Avoid logging message ""Login incorrect (Home Server says so)" if
+    `auth_reject = no` is configured.
+    
+    Signed-off-by: Daniele Rondina <geaaru@sabayonlinux.org>
+
+diff --git a/src/main/auth.c b/src/main/auth.c
+index a10097637b..7facbcd670 100644
+--- a/src/main/auth.c
++++ b/src/main/auth.c
+@@ -481,9 +481,9 @@ int rad_authenticate(REQUEST *request)
+ 		 *	done by the server, by rejecting them here.
+ 		 */
+ 		case PW_CODE_ACCESS_REJECT:
++			request->reply->code = PW_CODE_ACCESS_REJECT;
+ 			rad_authlog("Login incorrect (Home Server says so)",
+ 				    request, 0);
+-			request->reply->code = PW_CODE_ACCESS_REJECT;
+ 			return RLM_MODULE_REJECT;
+ 
+ 		default:
