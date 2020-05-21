@@ -1,0 +1,11 @@
+[Unit]
+Description=SNMP Notifier
+After=network.target
+
+[Service]
+User=snmp_notifier
+Group=snmp_notifier
+ExecStart=/usr/bin/snmp_notifier $SNMP_NOTIFIER_OPTS
+
+[Install]
+WantedBy=multi-user.target
