@@ -28,8 +28,12 @@ pkg_setup() {
 }
 
 src_install() {
-	dodoc LICENSE description-template.tpl
+	dodoc LICENSE
 	dobin ${PN}
+
+	dodir /etc/${PN}
+	insinto /etc/${PN}
+	doins ${S}/description-template.tpl
 
 	systemd_dounit "${FILESDIR}"/${PN}.service
 }

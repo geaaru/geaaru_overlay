@@ -5,7 +5,7 @@ After=network.target
 [Service]
 User=snmp_notifier
 Group=snmp_notifier
-ExecStart=/usr/bin/snmp_notifier $SNMP_NOTIFIER_OPTS
+ExecStart=/usr/bin/snmp_notifier --snmp.trap-description-template=/etc/snmp_notifier=description-template.tpl $SNMP_NOTIFIER_OPTS
 
 [Install]
 WantedBy=multi-user.target
