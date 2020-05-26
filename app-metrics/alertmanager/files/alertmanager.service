@@ -6,7 +6,7 @@ After=network-online.target
 [Service]
 User=alertmanager
 Restart=on-failure
-ExecStart=/usr/bin/alertmanager --config.file=/etc/alertmanager/config.yaml
+ExecStart=/usr/bin/alertmanager --config.file=/etc/alertmanager/config.yaml --storage.path=/var/lib/alertmanager/data
 
 [Install]
 WantedBy=multi-user.target
