@@ -1,0 +1,26 @@
+commit 6c863ae3cf0be67341171d3fdb6cc70686e66863
+Author: Alan T. DeKok <aland@freeradius.org>
+Date:   Mon Apr 6 08:47:38 2020 -0400
+
+    respect auth_log here, too
+
+diff --git a/src/main/auth.c b/src/main/auth.c
+index 7facbcd670..215991858f 100644
+--- a/src/main/auth.c
++++ b/src/main/auth.c
+@@ -526,6 +526,7 @@ autz_redo:
+ 	case RLM_MODULE_REJECT:
+ 	case RLM_MODULE_USERLOCK:
+ 	default:
++		request->reply->code = PW_CODE_ACCESS_REJECT;
+ 		if ((module_msg = fr_pair_find_by_num(request->packet->vps, PW_MODULE_FAILURE_MESSAGE, 0, TAG_ANY)) != NULL) {
+ 			char msg[MAX_STRING_LEN + 16];
+ 			snprintf(msg, sizeof(msg), "Invalid user (%s)",
+@@ -534,7 +535,6 @@ autz_redo:
+ 		} else {
+ 			rad_authlog("Invalid user", request, 0);
+ 		}
+-		request->reply->code = PW_CODE_ACCESS_REJECT;
+ 		return result;
+ 	}
+ 	if (!autz_retry) {
