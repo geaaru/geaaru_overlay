@@ -19,10 +19,8 @@ KEYWORDS="~amd64 ~x86"
 
 IUSE=""
 
-RDEPEND=">=virtual/jre-1.8
-	${COMMON_DEP}"
-	DEPEND=">=virtual/jdk-1.8
-	${COMMON_DEP}"
+RDEPEND=">=virtual/jre-1.8"
+DEPEND=">=virtual/jdk-1.8"
 
 pkg_setup() {
 	ebegin "Creating karaf group and user"
@@ -76,7 +74,7 @@ src_install() {
 
 	# Systemd files
 	systemd_dounit "${FILESDIR}"/karaf-${SLOT}.service
-	systemd_install_serviced "${FILESDIR}"/karaf.service.conf "karaf-${SLOT}.service"
+	systemd_install_serviced "${FILESDIR}"/karaf-4.2.service.conf "karaf-${SLOT}.service"
 
 	dodoc LICENSE NOTICE README.md RELEASE-NOTES.md
 
