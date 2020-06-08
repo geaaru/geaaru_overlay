@@ -19,8 +19,11 @@ KEYWORDS="~amd64 ~x86"
 
 IUSE=""
 
-RDEPEND=">=virtual/jre-1.8"
-DEPEND=">=virtual/jdk-1.8"
+RDEPEND="virtual/awk
+	sys-apps/sed
+	>=virtual/jre-1.8
+"
+DEPEND=""
 
 pkg_setup() {
 	ebegin "Creating karaf group and user"
@@ -35,14 +38,6 @@ src_unpack() {
 
 	mv apache-karaf-${PV}/ ${PF}
 	cd ${S}
-}
-
-src_configure() {
-
-	# Change path to logfile
-	sed -i -e \
-		's/log4j.appender.out.file=.*/log4j.appender.out.file=\/var\/log\/karaf\/karaf.log/g' \
-		etc/org.ops4j.pax.logging.cfg
 }
 
 src_install() {
@@ -67,10 +62,14 @@ src_install() {
 	sed -i -e 's/conffile=.*/conffile=\/etc\/default\/karaf-4.2.conf/g' \
 		${D}/${INSTDIR}/${PF}/bin/karaf_linux.sh
 
+	sed -i -e "s/KARAF_VERSION/${PV}/g" \
+		${D}/${INSTDIR}/etc/default/karaf-${SLOT}.conf
+
 	for dir in data deploy etc lib system ; do
 		cp -r ${S}/${dir} ${D}/${INSTDIR}/${PF}/${dir}/
-		
 	done
+
+	dodir ${INSTDIR}/${PF}/tmp
 
 	# Systemd files
 	systemd_dounit "${FILESDIR}"/karaf-${SLOT}.service

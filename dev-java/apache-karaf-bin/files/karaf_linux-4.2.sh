@@ -2,13 +2,14 @@
 
 ###########################################################################
 #                                                                         #
-# Author: Geaaru, geaaru@gmail.com                                        #
+# Author: Daniele Rondina, geaaru@gmail.com                               #
 # Version: 1.0                                                            #
 # Description: Script for start Karaf on openrc or systemd environment.   #
 #                                                                         #
 ###########################################################################
 
 conffile=/etc/default/karaf.conf
+karaf_default_log_dir=/var/log/karaf
 TMP_START_SCRIPT=/tmp/karaf.sh
 
 # Source of configuration file
@@ -30,7 +31,7 @@ init_env_vars () {
 
     KARAF_ARGS=""
 
-    # Check Service Mix karaf home directory
+    # Check karaf home directory
     if [ x"${karaf_home_dir}" == x ] ; then
         error "You need to set karaf_home_dir on configure file" && exit 1
     else
@@ -52,7 +53,7 @@ init_env_vars () {
         KARAF_ARGS="$KARAF_ARGS -Dkaraf.base=${karaf_home_dir}"
     fi
 
-    # Check Service Mix Karaf Data directory
+    # Check Karaf Data directory
     if [ x"${karaf_data_dir}" != x ] ; then
         if [ ! -d "${karaf_data_dir}" ] ; then
             error "Invalid directory for karaf_data_dir: ${karaf_data_dir}" && exit 1
@@ -64,7 +65,17 @@ init_env_vars () {
         KARAF_ARGS="$KARAF_ARGS -Dkaraf.data=${karaf_home_dir}/data"
     fi
 
-    # Check Service Mix Karaf instances directory
+    # Check Karaf Log directory
+    if [ x"${karaf_log_dir}" != x ] ; then
+        if [ ! -d "${karaf_log_dir}" ] ; then
+            error "Invalid directory for karaf_log_dir: ${karaf_log_dir}" && exit 1
+        fi
+        KARAF_ARGS="$KARAF_ARGS -Dkaraf.log=${karaf_log_dir}"
+    else
+        KARAF_ARGS="$KARAF_ARGS -Dkaraf.log=${karaf_default_log_dir}"
+    fi
+
+    # Check Karaf instances directory
     if [ x"${karaf_instances_dir}" != x ] ; then
         if [ ! -d "${karaf_instances_dir}" ] ; then
             error "Invalid directory for karaf_instances_dir: ${karaf_instances_dir}"  && exit 1
@@ -74,7 +85,7 @@ init_env_vars () {
         KARAF_ARGS="$KARAF_ARGS -Dkaraf.instances=${karaf_home_dir}/instances"
     fi
 
-    # Check Service Mix Karaf etc directory
+    # Check Karaf etc directory
     if [ x"${karaf_etc_dir}" != x ] ; then
         if [ ! -d "${karaf_etc_dir}" ] ; then
             error "Invalid directory for karaf_etc_dir: ${karaf_etc_dir}"  && exit 1
@@ -84,7 +95,7 @@ init_env_vars () {
         KARAF_ARGS="$KARAF_ARGS -Dkaraf.etc=${karaf_home_dir}/etc"
     fi
 
-    # Check Service Mix Karaf logging property file
+    # Check Karaf logging property file
     if [ x"${logging_prop_file}" != x ] ; then
         if [ ! -e "${logging_prop_file}" ] ; then
             error "Invalid logging property file: ${logging_prop_file}" && exit 1
@@ -124,6 +135,13 @@ init_env_vars () {
         JAVA="$JAVA_HOME/bin/java"
     fi
 
+    AWK=/usr/bin/awk
+    JAVA_VERSION=${JAVA_VERSION-$("${JAVA}" -version 2>&1 | ${AWK} -F '"' '/version/ {print $2}' | sed -e 's/_.*//g; s/^1\.//g; s/\..*//g; s/-.*//g;')}
+
+    if [ -z "$JAVA_VERSION" ] ; then
+        error "Error on retrieve java version" && exit 1
+    fi
+
     # Check for java_xms_opt property
     if [ x"$java_xms_opt" != x ] ; then
         KARAF_ARGS="$KARAF_ARGS -Xms$java_xms_opt"
@@ -138,40 +156,71 @@ init_env_vars () {
         KARAF_ARGS="$KARAF_ARGS -Xmx512m"
     fi
 
-    if [ x"$java_dgc_client_gcInterval" != x ]; then
-        KARAF_ARGS="$KARAF_ARGS -Dsun.rmi.dgc.client.gcInterval=$java_dgc_client_gcInterval"
+    # Set temporary dir (TODO: Show if use systemd PrivateTmp)
+    KARAF_ARGS="$KARAF_ARGS -Djava.io.tmpdir=${KARAF_DATA}/tmp"
+
+    KARAF_ARGS="$KARAF_ARGS  -Dkaraf.restart.jvm.supported=true"
+
+    if [ "$JAVA_VERSION" -gt "8" ] ; then
+
+      # POST: java_version > 8
+
+      KARAF_ARGS="$KARAF_ARGS --add-reads=java.xml=java.logging"
+      KARAF_ARGS="$KARAF_ARGS --add-exports=java.base/org.apache.karaf.specs.locator=java.xml,ALL-UNNAMED"
+
+      KARAF_ARGS="$KARAF_ARGS --patch-module java.base=lib/endorsed/org.apache.karaf.specs.locator-${karaf_version}.jar"
+      KARAF_ARGS="$KARAF_ARGS --patch-module java.xml=lib/endorsed/org.apache.karaf.specs.java.xml-${karaf_version}.jar"
+
+      KARAF_ARGS="$KARAF_ARGS --add-opens java.base/java.security=ALL-UNNAMED"
+      KARAF_ARGS="$KARAF_ARGS --add-opens java.base/java.net=ALL-UNNAMED"
+      KARAF_ARGS="$KARAF_ARGS --add-opens java.base/java.lang=ALL-UNNAMED"
+      KARAF_ARGS="$KARAF_ARGS --add-opens java.base/java.util=ALL-UNNAMED"
+      KARAF_ARGS="$KARAF_ARGS --add-opens java.naming/javax.naming.spi=ALL-UNNAMED"
+      KARAF_ARGS="$KARAF_ARGS --add-opens java.rmi/sun.rmi.transport.tcp=ALL-UNNAMED"
+
+      KARAF_ARGS="$KARAF_ARGS --add-exports=java.base/sun.net.www.protocol.http=ALL-UNNAMED"
+      KARAF_ARGS="$KARAF_ARGS --add-exports=java.base/sun.net.www.protocol.https=ALL-UNNAMED"
+      KARAF_ARGS="$KARAF_ARGS --add-exports=java.base/sun.net.www.protocol.jar=ALL-UNNAMED"
+      KARAF_ARGS="$KARAF_ARGS --add-exports=jdk.xml.dom/org.w3c.dom.html=ALL-UNNAMED"
+      KARAF_ARGS="$KARAF_ARGS --add-exports=jdk.naming.rmi/com.sun.jndi.url.rmi=ALL-UNNAMED"
+
     else
-        KARAF_ARGS="$KARAF_ARGS -Dsun.rmi.dgc.client.gcInterval=3600000"
+
+      if [ x"$java_dgc_client_gcInterval" != x ]; then
+          KARAF_ARGS="$KARAF_ARGS -Dsun.rmi.dgc.client.gcInterval=$java_dgc_client_gcInterval"
+      else
+          KARAF_ARGS="$KARAF_ARGS -Dsun.rmi.dgc.client.gcInterval=3600000"
+      fi
+
+      if [ x"$java_dgc_server_gcInterval" != x ]; then
+          KARAF_ARGS="$KARAF_ARGS -Dsun.rmi.dgc.server.gcInterval=$java_dgc_server_gcInterval"
+      else
+          KARAF_ARGS="$KARAF_ARGS -Dsun.rmi.dgc.server.gcInterval=3600000"
+      fi
+
+      if [ x"$java_endorsed_dirs" != x ]; then
+          KARAF_ARGS="$KARAF_ARGS -Djava.endorsed.dirs=\"${JAVA_HOME}/jre/lib/endorsed:${JAVA_HOME}/lib/endorsed:$java_endorsed_dirs\""
+      else
+          KARAF_ARGS="$KARAF_ARGS -Djava.endorsed.dirs=\"${JAVA_HOME}/jre/lib/endorsed:${JAVA_HOME}/lib/endorsed:${karaf_home_dir}/lib/endorsed\""
+      fi
+
+      if [ x"$java_ext_dirs" != x ]; then
+          KARAF_ARGS="$KARAF_ARGS -Djava.ext.dirs=\"${JAVA_HOME}/jre/lib/ext:${JAVA_HOME}/lib/ext:$java_ext_dirs\""
+      else
+          KARAF_ARGS="$KARAF_ARGS -Djava.ext.dirs=\"${JAVA_HOME}/jre/lib/ext:${JAVA_HOME}/lib/ext:${karaf_home_dir}/lib/ext\""
+      fi
+
+      KARAF_ARGS="$KARAF_ARGS -server"
+
     fi
 
-    if [ x"$java_dgc_server_gcInterval" != x ]; then
-        KARAF_ARGS="$KARAF_ARGS -Dsun.rmi.dgc.server.gcInterval=$java_dgc_server_gcInterval"
-    else
-        KARAF_ARGS="$KARAF_ARGS -Dsun.rmi.dgc.server.gcInterval=3600000"
-    fi
-
-    if [ x"$java_endorsed_dirs" != x ]; then
-        KARAF_ARGS="$KARAF_ARGS -Djava.endorsed.dirs=\"${JAVA_HOME}/jre/lib/endorsed:${JAVA_HOME}/lib/endorsed:$java_endorsed_dirs\""
-    else
-        KARAF_ARGS="$KARAF_ARGS -Djava.endorsed.dirs=\"${JAVA_HOME}/jre/lib/endorsed:${JAVA_HOME}/lib/endorsed:${karaf_home_dir}/lib/endorsed\""
-    fi
-
-    if [ x"$java_ext_dirs" != x ]; then
-        KARAF_ARGS="$KARAF_ARGS -Djava.ext.dirs=\"${JAVA_HOME}/jre/lib/ext:${JAVA_HOME}/lib/ext:$java_ext_dirs\""
-    else
-        KARAF_ARGS="$KARAF_ARGS -Djava.ext.dirs=\"${JAVA_HOME}/jre/lib/ext:${JAVA_HOME}/lib/ext:${karaf_home_dir}/lib/ext\""
-    fi
+    # Set SUN specific JVM flags
+    KARAF_ARGS="$KARAF_ARGS -Dcom.sun.management.jmxremote"
 
     if [ x"$java_charset_opt" != x ]; then
         KARAF_ARGS="$KARAF_ARGS -Dfile.encoding=\"$java_charset_opt\""
     fi
 
-
-    # Set SUN specific JVM flags
-    KARAF_ARGS="$KARAF_ARGS -server -Dcom.sun.management.jmxremote"
-
-    # Set temporary dir (TODO: Show if use systemd PrivateTmp)
-    KARAF_ARGS="$KARAF_ARGS -Djava.io.tmpdir=${KARAF_DATA}/tmp"
 
     # Add the jars in the lib dir
     for file in ${karaf_home_dir}/lib/boot/*.jar
@@ -182,6 +231,18 @@ init_env_vars () {
             CLASSPATH="$CLASSPATH:$file"
         fi
     done
+
+    if [ "$JAVA_VERSION" -gt "8" ] ; then
+      for file in ${karaf_home_dir}/lib/jdk9plus/*.jar
+      do
+          if [ -z "$CLASSPATH" ]; then
+              CLASSPATH="$file"
+          else
+              CLASSPATH="$CLASSPATH:$file"
+          fi
+      done
+    fi
+
 
     if [ x"$karaf_cp_append" != x ] ; then
         CLASSPATH="$CLASSPATH:$karaf_cp_append"
