@@ -45,6 +45,7 @@ src_install() {
 	INSTDIR="/opt"
 
 	dodir /var/log/karaf/
+	keepdir /var/log/karaf
 
 	exeinto ${INSTDIR}/${PF}/bin
 	newexe bin/client "client"
