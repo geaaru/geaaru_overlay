@@ -18,7 +18,9 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
-NPM_NO_DEPS=1
+NPM_LOCAL_MODULES="
+readable-stream
+"
 
 S="${WORKDIR}/package"
 
