@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 # Ebuild automatically produced by node-ebuilder.
 
@@ -22,5 +22,10 @@ NPM_NO_DEPS=1
 
 S="${WORKDIR}/package"
 
-inherit npmv1
+inherit npmv1 eutils
 
+src_prepare() {
+	npmv1_src_prepare
+
+	epatch "${FILESDIR}"/support_onem2m_ct.patch || die "Error on apply patch"
+}
