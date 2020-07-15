@@ -22,6 +22,9 @@ DEPEND="
 	>=dev-node/stack-trace-0.0.10
 	>=dev-node/triple-beam-1.3.0
 	>=dev-node/winston-transport-4.4.0
+	>=dev-node/colorspace-1.1.1
+	>=dev-node/enabled-2.0.0
+	>=dev-node/kuler-2.0.0
 "
 RDEPEND="${DEPEND}"
 
