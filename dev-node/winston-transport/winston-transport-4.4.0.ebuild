@@ -15,7 +15,7 @@ IUSE=""
 DEPEND="
 	>=dev-node/readable-stream-2.3.7
 	>=dev-node/triple-beam-1.3.0
-	>=process-nextick-args-2.0.0
+	>=dev-node/process-nextick-args-2.0.0
 "
 RDEPEND="${DEPEND}"
 
