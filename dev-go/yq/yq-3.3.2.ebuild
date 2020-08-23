@@ -12,7 +12,7 @@ DESCRIPTION="yq is a portable command-line YAML processor"
 HOMEPAGE="https://github.com/mikefarah/yq"
 
 EGIT_REPO_URI="https://github.com/mikefarah/yq.git"
-EGIT_COMMIT="v${PV}"
+EGIT_COMMIT="${PV}"
 EGIT_CHECKOUT_DIR="${S}"
 
 LICENSE="MIT"
