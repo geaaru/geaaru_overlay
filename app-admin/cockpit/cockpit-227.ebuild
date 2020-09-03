@@ -18,8 +18,8 @@ DEPEND="sys-auth/polkit:=
 	>=dev-libs/glib-2.37.4
 	sys-libs/pam:=
 	app-crypt/mit-krb5:=
-  systemd? ( sys-apps/systemd:= ) ( !sys-apps/openrc:=)
-	openrc? ( app-admin/openrc-settingsd:=) ( !sys-apps/systemd:= )
+  systemd? ( sys-apps/systemd:= ) ( !sys-apps/openrc:= )
+	openrc? ( app-admin/openrc-settingsd:= ) ( !sys-apps/systemd:= )
 	sys-devel/gettext
   dev-util/intltool:=
 	net-libs/libssh:=[server]
