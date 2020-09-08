@@ -19,7 +19,6 @@ KEYWORDS="~amd64 ~arm"
 IUSE=""
 
 RDEPEND="
-	dev-python/gconf-python
 	gnome-base/gconf[introspection]
 	dev-python/pyxdg
 	$(python_gen_cond_dep '
