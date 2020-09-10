@@ -22,7 +22,6 @@ RDEPEND="
 	gnome-base/gconf[introspection]
 	dev-python/pyxdg
 	$(python_gen_cond_dep '
-		dev-python/beaker[${PYTHON_MULTI_USEDEP}]
 		dev-python/requests[${PYTHON_MULTI_USEDEP}]
 	')
 "
