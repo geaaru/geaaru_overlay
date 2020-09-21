@@ -26,6 +26,7 @@ RDEPEND="
 	')
 "
 DEPEND="${RDEPEND}
+	dev-util/glib-utils
 	dev-util/intltool"
 
 src_unpack() {
