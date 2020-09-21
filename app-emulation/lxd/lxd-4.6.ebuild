@@ -109,7 +109,7 @@ src_configure() {
 	cd "${GOPATH}/deps/dqlite" || die "Can't cd to dqlite dir"
 	export RAFT_CFLAGS="-I${GOPATH}/deps/raft/include/"
 	export RAFT_LIBS="${GOPATH}/deps/raft/.libs"
-	PKG_CONFIG_PATH="${GOPATH}/sqlite/" econf --libdir=${EPREFIX}/usr/lib/lxd
+	econf --libdir=${EPREFIX}/usr/lib/lxd
 }
 
 src_compile() {
