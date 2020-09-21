@@ -4,7 +4,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_6 )
+PYTHON_COMPAT=( python3_{6,7} )
 inherit autotools pam python-single-r1 git-r3 systemd
 
 EGIT_REPO_URI="https://github.com/FreeRADIUS/freeradius-server.git"
