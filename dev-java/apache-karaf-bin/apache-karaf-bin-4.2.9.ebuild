@@ -21,7 +21,7 @@ IUSE=""
 
 RDEPEND="virtual/awk
 	sys-apps/sed
-	>=virtual/jre-1.8
+	virtual/jre
 "
 DEPEND=""
 
