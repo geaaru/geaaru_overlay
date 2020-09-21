@@ -3,7 +3,7 @@
 # $Heade$
 
 EAPI=6
-PYTHON_COMPAT=( python{2_7,3_5,3_6} )
+PYTHON_COMPAT=( python{3_5,3_6,3_7} )
 
 inherit distutils-r1
 
