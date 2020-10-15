@@ -266,9 +266,9 @@ pkg_config() {
 	if use ssl; then
 		cd "${ROOT}"/etc/raddb/certs || die
 		./bootstrap || die "Error while running ./bootstrap script."
-		fowners root:radius "${ROOT}"/etc/raddb/certs
-		fowners root:radius "${ROOT}"/etc/raddb/certs/ca.pem
-		fowners root:radius "${ROOT}"/etc/raddb/certs/server.{key,crt,pem}
+		fowners root:radius "${ROOT}"/etc/raddb/certs || die "Error on set perms to /etc/raddb/certs"
+		fowners root:radius "${ROOT}"/etc/raddb/certs/ca.pem || die "Error on set perms to /etc/raddb/certs/ca.pem"
+		fowners root:radius "${ROOT}"/etc/raddb/certs/server.{key,crt,pem} || die "Error on set perms to /etc/raddb/server.key,crt,pem"
 	fi
 }
 
