@@ -15,7 +15,7 @@ HOMEPAGE="https://github.com/lxc/distrobuilder"
 EGIT_REPO_URI="https://github.com/geaaru/distrobuilder.git"
 #EGIT_REPO_URI="https://${EGO_PN}.git"
 #EGIT_BRANCH="dep-integration"
-EGIT_BRANCH="luet-with-dep-integration"
+EGIT_BRANCH="develop"
 EGIT_CHECKOUT_DIR="${S}"
 
 LICENSE="Apache-2.0"
@@ -23,11 +23,9 @@ SLOT="0"
 KEYWORDS=""
 IUSE=""
 
-DEPEND="dev-go/dep"
+DEPEND=""
 
 src_compile() {
-#	GOPATH="${WORKDIR}/${P}:$(get_golibdir_gopath)" \
-#		dep ensure
 	GOPATH="${WORKDIR}/${P}:$(get_golibdir_gopath)" \
 		go build -v -x ${EGO_BUILD_FLAGS} "${EGO_PN}" ./...
 }
