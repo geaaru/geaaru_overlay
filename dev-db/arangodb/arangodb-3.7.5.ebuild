@@ -3,7 +3,7 @@
 
 EAPI=6
 CMAKE_BUILD_TYPE=Release
-PYTHON_COMPAT=( python2_7 )
+PYTHON_COMPAT=( python3_{6,7,8} )
 
 inherit eutils user vcs-snapshot systemd python-any-r1 cmake-utils
 
@@ -44,14 +44,19 @@ src_prepare() {
 }
 
 src_configure() {
+
+	export CFLAGS="${CFLAGS} -msse4.1 -mssse3"
+	export CXXFLAGS="${CXXFLAGS} -msse4.1 -mssse3"
+
 	local mycmakeargs=(
 		#-DVERBOSE=On
 		-DUSE_OPTIMIZE_FOR_ARCHITECTURE=Off
 		-DCMAKE_BUILD_TYPE=RelWithDebInfo
-		#-DCMAKE_C_FLAGS="$(CFLAGS)"
-		#-DCMAKE_CXX_FLAGS="$(CXXFLAGS)"
+		-DCMAKE_C_FLAGS="${CFLAGS}"
+		-DCMAKE_CXX_FLAGS="${CXXFLAGS}"
 		#-DETCDIR=/etc
 		#-DVARDIR=/var
+		-DUSE_SSE4_2=false
 		-DCMAKE_INSTALL_DOCDIR=/usr/share/arangodb3
 		-DCMAKE_INSTALL_SYSCONFDIR=/etc
 		-DCMAKE_INSTALL_PREFIX:PATH=/usr
