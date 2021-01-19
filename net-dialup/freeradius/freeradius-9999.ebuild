@@ -4,7 +4,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{6,7} )
+PYTHON_COMPAT=( python3_{6,7,8} )
 inherit autotools pam python-single-r1 git-r3 systemd
 
 EGIT_REPO_URI="https://github.com/FreeRADIUS/freeradius-server.git"
@@ -57,6 +57,7 @@ RESTRICT="test"
 PATCHES=(
 	${FILESDIR}/freeradius-3.0.14-proxy-timestamp.patch
 	"${FILESDIR}"/${PN}-3.0.20-systemd-service.patch
+	"${FILESDIR}"/${PN}-delay-access-accept.patch
 #	${FILESDIR}/freeradius-detail-access-req.patch
 #   ${FILESDIR}/freeradius-rest-redundant.patch
 )
