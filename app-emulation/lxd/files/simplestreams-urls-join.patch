@@ -1,0 +1,78 @@
+commit ed357a9219471effa6508d24b880b5ea71258911
+Author: Daniele Rondina <geaaru@sabayonlinux.org>
+Date:   Sat Jan 30 09:02:17 2021 +0100
+
+    simplestreams: Review and sanitize urls join
+    
+    On expose images through S3 storage like Minio the path with `..` is not
+    accepted.
+    Example: http://server.org/simple../images/$path/root.tar.xz
+    In this case, we need to sanitize the URL to have:
+    http://server.org/images/$path/root.tar.xz
+    
+    Signed-off-by: Daniele Rondina <geaaru@sabayonlinux.org>
+
+diff --git a/client/simplestreams_images.go b/client/simplestreams_images.go
+index d720f0321..8679afa21 100644
+--- a/client/simplestreams_images.go
++++ b/client/simplestreams_images.go
+@@ -81,7 +81,10 @@ func (r *ProtocolSimpleStreams) GetImageFile(fingerprint string, req ImageFileRe
+ 	// Download function
+ 	download := func(path string, filename string, hash string, target io.WriteSeeker) (int64, error) {
+ 		// Try over http
+-		url := fmt.Sprintf("http://%s/%s", strings.TrimPrefix(r.httpHost, "https://"), path)
++		url, err := shared.JoinUrls(fmt.Sprintf("http://%s", strings.TrimPrefix(r.httpHost, "https://")), path)
++		if err != nil {
++			return -1, err
++		}
+ 
+ 		size, err := shared.DownloadFileHash(r.http, r.httpUserAgent, req.ProgressHandler, req.Canceler, filename, url, hash, sha256.New(), target)
+ 		if err != nil {
+@@ -91,7 +94,11 @@ func (r *ProtocolSimpleStreams) GetImageFile(fingerprint string, req ImageFileRe
+ 			}
+ 
+ 			// Try over https
+-			url = fmt.Sprintf("%s/%s", r.httpHost, path)
++			url, err := shared.JoinUrls(r.httpHost, path)
++			if err != nil {
++				return -1, err
++			}
++
+ 			size, err = shared.DownloadFileHash(r.http, r.httpUserAgent, req.ProgressHandler, req.Canceler, filename, url, hash, sha256.New(), target)
+ 			if err != nil {
+ 				return -1, err
+diff --git a/shared/simplestreams/simplestreams.go b/shared/simplestreams/simplestreams.go
+index a459eaac0..ff4ed2f7e 100644
+--- a/shared/simplestreams/simplestreams.go
++++ b/shared/simplestreams/simplestreams.go
+@@ -98,7 +98,11 @@ func (s *SimpleStreams) cachedDownload(path string) ([]byte, error) {
+ 	}
+ 
+ 	// Download from the source
+-	uri := fmt.Sprintf("%s/%s", strings.TrimRight(s.url, "/"), strings.TrimLeft(path, "/"))
++	uri, err := shared.JoinUrls(s.url, path)
++	if err != nil {
++		return nil, err
++	}
++
+ 	req, err := http.NewRequest("GET", uri, nil)
+ 	if err != nil {
+ 		return nil, err
+diff --git a/shared/util.go b/shared/util.go
+index b7561ceb7..fc01563db 100644
+--- a/shared/util.go
++++ b/shared/util.go
+@@ -1237,3 +1237,13 @@ func InSnap() bool {
+ 
+ 	return false
+ }
++
++// JoinUrlPath return the join of the input urls/paths sanitized.
++func JoinUrls(baseUrl, path string) (string, error) {
++	u, err := url.Parse(baseUrl)
++	if err != nil {
++		return "", err
++	}
++	u.Path = filepath.Join(u.Path, path)
++	return u.String(), nil
++}
