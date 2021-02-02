@@ -1,11 +1,11 @@
-commit 84e8a65e5c928186c96935bb107aff6b213922ed
+commit 09a3f56da0c8222e8145333f5c22851fef90a7d4
 Author: Daniele Rondina <geaaru@sabayonlinux.org>
 Date:   Tue Jan 19 16:06:43 2021 +0100
 
     Permit delay on Access-Accept response
 
 diff --git a/src/main/process.c b/src/main/process.c
-index 7a0271e1a4..55605271d0 100644
+index 7a0271e1a4..03a033ffe6 100644
 --- a/src/main/process.c
 +++ b/src/main/process.c
 @@ -425,6 +425,29 @@ static void coa_separate(REQUEST *request, bool retransmit) CC_HINT(nonnull);
@@ -66,7 +66,7 @@ index 7a0271e1a4..55605271d0 100644
 -					request->response_delay.tv_usec = 0;
 -				}
 -			}
-+		if (request->root->reject_delay.tv_sec > 0) {
++		if (request->root->reject_delay.tv_sec > 0 && request->reply->code == PW_CODE_ACCESS_REJECT) {
 +			request->response_delay = request->root->reject_delay;
  		}
 +		HANDLE_RESPONSE_DELAY;
