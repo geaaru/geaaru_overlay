@@ -155,6 +155,7 @@ freeradius-modules_src_unpack() {
 	rm -rf ${S}/src/modules/rlm_{preprocess,python,python3,radutmp,realm,redis,rediswho} || true
 	rm -rf ${S}/src/modules/rlm_{replicate,rest,ruby,securid,smsotp,soh,sometimes} || true
 	rm -rf ${S}/src/modules/rlm_{sqlcounter,sqlhpwippool,sqlippool,test,unbound} || true
+	rm -rf ${S}/src/modules/rlm_sql_map || true
 	rm -rf ${S}/src/modules/rlm_{unix,unpack,utf8,wimax,yubikey} || true
 	rm -rf ${S}/src/modules/rlm_{detail,pap} || true
 
