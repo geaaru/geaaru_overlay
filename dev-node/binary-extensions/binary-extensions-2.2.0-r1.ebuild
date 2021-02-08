@@ -15,6 +15,9 @@ IUSE=""
 DEPEND="
 "
 RDEPEND="${DEPEND}"
+NPM_PKG_DIRS="
+	binary-extensions.json
+"
 
 NPM_NO_DEPS=1
 
