@@ -8,7 +8,7 @@ inherit autotools bash-completion-r1 linux-info flag-o-matic systemd readme.gent
 DESCRIPTION="LinuX Containers userspace utilities"
 HOMEPAGE="https://linuxcontainers.org/"
 EGIT_REPO_URI="https://github.com/lxc/lxc.git"
-EGIT_COMMIT="092529eaef5d72af8b5c8865e6f4fbecb834b23c"
+EGIT_COMMIT="f62764977dbbacda85ba9d496cb011080ebae1fe"
 
 KEYWORDS="~amd64 ~arm ~arm64"
 
