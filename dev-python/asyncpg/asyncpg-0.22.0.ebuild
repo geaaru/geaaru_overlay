@@ -12,9 +12,17 @@ SRC_URI="https://github.com/MagicStack/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.g
 LICENSE="Apache-2.0"
 KEYWORDS="~amd64 ~x86"
 SLOT="0"
-IUSE=""
+IUSE="+cython"
 RESTRICT=""
 
+PATCHES=(
+	"${FILESDIR}/disable-extensions.patch"
+)
+
+
+BDEPEND="cython? ( dev-python/cython[${PYTHON_USEDEP}] )"
 RDEPEND="dev-python/typing-extensions[${PYTHON_USEDEP}]"
 DEPEND="${RDEPEND}
 	dev-python/setuptools[${PYTHON_USEDEP}]"
+
+

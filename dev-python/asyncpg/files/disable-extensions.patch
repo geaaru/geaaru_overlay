@@ -1,0 +1,26 @@
+diff --git a/setup.py b/setup.py
+index b2fc8f3..a6469f9 100644
+--- a/setup.py
++++ b/setup.py
+@@ -277,21 +277,6 @@ setuptools.setup(
+     packages=['asyncpg'],
+     provides=['asyncpg'],
+     include_package_data=True,
+-    ext_modules=[
+-        setuptools.extension.Extension(
+-            "asyncpg.pgproto.pgproto",
+-            ["asyncpg/pgproto/pgproto.pyx"],
+-            extra_compile_args=CFLAGS,
+-            extra_link_args=LDFLAGS),
+-
+-        setuptools.extension.Extension(
+-            "asyncpg.protocol.protocol",
+-            ["asyncpg/protocol/record/recordobj.c",
+-             "asyncpg/protocol/protocol.pyx"],
+-            include_dirs=['asyncpg/pgproto/'],
+-            extra_compile_args=CFLAGS,
+-            extra_link_args=LDFLAGS),
+-    ],
+     install_requires=['typing-extensions>=3.7.4.3;python_version<"3.8"'],
+     cmdclass={'build_ext': build_ext, 'build_py': build_py, 'sdist': sdist},
+     test_suite='tests.suite',
