@@ -17,15 +17,16 @@ KEYWORDS="~amd64 ~x86"
 BDEPEND="
 	dev-python/cython[${PYTHON_USEDEP}]
 	test? (
-		dev-python/aiofiles[${PYTHON_USEDEP}]
-		dev-python/cbor2[${PYTHON_USEDEP}]
-		dev-python/httpx[${PYTHON_USEDEP}]
-		dev-python/msgpack[${PYTHON_USEDEP}]
-		dev-python/pytest-asyncio[${PYTHON_USEDEP}]
-		dev-python/pyyaml[${PYTHON_USEDEP}]
-		dev-python/uvicorn[${PYTHON_USEDEP}]
-		dev-python/websockets[${PYTHON_USEDEP}]
-	)"
+	dev-python/aiofiles[${PYTHON_USEDEP}]
+	dev-python/cbor2[${PYTHON_USEDEP}]
+	dev-python/httpx[${PYTHON_USEDEP}]
+	dev-python/msgpack[${PYTHON_USEDEP}]
+	dev-python/pytest-asyncio[${PYTHON_USEDEP}]
+	dev-python/pyyaml[${PYTHON_USEDEP}]
+	dev-python/uvicorn[${PYTHON_USEDEP}]
+	dev-python/websockets[${PYTHON_USEDEP}]
+)"
+
 
 distutils_enable_tests pytest
 

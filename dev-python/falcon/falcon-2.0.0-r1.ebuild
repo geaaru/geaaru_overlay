@@ -6,7 +6,8 @@ EAPI=6
 # Python 2.6 is supported, but depends on ordereddict, which has been in
 # improvise for months and is a minimal package. If needed
 # please let me know. PyPy also works
-PYTHON_COMPAT=( python3_{6,7} )
+#PYTHON_COMPAT=( python3_7, python3_8 )
+PYTHON_COMPAT=( python3_{7..9} )
 
 inherit distutils-r1
 
