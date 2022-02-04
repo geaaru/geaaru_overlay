@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE repositories SYSTEM "/dtd/repositories.dtd">
+<repositories xmlns="" version="1.0">
+  <repo quality="experimental" status="unofficial">
+    <name><![CDATA[geaaru-kit]]></name>
+    <description lang="en"><![CDATA[Geaaru Overlay]]></description>
+    <homepage>http://github.com/geaaru/geaaru_overlay</homepage>
+    <owner type="person">
+      <email>geaaru@gmail.com</email>
+      <name><![CDATA[Daniele Rondina]]></name>
+    </owner>
+    <source type="git">git://github.com/geaaru/geaaru_overlay.git</source>
+    <feed>http://github.com/geaaru/geaaru-overlay/commits/funtoo.atom</feed>
+  </repo>
+</repositories>
