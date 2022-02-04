@@ -51,7 +51,7 @@ DOCS=( CHANGELOG CONTRIBUTING MAINTAINERS README )
 ADMINS=( iprange systemd )
 ADMINS_DIRECT=( halog dyncookie )
 ADDONS=()
-DEV_TOOLS=( flags hpack poll tcploop )
+DEV_TOOLS=( flags/flags hpack/decode hpack/gen-enc hpack/gen-rht poll/poll tcploop/tcploop )
 
 haproxy_use() {
 	(( $# != 2 )) && die "${FUNCNAME} <USE flag> <make option>"
@@ -83,9 +83,6 @@ src_compile() {
 	fi
 	if use wurfl ; then
 		ADDONS+=( wurfl )
-	fi
-	if use prometheus-exporter ; then
-		ADDONS+=( promex )
 	fi
 
 	# TODO: PCRE2_WIDTH?
@@ -136,7 +133,7 @@ src_compile() {
 		done
 
 		for dev in ${DEV_TOOLS[@]} ; do
-			emake -C dev/${dev} \
+			emake dev/${dev} \
 				SBINDIR=/usr/sbin \
 				CFLAGS="${CFLAGS} -I../../include/ -I../../ebtree/" OPTIMIZE="${CFLAGS}" LDFLAGS="${LDFLAGS}" CC=$(tc-getCC) ${args[@]}
 		done
@@ -168,16 +165,16 @@ src_install() {
 		has halog "${ADMINS_DIRECT[@]}" && dobin admin/halog/halog
 		has iprange "${ADMINS[@]}" && {
 			newbin admin/iprange/iprange haproxy_iprange ;
-			newbin admin/iprange/iprange6 haproxy_ip6range ;
+			newbin admin/iprange/ip6range haproxy_ip6range ;
 		}
 
-		has tcploop "${DEV_TOOLS[@]}" && newbin dev/tcploop/tcploop haproxy_tcploop
-		has pool "${DEV_TOOLS[@]}" && newbin dev/pool/poll haproxy_poll
-		has flags "${DEV_TOOLS[@]}" && newbin dev/flags/flags haproxy_flags
-		has hpack "${DEV_TOOLS[@]}" && {
+		has tcploop/tcploop "${DEV_TOOLS[@]}" && newbin dev/tcploop/tcploop haproxy_tcploop
+		has pool/pool "${DEV_TOOLS[@]}" && newbin dev/pool/poll haproxy_poll
+		has flags/flags "${DEV_TOOLS[@]}" && newbin dev/flags/flags haproxy_flags
+		has hpack/gen-rht "${DEV_TOOLS[@]}" && {
 			newbin dev/hpack/gen-rht haproxy_gen-rht
 			newbin dev/hpack/gen-enc haproxy_gen-enc
-			newbin dev/hpack/gen-decode haproxy_decode
+			newbin dev/hpack/decode haproxy_decode
 		}
 	fi
 
