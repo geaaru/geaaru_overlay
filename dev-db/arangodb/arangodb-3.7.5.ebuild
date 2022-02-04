@@ -37,7 +37,9 @@ pkg_setup() {
 src_prepare() {
 	cmake-utils_src_prepare
 
-	sed -i 's?@PKGDATADIR@?/usr/share/arangodb3?' etc/arangodb3/arangod.conf.in || die 'sed arangod.conf failed'
+	sed -i -e 's?@PKGDATADIR@?/usr/share/arangodb3?' \
+		-e 's|= arangodb$|= arangodb3|g' \
+		etc/arangodb3/arangod.conf.in || die 'sed arangod.conf failed'
 	sed -i 's?@PKGDATADIR@?/usr/share/arangodb3?' etc/arangodb3/arangosh.conf.in || die 'sed arangosh.conf failed'
 
 	sed -i -e 's: arangodb : arangodb3 :g' Installation/logrotate.d/arangod.systemd || die 'sed logrotate file failed'
