@@ -35,7 +35,7 @@ DEPEND="
 		pcre2-jit? ( dev-libs/libpcre2[jit] )
 	)
 	ssl? (
-		!libressl? ( dev-libs/openssl:0=[zlib?] )
+		!libressl? ( dev-libs/openssl:0= )
 		libressl? ( dev-libs/libressl:0= )
 	)
 	slz? ( dev-libs/libslz:= )
