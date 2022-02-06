@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=5
+EAPI=7
 PYTHON_COMPAT=( python{2_7,3_4,3_5} )
 PYTHON_NAMESPACES="xstatic xstatic.pkg"
 

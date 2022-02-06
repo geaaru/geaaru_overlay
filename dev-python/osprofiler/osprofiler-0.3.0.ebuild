@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-python/oslo-vmware/oslo-vmware-0.3.ebuild,v 1.2 2014/07/06 12:45:05 mgorny Exp $
 
-EAPI=5
+EAPI=7
 PYTHON_COMPAT=( python2_7 )
 
 inherit distutils-r1

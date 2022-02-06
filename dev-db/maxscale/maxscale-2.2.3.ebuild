@@ -1,7 +1,7 @@
 # Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=6
 
 inherit eutils cmake-utils multilib user systemd
 
@@ -24,7 +24,7 @@ DEPEND="
 	>=dev-libs/libpcre-8.35
 	dev-libs/openssl:0
 	net-misc/curl
-	virtual/mysql[embedded]
+	virtual/mysql
 	dev-libs/jansson
 	jemalloc? ( dev-libs/jemalloc )
 	rabbitmq? ( net-libs/rabbitmq-c )
@@ -34,7 +34,7 @@ RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/${MY_P}"
 
-PATCHES=( ${FILESDIR}/init_var_gcc5_4_0.patch )
+PATCHES=( )
 
 pkg_setup() {
 	enewgroup maxscale

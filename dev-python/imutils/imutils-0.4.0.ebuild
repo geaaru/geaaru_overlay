@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Heade$
 
-EAPI=5
+EAPI=7
 PYTHON_COMPAT=( python2_7 python3_4 python3_5 )
 
 inherit distutils-r1
