@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=7
 PYTHON_COMPAT=( python2_7 python3_4 python3_5 )
 # It's seems that is there both configure anche cmake files
 # but is there a problem with linking of pthread library (use -pthreads instead of
