@@ -15,10 +15,9 @@ KEYWORDS="~amd64 ~arm"
 IUSE="doc"
 
 DEPEND="sys-auth/polkit:=
-	>=dev-libs/glib-2.37.4
+	dev-libs/glib
 	sys-libs/pam:=
 	app-crypt/mit-krb5:=
-	sys-apps/systemd:=
 	dev-util/intltool:=
 	net-libs/libssh:=[server]
 "
