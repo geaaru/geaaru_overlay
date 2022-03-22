@@ -4,17 +4,18 @@
 EAPI=7
 
 if [[ ${PV} == 9999 ]]; then
-	EGIT_REPO_URI="https://github.com/systemd/systemd.git"
+	EGIT_REPO_URI="https://github.com/systemd/systemd-stable.git"
 	inherit git-r3
 else
 	MY_PV=${PV/_/-}
 	MY_P=${PN}-${MY_PV}
-	S=${WORKDIR}/${MY_P}
+	MY_PS=${PN}-stable-${MY_PV}
+	S=${WORKDIR}/${MY_PS}
 	SRC_URI="https://github.com/systemd/systemd-stable/archive/v${MY_PV}/${MY_P}.tar.gz"
 	KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sparc ~x86"
 fi
 
-PYTHON_COMPAT=( python{3_5,3_6,3_7} )
+PYTHON_COMPAT=( python3+ )
 
 inherit bash-completion-r1 linux-info meson multilib-minimal ninja-utils pam python-any-r1 systemd toolchain-funcs udev user
 
