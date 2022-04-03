@@ -105,6 +105,7 @@ src_configure() {
 	}
 
 	configuration() {
+
 		local myconf=(
 			sip-build
 			--verbose
@@ -113,30 +114,30 @@ src_configure() {
 			--scripts-dir="$(python_get_scriptdir)"
 			--qmake="$(qt5_get_bindir)"/qmake
 			--no-make
-			$(usev debug '--debug --qml-debug --tracing')
-			$(usev !dbus --no-dbus-python)
-			$(usev !declarative --no-qml-plugin)
-			$(usev !designer --no-designer-plugin)
-			$(usev gles2-only --disabled-feature=PyQt_Desktop_OpenGL)
-			$(usev !ssl --disabled-feature=PyQt_SSL)
+			$(usex debug '--debug --qml-debug --tracing' '')
+			$(usex dbus '' --no-python-dbus)
+			$(usex declarative '' --no-qml-plugin)
+			$(usex declarative '' --no-qml-plugin)
+			$(usex gles2-only '--disable-feature=PyQt_Desktop_OpenGL' '')
+			$(usex ssl '' '--disable-feature=PyQt_SSL')
 			--enable=pylupdate
 			--enable=pyrcc
 			--enable=Qt
 			$(pyqt_use_enable bluetooth)
 			--enable=QtCore
 			$(pyqt_use_enable dbus QtDBus)
-			$(pyqt_use_enable declarative QtQml QtQuick $(usev widgets QtQuickWidgets))
+			$(pyqt_use_enable declarative QtQml QtQuick $(usex widgets QtQuickWidgets ''))
 			$(pyqt_use_enable designer)
 			$(pyqt_use_enable gui)
 			$(pyqt_use_enable gui $(use gles2-only && echo _QOpenGLFunctions_ES2 || echo _QOpenGLFunctions_{2_0,2_1,4_1_Core}))
-			$(pyqt_use_enable help)
+			$(pyqt_use_enable help QtHelp)
 			$(pyqt_use_enable location)
-			$(pyqt_use_enable multimedia QtMultimedia $(usev widgets QtMultimediaWidgets))
+			$(pyqt_use_enable multimedia QtMultimedia $(usex widgets QtMultimediaWidgets ''))
 			$(pyqt_use_enable network)
 			$(pyqt_use_enable opengl QtOpenGL)
 			$(pyqt_use_enable positioning)
 			$(pyqt_use_enable printsupport QtPrintSupport)
-			$(pyqt_use_enable sensors)
+			$(pyqt_use_enable sensors QtSensors)
 			$(pyqt_use_enable serialport QtSerialPort)
 			$(pyqt_use_enable speech QtTextToSpeech)
 			$(pyqt_use_enable sql)
