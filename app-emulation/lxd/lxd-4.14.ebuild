@@ -36,7 +36,7 @@ RDEPEND="
 		>=app-emulation/lxc-4.0.2[seccomp]
 		dev-libs/libuv
 		dev-libs/lzo
-		dev-util/xdelta:3[lzma]
+		dev-util/xdelta:3
 		dnsmasq? (
 			net-dns/dnsmasq[dhcp,ipv6?]
 		)
