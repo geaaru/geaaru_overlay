@@ -15,7 +15,6 @@ MY_P="${MY_PN}-${PV}"
 #SRC_URI="mirror://pypi/${MY_PN:0:1}/${MY_PN}/${MY_P}.tar.gz"
 SRC_URI="https://files.pythonhosted.org/packages/fe/56/b18bf0167aa6e2ab195d0c2736992a3a9aeca1ddbefebee554226d211267/${P}.tar.gz"
 KEYWORDS="*"
-S="${WORKDIR}"/${MY_P}
 
 LICENSE="GPL-3"
 SLOT="0"
