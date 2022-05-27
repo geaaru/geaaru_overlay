@@ -15,8 +15,7 @@ SLOT="0"
 KEYWORDS="*"
 RESTRICT="test"
 
-RDEPEND=">=app-admin/ansible-base-2.12.0
-	<app-admin/ansible-base-2.13"
+RDEPEND="app-admin/ansible-base"
 
 python_compile() {
 	local -x ANSIBLE_SKIP_CONFLICT_CHECK=1
