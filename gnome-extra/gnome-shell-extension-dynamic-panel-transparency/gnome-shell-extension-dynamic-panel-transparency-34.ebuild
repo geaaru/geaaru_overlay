@@ -1,6 +1,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
+inherit gnome3-utils
 
 MY_PN="${PN/gnome-shell-extension-/}"
 MY_P="${MY_PN}-${PV}"
@@ -47,16 +48,16 @@ src_install() {
 }
 
 pkg_preinst() {
-	gnome2_schemas_savelist
+	gnome3_schemas_savelist
 }
 
 pkg_postinst() {
-	gnome2_schemas_update
+	gnome3_schemas_update
 	ebegin "Updating list of installed extensions"
 	eselect gnome-shell-extensions update
 	eend $?
 }
 
 pkg_postrm() {
-	gnome2_schemas_update
+	gnome3_schemas_update
 }
