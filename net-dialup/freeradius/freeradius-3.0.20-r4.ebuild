@@ -31,9 +31,7 @@ RESTRICT="test firebird? ( bindist )"
 
 # TODO: rlm_mschap works with both samba library or without. I need to avoid
 #       linking of samba library if -samba is used.
-RDEPEND="acct-group/radius
-	acct-user/radius
-	!net-dialup/cistronradius
+RDEPEND="!net-dialup/cistronradius
 	dev-lang/perl:=
 	sys-libs/gdbm:=
 	sys-libs/talloc
