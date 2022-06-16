@@ -17,6 +17,9 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 NPM_NO_DEPS=1
+NPM_BINS="
+uuid => node-uuid-uuidjs
+"
 
 S="${WORKDIR}/package"
 
