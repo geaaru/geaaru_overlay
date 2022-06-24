@@ -18,6 +18,7 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~x86"
 RESTRICT="strip"
+IUSE="doc"
 
 RDEPEND="!app-arch/upx-ucl"
 
@@ -27,10 +28,13 @@ QA_PREBUILT="/opt/bin/upx"
 
 src_install() {
 	cd ${MY_P}*
-	into /opt
+	into /usr
 	dobin upx
 	pax-mark -m "${ED}"/opt/bin/upx
 	doman upx.1
 	dodoc upx.doc BUGS NEWS README* THANKS
-	dohtml upx.html
+	if use doc ; then
+		local HTML_DOCS=( upx.html )
+		einstalldocs
+	fi
 }
