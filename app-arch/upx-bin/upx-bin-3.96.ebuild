@@ -31,6 +31,6 @@ src_install() {
 	dobin upx
 	pax-mark -m "${ED}"/opt/bin/upx
 	doman upx.1
-	dodoc upx.doc BUGS NEWS README* THANKS TODO
+	dodoc upx.doc BUGS NEWS README* THANKS
 	dohtml upx.html
 }
