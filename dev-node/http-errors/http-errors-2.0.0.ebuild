@@ -1,6 +1,5 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 # Ebuild automatically produced by node-ebuilder.
 
 EAPI=6
@@ -14,9 +13,11 @@ KEYWORDS="~amd64 ~arm"
 IUSE=""
 
 DEPEND="
-	>=dev-node/inherits-2.0.1
-	>=dev-node/setprototypeof-1.0.1
-	>=dev-node/statuses-1.3.0
+	>=dev-node/depd-2.0.0
+	>=dev-node/inherits-2.0.4
+	>=dev-node/setprototypeof-1.2.0
+	>=dev-node/statuses-2.0.1
+	>=dev-node/toidentifier-1.0.1
 "
 RDEPEND="${DEPEND}"
 
