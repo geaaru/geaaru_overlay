@@ -9,8 +9,8 @@ HOMEPAGE="https://github.com/mqttjs/async-mqtt#readme"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
-IUSE="*"
+KEYWORDS="*"
+IUSE=""
 
 DEPEND="
 	>=dev-node/mqtt-4.3.7
