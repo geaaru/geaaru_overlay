@@ -1,0 +1,15 @@
+systemd:
+  generator: github-1
+  packages:
+    - systemd:
+        github:
+          user: systemd
+          repo: systemd-stable
+          query: tags
+        versions:
+          latest:
+            template: systemd.tmpl
+          249.12:
+            template: systemd.tmpl
+
+
