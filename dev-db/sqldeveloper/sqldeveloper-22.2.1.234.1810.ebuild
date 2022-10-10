@@ -38,7 +38,7 @@ src_prepare() {
 	sed -i 's|"`dirname $0`"|/opt/sqldeveloper|' sqldeveloper.sh || die
 
 	rm -r netbeans/platform/modules/lib/i386 || die
-	rm -r modules/javafx || die
+	#rm -r modules/javafx || die
 
 	# they both use jtds, enabling one of them also enables the other one
 	if use mssql && ! use sybase; then
