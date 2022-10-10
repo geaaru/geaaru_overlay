@@ -45,7 +45,7 @@ src_prepare() {
 	fi
 
 	if use mssql || use sybase; then
-		echo "AddJavaLibFile $(java-pkg_getjars jtds-1.2)" >> sqldeveloper/bin/sqldeveloper.conf
+		echo "AddJavaLibFile $(java-pkg_getjars jtds-1.3)" >> sqldeveloper/bin/sqldeveloper.conf
 	fi
 
 	if use mysql; then
