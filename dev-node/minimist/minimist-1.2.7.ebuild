@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/minimistjs/minimist"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="*"
+KEYWORDS="~amd64 amd64"
 IUSE=""
 
 DEPEND="
