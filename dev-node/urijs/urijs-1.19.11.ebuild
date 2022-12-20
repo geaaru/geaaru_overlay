@@ -9,7 +9,7 @@ HOMEPAGE="http://medialize.github.io/URI.js/"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="*"
+KEYWORDS="~amd64"
 IUSE=""
 
 DEPEND="

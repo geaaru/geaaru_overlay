@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/jshttp/http-assert#readme"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="*"
+KEYWORDS="~amd64"
 IUSE=""
 
 DEPEND="

@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/inspect-js/object-inspect"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="*"
+KEYWORDS="~amd64"
 IUSE=""
 
 DEPEND="

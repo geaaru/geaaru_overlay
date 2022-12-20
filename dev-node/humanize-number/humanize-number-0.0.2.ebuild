@@ -8,7 +8,7 @@ DESCRIPTION="Humanize a number (1000000 -> 1,000,000)"
 HOMEPAGE="https://github.com/component/humanize-number#readme"
 
 SLOT="0"
-KEYWORDS="*"
+KEYWORDS="~amd64"
 IUSE=""
 
 DEPEND="
