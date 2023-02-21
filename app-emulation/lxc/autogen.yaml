@@ -1,0 +1,12 @@
+lxc:
+  generator: github-1
+  packages:
+    - lxc:
+        github:
+          user: lxc
+          query: tags
+          tarball: "lxc-{version}.tar.gz"
+          match: '^lxc-([0-9.]+)$'
+        versions:
+          latest:
+            template: lxc.tmpl
