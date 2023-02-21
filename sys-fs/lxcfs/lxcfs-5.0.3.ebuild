@@ -39,8 +39,8 @@ src_configure() {
 src_install() {
 	meson_src_install
 
-	newinitd "${FILESDIR}"/${PV}/lxcfs.initd lxcfs
-	newconfd "${FILESDIR}"/${PV}/lxcfs.confd lxcfs
+	newinitd "${FILESDIR}"/lxcfs.initd lxcfs
+	newconfd "${FILESDIR}"/lxcfs.confd lxcfs
 
 	find "${ED}" -name '*.la' -delete || die
 
