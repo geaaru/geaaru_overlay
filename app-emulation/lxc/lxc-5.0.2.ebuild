@@ -81,13 +81,12 @@ pkg_setup() {
 src_unpack() {
 	unpack ${A}
 	mv "${WORKDIR}"/lxc-* "${S}"
-	python3 -m venv ${WORKDIR}/venv
 }
 
 src_configure() {
-	. ${WORKDIR}/venv/bin/activate
-	pip install meson
 	local emesonargs=(
+		--localstatedir "${EPREFIX}/var"
+
 		-Dcoverity-build=false
 		-Doss-fuzz=false
 
