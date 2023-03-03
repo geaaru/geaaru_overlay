@@ -56,7 +56,7 @@ src_configure() {
 		-DENABLE_OPENCV=$(usex opencv)
 		-DENABLE_RUBY=OFF # TODO: add ruby support
 		-DENABLE_PYTHON=$(usex python)
-		-DENABLE_TESTS=$(usex test)
+		-DENABLE_TESTS=false
 		-DUSE_SYSTEM_JSONCPP=ON
 		$(cmake_use_find_package imagemagick ImageMagick)
 	)
