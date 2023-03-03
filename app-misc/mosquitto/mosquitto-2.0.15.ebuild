@@ -11,7 +11,7 @@ SRC_URI="https://mosquitto.org/files/source/${P}.tar.gz"
 
 LICENSE="EPL-1.0"
 SLOT="0"
-KEYWORDS="amd64 arm ~arm64 x86"
+KEYWORDS="*"
 IUSE="bridge examples +persistence +srv ssl tcpd websockets systemd"
 
 REQUIRED_USE=""
