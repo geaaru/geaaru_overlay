@@ -46,7 +46,4 @@ python_compile_all() {
 python_install_all() {
 	use doc && local HTML_DOCS=( doc/_build/html/. )
 	distutils-r1_python_install_all
-
-	# Do link to openshot-qt as openshot
-	dosym ${EROOT}usr/bin/openshot-qt ${EROOT}usr/bin/openshot
 }
