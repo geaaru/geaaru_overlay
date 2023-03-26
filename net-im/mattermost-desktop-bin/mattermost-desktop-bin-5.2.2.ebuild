@@ -20,7 +20,7 @@ SLOT="0"
 KEYWORDS="*"
 
 RDEPEND="
-	>=app-accessibility/at-spi2-core-2.46.0:2[X]
+	app-accessibility/at-spi2-core[X]
 	dev-libs/expat
 	dev-libs/glib:2
 	dev-libs/nspr
@@ -81,7 +81,7 @@ src_install() {
 	exeinto "/opt/${MY_PN}"
 	doexe *.so *.so.* "${MY_PN}"
 
-	dosym -r "/opt/${MY_PN}/${MY_PN}" "/usr/bin/${MY_PN}"
+	dosym "/opt/${MY_PN}/${MY_PN}" "/usr/bin/${MY_PN}"
 
 	make_desktop_entry "${MY_PN}" Mattermost "${MY_PN}"
 
