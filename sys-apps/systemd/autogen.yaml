@@ -6,7 +6,7 @@ systemd:
           user: systemd
           repo: systemd-stable
           query: tags
-          select: '^v251.*|^v249.*'
+          select: '^v251.*|^v249.*|^v252.*'
         versions:
           latest:
             template: systemd.tmpl
