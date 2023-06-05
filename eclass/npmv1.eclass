@@ -19,6 +19,8 @@ if has "${EAPI:-0}" 5; then
     # https://blogs.gentoo.org/mgorny/2015/11/13/the-ultimate-guide-to-eapi-6/
 fi
 
+inherit epatch
+
 # TODO:
 #  * support multi slot ebuilds
 #
@@ -59,7 +61,7 @@ fi
 #  * NPM_PV              Define version used for download sources when NPM_GITHUP_MOD is used.
 #                        Default value is "v${PV}".
 
-NPMV1_ECLASS_VERSION="0.3.1"
+NPMV1_ECLASS_VERSION="0.3.2"
 
 _npmv1_set_metadata() {
 
@@ -130,6 +132,8 @@ npmv1_src_prepare() {
 	else
 		NPM_GYP_PKG=0
 	fi
+
+	[[ ${PATCHES} ]] && epatch "${PATCHES[@]}"
 
 	if [[ ${EAPI} == 6 ]]; then
 		eapply_user
