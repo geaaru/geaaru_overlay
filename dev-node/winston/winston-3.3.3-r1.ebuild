@@ -28,6 +28,10 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
+PATCHES=(
+	"${FILESDIR}"/${PN}-3.3-ghostfiles.patch
+)
+
 NPM_PKG_DIRS="
 	dist
 "
@@ -39,4 +43,3 @@ NPM_LOCAL_MODULES="
 S="${WORKDIR}/package"
 
 inherit npmv1
-

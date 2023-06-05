@@ -1,0 +1,17 @@
+--- a/lib/winston/transports/file.js	2023-02-03 10:22:57.000000000 +0000
++++ b/lib/winston/transports/file.js	2023-06-05 08:15:52.306304519 +0000
+@@ -169,7 +169,13 @@
+       // This could potentially be optimized to not run a stat call but its
+       // the safest way since we are supporting `maxFiles`.
+       this._rotate = true;
+-      this._endStream(() => this._rotateFile());
++      //this._endStream(() => this._rotateFile());
++      this._endStream(() => {
++        if (this._rotate === true) {
++          this._rotate = false;
++          this._rotateFile();
++        }
++      });
+     }
+ 
+     // Keep track of the pending bytes being written while files are opening
