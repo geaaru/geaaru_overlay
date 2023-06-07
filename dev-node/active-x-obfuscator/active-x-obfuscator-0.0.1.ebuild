@@ -9,7 +9,7 @@ DESCRIPTION="A module to (safely) obfuscate all occurrences of the string 'Activ
 HOMEPAGE="https://github.com/felixge/node-active-x-obfuscator"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

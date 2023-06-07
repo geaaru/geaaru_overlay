@@ -9,7 +9,7 @@ DESCRIPTION="High performance middleware framework"
 HOMEPAGE="https://github.com/senchalabs/connect#readme"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

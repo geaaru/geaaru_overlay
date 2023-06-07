@@ -9,7 +9,7 @@ DESCRIPTION="JavaScript parser, mangler/compressor and beautifier toolkit"
 HOMEPAGE="http://lisperator.net/uglifyjs"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

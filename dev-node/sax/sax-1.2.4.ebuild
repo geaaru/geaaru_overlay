@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/isaacs/sax-js#readme"
 
 LICENSE="ISC"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

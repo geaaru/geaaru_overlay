@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/isaacs/isexe#readme"
 
 LICENSE="ISC"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

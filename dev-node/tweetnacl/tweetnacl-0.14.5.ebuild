@@ -9,7 +9,7 @@ HOMEPAGE="https://tweetnacl.js.org"
 
 LICENSE="Unlicense"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

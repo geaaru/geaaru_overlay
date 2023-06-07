@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/npm/npm-normalize-package-bin#readme"
 
 LICENSE="ISC"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

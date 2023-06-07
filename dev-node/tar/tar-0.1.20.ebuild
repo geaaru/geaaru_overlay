@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/isaacs/node-tar#readme"
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

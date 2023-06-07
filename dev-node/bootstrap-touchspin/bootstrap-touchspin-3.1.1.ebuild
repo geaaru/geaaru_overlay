@@ -8,7 +8,7 @@ DESCRIPTION="A mobile and touch friendly input spinner component for Bootstrap 3
 HOMEPAGE="http://www.virtuosoft.eu/code/bootstrap-touchspin/"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

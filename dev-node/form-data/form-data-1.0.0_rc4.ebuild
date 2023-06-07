@@ -13,7 +13,7 @@ SRC_URI="http://registry.npmjs.org/${PN}/-/${PN}-${MY_V}.tgz"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

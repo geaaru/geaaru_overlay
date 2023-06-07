@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/isaacs/node-graceful-fs#readme"
 
 LICENSE="ISC"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

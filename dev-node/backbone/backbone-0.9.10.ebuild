@@ -9,7 +9,7 @@ DESCRIPTION="Give your JS App some Backbone with Models, Views, Collections, and
 HOMEPAGE="http://www.npmjs.com/package/backbone"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

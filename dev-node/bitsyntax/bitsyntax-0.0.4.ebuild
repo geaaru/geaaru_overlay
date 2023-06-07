@@ -8,7 +8,7 @@ DESCRIPTION="Pattern-matching on byte buffers"
 HOMEPAGE="https://github.com/squaremo/bitsyntax-js#readme"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

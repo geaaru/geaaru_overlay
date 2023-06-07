@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/kubernetes-ui/describer#readme"
 NPM_GITHUP_MOD="kubernetes-ui/${PN}"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/estools/estraverse"
 
 LICENSE="BSD-2-Clause"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/tachyons-css/tachyons#readme"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

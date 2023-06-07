@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/ljharb/qs"
 
 LICENSE="BSD-3-Clause"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

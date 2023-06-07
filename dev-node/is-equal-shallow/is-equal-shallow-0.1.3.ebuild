@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/jonschlinkert/is-equal-shallow"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

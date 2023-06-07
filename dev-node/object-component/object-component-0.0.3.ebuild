@@ -8,7 +8,7 @@ DESCRIPTION="Object utils."
 HOMEPAGE="http://www.npmjs.com/package/object-component"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

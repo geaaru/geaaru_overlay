@@ -9,7 +9,7 @@ HOMEPAGE="http://angular-gettext.rocketeer.be/"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/pillarjs/path-to-regexp#readme"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

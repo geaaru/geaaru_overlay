@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/pinojs/sonic-boom#readme"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

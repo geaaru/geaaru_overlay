@@ -8,7 +8,7 @@ DESCRIPTION="Abstraction for exponential and custom retry strategies for failed 
 HOMEPAGE="https://github.com/tim-kos/node-retry"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

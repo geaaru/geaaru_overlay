@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/twada/qunit-tap"
 
 LICENSE="(MIT OR GPL-2.0)"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

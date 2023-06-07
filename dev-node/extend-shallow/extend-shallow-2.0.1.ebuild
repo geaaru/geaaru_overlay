@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/jonschlinkert/extend-shallow"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

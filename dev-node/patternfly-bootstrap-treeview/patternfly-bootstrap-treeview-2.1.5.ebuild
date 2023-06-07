@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/patternfly/patternfly-bootstrap-treeview"
 
 LICENSE="Apache-2.0"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

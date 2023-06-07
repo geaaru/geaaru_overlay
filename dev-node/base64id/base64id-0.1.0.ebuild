@@ -9,7 +9,7 @@ DESCRIPTION="Generates a base64 id"
 HOMEPAGE="https://github.com/faeldt/base64id#readme"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

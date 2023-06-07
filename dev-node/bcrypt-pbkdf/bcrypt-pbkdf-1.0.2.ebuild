@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/joyent/node-bcrypt-pbkdf"
 
 LICENSE="BSD-3-Clause"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

@@ -9,7 +9,7 @@ DESCRIPTION="A comprehensive library for mime-type mapping"
 HOMEPAGE="https://github.com/broofa/node-mime#readme"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

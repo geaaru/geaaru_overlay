@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/fb55/htmlparser2#readme"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

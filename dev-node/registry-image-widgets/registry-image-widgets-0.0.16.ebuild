@@ -9,7 +9,7 @@ HOMEPAGE="http://www.npmjs.com/package/registry-image-widgets"
 
 LICENSE="LGPL 2+"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

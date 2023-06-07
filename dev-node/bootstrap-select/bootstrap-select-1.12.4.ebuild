@@ -9,7 +9,7 @@ HOMEPAGE="http://silviomoreto.github.io/bootstrap-select"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

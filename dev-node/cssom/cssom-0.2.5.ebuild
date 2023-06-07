@@ -9,7 +9,7 @@ DESCRIPTION="CSS Object Model implementation and CSS parser"
 HOMEPAGE="https://github.com/NV/CSSOM"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

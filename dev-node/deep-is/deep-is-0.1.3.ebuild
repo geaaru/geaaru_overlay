@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/thlorenz/deep-is#readme"
 
 LICENSE="[object Object]"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

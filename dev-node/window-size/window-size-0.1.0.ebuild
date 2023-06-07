@@ -9,7 +9,7 @@ DESCRIPTION="Reliable way to to get the height and width of the terminal/console
 HOMEPAGE="https://github.com/jonschlinkert/window-size"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

@@ -8,7 +8,7 @@ DESCRIPTION="utilities for working with htmlparser2's dom"
 HOMEPAGE="https://github.com/FB55/domutils#readme"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

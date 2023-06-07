@@ -9,7 +9,7 @@ DESCRIPTION="HTTP response freshness testing"
 HOMEPAGE="http://www.npmjs.com/package/fresh"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

@@ -8,7 +8,7 @@ DESCRIPTION="Node adapter for RequireJS, for loading AMD modules. Includes Requi
 HOMEPAGE="http://github.com/jrburke/r.js"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

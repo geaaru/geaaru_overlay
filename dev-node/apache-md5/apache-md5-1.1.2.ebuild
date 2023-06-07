@@ -9,7 +9,7 @@ HOMEPAGE="http://github.com/http-auth/apache-md5"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

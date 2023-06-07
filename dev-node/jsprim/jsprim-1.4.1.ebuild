@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/joyent/node-jsprim#readme"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

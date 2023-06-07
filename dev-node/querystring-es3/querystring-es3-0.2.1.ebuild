@@ -8,7 +8,7 @@ DESCRIPTION="Node's querystring module for all engines. (ES3 compat fork)"
 HOMEPAGE="https://github.com/mike-spainhower/querystring#readme"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

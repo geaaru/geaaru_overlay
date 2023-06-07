@@ -8,7 +8,7 @@ DESCRIPTION="Cross-browser type assertions (less broken typeof)"
 HOMEPAGE="http://www.npmjs.com/package/type-component"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

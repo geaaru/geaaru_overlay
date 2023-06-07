@@ -8,7 +8,7 @@ DESCRIPTION="Flexible ascii progress bar"
 HOMEPAGE="https://github.com/visionmedia/node-progress#readme"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

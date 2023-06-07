@@ -8,7 +8,7 @@ DESCRIPTION="A tiny simple way to do classic inheritance in js"
 HOMEPAGE="https://github.com/isaacs/inherits#readme"
 
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

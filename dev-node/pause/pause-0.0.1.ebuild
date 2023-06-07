@@ -9,7 +9,7 @@ DESCRIPTION="Pause streams..."
 HOMEPAGE="http://www.npmjs.com/package/pause"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

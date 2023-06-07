@@ -9,7 +9,7 @@ HOMEPAGE="http://github.com/dex4er/js-dgram-as-promised"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

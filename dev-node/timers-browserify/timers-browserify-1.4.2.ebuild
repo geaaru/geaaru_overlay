@@ -8,7 +8,7 @@ DESCRIPTION="timers module for browserify"
 HOMEPAGE="https://github.com/jryans/timers-browserify"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

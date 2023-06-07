@@ -8,7 +8,7 @@ DESCRIPTION="JSDoc parser"
 HOMEPAGE="https://github.com/eslint/doctrine"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

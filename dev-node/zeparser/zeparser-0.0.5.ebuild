@@ -9,7 +9,7 @@ DESCRIPTION="My JavaScript parser"
 HOMEPAGE="https://github.com/qfox/ZeParser/"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

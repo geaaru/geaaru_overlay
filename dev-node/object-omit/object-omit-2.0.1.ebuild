@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/jonschlinkert/object.omit"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

@@ -8,7 +8,7 @@ DESCRIPTION="An easy-to-use wildcard globbing library."
 HOMEPAGE="https://github.com/cowboy/node-globule"
 
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

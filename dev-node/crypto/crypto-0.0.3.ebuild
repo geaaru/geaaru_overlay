@@ -8,7 +8,7 @@ DESCRIPTION="JavaScript implementations of standard and secure cryptographic alg
 HOMEPAGE="https://github.com/Gozala/crypto#readme"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

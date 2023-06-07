@@ -10,7 +10,7 @@ HOMEPAGE="https://github.com/npm/node-semver#readme"
 
 LICENSE="ISC"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

@@ -8,7 +8,7 @@ DESCRIPTION="Node's querystring module for all engines."
 HOMEPAGE="https://github.com/Gozala/querystring#readme"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

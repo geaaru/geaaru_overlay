@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/expressjs/morgan#readme"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

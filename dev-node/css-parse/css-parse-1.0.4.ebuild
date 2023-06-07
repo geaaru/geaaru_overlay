@@ -9,7 +9,7 @@ DESCRIPTION="CSS parser"
 HOMEPAGE="http://www.npmjs.com/package/css-parse"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

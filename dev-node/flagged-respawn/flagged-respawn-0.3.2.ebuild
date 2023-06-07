@@ -8,7 +8,7 @@ DESCRIPTION="A tool for respawning node binaries when special flags are present.
 HOMEPAGE="https://github.com/js-cli/js-flagged-respawn"
 
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

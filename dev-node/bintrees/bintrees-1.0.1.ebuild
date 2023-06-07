@@ -8,7 +8,7 @@ DESCRIPTION="Binary Search Trees"
 HOMEPAGE="https://github.com/vadimg/js_bintrees#readme"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

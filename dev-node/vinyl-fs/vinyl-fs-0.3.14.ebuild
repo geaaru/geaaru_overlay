@@ -8,7 +8,7 @@ DESCRIPTION="Vinyl adapter for the file system"
 HOMEPAGE="http://github.com/wearefractal/vinyl-fs"
 
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

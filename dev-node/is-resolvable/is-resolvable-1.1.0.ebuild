@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/shinnn/is-resolvable#readme"
 
 LICENSE="ISC"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

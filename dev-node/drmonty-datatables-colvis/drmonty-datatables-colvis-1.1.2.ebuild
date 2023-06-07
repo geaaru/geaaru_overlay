@@ -8,7 +8,7 @@ DESCRIPTION="End user column visibility options plug-in for DataTables"
 HOMEPAGE="http://datatables.net"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

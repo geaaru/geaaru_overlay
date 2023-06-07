@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/rvagg/through2"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

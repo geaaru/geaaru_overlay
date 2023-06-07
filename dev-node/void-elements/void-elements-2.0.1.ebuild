@@ -10,7 +10,7 @@ HOMEPAGE="https://github.com/hemanth/void-elements"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

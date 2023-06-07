@@ -10,7 +10,7 @@ HOMEPAGE="https://github.com/stefanpenner/get-caller-file#readme"
 
 LICENSE="ISC"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

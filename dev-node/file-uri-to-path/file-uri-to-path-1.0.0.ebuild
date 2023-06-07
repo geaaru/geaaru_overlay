@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/TooTallNate/file-uri-to-path"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

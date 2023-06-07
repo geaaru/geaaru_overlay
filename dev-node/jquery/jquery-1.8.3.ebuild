@@ -9,7 +9,7 @@ DESCRIPTION="jQuery: The Write Less, Do More, JavaScript Library (packaged for N
 HOMEPAGE="https://github.com/coolaj86/node-jquery"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

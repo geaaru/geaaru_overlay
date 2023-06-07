@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/substack/vm-browserify"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

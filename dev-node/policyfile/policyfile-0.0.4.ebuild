@@ -9,7 +9,7 @@ DESCRIPTION="Flash Socket Policy File Server. A server to respond to Flash Socke
 HOMEPAGE="https://github.com/3rd-Eden/FlashPolicyFileServer#readme"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

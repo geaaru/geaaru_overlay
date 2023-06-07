@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/rvagg/string_decoder"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

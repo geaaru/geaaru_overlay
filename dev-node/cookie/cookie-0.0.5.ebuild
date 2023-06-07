@@ -9,7 +9,7 @@ DESCRIPTION="cookie parsing and serialization"
 HOMEPAGE="https://github.com/shtylman/node-cookie#readme"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

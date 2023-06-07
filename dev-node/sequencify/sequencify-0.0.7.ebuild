@@ -8,7 +8,7 @@ DESCRIPTION="A module for sequencing tasks and dependencies"
 HOMEPAGE="https://github.com/robrich/sequencify"
 
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

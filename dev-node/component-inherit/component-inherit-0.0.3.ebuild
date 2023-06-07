@@ -8,7 +8,7 @@ DESCRIPTION="Prototype inheritance utility"
 HOMEPAGE="https://github.com/component/inherit#readme"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

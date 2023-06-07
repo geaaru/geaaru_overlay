@@ -9,7 +9,7 @@ HOMEPAGE="http://www.npmjs.com/package/has-binary2"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

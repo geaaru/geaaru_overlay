@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/substack/node-archy"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

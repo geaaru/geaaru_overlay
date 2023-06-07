@@ -10,7 +10,7 @@ HOMEPAGE="https://github.com/chad3814/CSSStyleDeclaration"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

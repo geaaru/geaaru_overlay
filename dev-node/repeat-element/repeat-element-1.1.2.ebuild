@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/jonschlinkert/repeat-element"
 
 LICENSE="[object Object]"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

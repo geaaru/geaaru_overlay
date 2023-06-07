@@ -9,7 +9,7 @@ DESCRIPTION="CSS parser / stringifier using css-parse and css-stringify"
 HOMEPAGE="http://www.npmjs.com/package/css"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

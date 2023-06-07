@@ -10,7 +10,7 @@ HOMEPAGE="https://github.com/yargs/y18n"
 
 LICENSE="ISC"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

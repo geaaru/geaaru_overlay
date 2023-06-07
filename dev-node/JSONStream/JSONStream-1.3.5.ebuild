@@ -9,7 +9,7 @@ HOMEPAGE="http://github.com/dominictarr/JSONStream"
 
 LICENSE="(MIT OR Apache-2.0)"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

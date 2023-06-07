@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/jonschlinkert/is-extglob"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

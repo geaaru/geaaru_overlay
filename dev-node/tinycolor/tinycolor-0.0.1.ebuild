@@ -9,7 +9,7 @@ DESCRIPTION="a to-the-point color module for node"
 HOMEPAGE="https://github.com/einaros/tinycolor#readme"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

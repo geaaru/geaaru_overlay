@@ -9,7 +9,7 @@ HOMEPAGE="https://www.npmjs.com/package/sntp"
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/ramitos/JSONStream2"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

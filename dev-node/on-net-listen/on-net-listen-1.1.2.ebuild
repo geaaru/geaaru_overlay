@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/mafintosh/on-net-listen"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

@@ -8,7 +8,7 @@ DESCRIPTION="Emulate console for all the browsers"
 HOMEPAGE="https://github.com/Raynos/console-browserify"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/regular/unbzip2-stream#readme"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

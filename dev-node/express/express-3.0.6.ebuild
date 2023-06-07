@@ -9,7 +9,7 @@ DESCRIPTION="Sinatra inspired web development framework"
 HOMEPAGE="https://github.com/visionmedia/express#readme"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

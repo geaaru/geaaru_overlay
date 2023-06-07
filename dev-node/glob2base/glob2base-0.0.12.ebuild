@@ -8,7 +8,7 @@ DESCRIPTION="Extracts a base path from a node-glob instance"
 HOMEPAGE="http://github.com/wearefractal/glob2base"
 
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

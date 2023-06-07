@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/ORESoftware/live-mutex#readme"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 RESTRICT="-network-sandbox"
 

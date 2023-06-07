@@ -8,7 +8,7 @@ DESCRIPTION="Turn an array like into an array"
 HOMEPAGE="https://github.com/Raynos/to-array"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

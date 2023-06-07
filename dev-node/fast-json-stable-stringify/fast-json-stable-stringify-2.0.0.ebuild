@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/epoberezkin/fast-json-stable-stringify"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

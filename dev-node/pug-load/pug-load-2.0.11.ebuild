@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/pugjs/pug-load#readme"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

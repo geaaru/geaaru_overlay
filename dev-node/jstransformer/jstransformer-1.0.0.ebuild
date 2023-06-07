@@ -10,7 +10,7 @@ HOMEPAGE="https://github.com/jstransformers/jstransformer#readme"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/nodeca/pako"
 
 LICENSE="(MIT AND Zlib)"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

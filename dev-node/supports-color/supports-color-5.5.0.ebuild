@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/chalk/supports-color"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

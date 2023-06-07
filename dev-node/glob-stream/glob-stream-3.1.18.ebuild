@@ -8,7 +8,7 @@ DESCRIPTION="File system globs as a stream"
 HOMEPAGE="http://github.com/wearefractal/glob-stream"
 
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

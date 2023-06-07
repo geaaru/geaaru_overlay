@@ -8,7 +8,7 @@ DESCRIPTION="A very light-weight in-code option parsers for node.js."
 HOMEPAGE="https://github.com/einaros/options.js#readme"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

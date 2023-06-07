@@ -9,7 +9,7 @@ DESCRIPTION="A Browser-esque location object"
 HOMEPAGE="https://github.com/coolaj86/node-location#readme"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

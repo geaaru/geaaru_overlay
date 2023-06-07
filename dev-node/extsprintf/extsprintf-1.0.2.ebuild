@@ -9,7 +9,7 @@ DESCRIPTION="extended POSIX-style sprintf"
 HOMEPAGE="https://github.com/davepacheco/node-extsprintf#readme"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

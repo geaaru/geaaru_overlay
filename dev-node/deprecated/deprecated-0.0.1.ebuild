@@ -8,7 +8,7 @@ DESCRIPTION="Tool for deprecating things"
 HOMEPAGE="http://github.com/wearefractal/deprecated"
 
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

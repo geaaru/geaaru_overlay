@@ -9,7 +9,7 @@ DESCRIPTION="jQuery: The Write Less, Do More, JavaScript Library, packaged for b
 HOMEPAGE="http://www.jQuery.com"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

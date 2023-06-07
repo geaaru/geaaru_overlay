@@ -8,7 +8,7 @@ DESCRIPTION="access to v8's CallSites"
 HOMEPAGE="http://www.npmjs.com/package/callsite"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

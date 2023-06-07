@@ -9,7 +9,7 @@ DESCRIPTION="Redis search for node.js"
 HOMEPAGE="https://github.com/visionmedia/reds"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

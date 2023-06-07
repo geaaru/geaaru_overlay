@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/3rd-Eden/text-hex"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

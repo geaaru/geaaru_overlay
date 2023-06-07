@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/mishoo/UglifyJS2#readme"
 
 LICENSE="BSD-2-Clause"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

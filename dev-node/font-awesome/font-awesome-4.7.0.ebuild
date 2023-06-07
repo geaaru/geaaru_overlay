@@ -9,7 +9,7 @@ HOMEPAGE="http://fontawesome.io/"
 
 LICENSE="(OFL-1.1 AND MIT)"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

@@ -8,7 +8,7 @@ DESCRIPTION="Lightweight library for composing asynchronous and event-based oper
 HOMEPAGE="https://github.com/Reactive-Extensions/RxJS"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

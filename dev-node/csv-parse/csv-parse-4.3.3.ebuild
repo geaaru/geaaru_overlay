@@ -9,7 +9,7 @@ HOMEPAGE="https://csv.js.org/parse/"
 
 LICENSE="BSD-3-Clause"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

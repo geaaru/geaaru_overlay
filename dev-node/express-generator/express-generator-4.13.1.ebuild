@@ -10,7 +10,7 @@ SRC_URI="https://github.com/expressjs/generator/archive/v${PV}.zip"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 S="${WORKDIR}/${PN/express-/}-${PV}"

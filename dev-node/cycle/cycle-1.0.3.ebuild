@@ -8,7 +8,7 @@ DESCRIPTION="decycle your json"
 HOMEPAGE="https://github.com/douglascrockford/JSON-js"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/feross/hyperscript-attribute-to-property"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

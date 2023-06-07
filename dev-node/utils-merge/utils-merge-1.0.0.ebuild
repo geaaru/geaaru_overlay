@@ -8,7 +8,7 @@ DESCRIPTION="merge() utility function"
 HOMEPAGE="https://github.com/jaredhanson/utils-merge#readme"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

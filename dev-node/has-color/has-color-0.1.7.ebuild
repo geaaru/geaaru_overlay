@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/sindresorhus/has-color#readme"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

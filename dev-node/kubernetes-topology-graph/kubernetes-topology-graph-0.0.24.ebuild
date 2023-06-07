@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/kubernetes-ui/topology-graph#readme"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

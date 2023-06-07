@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/cowboy/node-findup-sync"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

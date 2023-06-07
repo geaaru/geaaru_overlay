@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/thlorenz/pretty-trace"
 
 LICENSE="[object Object]"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

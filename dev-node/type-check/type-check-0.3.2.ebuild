@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/gkz/type-check"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

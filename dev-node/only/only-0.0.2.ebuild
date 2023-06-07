@@ -8,7 +8,7 @@ DESCRIPTION="return whitelisted properties of an object"
 HOMEPAGE="https://github.com/visionmedia/node-only#readme"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

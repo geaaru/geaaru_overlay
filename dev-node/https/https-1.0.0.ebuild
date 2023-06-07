@@ -9,7 +9,7 @@ HOMEPAGE="http://www.npmjs.com/package/https"
 
 LICENSE="ISC"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

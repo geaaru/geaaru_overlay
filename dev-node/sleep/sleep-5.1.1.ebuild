@@ -9,7 +9,7 @@ HOMEPAGE="http://github.com/erikdubbelboer/node-sleep"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

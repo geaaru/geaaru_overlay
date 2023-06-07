@@ -9,7 +9,7 @@ HOMEPAGE="http://github.com/estools/escope"
 
 LICENSE="BSD-2-Clause"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

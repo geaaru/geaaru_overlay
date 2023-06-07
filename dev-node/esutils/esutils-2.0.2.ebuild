@@ -8,7 +8,7 @@ DESCRIPTION="utility box for ECMAScript language tools"
 HOMEPAGE="https://github.com/estools/esutils"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

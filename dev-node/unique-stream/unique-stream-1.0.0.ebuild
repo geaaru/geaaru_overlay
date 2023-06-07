@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/eugeneware/unique-stream"
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

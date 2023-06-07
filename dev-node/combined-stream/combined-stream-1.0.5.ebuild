@@ -10,7 +10,7 @@ HOMEPAGE="https://github.com/felixge/node-combined-stream"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

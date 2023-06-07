@@ -8,7 +8,7 @@ DESCRIPTION="AMQP driver for node"
 HOMEPAGE="https://github.com/postwait/node-amqp#readme"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

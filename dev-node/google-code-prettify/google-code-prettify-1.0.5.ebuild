@@ -8,7 +8,7 @@ DESCRIPTION="Direct port of svn into git from http://google-code-prettify.google
 HOMEPAGE="http://www.npmjs.com/package/google-code-prettify"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

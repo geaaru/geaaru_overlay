@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/es128/glob-parent"
 
 LICENSE="ISC"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

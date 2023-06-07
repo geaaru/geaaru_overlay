@@ -8,7 +8,7 @@ DESCRIPTION="Add support for more integer widths to Buffer"
 HOMEPAGE="https://github.com/dpw/node-buffer-more-ints"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

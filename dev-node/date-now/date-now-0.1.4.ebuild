@@ -8,7 +8,7 @@ DESCRIPTION="A requirable version of Date.now()"
 HOMEPAGE="https://github.com/Colingo/date-now"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

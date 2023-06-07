@@ -9,7 +9,7 @@ DESCRIPTION="A JavaScript implementation of the W3C DOM"
 HOMEPAGE="https://github.com/tmpvar/jsdom#readme"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

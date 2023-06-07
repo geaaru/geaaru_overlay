@@ -8,7 +8,7 @@ DESCRIPTION="String manipulation extensions for Underscore.js javascript library
 HOMEPAGE="http://epeli.github.com/underscore.string/"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

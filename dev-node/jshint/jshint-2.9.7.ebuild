@@ -9,7 +9,7 @@ HOMEPAGE="http://jshint.com/"
 
 LICENSE="(MIT AND JSON)"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

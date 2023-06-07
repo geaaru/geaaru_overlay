@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/feross/ieee754#readme"
 
 LICENSE="BSD-3-Clause"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/jonschlinkert/array-unique"
 
 LICENSE="[object Object]"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

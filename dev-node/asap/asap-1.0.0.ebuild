@@ -9,7 +9,7 @@ DESCRIPTION="High-priority task queue for Node.js and browsers"
 HOMEPAGE="http://www.npmjs.com/package/asap"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

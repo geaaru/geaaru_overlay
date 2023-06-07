@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/aroneous/stream-consume"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

@@ -9,7 +9,7 @@ DESCRIPTION="A browser-esque navigator for Node.JS (for Ender.JS compatibility)"
 HOMEPAGE="https://github.com/coolaj86/node-navigator#readme"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

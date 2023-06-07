@@ -9,7 +9,7 @@ DESCRIPTION="formidable nodejs module"
 HOMEPAGE="http://www.npmjs.com/package/formidable"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

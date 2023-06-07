@@ -9,7 +9,7 @@ HOMEPAGE="https://bttstrp.github.io/bootstrap-switch"
 
 LICENSE="Apache-2.0"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

@@ -8,7 +8,7 @@ DESCRIPTION="path.extname implementation adapted to also include multiple dots e
 HOMEPAGE="https://github.com/ruyadorno/path-complete-extname"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/darsain/remove-trailing-separator#readme"
 
 LICENSE="ISC"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

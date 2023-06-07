@@ -10,7 +10,7 @@ HOMEPAGE="http://www.npmjs.com/package/bleno"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

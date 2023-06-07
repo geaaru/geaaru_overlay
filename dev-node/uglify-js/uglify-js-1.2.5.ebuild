@@ -9,7 +9,7 @@ DESCRIPTION="JavaScript parser and compressor/beautifier toolkit"
 HOMEPAGE="https://github.com/mishoo/UglifyJS#readme"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

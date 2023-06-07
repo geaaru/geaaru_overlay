@@ -8,7 +8,7 @@ DESCRIPTION="a customizable value inspector"
 HOMEPAGE="http://www.npmjs.com/package/eyes"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

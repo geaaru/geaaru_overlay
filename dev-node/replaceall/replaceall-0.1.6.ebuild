@@ -8,7 +8,7 @@ DESCRIPTION="Replace all instances in a JavaScript string"
 HOMEPAGE="http://ilee.co.uk"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

@@ -8,7 +8,7 @@ DESCRIPTION="Encode/decode base64 data into ArrayBuffers"
 HOMEPAGE="https://github.com/niklasvh/base64-arraybuffer"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

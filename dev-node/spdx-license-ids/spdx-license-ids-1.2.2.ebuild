@@ -10,7 +10,7 @@ HOMEPAGE="https://github.com/shinnn/spdx-license-ids#readme"
 
 LICENSE="Unlicense"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

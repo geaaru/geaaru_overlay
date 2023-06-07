@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/yeikos/js.merge"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

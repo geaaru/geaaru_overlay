@@ -10,7 +10,7 @@ HOMEPAGE="https://github.com/nexdrew/which-module#readme"
 
 LICENSE="ISC"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

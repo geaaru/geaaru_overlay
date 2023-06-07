@@ -9,7 +9,7 @@ HOMEPAGE="https://www.npmjs.com/package/jodid25519"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

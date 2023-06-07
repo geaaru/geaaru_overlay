@@ -8,7 +8,7 @@ DESCRIPTION="handler for htmlparser2 that turns pages into a dom"
 HOMEPAGE="https://github.com/fb55/DomHandler#readme"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

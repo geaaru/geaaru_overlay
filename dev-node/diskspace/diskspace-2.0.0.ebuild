@@ -8,7 +8,7 @@ DESCRIPTION="A simple disk space checker module. Check out the GitHub page for m
 HOMEPAGE="https://github.com/keverw/diskspace.js#readme"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

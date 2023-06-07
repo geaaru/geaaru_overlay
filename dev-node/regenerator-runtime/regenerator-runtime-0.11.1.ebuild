@@ -9,7 +9,7 @@ HOMEPAGE="http://www.npmjs.com/package/regenerator-runtime"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/estools/esrecurse"
 
 LICENSE="BSD-2-Clause"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

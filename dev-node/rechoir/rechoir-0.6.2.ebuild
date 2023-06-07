@@ -8,7 +8,7 @@ DESCRIPTION="Require any supported file as a node module."
 HOMEPAGE="https://github.com/tkellen/node-rechoir"
 
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

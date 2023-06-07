@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/kevva/decompress#readme"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

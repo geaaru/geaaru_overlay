@@ -9,7 +9,7 @@ DESCRIPTION="Turn an object into a persistent execution context."
 HOMEPAGE="https://github.com/brianmcd/contextify#readme"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

@@ -8,7 +8,7 @@ DESCRIPTION="Buffer optimized"
 HOMEPAGE="https://github.com/mercadolibre/flexbuffer-node"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

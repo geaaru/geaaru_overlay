@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/isaacs/async-cache#readme"
 
 LICENSE="ISC"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

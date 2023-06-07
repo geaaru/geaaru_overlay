@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/dominictarr/rc#readme"
 
 LICENSE="(BSD-2-Clause OR MIT OR Apache-2.0)"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

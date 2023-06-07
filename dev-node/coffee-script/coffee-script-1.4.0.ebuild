@@ -9,7 +9,7 @@ DESCRIPTION="Unfancy JavaScript"
 HOMEPAGE="http://coffeescript.org"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

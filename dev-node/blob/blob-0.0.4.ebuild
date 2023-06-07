@@ -8,7 +8,7 @@ DESCRIPTION="Abstracts out Blob and uses BlobBulder in cases where it is support
 HOMEPAGE="https://github.com/rase-/blob"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

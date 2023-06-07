@@ -9,7 +9,7 @@ DESCRIPTION="Range header field string parser"
 HOMEPAGE="http://www.npmjs.com/package/range-parser"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

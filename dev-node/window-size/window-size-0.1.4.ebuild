@@ -10,7 +10,7 @@ HOMEPAGE="https://github.com/jonschlinkert/window-size"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

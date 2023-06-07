@@ -8,7 +8,7 @@ DESCRIPTION="XMLHttpRequest for Node"
 HOMEPAGE="https://github.com/mjwwit/node-XMLHttpRequest#readme"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

@@ -9,7 +9,7 @@ HOMEPAGE="https://caolan.github.io/async/"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

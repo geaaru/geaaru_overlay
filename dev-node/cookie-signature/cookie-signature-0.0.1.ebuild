@@ -9,7 +9,7 @@ DESCRIPTION="Sign and unsign cookies"
 HOMEPAGE="http://www.npmjs.com/package/cookie-signature"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

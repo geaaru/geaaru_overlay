@@ -9,7 +9,7 @@ DESCRIPTION="Socket.IO client for the browser and node.js"
 HOMEPAGE="http://socket.io"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

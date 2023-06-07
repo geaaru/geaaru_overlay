@@ -8,7 +8,7 @@ DESCRIPTION="semaphore for node"
 HOMEPAGE="https://github.com/abrkn/semaphore.js"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

@@ -9,7 +9,7 @@ DESCRIPTION="Higher-order functions and common patterns for asynchronous code"
 HOMEPAGE="https://github.com/caolan/async#readme"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

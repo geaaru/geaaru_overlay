@@ -9,7 +9,7 @@ HOMEPAGE="http://github.com/node-js-libs/cli"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

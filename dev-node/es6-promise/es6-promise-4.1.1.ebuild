@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/stefanpenner/es6-promise#readme"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

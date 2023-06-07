@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/mikeal/aws-sign#readme"
 
 LICENSE="Apache-2.0"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

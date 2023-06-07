@@ -9,7 +9,7 @@ DESCRIPTION="Redis client library"
 HOMEPAGE="https://github.com/mranney/node_redis"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

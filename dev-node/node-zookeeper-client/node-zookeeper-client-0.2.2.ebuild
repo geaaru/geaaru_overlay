@@ -8,7 +8,7 @@ DESCRIPTION="A pure Javascript ZooKeeper client for Node.js."
 HOMEPAGE="https://github.com/alexguan/node-zookeeper-client#readme"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

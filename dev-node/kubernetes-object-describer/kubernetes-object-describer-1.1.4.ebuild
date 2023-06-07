@@ -8,7 +8,7 @@ DESCRIPTION="Provides extensions to the kubernetes-object-describer for OpenShif
 HOMEPAGE="https://github.com/openshift/object-describer#readme"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

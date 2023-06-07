@@ -9,7 +9,7 @@ HOMEPAGE="http://brm.io/jquery-match-height/"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

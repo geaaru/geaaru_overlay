@@ -9,7 +9,7 @@ DESCRIPTION="Better streaming static file server with Range and conditional-GET 
 HOMEPAGE="http://www.npmjs.com/package/send"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

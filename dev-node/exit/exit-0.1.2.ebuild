@@ -8,7 +8,7 @@ DESCRIPTION="A replacement for process.exit that ensures stdio are fully drained
 HOMEPAGE="https://github.com/cowboy/node-exit"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

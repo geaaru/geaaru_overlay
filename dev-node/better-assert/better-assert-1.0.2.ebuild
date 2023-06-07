@@ -8,7 +8,7 @@ DESCRIPTION="Better assertions for node, reporting the expr, filename, lineno et
 HOMEPAGE="https://github.com/visionmedia/better-assert#readme"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

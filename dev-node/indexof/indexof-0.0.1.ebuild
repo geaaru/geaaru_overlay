@@ -8,7 +8,7 @@ DESCRIPTION="Microsoft sucks"
 HOMEPAGE="http://www.npmjs.com/package/indexof"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

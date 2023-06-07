@@ -9,7 +9,7 @@ HOMEPAGE="https://www.npmjs.com/package/qs"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

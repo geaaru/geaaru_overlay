@@ -9,7 +9,7 @@ HOMEPAGE="http://github.com/jrburke/amdefine"
 
 LICENSE="BSD-3-Clause AND MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

@@ -9,7 +9,7 @@ DESCRIPTION="Real-time apps made cross-browser & easy with a WebSocket-like API"
 HOMEPAGE="http://socket.io"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/ahmadnassri/har-schema"
 
 LICENSE="ISC"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

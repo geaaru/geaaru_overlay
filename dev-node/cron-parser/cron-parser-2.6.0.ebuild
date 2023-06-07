@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/harrisiirak/cron-parser#readme"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

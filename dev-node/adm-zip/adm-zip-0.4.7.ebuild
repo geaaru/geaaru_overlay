@@ -8,7 +8,7 @@ DESCRIPTION="A Javascript implementation of zip for nodejs. Allows user to creat
 HOMEPAGE="http://github.com/cthackers/adm-zip"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

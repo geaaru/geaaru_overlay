@@ -10,7 +10,7 @@ HOMEPAGE="https://github.com/jonschlinkert/longest"
 
 LICENSE="[object Object]"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

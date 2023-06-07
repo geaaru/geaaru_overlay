@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/regexps/filename-regex"
 
 LICENSE="[object Object]"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

@@ -8,7 +8,7 @@ DESCRIPTION="Treat a collection of Buffers as a single contiguous partially muta
 HOMEPAGE="https://github.com/substack/node-buffers#readme"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

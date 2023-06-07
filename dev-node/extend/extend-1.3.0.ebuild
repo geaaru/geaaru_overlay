@@ -9,7 +9,7 @@ DESCRIPTION="Port of jQuery.extend for node.js and the browser"
 HOMEPAGE="https://github.com/justmoon/node-extend"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

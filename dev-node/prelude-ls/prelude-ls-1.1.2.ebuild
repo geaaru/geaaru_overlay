@@ -8,7 +8,7 @@ DESCRIPTION="prelude.ls is a functionally oriented utility library. It is powerf
 HOMEPAGE="http://preludels.com"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

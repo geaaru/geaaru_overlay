@@ -10,7 +10,7 @@ HOMEPAGE="https://github.com/isaacs/node-glob#readme"
 
 LICENSE="ISC"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

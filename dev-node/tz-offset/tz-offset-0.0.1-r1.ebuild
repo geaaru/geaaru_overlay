@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/merencia/tz-offset#readme"
 
 LICENSE="ISC"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

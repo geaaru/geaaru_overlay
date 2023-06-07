@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/jonschlinkert/for-in"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

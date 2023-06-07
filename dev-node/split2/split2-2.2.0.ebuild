@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/mcollina/split2#readme"
 
 LICENSE="ISC"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

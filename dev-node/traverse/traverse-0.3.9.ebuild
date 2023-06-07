@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/substack/js-traverse#readme"
 
 LICENSE="MIT/X11"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

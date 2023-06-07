@@ -9,7 +9,7 @@ DESCRIPTION="Generates and consumes source maps"
 HOMEPAGE="https://github.com/mozilla/source-map"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

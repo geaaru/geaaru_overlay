@@ -8,7 +8,7 @@ DESCRIPTION="A lightweight Promises/A+ and when() implementation, plus other asy
 HOMEPAGE="http://cujojs.com"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

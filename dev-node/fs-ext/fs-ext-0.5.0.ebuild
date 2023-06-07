@@ -8,7 +8,7 @@ DESCRIPTION="Extensions to core 'fs' module."
 HOMEPAGE="https://github.com/baudehlo/node-fs-ext/"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

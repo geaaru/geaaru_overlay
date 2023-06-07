@@ -8,7 +8,7 @@ DESCRIPTION="## About ##"
 HOMEPAGE="http://www.npmjs.com/package/jquery-flot"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

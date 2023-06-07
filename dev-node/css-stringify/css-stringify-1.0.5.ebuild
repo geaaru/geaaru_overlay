@@ -9,7 +9,7 @@ DESCRIPTION="CSS compiler"
 HOMEPAGE="http://www.npmjs.com/package/css-stringify"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

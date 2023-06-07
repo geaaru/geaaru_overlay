@@ -9,7 +9,7 @@ DESCRIPTION="XMLHttpRequest for Node"
 HOMEPAGE="https://github.com/driverdan/node-XMLHttpRequest#readme"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

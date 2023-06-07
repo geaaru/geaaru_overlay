@@ -8,7 +8,7 @@ DESCRIPTION="function binding utility"
 HOMEPAGE="https://github.com/component/bind#readme"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

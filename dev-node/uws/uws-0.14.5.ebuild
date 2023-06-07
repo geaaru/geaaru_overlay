@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/uWebSockets/uWebSockets"
 
 LICENSE="Zlib"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

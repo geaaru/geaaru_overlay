@@ -8,7 +8,7 @@ DESCRIPTION="Advanced ANSI formatting tool for Node.js"
 HOMEPAGE="https://github.com/TooTallNate/ansi.js#readme"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

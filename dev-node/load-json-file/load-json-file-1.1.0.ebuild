@@ -10,7 +10,7 @@ HOMEPAGE="https://github.com/sindresorhus/load-json-file"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

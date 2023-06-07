@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/calvinmetcalf/process-nextick-args"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

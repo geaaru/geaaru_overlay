@@ -9,7 +9,7 @@ DESCRIPTION="A pure javascript CRC32 algorithm that plays nice with binary data"
 HOMEPAGE="https://github.com/brianloveswords/buffer-crc32"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

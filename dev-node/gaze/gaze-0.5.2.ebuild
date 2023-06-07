@@ -8,7 +8,7 @@ DESCRIPTION="A globbing fs.watch wrapper built from the best parts of other fine
 HOMEPAGE="https://github.com/shama/gaze"
 
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

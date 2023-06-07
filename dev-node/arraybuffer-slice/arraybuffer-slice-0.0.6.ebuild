@@ -8,7 +8,7 @@ DESCRIPTION="Exports a function for slicing ArrayBuffers (no polyfilling)"
 HOMEPAGE="https://github.com/rase-/arraybuffer.slice"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

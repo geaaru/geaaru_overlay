@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/node-modules/error-inject"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

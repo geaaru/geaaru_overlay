@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/es-shims/RegExp.prototype.flags#readme"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/deoxxa/duplexer2"
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

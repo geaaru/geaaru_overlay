@@ -9,7 +9,7 @@ DESCRIPTION="the complete solution for node.js command-line programs"
 HOMEPAGE="https://github.com/visionmedia/commander.js#readme"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

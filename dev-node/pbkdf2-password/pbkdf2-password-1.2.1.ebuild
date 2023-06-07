@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/mcollina/pbkdf2-password"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

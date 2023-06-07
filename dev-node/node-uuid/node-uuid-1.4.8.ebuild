@@ -8,7 +8,7 @@ DESCRIPTION="Rigorous implementation of RFC4122 (v1 and v4) UUIDs."
 HOMEPAGE="https://github.com/broofa/node-uuid"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

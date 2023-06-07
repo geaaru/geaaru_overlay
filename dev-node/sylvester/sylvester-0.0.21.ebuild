@@ -9,7 +9,7 @@ DESCRIPTION="node.js implementation of James Coglan's "Sylvester" matrix math li
 HOMEPAGE="http://www.npmjs.com/package/sylvester"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

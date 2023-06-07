@@ -8,7 +8,7 @@ DESCRIPTION="A helper for installing repos without a package.json with npm."
 HOMEPAGE="https://github.com/shama/napa"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

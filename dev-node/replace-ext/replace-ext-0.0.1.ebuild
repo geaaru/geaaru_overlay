@@ -8,7 +8,7 @@ DESCRIPTION="Replaces a file extension with another one"
 HOMEPAGE="http://github.com/wearefractal/replace-ext"
 
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

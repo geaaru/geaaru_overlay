@@ -9,7 +9,7 @@ DESCRIPTION="JavaScript's functional programming helper library."
 HOMEPAGE="http://underscorejs.org"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

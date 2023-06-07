@@ -8,7 +8,7 @@ DESCRIPTION="Object.prototype.hasOwnProperty.call shortcut"
 HOMEPAGE="https://github.com/tarruda/has"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

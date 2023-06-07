@@ -8,7 +8,7 @@ DESCRIPTION="Creates a duplex stream"
 HOMEPAGE="https://github.com/Raynos/duplexer"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

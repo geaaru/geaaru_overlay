@@ -8,7 +8,7 @@ DESCRIPTION="extend like a boss"
 HOMEPAGE="https://github.com/Raynos/xtend"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

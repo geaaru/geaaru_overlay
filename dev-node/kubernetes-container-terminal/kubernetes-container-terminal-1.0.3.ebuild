@@ -9,7 +9,7 @@ HOMEPAGE="http://www.npmjs.com/package/kubernetes-container-terminal"
 
 LICENSE="LGPL 2+"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

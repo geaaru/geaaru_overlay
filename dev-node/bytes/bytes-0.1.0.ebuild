@@ -9,7 +9,7 @@ DESCRIPTION="byte size string parser / serializer"
 HOMEPAGE="http://www.npmjs.com/package/bytes"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

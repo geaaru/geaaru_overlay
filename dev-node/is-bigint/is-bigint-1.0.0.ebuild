@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/ljharb/is-bigint#readme"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

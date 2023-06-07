@@ -8,7 +8,7 @@ DESCRIPTION="Watch globs"
 HOMEPAGE="http://github.com/wearefractal/glob-watcher"
 
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

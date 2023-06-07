@@ -10,7 +10,7 @@ HOMEPAGE="https://github.com/kemitchell/spdx-expression-parse.js#readme"
 
 LICENSE="MIT,CC-BY-3.0"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

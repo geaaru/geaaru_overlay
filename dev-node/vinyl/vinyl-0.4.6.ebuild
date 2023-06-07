@@ -8,7 +8,7 @@ DESCRIPTION="A virtual file format"
 HOMEPAGE="http://github.com/wearefractal/vinyl"
 
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

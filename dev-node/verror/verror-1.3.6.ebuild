@@ -9,7 +9,7 @@ DESCRIPTION="richer JavaScript errors"
 HOMEPAGE="https://github.com/davepacheco/node-verror#readme"
 
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

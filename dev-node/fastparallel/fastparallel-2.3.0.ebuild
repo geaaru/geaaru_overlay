@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/mcollina/fastparallel"
 
 LICENSE="ISC"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

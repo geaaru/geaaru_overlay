@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/Salakar/cluster-key-slot#readme"
 
 LICENSE="APACHE-2.0"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

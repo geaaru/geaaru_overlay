@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/winstonjs/winston-daily-rotate-file#readme"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

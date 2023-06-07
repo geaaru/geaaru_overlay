@@ -8,7 +8,7 @@ DESCRIPTION="Get available v8 flags."
 HOMEPAGE="https://github.com/tkellen/node-v8flags"
 
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

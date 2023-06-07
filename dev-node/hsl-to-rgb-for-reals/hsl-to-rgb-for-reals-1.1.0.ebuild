@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/davidmarkclements/hsl_rgb_converter/"
 
 LICENSE="ISC"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

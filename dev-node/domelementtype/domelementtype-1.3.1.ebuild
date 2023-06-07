@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/fb55/domelementtype#readme"
 
 LICENSE="BSD-2-Clause"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/kesla/node-snappy"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="

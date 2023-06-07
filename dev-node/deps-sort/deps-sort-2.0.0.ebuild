@@ -9,7 +9,7 @@ HOMEPAGE="https://github.com/substack/deps-sort"
 
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="
