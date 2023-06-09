@@ -416,7 +416,7 @@ ${nodecmd}${bindir}/${binfile} \$@
 
 	# Copy all .js|.ts(typescripts) from root directory
 	npm_root_js_files=(
-		$(ls --color=none . | grep --color=none "\.js$|\.ts$")
+		$(ls --color=none . | grep --color=none -E "\.js$|\.ts$")
 	)
 	_npmv1_copy_root_js_files
 
