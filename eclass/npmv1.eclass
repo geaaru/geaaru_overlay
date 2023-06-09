@@ -414,8 +414,10 @@ ${nodecmd}${bindir}/${binfile} \$@
 		fi
 	fi # End if x"${NPM_NO_DEPS}" != x"1" ...
 
-	# Copy all .js from root directory
-	npm_root_js_files=( $(ls --color=none . | grep --color=none "\.js$") )
+	# Copy all .js|.ts(typescripts) from root directory
+	npm_root_js_files=(
+		$(ls --color=none . | grep --color=none "\.js$|\.ts$")
+	)
 	_npmv1_copy_root_js_files
 
 	# Copy library directory
