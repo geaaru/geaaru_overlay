@@ -35,11 +35,14 @@ DEPEND="
 	>=dev-lang/fpc-${FPCVER}[source]
 	>=sys-devel/binutils-2.19.1-r1:=
 	gui? (
-	    !gtk2? ( dev-libs/libqt5pas:0/2.2 )
-	    gtk2? ( x11-libs/gtk+:2 )
+		!gtk2? ( dev-libs/libqt5pas:0/2.2 )
+		gtk2? ( x11-libs/gtk+:2 )
 )"
 BDEPEND="net-misc/rsync"
-RDEPEND="${DEPEND}"
+RDEPEND="${DEPEND}
+	sys-devel/make
+	sys-devel/gdb
+"
 
 RESTRICT="strip" #269221
 
