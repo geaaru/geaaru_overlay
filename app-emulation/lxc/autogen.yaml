@@ -10,3 +10,5 @@ lxc:
         versions:
           latest:
             template: lxc.tmpl
+          5.0.2:
+            template: lxc.tmpl

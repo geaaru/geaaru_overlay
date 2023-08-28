@@ -39,7 +39,6 @@ DEPEND="${RDEPEND}
 	apparmor? ( sys-apps/apparmor )"
 BDEPEND="virtual/pkgconfig
 	=dev-lang/python-3*
-	dev-python/virtualenv
 	man? ( app-text/docbook2X )
 "
 
