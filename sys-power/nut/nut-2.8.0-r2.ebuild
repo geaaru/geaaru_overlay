@@ -1,7 +1,6 @@
-# Copyright 1999-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=8
+EAPI=7
 
 inherit bash-completion-r1 flag-o-matic linux-info optfeature systemd
 inherit tmpfiles toolchain-funcs udev
