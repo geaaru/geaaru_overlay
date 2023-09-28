@@ -5,7 +5,7 @@ EAPI=7
 inherit flag-o-matic multilib-minimal
 
 SRC_URI="mirror://sourceforge/opencore-amr/${P}.tar.gz"
-KEYWORDS="alpha amd64 arm arm64 hppa ia64 ppc ppc64 sparc x86 ~amd64-fbsd ~x86-fbsd ~amd64-linux ~x86-linux ~x64-macos"
+KEYWORDS="*"
 
 DESCRIPTION="VisualOn AAC encoder library"
 HOMEPAGE="https://sourceforge.net/projects/opencore-amr/"
