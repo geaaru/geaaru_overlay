@@ -116,7 +116,7 @@ src_compile() {
 	emake
 
 	cd ${VDIR}/dqlite || die
-	emake CFLAGS="-I${VDIR}/raft/include" LDFLAGS="-L${VDIR}/raft -lraft"
+	emake CFLAGS="-I${VDIR}/raft/include" LDFLAGS="-L${VDIR}/raft/.libs -lraft"
 
 	cd ${S}/ || die
 	mkdir -p bin || die
@@ -143,7 +143,7 @@ src_install() {
 
 	dosbin ${bindir}/lxd
 
-	for l in fuidshift lxd-agent lxd-benchmark lxd-migrate lxc lxc-to-lxd lxd-user; do
+	for l in fuidshift lxd-agent lxd-benchmark lxd-migrate lxc lxc-to-lxd lxd-user lxd-metadata; do
 		dobin ${bindir}/${l}
 	done
 
