@@ -66,7 +66,7 @@ src_install() {
 	default
 
 	if ! use static-libs; then
-		find "${ED}"usr/lib* -name '*.la' -o -name '*.a' -delete || die
+		find "${ED}"/usr/lib* -name '*.la' -o -name '*.a' -delete || die
 	fi
 
 	dodoc Changes README*
