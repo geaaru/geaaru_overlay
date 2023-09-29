@@ -1,0 +1,8 @@
+podman:
+  generator: github-1
+  packages:
+    - podman:
+        github:
+          user: containers
+          repo: podman
+          query: releases
