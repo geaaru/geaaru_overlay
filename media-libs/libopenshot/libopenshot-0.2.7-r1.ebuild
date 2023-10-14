@@ -27,7 +27,7 @@ RDEPEND="dev-libs/jsoncpp:0=
 	net-libs/cppzmq
 	net-libs/zeromq
 	imagemagick? ( >=media-gfx/imagemagick-7:0=[cxx] )
-	opencv? ( >=media-libs/opencv-4.5.2:=[contrib,contribdnn] )
+	opencv? ( >=media-libs/opencv-4.5.2:=[contrib] )
 	python? ( ${PYTHON_DEPS} )"
 DEPEND="${RDEPEND}"
 BDEPEND="doc? ( app-doc/doxygen )
