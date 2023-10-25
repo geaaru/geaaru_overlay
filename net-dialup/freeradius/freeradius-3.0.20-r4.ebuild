@@ -3,8 +3,8 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{6,7,8} )
-inherit autotools pam python-single-r1 systemd
+PYTHON_COMPAT=( python3+ )
+inherit autotools pam python-single-r1 systemd users
 
 MY_P="${PN}-server-${PV}"
 
@@ -15,7 +15,7 @@ SRC_URI="
 "
 HOMEPAGE="http://www.freeradius.org/"
 
-KEYWORDS="~amd64 ~arm ~arm64 ~ppc ~ppc64 ~sparc ~x86"
+KEYWORDS="*"
 LICENSE="GPL-2"
 SLOT="0"
 
@@ -77,6 +77,9 @@ PATCHES=(
 )
 
 pkg_setup() {
+	enewgroup radius
+	enewuser radius -1 -1 /var/log/radius radius
+
 	if use python ; then
 		python-single-r1_pkg_setup
 		export PYTHONBIN="${EPYTHON}"
