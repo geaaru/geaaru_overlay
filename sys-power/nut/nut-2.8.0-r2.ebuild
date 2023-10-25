@@ -3,7 +3,7 @@
 EAPI=7
 
 inherit bash-completion-r1 flag-o-matic linux-info optfeature systemd
-inherit tmpfiles toolchain-funcs udev
+inherit tmpfiles toolchain-funcs udev users
 
 MY_P=${P/_/-}
 
@@ -15,7 +15,7 @@ if [[ ${PV} == *9999 ]] ; then
 	inherit git-r3
 else
 	SRC_URI="https://networkupstools.org/source/${PV%.*}/${MY_P}.tar.gz"
-	KEYWORDS="~amd64 ~arm ~arm64 ~ppc ~ppc64 ~riscv ~x86"
+	KEYWORDS="*"
 fi
 
 S="${WORKDIR}/${MY_P}"
@@ -26,8 +26,6 @@ IUSE="cgi doc ipmi serial i2c +man snmp +usb modbus selinux split-usr ssl tcpd t
 RESTRICT="!test? ( test )"
 
 DEPEND="
-	acct-group/nut
-	acct-user/nut
 	dev-libs/libltdl
 	virtual/udev
 	cgi? ( >=media-libs/gd-2[png] )
@@ -54,6 +52,13 @@ RDEPEND="
 PATCHES=(
 	"${FILESDIR}/${PN}-2.6.2-lowspeed-buffer-size.patch"
 )
+
+pkg_setup() {
+	enewgroup nut
+	enewuser nut -1 -1 /var/lib/nut nut
+
+	default
+}
 
 pkg_pretend() {
 	if use i2c; then
