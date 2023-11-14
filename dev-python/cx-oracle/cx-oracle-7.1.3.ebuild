@@ -3,7 +3,7 @@
 # $Id$
 
 EAPI="7"
-PYTHON_COMPAT=( python{3_5,3_6,3_7} )
+PYTHON_COMPAT=( python3+ )
 inherit distutils-r1
 
 MY_PN=cx_Oracle
@@ -14,7 +14,7 @@ SRC_URI="mirror://pypi/${MY_PN:0:1}/${MY_PN}/${MY_P}.tar.gz"
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="*"
 IUSE="doc examples"
 
 DEPEND=">=dev-db/oracle-instantclient-basic-12.1.0.2"
