@@ -41,7 +41,7 @@ RDEPEND="
 	media-libs/speexdsp
 	alsa? ( media-libs/alsa-lib )
 	jack? ( virtual/jack )
-	pulseaudio? ( media-libs/libpulse )
+	pulseaudio? ( media-sound/pulseaudio )
 	sndio? ( media-sound/sndio:= )"
 DEPEND="
 	${RDEPEND}
