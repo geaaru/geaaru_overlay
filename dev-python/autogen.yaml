@@ -13,6 +13,10 @@ simple:
   generator: pypi-simple-1
   packages:
     - python-mimeparse
+    - m2r2:
+        pydeps:
+          - mistune
+          - docutils
 
 hatchling_builds:
   defaults:
