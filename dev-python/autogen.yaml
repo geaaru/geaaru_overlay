@@ -14,6 +14,7 @@ simple:
   packages:
     - python-mimeparse
     - m2r2:
+        rdepend: '<=dev-python/mistune-0.8.4'
         pydeps:
           - mistune
           - docutils
@@ -47,4 +48,5 @@ setuptools_builds:
   generator: pypi-simple-1
   packages:
     - distlib
-    - mistune
+    - mistune:
+        version: 0.8.4
