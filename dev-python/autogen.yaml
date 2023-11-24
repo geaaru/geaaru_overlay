@@ -43,3 +43,4 @@ setuptools_builds:
   generator: pypi-simple-1
   packages:
     - distlib
+    - mistune
