@@ -1,0 +1,45 @@
+# The dev_python_compat_rule will handle situations where python2 support has been deprecated.
+#
+# An ebuild pyxattr-(latestversion) will be created.
+# An ebuild pyxattr-compat-(lastpy2version) will be created.
+# pyxattr will still "advertise" python2 support. If python2 support is selected, the older
+# pyxattr-compat will be RDEPENDed upon so it will be installed to satisfy those packages who
+# need it.
+#
+simple:
+  defaults:
+    cat: dev-python
+    python_compat: python3+
+  generator: pypi-simple-1
+  packages:
+    - python-mimeparse
+
+hatchling_builds:
+  defaults:
+    cat: dev-python
+    python_compat: python3+
+    du_pep517: hatchling
+  generator: pypi-simple-1
+  packages:
+    - platformdirs:
+        description: "A small Python package for determining appropriate platform-specific dirs"
+        pydeps:
+          py:3:build:
+            - hatch-vcs
+    - virtualenv:
+        pydeps:
+          py:3:build:
+            - hatch-vcs
+          py:3:runtime:
+            - distlib
+            - filelock
+            - platformdirs
+
+setuptools_builds:
+  defaults:
+    cat: dev-python
+    python_compat: python3+
+    du_pep517: setuptools
+  generator: pypi-simple-1
+  packages:
+    - distlib
