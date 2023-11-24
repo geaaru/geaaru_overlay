@@ -11,6 +11,7 @@ SRC_URI="https://files.pythonhosted.org/packages/ee/09/fe73f1739c727ba119cbd67c4
 
 DEPEND=""
 RDEPEND="
+	<=dev-python/mistune-0.8.4
 	dev-python/mistune[${PYTHON_USEDEP}]
 	dev-python/docutils[${PYTHON_USEDEP}]"
 IUSE=""
