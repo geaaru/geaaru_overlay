@@ -30,7 +30,7 @@ hatchling_builds:
   generator: pypi-simple-1
   packages:
     - platformdirs:
-        description: "A small Python package for determining appropriate platform-specific dirs"
+        desc: "A small Python package for determining appropriate platform-specific dirs"
     - filelock
     - virtualenv:
         pydeps:
