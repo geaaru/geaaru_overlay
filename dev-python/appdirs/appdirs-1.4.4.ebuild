@@ -6,7 +6,7 @@ PYTHON_COMPAT=( python3+ )
 DISTUTILS_USE_PEP517="setuptools"
 inherit distutils-r1
 
-DESCRIPTION="A small Python module for determining appropriate platform-specific dirs, e.g. a "user data dir"."
+DESCRIPTION="A small Python module for determining appropriate platform-specific dirs"
 HOMEPAGE="http://github.com/ActiveState/appdirs https://pypi.org/project/appdirs/"
 SRC_URI="https://files.pythonhosted.org/packages/d7/d8/05696357e0311f5b5c316d7b95f46c669dd9c15aaeecbb48c7d0aeb88c40/appdirs-1.4.4.tar.gz -> appdirs-1.4.4.tar.gz"
 
