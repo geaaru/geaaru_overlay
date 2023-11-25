@@ -35,6 +35,7 @@ simple:
         pydeps:
           py:3:build:
             - setuptools
+            - versioneer
 
 hatchling_builds:
   defaults:
@@ -68,6 +69,7 @@ hatchling_builds:
           py:3:build:
             - hatch-vcs
             - incremental
+            - hatch-fancy-pypi-readme
           py:3:all:
             - zope-interface
             - constantly
@@ -93,7 +95,9 @@ setuptools_builds:
     du_pep517: setuptools
   generator: pypi-simple-1
   packages:
-    - appdirs
+    - appdirs:
+        # Override description generates with "
+        desc: "A small Python module for determining appropriate platform-specific dirs"
     - distlib
     - mistune:
         version: 0.8.4
@@ -101,3 +105,7 @@ setuptools_builds:
         pydeps:
           py:3:runtime:
             - idna
+    - versioneer:
+        pydeps:
+          py:all:
+            - tomli
