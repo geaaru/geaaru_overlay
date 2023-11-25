@@ -24,17 +24,16 @@ hatchling_builds:
     cat: dev-python
     python_compat: python3+
     du_pep517: hatchling
+    pydeps:
+      py:3:build:
+        - hatch-vcs
   generator: pypi-simple-1
   packages:
     - platformdirs:
         description: "A small Python package for determining appropriate platform-specific dirs"
-        pydeps:
-          py:3:build:
-            - hatch-vcs
+    - filelock
     - virtualenv:
         pydeps:
-          py:3:build:
-            - hatch-vcs
           py:3:runtime:
             - distlib
             - filelock
