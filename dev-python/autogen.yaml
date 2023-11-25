@@ -13,11 +13,28 @@ simple:
   generator: pypi-simple-1
   packages:
     - python-mimeparse
+    - priority:
+        # Twisted require version <2.0
+        version: 1.3.0
     - m2r2:
         rdepend: '<=dev-python/mistune-0.8.4'
         pydeps:
           - mistune
           - docutils
+    - oauthlib:
+        pydeps:
+          py:3:runtime:
+            - pyjwt
+            - blinker
+            - cryptography
+    - pyserial:
+        pydeps:
+          py:3:build:
+            - setuptools
+    - constantly:
+        pydeps:
+          py:3:build:
+            - setuptools
 
 hatchling_builds:
   defaults:
@@ -38,6 +55,36 @@ hatchling_builds:
             - distlib
             - filelock
             - platformdirs
+    - twisted:
+        iuse: conch crypt serial http2
+        depend: |
+          http2? (
+            <=dev-python/h2-5.0.0[${PYTHON_USEDEP}]
+            >=dev-python/h2-4.0.0[${PYTHON_USEDEP}]
+            >=dev-python/priority-1.1.0[${PYTHON_USEDEP}]
+            <dev-python/priority-2.0[${PYTHON_USEDEP}]
+          )
+        pydeps:
+          py:3:build:
+            - hatch-vcs
+            - incremental
+          py:3:all:
+            - zope-interface
+            - constantly
+            - automat
+            - hyperlink
+            - attrs
+            - typing-extensions
+          use:crypt:
+            - pyopenssl
+            - service_identity
+            - idna
+          use:serial:
+            - pyserial
+          use:conch:
+            - cryptography
+            - appdirs
+            - bcrypt
 
 setuptools_builds:
   defaults:
@@ -46,6 +93,11 @@ setuptools_builds:
     du_pep517: setuptools
   generator: pypi-simple-1
   packages:
+    - appdirs
     - distlib
     - mistune:
         version: 0.8.4
+    - hyperlink:
+        pydeps:
+          py:3:runtime:
+            - idna
