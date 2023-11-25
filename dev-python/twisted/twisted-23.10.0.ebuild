@@ -17,11 +17,11 @@ DEPEND="
 		>=dev-python/priority-1.1.0[${PYTHON_USEDEP}]
 		<dev-python/priority-2.0[${PYTHON_USEDEP}]
 	)
-	$(python_gen_cond_dep 'dev-python/hatch-vcs[${PYTHON_USEDEP}] dev-python/hatch-vcs[${PYTHON_USEDEP}] dev-python/incremental[${PYTHON_USEDEP}]' -3)"
+	$(python_gen_cond_dep 'dev-python/hatch-fancy-pypi-readme[${PYTHON_USEDEP}] dev-python/hatch-vcs[${PYTHON_USEDEP}] dev-python/hatch-vcs[${PYTHON_USEDEP}] dev-python/incremental[${PYTHON_USEDEP}]' -3)"
 RDEPEND="
+	conch? ( dev-python/appdirs[${PYTHON_USEDEP}] dev-python/bcrypt[${PYTHON_USEDEP}] dev-python/cryptography[${PYTHON_USEDEP}] )
 	serial? ( dev-python/pyserial[${PYTHON_USEDEP}] )
-	crypt? ( dev-python/idna[${PYTHON_USEDEP}] dev-python/pyopenssl[${PYTHON_USEDEP}] dev-python/service_identity[${PYTHON_USEDEP}] )
-	conch? ( dev-python/appdirs[${PYTHON_USEDEP}] dev-python/bcrypt[${PYTHON_USEDEP}] dev-python/cryptography[${PYTHON_USEDEP}] )"
+	crypt? ( dev-python/idna[${PYTHON_USEDEP}] dev-python/pyopenssl[${PYTHON_USEDEP}] dev-python/service_identity[${PYTHON_USEDEP}] )"
 IUSE="conch crypt http2 serial"
 SLOT="0"
 LICENSE=""
