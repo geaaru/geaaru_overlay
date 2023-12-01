@@ -123,3 +123,13 @@ setuptools_builds:
         pydeps:
           py:3:runtime:
             - jsonpointer
+
+    - httplib2:
+        rdepend: app-misc/ca-certificates
+        pydeps:
+          py:3:runtime:
+            - pyparsing
+        patches:
+          - httplib2-0.12.1-use-system-cacerts.patch
+
+
