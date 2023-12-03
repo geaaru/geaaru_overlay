@@ -1,0 +1,8 @@
+conmon:
+  generator: github-1
+  packages:
+    - conmon:
+        github:
+          user: containers
+          repo: conmon
+          query: releases
