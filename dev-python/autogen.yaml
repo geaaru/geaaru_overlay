@@ -42,6 +42,10 @@ simple:
           py:3:build:
             - setuptools
             - pbr
+    # TODO: check if it's possible add
+    #       PYTHON_REQ_USE="threads(+)"
+    #       without a template file
+    - lockfile
 
 
 
