@@ -15,8 +15,8 @@ KEYWORDS="*"
 IUSE="doc"
 
 DEPEND="
-	virtual/libusb:1[${MULTILIB_USEDEP}]
-	virtual/libudev:0[${MULTILIB_USEDEP}]
+	virtual/libusb:1
+	virtual/libudev:0
 "
 RDEPEND="${DEPEND}"
 BDEPEND="doc? ( app-doc/doxygen )"
