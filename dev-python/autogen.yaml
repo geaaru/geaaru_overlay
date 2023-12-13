@@ -23,6 +23,10 @@ simple:
         pydeps:
           py:3:build:
             - setuptools
+    - incremental:
+        pydeps:
+          py:3:build:
+            - setuptools
     - constantly:
         pydeps:
           py:3:build:
