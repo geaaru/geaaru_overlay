@@ -24,6 +24,7 @@ simple:
           py:3:build:
             - setuptools
     - incremental:
+        desc: "A small library that versions your Python projects."
         pydeps:
           py:3:build:
             - setuptools
