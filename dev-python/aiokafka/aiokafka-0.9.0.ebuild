@@ -10,7 +10,9 @@ DESCRIPTION="Kafka integration with asyncio"
 HOMEPAGE=" https://pypi.org/project/aiokafka/"
 SRC_URI="https://files.pythonhosted.org/packages/88/69/cafa02d766547dc04557eab3b119ae0b1056dd851806027147a89dab4a1c/aiokafka-0.9.0.tar.gz -> aiokafka-0.9.0.tar.gz"
 
-DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]"
+DEPEND="
+	dev-python/kafka-python[${PYTHON_USEDEP}]
+	dev-python/setuptools[${PYTHON_USEDEP}]"
 RDEPEND="dev-python/kafka-python[${PYTHON_USEDEP}]"
 IUSE=""
 SLOT="0"
