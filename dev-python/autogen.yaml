@@ -190,3 +190,15 @@ setuptools_builds:
             sed -e '/^\tasynctest.*/d' -i ${S}/setup.cfg
           }
     - frozenlist
+
+    - kafka-python:
+        pydeps:
+          py:all:build:
+            - setuptools
+    - aiokafka:
+        pydeps:
+          py:all:
+            - kafka-python
+          py:all:build:
+            - kafka-python
+            - setuptools
