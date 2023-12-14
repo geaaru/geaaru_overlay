@@ -51,6 +51,19 @@ simple:
     #       PYTHON_REQ_USE="threads(+)"
     #       without a template file
     - lockfile
+    - aiobotocore:
+        license: Apache-2.0
+        pydeps:
+          - aiohttp
+          - aioitertools
+          - botocore
+          - wrapt
+    - aioboto3:
+        license: Apache-2.0
+        pydeps:
+          - aiobotocore
+
+
 
 
 
@@ -141,4 +154,39 @@ setuptools_builds:
         patches:
           - httplib2-0.12.1-use-system-cacerts.patch
 
+    - aiohttp-socks
 
+    - aiodns:
+        pydeps:
+          py:all:
+            - pycares >= 3
+          py:all:build:
+            - setuptools
+    - aiosignal:
+        pydeps:
+          - frozenlist
+    - aiohttp:
+        desc: Async http client/server framework (asyncio)
+        pydeps:
+          py:all:
+            - async_timeout > 3
+            - attrs > 17.3.0
+            - multidict > 4.5.0
+            - yarl > 1
+            - typing-extensions
+            - aiosignal
+            - aiodns
+            - charset_normalizer
+            - frozenlist
+          py:all:build:
+            - setuptools
+            - cython
+        body: |
+          src_prepare() {
+            default
+            rm ${S}/examples/__init__.py
+
+            # Drop runtime dep to asynctest used for tests
+            sed -e '/^\tasynctest.*/d' -i ${S}/setup.cfg
+          }
+    - frozenlist
