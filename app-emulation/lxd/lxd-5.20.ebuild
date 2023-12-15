@@ -10,7 +10,7 @@ SRC_URI="https://github.com/canonical/lxd/releases/download/lxd-${PV}/lxd-${PV}.
 #SRC_URI="https://github.com/canonical/lxd/archive/refs/tags/lxd-${PV}.tar.gz"
 
 # Needs to include licenses for all bundled programs and libraries.
-LICENSE="Apache-2.0 BSD BSD-2 LGPL-3 MIT MPL-2.0"
+LICENSE="AGPL-3 Apache-2.0 BSD BSD-2 LGPL-3 MIT MPL-2.0"
 SLOT="0"
 KEYWORDS="*"
 IUSE="apparmor ipv6 nls"
