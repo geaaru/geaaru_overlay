@@ -64,6 +64,16 @@ QA_PREBUILT="/usr/lib/incus/libcowsql.so.0.0.1
 RESTRICT="test"
 VDIR="${S}/vendor"
 
+pkg_setup() {
+	ebegin "Ensuring incus and incus-admin groups exist"
+	# The group incus is used for user socket with restrict access to a specific
+	# project.
+	enewgroup incus
+	# The control socket will be owned by (and writeable by) this group.
+	enewgroup incus-admin
+	eend $?
+}
+
 src_prepare() {
 	default
 
@@ -159,6 +169,14 @@ src_install() {
 	fi
 	newconfd "${FILESDIR}"/incusd.confd incusd || die
 
+	# Creating service directory
+	diropts -m0750 -o root -g incus-admin
+	dodir /var/lib/incus/
+	keepdir /var/lib/incus/
+	dodir /var/log/incus/
+	keepdir /var/log/incus/
+	diropts
+
 	local dodoc_opts=-r
 	dodoc -r AUTHORS doc/**
 	use nls && domo po/*.mo
@@ -182,12 +200,6 @@ pkg_postinst() {
 			ewarn
 		fi
 	fi
-
-	# The group incus is used for user socket with restrict access to a specific
-	# project.
-	enewgroup incus
-	# The control socket will be owned by (and writeable by) this group.
-	enewgroup incus-admin
 
 	elog
 	elog "Please run 'lxc-checkconfig' to see all optional kernel features."
