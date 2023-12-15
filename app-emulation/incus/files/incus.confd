@@ -1,5 +1,5 @@
 # Group which owns the shared socket
-INCUSD_OPTIONS+=" --group incus-admin"
+INCUSD_OPTIONS+="--group incus-admin"
 
 # Enable cpu profiling into the specified file
 #INCUSD_OPTIONS+=" --cpuprofile /tmp/lxc_cpu_profile"
