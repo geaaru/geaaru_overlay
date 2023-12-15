@@ -161,7 +161,6 @@ src_install() {
 	rm -r "${ED}"/usr/lib/incus/pkgconfig || die
 
 	newbashcomp scripts/bash/incus incus
-	bashcomp_alias incus incus.lxc
 
 	exeinto /usr/sbin/
 	doexe "${FILESDIR}"/incus-startup
