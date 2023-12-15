@@ -126,7 +126,7 @@ src_compile() {
 
 	CGO_ENABLED=0 go build $GOFLAGS -v -x -tags "netgo" -o bin/ ./cmd/incus-migrate/... || die "Failed to build incus-migrate"
 
-	for k in incus lxc-to-incus incus incus-benchmark incus-user; do
+	for k in incus incusd lxc-to-incus incus incus-benchmark incus-user; do
 		CGO_ENABLED=1 go build -v -x -tags "libsqlite3" -o bin/ ./cmd/${k}/... || die "Failed to build ${k}"
 	done
 
@@ -139,9 +139,10 @@ src_install() {
 	cd ${S}/
 	local bindir="bin"
 
-	dosbin ${bindir}/incus
+	dosbin ${bindir}/incusd
+	dosbin ${bindir}/incus-user
 
-	for l in incus-agent incus-benchmark incus-migrate incus lxc-to-incus incus-user; do
+	for l in incus-agent incus-benchmark incus-migrate incus lxc-to-incus; do
 		dobin ${bindir}/${l}
 	done
 
@@ -162,17 +163,32 @@ src_install() {
 	newbashcomp scripts/bash/incus incus
 	bashcomp_alias incus incus.lxc
 
+	exeinto /usr/sbin/
+	doexe "${FILESDIR}"/incus-startup
+
 	if use systemd ; then
-		systemd_newunit "${FILESDIR}"/incusd.service incusd.service || die
+		systemd_newunit "${FILESDIR}"/incus.service incus.service || die
+		systemd_newunit "${FILESDIR}"/incus-startup.service incus-startup.service || die
+		systemd_newunit "${FILESDIR}"/incus-lxcfs.service incus-lxcfs.service || die
+		systemd_newunit "${FILESDIR}"/incus-user.service incus-user.service || die
+		systemd_newunit "${FILESDIR}"/incus-startup.service incus-startup.service || die
+		systemd_newunit "${FILESDIR}"/incus.socket incus.socket || die
+		systemd_newunit "${FILESDIR}"/incus-user.socket incus-user.socket || die
 	else
-		newinitd "${FILESDIR}"/incusd.initd incusd || die
+		newinitd "${FILESDIR}"/incus.initd incus || die
+		newinitd "${FILESDIR}"/incus-user.initd incus-user || die
+		newinitd "${FILESDIR}"/incus-lxcfs.initd incus-lxcfs || die
 	fi
-	newconfd "${FILESDIR}"/incusd.confd incusd || die
+	newconfd "${FILESDIR}"/incus.confd incus || die
+	newconfd "${FILESDIR}"/incus-user.confd incus-user || die
+	newconfd "${FILESDIR}"/incus-lxcfs.confd incus-lxcfs || die
 
 	# Creating service directory
 	diropts -m0750 -o root -g incus-admin
 	dodir /var/lib/incus/
+	dodir /var/lib/incus-lxcfs/
 	keepdir /var/lib/incus/
+	keepdir /var/lib/incus-lxcfs/
 	dodir /var/log/incus/
 	keepdir /var/log/incus/
 	diropts
