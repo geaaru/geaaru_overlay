@@ -149,7 +149,7 @@ src_install() {
 	rm -r "${ED}"/usr/lib/incus/*.a || die
 	rm -r "${ED}"/usr/lib/incus/pkgconfig || die
 
-	newbashcomp scripts/bash/incus-client incus
+	newbashcomp scripts/bash/incus incus
 	bashcomp_alias incus incus.lxc
 
 	if use systemd ; then
