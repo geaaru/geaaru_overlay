@@ -81,6 +81,9 @@ src_prepare() {
 		-e "s:\./configure:./configure --prefix=/usr --libdir=${EPREFIX}/usr/lib/incus:g" \
 		-e "s:make:make ${MAKEOPTS}:g" \
 		Makefile || die
+	sed -i \
+		-e "s:/usr/lib/qemu/virtfs-proxy-helper:/usr/libexec/virtfs-proxy-helper:g" \
+		internal/server/device/device_utils_disk.go || die "Failed to fix virtfs-proxy-helper path."
 
 	sed -i 's#zfs version 2>/dev/null | cut -f 2 -d - | head -1#< /sys/module/zfs/version cut -f 1#' ${VDIR}/raft/configure.ac || die
 
@@ -126,11 +129,15 @@ src_compile() {
 
 	CGO_ENABLED=0 go build $GOFLAGS -v -x -tags "netgo" -o bin/ ./cmd/incus-migrate/... || die "Failed to build incus-migrate"
 
-	for k in incus incusd lxc-to-incus incus incus-benchmark incus-user; do
+	for k in incus incusd lxc-to-incus incus incus-benchmark incus-user ; do
 		CGO_ENABLED=1 go build -v -x -tags "libsqlite3" -o bin/ ./cmd/${k}/... || die "Failed to build ${k}"
 	done
 
 	CGO_ENABLED=0 CGO_LDFLAGS="$CGO_LDFLAGS -static" go build -v -x -tags "agent,netgo" -o bin/ ./cmd/incus-agent/... || die "Failed to build incus-agent"
+
+	pushd "${S}"/cmd/lxd-to-incus || die
+	CGO_ENABLED=0 CGO_LDFLAGS="$CGO_LDFLAGS -static" go build -v -x -o ../bin/ ./ || die "Failed to build lxd-to-incus"
+	popd
 
 	use nls && emake build-mo
 }
@@ -141,6 +148,7 @@ src_install() {
 
 	dosbin ${bindir}/incusd
 	dosbin ${bindir}/incus-user
+	dosbin ${bindir}/lxd-to-incus
 
 	for l in incus-agent incus-benchmark incus-migrate incus lxc-to-incus; do
 		dobin ${bindir}/${l}
