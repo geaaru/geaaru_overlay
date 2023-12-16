@@ -14,6 +14,7 @@ start() {
 			--background \
 			--make-pidfile \
 			-- ${INCUS_LXCFS_OPTS} \
+			--pidfile ${PIDFILE} \
 			/var/lib/incus-lxcfs
 	eend ${?}
 }
