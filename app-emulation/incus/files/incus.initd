@@ -33,9 +33,15 @@ if [ -n "${INCUSD_LXC_TEMPLATE_CONFIG}" ] ; then
 	--env INCUS_LXC_TEMPLATE_CONFIG=${INCUSD_LXC_TEMPLATE_CONFIG}"
 fi
 
+INCUSD_USE_INCUSLXCFS=${INCUSD_USE_INCUSLXCFS:-0}
+
 depend() {
 	need net
-	need incus-lxcfs
+	if [ "${INCUSD_LXCFS_ISOLATED}" = "1" ] ; then
+		need incus-lxcfs
+	else
+		need lxcfs
+	fi
 }
 
 start() {

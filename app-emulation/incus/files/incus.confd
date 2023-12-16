@@ -1,6 +1,11 @@
 # Group which owns the shared socket
 INCUSD_OPTIONS+="--group incus-admin"
 
+# Use lxcfs specific path (1) or the same of LXC (0)
+# NOTE: Using 1 need set of INCUS_LXC_TEMPLATE_CONFIG env
+#       with a different hooks path.
+#INCUSD_USE_INCUSLXCFS=0
+
 # Enable cpu profiling into the specified file
 #INCUSD_OPTIONS+=" --cpuprofile /tmp/lxc_cpu_profile"
 
