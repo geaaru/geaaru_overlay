@@ -136,7 +136,7 @@ src_compile() {
 	CGO_ENABLED=0 CGO_LDFLAGS="$CGO_LDFLAGS -static" go build -v -x -tags "agent,netgo" -o bin/ ./cmd/incus-agent/... || die "Failed to build incus-agent"
 
 	pushd "${S}"/cmd/lxd-to-incus || die
-	CGO_ENABLED=0 CGO_LDFLAGS="$CGO_LDFLAGS -static" go build -v -x -o ../bin/ ./ || die "Failed to build lxd-to-incus"
+	CGO_ENABLED=0 CGO_LDFLAGS="$CGO_LDFLAGS -static" go build -v -x -o ../../bin/ ./ || die "Failed to build lxd-to-incus"
 	popd
 
 	use nls && emake build-mo
