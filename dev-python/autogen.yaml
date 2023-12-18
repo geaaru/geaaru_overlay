@@ -202,3 +202,10 @@ setuptools_builds:
           py:all:build:
             - kafka-python
             - setuptools
+
+    - pynacl:
+        pydeps:
+          py:all:
+            - cffi
+          py:all:build:
+            - cffi
