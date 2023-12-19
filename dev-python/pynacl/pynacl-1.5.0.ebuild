@@ -17,3 +17,8 @@ SLOT="0"
 LICENSE=""
 KEYWORDS="*"
 S="${WORKDIR}/pynacl-1.5.0"
+
+post_src_unpack() {
+	mv ${WORKDIR}/PyNaCl-* ${S}
+	default
+}
