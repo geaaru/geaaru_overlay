@@ -209,3 +209,9 @@ setuptools_builds:
             - cffi
           py:all:build:
             - cffi
+
+    - netaddr:
+        pydeps:
+          py:all:build:
+            - setuptools
+
