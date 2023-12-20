@@ -66,7 +66,6 @@ simple:
 
 
 
-
 hatchling_builds:
   defaults:
     cat: dev-python
@@ -123,6 +122,9 @@ setuptools_builds:
     cat: dev-python
     python_compat: python3+
     du_pep517: setuptools
+    pydeps:
+      py:all:build:
+        - setuptools
   generator: pypi-simple-1
   packages:
     - appdirs:
@@ -226,3 +228,98 @@ setuptools_builds:
             - ptyprocess
           py:all:build:
             - setuptools
+
+    - wcwidth:
+        body: |
+          src_prepare() {
+            sed -e 's:--cov-append::' \
+              -e 's:--cov-report=html::' \
+              -e 's:--cov=wcwidth::' \
+              -i tox.ini || die
+            distutils-r1_src_prepare
+          }
+
+    - prompt_toolkit:
+        pydeps:
+          py:all:runtime:
+            - wcwidth
+          py:all:build:
+            - setuptools
+
+    - pycurl:
+        iuse: curl_ssl_gnutls curl_ssl_nss +curl_ssl_openssl ssl
+        rdepend: |
+          >=net-misc/curl-7.25.0-r1[ssl=]
+          ssl? (
+            net-misc/curl[curl_ssl_gnutls(-)=,curl_ssl_nss(-)=,curl_ssl_openssl(-)=,-curl_ssl_axtls(-),-curl_ssl_cyassl(-)]
+            curl_ssl_gnutls? ( >=net-libs/gnutls-2.11.0 )
+          )
+        depend: '${RDEPEND}'
+        body: |
+          python_configure_all() {
+            # Override faulty detection in setup.py, bug #510974.
+            export PYCURL_SSL_LIBRARY=${CURL_SSL}
+          }
+
+
+    - pykerberos:
+        depend: "app-crypt/mit-krb5"
+        rdepend: '${DEPEND}'
+
+    - python-memcached:
+        pydeps:
+          py:all:runtime:
+            - six
+
+    - pyudev:
+        inherit:
+          - optfeature
+        iuse: qt5
+        rdepend: "virtual/udev"
+        license: 'LGPL-2.1'
+        body: |
+          pkg_postinst() {
+            optfeature "PyQt5 bindings" "dev-python/PyQt5"
+          }
+
+    - simplejson:
+        license: '|| ( MIT AFL-2.1 )'
+
+flit_builds:
+  defaults:
+    cat: dev-python
+    python_compat: python3+
+    du_pep517: flit
+    pydeps:
+      py:all:build:
+        - flit_core
+  generator: pypi-simple-1
+  packages:
+    - ptyprocess
+
+
+poetry_builds:
+  defaults:
+    cat: dev-python
+    python_compat: python3+
+    du_pep517: poetry
+    pydeps:
+      py:all:build:
+        - poetry-core
+  generator: pypi-simple-1
+  packages:
+    - terminaltables:
+        license: MIT
+        body: |
+          src_prepare() {
+            sed -e '/requires/s:poetry:&-core:' \
+              -e '/backend/s:poetry:&.core:' \
+              -i pyproject.toml || die
+
+            # Fix terminal_io.py
+            sed -e 's|sys.stdout.write|sys.stdout.buffer.write|g' \
+              -i terminaltables/terminal_io.py || die
+
+            distutils-r1_src_prepare
+          }
+
