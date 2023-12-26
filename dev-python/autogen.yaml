@@ -65,7 +65,6 @@ simple:
 
 
 
-
 hatchling_builds:
   defaults:
     cat: dev-python
@@ -285,6 +284,35 @@ setuptools_builds:
     - simplejson:
         license: '|| ( MIT AFL-2.1 )'
 
+    - contextlib2:
+        license: 'PSF License'
+
+    - scandir:
+        license: 'New BSD License'
+
+    - configparser:
+        license: MIT
+
+    - pathlib2:
+        license: MIT
+        pydeps:
+          py:all:runtime:
+            - six
+
+    - ecdsa:
+        license: MIT
+
+    - decorator:
+        license: BSD
+
+    - python-semver:
+        license: BSD
+        pypi_name: semver
+        pydeps:
+          py:all:build:
+            - setuptools
+            - setuptools_scm
+
 flit_builds:
   defaults:
     cat: dev-python
@@ -296,6 +324,15 @@ flit_builds:
   generator: pypi-simple-1
   packages:
     - ptyprocess
+
+    - python-sqlparse:
+        pypi_name: sqlparse
+        license: BSD
+        pydeps:
+          py:all:build:
+            - flake8
+          py:all:runtime:
+            - flake8
 
 
 poetry_builds:
