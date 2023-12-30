@@ -34,6 +34,7 @@ def get_ovs_hash(version, repo, target_dir):
 
 async def generate(hub, **pkginfo):
 	supported_releases = {
+		'23.09': '>=23.09.0,<23.10.0',
 		'23.06': '>=23.06.0,<23.07.0',
 		'23.03': '>=23.03.0,<23.04.0',
 		'22.12': '>=22.12.0,<23.01.0',
