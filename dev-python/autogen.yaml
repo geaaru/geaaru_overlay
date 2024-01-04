@@ -62,6 +62,11 @@ simple:
         license: Apache-2.0
         pydeps:
           - aiobotocore
+    - frozenlist:
+        pydeps:
+          py:3:build:
+            - setuptools
+            - pbr
 
 
 
@@ -190,7 +195,6 @@ setuptools_builds:
             # Drop runtime dep to asynctest used for tests
             sed -e '/^\tasynctest.*/d' -i ${S}/setup.cfg
           }
-    - frozenlist
 
     - kafka-python:
         pydeps:
