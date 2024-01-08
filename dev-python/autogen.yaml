@@ -67,7 +67,14 @@ simple:
           py:3:build:
             - setuptools
             - pbr
-
+    - dnspython:
+        pydeps:
+          py:3:build:
+            - idna
+            - cryptography
+          py:3:runtime:
+            - idna
+            - cryptography
 
 
 hatchling_builds:
@@ -316,6 +323,10 @@ setuptools_builds:
           py:all:build:
             - setuptools
             - setuptools_scm
+
+    - greenlet:
+        license: MIT
+
 
 flit_builds:
   defaults:
