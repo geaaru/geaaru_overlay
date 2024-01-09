@@ -61,6 +61,7 @@ QA_PREBUILT="/usr/lib/incus/libcowsql.so.0.0.1
 	/usr/bin/incus-user
 	/usr/sbin/incusd"
 
+S="${WORKDIR}/incus-0.4"
 RESTRICT="test"
 VDIR="${S}/vendor"
 
