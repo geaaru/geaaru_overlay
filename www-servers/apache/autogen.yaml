@@ -1,0 +1,9 @@
+apache:
+  generator: github-1
+  packages:
+    - apache:
+        github:
+          user: apache
+          repo: httpd
+          query: tags
+          select: '^2.4.[\d]'
