@@ -173,8 +173,6 @@ setuptools_builds:
         pydeps:
           py:all:
             - pycares >= 3
-          py:all:build:
-            - setuptools
     - aiosignal:
         pydeps:
           - frozenlist
@@ -192,7 +190,6 @@ setuptools_builds:
             - charset_normalizer
             - frozenlist
           py:all:build:
-            - setuptools
             - cython
         body: |
           src_prepare() {
@@ -203,17 +200,13 @@ setuptools_builds:
             sed -e '/^\tasynctest.*/d' -i ${S}/setup.cfg
           }
 
-    - kafka-python:
-        pydeps:
-          py:all:build:
-            - setuptools
+    - kafka-python
     - aiokafka:
         pydeps:
           py:all:
             - kafka-python
           py:all:build:
             - kafka-python
-            - setuptools
 
     - pynacl:
         body: |
@@ -236,8 +229,6 @@ setuptools_builds:
         pydeps:
           py:all:runtime:
             - ptyprocess
-          py:all:build:
-            - setuptools
 
     - wcwidth:
         body: |
@@ -253,8 +244,6 @@ setuptools_builds:
         pydeps:
           py:all:runtime:
             - wcwidth
-          py:all:build:
-            - setuptools
 
     - pycurl:
         iuse: curl_ssl_gnutls curl_ssl_nss +curl_ssl_openssl ssl
