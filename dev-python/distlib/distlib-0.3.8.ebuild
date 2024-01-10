@@ -10,7 +10,7 @@ DESCRIPTION="Distribution utilities"
 HOMEPAGE="https://github.com/pypa/distlib https://pypi.org/project/distlib/"
 SRC_URI="https://files.pythonhosted.org/packages/c4/91/e2df406fb4efacdf46871c25cde65d3c6ee5e173b7e5a4547a47bae91920/distlib-0.3.8.tar.gz -> distlib-0.3.8.tar.gz"
 
-DEPEND=""
+DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]"
 IUSE=""
 SLOT="0"
 LICENSE=""
