@@ -315,7 +315,7 @@ src_install() {
 
 	# Use correct multilib libdir in gentoo patches
 	sed -i -e "s:/usr/lib:/usr/$(get_libdir):g" \
-		"${D}"/etc/conf.d/apache2 \
+		"${D}"/etc/conf.d/apache2 "${D}"/etc/apache2/httpd.conf \
 		|| die "libdir sed failed"
 
 	sed -i -e "s:APACHE2_OPTS=\".*\":APACHE2_OPTS=\"${APACHE2_OPTS}\":" \
