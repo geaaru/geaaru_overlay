@@ -10,7 +10,7 @@ DESCRIPTION="Apply JSON-Patches (RFC 6902)"
 HOMEPAGE="https://github.com/stefankoegl/python-json-patch https://pypi.org/project/jsonpatch/"
 SRC_URI="https://files.pythonhosted.org/packages/42/78/18813351fe5d63acad16aec57f94ec2b70a09e53ca98145589e185423873/jsonpatch-1.33.tar.gz -> jsonpatch-1.33.tar.gz"
 
-DEPEND=""
+DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]"
 RDEPEND="$(python_gen_cond_dep 'dev-python/jsonpointer[${PYTHON_USEDEP}]' -3)"
 IUSE=""
 SLOT="0"
