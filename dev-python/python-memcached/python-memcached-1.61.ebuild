@@ -8,7 +8,7 @@ inherit distutils-r1
 
 DESCRIPTION="Pure python memcached client"
 HOMEPAGE="https://github.com/linsomniac/python-memcached https://pypi.org/project/python-memcached/"
-SRC_URI="https://files.pythonhosted.org/packages/90/59/5faf6e3cd8a568dd4f737ddae4f2e54204fd8c51f90bf8df99aca6c22318/python-memcached-1.59.tar.gz -> python-memcached-1.59.tar.gz"
+SRC_URI="https://files.pythonhosted.org/packages/ad/35/81e57118edda2a4b565199ac5a1949e82ef02f524d618e3d65f5ec878c3b/python-memcached-1.61.tar.gz -> python-memcached-1.61.tar.gz"
 
 DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]"
 RDEPEND="dev-python/six[${PYTHON_USEDEP}]"
@@ -16,4 +16,4 @@ IUSE=""
 SLOT="0"
 LICENSE=""
 KEYWORDS="*"
-S="${WORKDIR}/python-memcached-1.59"
+S="${WORKDIR}/python-memcached-1.61"
