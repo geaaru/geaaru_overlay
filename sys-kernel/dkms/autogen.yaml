@@ -1,0 +1,8 @@
+dkms:
+  generator: github-1
+  packages:
+    - dkms:
+        github:
+          user: dell
+          repo: dkms
+          query: releases
