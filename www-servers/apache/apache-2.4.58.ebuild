@@ -125,14 +125,14 @@ MODULE_CRITICAL="
 	unixd
 "
 
-APACHE_LAYOUT="Gentoo"
+APACHE_LAYOUT="Funtoo"
 
 inherit apache-2 systemd tmpfiles toolchain-funcs
 
 DESCRIPTION="The Apache Web Server"
 HOMEPAGE="https://httpd.apache.org/"
 
-SRC_URI="https://github.com/apache/httpd/tarball/c3ad18b7ee32da93eabaae7b94541d3c32264340 -> httpd-2.4.58-c3ad18b.tar.gz"
+#SRC_URI="https://github.com/apache/httpd/tarball/c3ad18b7ee32da93eabaae7b94541d3c32264340 -> httpd-2.4.58-c3ad18b.tar.gz"
 # some helper scripts are Apache-1.1, thus both are here
 LICENSE="Apache-2.0 Apache-1.1"
 SLOT="2"
@@ -161,22 +161,54 @@ REQUIRED_USE="apache2_modules_http2? ( ssl )
 	apache2_modules_md? ( ssl )"
 
 PATCHES=(
+#	"${FILESDIR}/00_all_gentoo_base.patch"
 	"${FILESDIR}/01_all_mod_rewrite_ampescape.patch"
 	"${FILESDIR}/03_all_gentoo_apache-tools.patch"
 	"${FILESDIR}/04_no_which.patch"
-	"${FILESDIR}/${PN}-2.4.41-libressl.patch" #668060
+	#"${FILESDIR}/${PN}-2.4.41-libressl.patch" #668060
 )
 
-post_src_unpack() {
-	mv apache-httpd-* ${S} || die "rename unpacked dir"
+generate_load_module() {
+	local endit=0 mod_lines= mod_dir="${ED%/}/usr/$(get_libdir)/apache2/modules"
+
+	if use static; then
+		sed -i -e "/%%LOAD_MODULE%%/d" \
+			"${D}"/etc/apache2/httpd.conf
+		return
+	fi
+
+	for m in ${MY_MODS[@]} ; do
+		if [[ -e "${mod_dir}/mod_${m}.so" ]] ; then
+			for def in ${MODULE_DEFINES} ; do
+				if [[ "${m}" == "${def%:*}" ]] ; then
+					mod_lines="${mod_lines}\n<IfDefine ${def#*:}>"
+					endit=1
+				fi
+			done
+
+			mod_lines="${mod_lines}\nLoadModule ${m}_module modules/mod_${m}.so"
+
+			if [[ ${endit} -ne 0 ]] ; then
+				mod_lines="${mod_lines}\n</IfDefine>"
+				endit=0
+			fi
+		fi
+	done
+
+	sed -i -e "s:%%LOAD_MODULE%%:${mod_lines}:" \
+		"${D}"/etc/apache2/httpd.conf
 }
+
+#post_src_unpack() {
+#	mv apache-httpd-* ${S} || die "rename unpacked dir"
+#}
 
 src_prepare() {
 	default
 
 	# Disable install-conf target. We use our customization.
 	sed -i -e 's|^INSTALL_TARGETS = install-conf|INSTALL_TARGETS =|g' \
-		Makefile.in
+	Makefile.in
 
 	# We use suexec binary from /usr/bin
 	sed -i -e 's|^#define SUEXEC_BIN.*|#define SUEXEC_BIN "/usr/bin/suexec"|g' \
@@ -201,6 +233,7 @@ src_prepare() {
 
 	# Don't rename configure.in _before_ any possible user patches!
 	if [[ -f "configure.in" ]] ; then
+		einfo "Renaming configure.in to configure.ac"
 		mv configure.{in,ac} || die
 	fi
 
@@ -238,7 +271,7 @@ pkg_setup() {
 src_configure() {
 	# Instead of hardcode PLATFORM on server/core.c using PLATFORM
 	# define.
-	append-cflags -DPLATFORM=MacaroniOS
+	append-cflags -DPLATFORM='\"MacaroniOS\"'
 
 	apache-2_src_configure
 }
@@ -264,8 +297,6 @@ src_install() {
 	keepdir /etc/apache2/vhosts.d
 	keepdir /etc/apache2/modules.d
 
-	generate_load_module
-
 	insinto /etc/apache2
 	doins -r "${FILESDIR}"/customization/conf/*
 	use apache2_modules_mime_magic && doins docs/conf/magic
@@ -282,16 +313,18 @@ src_install() {
 		APACHE2_OPTS+=" -D LANGUAGE"
 	fi
 
-	sed -i -e "s:APACHE2_OPTS=\".*\":APACHE2_OPTS=\"${APACHE2_OPTS}\":" \
-		"${FILESDIR}"/customization/init/apache2.confd || die
-
 	newconfd "${FILESDIR}"/customization/init/apache2.confd apache2
 	newinitd "${FILESDIR}"/customization/init/apache2.initd apache2
+
+	generate_load_module
 
 	# Use correct multilib libdir in gentoo patches
 	sed -i -e "s:/usr/lib:/usr/$(get_libdir):g" \
 		"${D}"/etc/conf.d/apache2 \
 		|| die "libdir sed failed"
+
+	sed -i -e "s:APACHE2_OPTS=\".*\":APACHE2_OPTS=\"${APACHE2_OPTS}\":" \
+		"${D}"/etc/conf.d/apache2 || die
 
 	# install apache2ctl wrapper for our init script if available
 	exeinto /usr/sbin
@@ -326,7 +359,7 @@ src_install() {
 	if use suexec ; then
 		local needs_adjustment="$(ver_test ${PV} -ge 2.4.34 && { { ! use suexec-syslog || ! use suexec-caps ; } && echo true || echo false ; } || echo true)"
 		if ${needs_adjustment} ; then
-			fowners 0:${SUEXEC_CALLER:-apache} /usr/sbin/suexec
+			#fowners 0:${SUEXEC_CALLER:-apache} /usr/sbin/suexec
 			fperms 4710 /usr/sbin/suexec
 			# provide legacy symlink for suexec, bug 177697
 			dosym /usr/sbin/suexec /usr/sbin/suexec2
@@ -336,7 +369,7 @@ src_install() {
 	# empty dirs
 	for i in /var/lib/dav /var/log/apache2 /var/cache/apache2 ; do
 		keepdir ${i}
-		fowners apache:apache ${i}
+		#fowners apache:apache ${i}
 		fperms 0750 ${i}
 	done
 	#

@@ -1,4 +1,4 @@
-<Layout Gentoo>
+<Layout Funtoo>
 	prefix:          /usr
 	exec_prefix:     /usr
 	bindir:          /usr/bin
