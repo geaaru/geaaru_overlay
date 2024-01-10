@@ -132,7 +132,7 @@ inherit apache-2 systemd tmpfiles toolchain-funcs
 DESCRIPTION="The Apache Web Server"
 HOMEPAGE="https://httpd.apache.org/"
 
-#SRC_URI="https://github.com/apache/httpd/tarball/c3ad18b7ee32da93eabaae7b94541d3c32264340 -> httpd-2.4.58-c3ad18b.tar.gz"
+SRC_URI="https://dlcdn.apache.org/httpd/httpd-2.4.58.tar.bz2 -> httpd-2.4.58.tar.bz2"
 # some helper scripts are Apache-1.1, thus both are here
 LICENSE="Apache-2.0 Apache-1.1"
 SLOT="2"
@@ -161,7 +161,6 @@ REQUIRED_USE="apache2_modules_http2? ( ssl )
 	apache2_modules_md? ( ssl )"
 
 PATCHES=(
-#	"${FILESDIR}/00_all_gentoo_base.patch"
 	"${FILESDIR}/01_all_mod_rewrite_ampescape.patch"
 	"${FILESDIR}/03_all_gentoo_apache-tools.patch"
 	"${FILESDIR}/04_no_which.patch"
@@ -198,10 +197,6 @@ generate_load_module() {
 	sed -i -e "s:%%LOAD_MODULE%%:${mod_lines}:" \
 		"${D}"/etc/apache2/httpd.conf
 }
-
-#post_src_unpack() {
-#	mv apache-httpd-* ${S} || die "rename unpacked dir"
-#}
 
 src_prepare() {
 	default
@@ -359,7 +354,7 @@ src_install() {
 	if use suexec ; then
 		local needs_adjustment="$(ver_test ${PV} -ge 2.4.34 && { { ! use suexec-syslog || ! use suexec-caps ; } && echo true || echo false ; } || echo true)"
 		if ${needs_adjustment} ; then
-			#fowners 0:${SUEXEC_CALLER:-apache} /usr/sbin/suexec
+			fowners 0:${SUEXEC_CALLER:-apache} /usr/sbin/suexec
 			fperms 4710 /usr/sbin/suexec
 			# provide legacy symlink for suexec, bug 177697
 			dosym /usr/sbin/suexec /usr/sbin/suexec2
@@ -369,7 +364,7 @@ src_install() {
 	# empty dirs
 	for i in /var/lib/dav /var/log/apache2 /var/cache/apache2 ; do
 		keepdir ${i}
-		#fowners apache:apache ${i}
+		fowners apache:apache ${i}
 		fperms 0750 ${i}
 	done
 	#
