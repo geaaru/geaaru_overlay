@@ -155,9 +155,8 @@ pkg_setup() {
 	:
 }
 
-src_unpack() {
-	default
-	[[ ${PV} != 9999 ]] || git-r3_src_unpack
+post_src_unpack() {
+	mv systemd-* "${S}" || die "Error on setup S"
 }
 
 src_prepare() {
