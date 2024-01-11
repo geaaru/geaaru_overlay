@@ -1,0 +1,26 @@
+gunicorn:
+  defaults:
+    cat: www-servers
+    python_compat: python3+
+    du_pep517: setuptools
+    pydeps:
+      py:all:build:
+        - setuptools
+  generator: pypi-simple-1
+  packages:
+
+    - gunicorn:
+        desc: A WSGI HTTP Server for UNIX
+        license: MIT PSF-2
+        pydeps:
+          py:all:
+            - packaging
+            - setproctitle
+          py:all:build:
+            - packaging
+        body: |
+          src_prepare() {
+            sed -e 's:--cov=gunicorn --cov-report=xml::' -i setup.cfg || die
+            distutils-r1_src_prepare
+          }
+
