@@ -316,6 +316,12 @@ setuptools_builds:
     - greenlet:
         license: MIT
 
+    - falcon:
+        license: Apache-2.0
+        pydeps:
+          py:all:build:
+            - wheel
+            - cython
 
 flit_builds:
   defaults:
