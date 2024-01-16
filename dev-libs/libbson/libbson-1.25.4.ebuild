@@ -2,12 +2,11 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3+ )
-inherit cmake python-any-r1
+inherit cmake
 
 DESCRIPTION="Library routines related to building,parsing and iterating BSON documents"
 HOMEPAGE="https://github.com/mongodb/mongo-c-driver/tree/master/src/libbson"
-SRC_URI="https://github.com/mongodb/mongo-c-driver/tarball/30ab91dd39ce4e7b42616f5aac1cc9b1b113d187 -> mongo-c-driver-1.25.1-30ab91d.tar.gz"
+SRC_URI="https://github.com/mongodb/mongo-c-driver/tarball/1e2ec7c60c6ae3102a27ed1c5c6bab09136542c9 -> mongo-c-driver-1.25.4-1e2ec7c.tar.gz"
 
 LICENSE="Apache-2.0"
 SLOT="0"
@@ -33,7 +32,7 @@ src_prepare() {
 
 	# It seems that the docs python script using py3.10 syntax but
 	# the library works with py3.9 too.
-	sed -i -e 's/str | None/str/g' build/sphinx/mongoc_common.py || die
+	sed -i -e 's/str | None|str/g' build/sphinx/mongoc_common.py
 
 	echo "#!/usr/bin/env python
 print('${PV}')
@@ -51,7 +50,6 @@ src_configure() {
 		-DENABLE_UNINSTALL=OFF
 	)
 
-	python_setup
 	cmake_src_configure
 }
 
