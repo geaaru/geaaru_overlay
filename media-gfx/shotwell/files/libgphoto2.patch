@@ -1,0 +1,40 @@
+--- a/vapi/libgphoto2.vapi	2024-01-20 22:46:15.373836183 +0100
++++ b/vapi/libgphoto2.vapi	2024-01-20 22:48:04.904206859 +0100
+@@ -159,10 +159,9 @@
+         public CameraFileInfoFields fields;
+         public CameraFileStatus status;
+         public ulong size;
+-        public string type;
++		public char type[64];
+         public uint width;
+         public uint height;
+-        public string name;
+         public CameraFilePermissions permissions;
+         public time_t mtime;
+     }
+@@ -176,11 +175,9 @@
+         public CameraFileInfoFields fields;
+         public CameraFileStatus status;
+         public ulong size;
+-        public string type;
++		public char type[64];
+         public uint width;
+         public uint height;
+-        public string name;
+-        public CameraFilePermissions permissions;
+         public time_t mtime;
+     }
+     
+@@ -314,9 +311,9 @@
+     )]
+     public struct CameraStorageInformation {
+         public CameraStorageInfoFields fields;
+-        public string basedir;
+-        public string label;
+-        public string description;
++		public char basedir[256];
++		public char label[256];
++		public char description[256];
+         public int type;
+         public int fstype;
+         public int access;

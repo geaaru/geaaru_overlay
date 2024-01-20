@@ -1,0 +1,25 @@
+From 0c5779bf9d9fa8f08696340dff1548b3c25374c6 Mon Sep 17 00:00:00 2001
+From: Jens Georg <mail@jensge.org>
+Date: Sun, 14 Mar 2021 11:21:10 +0100
+Subject: [PATCH] Fix compile error after GPhoto vapi change
+
+---
+ src/camera/ImportPage.vala | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/camera/ImportPage.vala b/src/camera/ImportPage.vala
+index f5e989552..7dbe9d423 100644
+--- a/src/camera/ImportPage.vala
++++ b/src/camera/ImportPage.vala
+@@ -1333,7 +1333,7 @@ public class ImportPage : CheckerboardPage {
+         if (fsid >= sifs.length)
+             return null;
+         
+-        return (sifs[fsid].fields & GPhoto.CameraStorageInfoFields.BASE) != 0 ? sifs[fsid].basedir : "/";
++        return (GPhoto.CameraStorageInfoFields.BASE in sifs[fsid].fields) ? (string) sifs[fsid].basedir : "/";
+     }
+     
+     public static string? get_fulldir(GPhoto.Camera camera, string camera_name, int fsid, string folder) {
+-- 
+GitLab
+

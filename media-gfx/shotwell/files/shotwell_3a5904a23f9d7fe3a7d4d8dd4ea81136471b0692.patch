@@ -1,0 +1,85 @@
+From 3a5904a23f9d7fe3a7d4d8dd4ea81136471b0692 Mon Sep 17 00:00:00 2001
+From: Jens Georg <mail@jensge.org>
+Date: Sun, 14 Mar 2021 11:21:10 +0100
+Subject: [PATCH] vapis: Plug memory leak in GPhoto2
+
+Caller was supposed to free the StorageInfo, which with the old binding
+we never did
+---
+ src/camera/GPhoto.vala     |  5 +++--
+ src/camera/ImportPage.vala | 14 ++++++--------
+ vapi/libgphoto2.vapi       |  2 +-
+ 3 files changed, 10 insertions(+), 11 deletions(-)
+
+diff --git a/src/camera/GPhoto.vala b/src/camera/GPhoto.vala
+index aa2fcf2bf..64ff7ca08 100644
+--- a/src/camera/GPhoto.vala
++++ b/src/camera/GPhoto.vala
+@@ -135,9 +135,10 @@ namespace GPhoto {
+     // filesystem.  In these cases shotwell can access the file directly. See:
+     // https://bugzilla.gnome.org/show_bug.cgi?id=716915
+     public PhotoMetadata? get_fallback_metadata(Camera camera, Context context, string folder, string filename) {
+-        GPhoto.CameraStorageInformation *sifs = null;
++        // Fixme: Why do we need to query get_storageinfo here first?
++        GPhoto.CameraStorageInformation[] sifs = null;
+         int count = 0;
+-        camera.get_storageinfo(&sifs, out count, context);
++        camera.get_storageinfo(out sifs, context);
+         
+         GPhoto.PortInfo port_info;
+         camera.get_port_info(out port_info);
+diff --git a/src/camera/ImportPage.vala b/src/camera/ImportPage.vala
+index 6ebf23138..f5e989552 100644
+--- a/src/camera/ImportPage.vala
++++ b/src/camera/ImportPage.vala
+@@ -1179,9 +1179,9 @@ public class ImportPage : CheckerboardPage {
+         
+         Gee.ArrayList<ImportSource> import_list = new Gee.ArrayList<ImportSource>();
+         
+-        GPhoto.CameraStorageInformation *sifs = null;
++        GPhoto.CameraStorageInformation[] sifs = null;
+         int count = 0;
+-        refresh_result = dcamera.gcamera.get_storageinfo(&sifs, out count, spin_idle_context.context);
++        refresh_result = dcamera.gcamera.get_storageinfo(out sifs, spin_idle_context.context);
+         if (refresh_result == GPhoto.Result.OK) {
+             for (int fsid = 0; fsid < count; fsid++) {
+                 // Check well-known video and image paths first to prevent accidental
+@@ -1324,18 +1324,16 @@ public class ImportPage : CheckerboardPage {
+     // Need to do this because some phones (iPhone, in particular) changes the name of their filesystem
+     // between each mount
+     public static string? get_fs_basedir(GPhoto.Camera camera, int fsid) {
+-        GPhoto.CameraStorageInformation *sifs = null;
++        GPhoto.CameraStorageInformation[] sifs = null;
+         int count = 0;
+-        GPhoto.Result res = camera.get_storageinfo(&sifs, out count, null_context.context);
++        GPhoto.Result res = camera.get_storageinfo(out sifs, null_context.context);
+         if (res != GPhoto.Result.OK)
+             return null;
+         
+-        if (fsid >= count)
++        if (fsid >= sifs.length)
+             return null;
+         
+-        GPhoto.CameraStorageInformation *ifs = sifs + fsid;
+-        
+-        return (ifs->fields & GPhoto.CameraStorageInfoFields.BASE) != 0 ? ifs->basedir : "/";
++        return (sifs[fsid].fields & GPhoto.CameraStorageInfoFields.BASE) != 0 ? sifs[fsid].basedir : "/";
+     }
+     
+     public static string? get_fulldir(GPhoto.Camera camera, string camera_name, int fsid, string folder) {
+diff --git a/vapi/libgphoto2.vapi b/vapi/libgphoto2.vapi
+index 61f13a356..adcef5c5c 100644
+--- a/vapi/libgphoto2.vapi
++++ b/vapi/libgphoto2.vapi
+@@ -64,7 +64,7 @@ namespace GPhoto {
+         public Result set_port_info(PortInfo info);
+         public Result get_abilities(out CameraAbilities abilities);
+         public Result set_abilities(CameraAbilities abilities);
+-        public Result get_storageinfo(CameraStorageInformation **sifs, out int count, Context context);
++        public Result get_storageinfo([CCode (array_length_pos=1)]out CameraStorageInformation[] sifs, Context context);
+         
+         // Folders
+         [CCode (cname="gp_camera_folder_list_folders")]
+-- 
+GitLab
+

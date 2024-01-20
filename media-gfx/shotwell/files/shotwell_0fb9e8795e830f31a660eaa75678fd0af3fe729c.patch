@@ -1,0 +1,46 @@
+From 0fb9e8795e830f31a660eaa75678fd0af3fe729c Mon Sep 17 00:00:00 2001
+From: Jens Georg <mail@jensge.org>
+Date: Sat, 13 Mar 2021 22:32:17 +0100
+Subject: [PATCH] Fix strings in [SimpleType] structs
+
+---
+ src/camera/ImportPage.vala | 5 +++--
+ vapi/libraw.vapi           | 2 +-
+ 2 files changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/src/camera/ImportPage.vala b/src/camera/ImportPage.vala
+index ab24df619..6ebf23138 100644
+--- a/src/camera/ImportPage.vala
++++ b/src/camera/ImportPage.vala
+@@ -1410,12 +1410,13 @@ public class ImportPage : CheckerboardPage {
+                     import_list.add(video_source);
+                 } else {
+                     // determine file format from type, and then from file extension
+-                    PhotoFileFormat file_format = PhotoFileFormat.from_gphoto_type(info.file.type);               
++                    string file_type = (string)info.file.type;
++                    PhotoFileFormat file_format = PhotoFileFormat.from_gphoto_type(file_type);               
+                     if (file_format == PhotoFileFormat.UNKNOWN) {
+                         file_format = PhotoFileFormat.get_by_basename_extension(filename);
+                         if (file_format == PhotoFileFormat.UNKNOWN) {
+                             message("Skipping %s/%s: Not a supported file extension (%s)", fulldir,
+-                                filename, info.file.type);
++                                filename, file_type);
+                             
+                             continue;
+                         }
+diff --git a/vapi/libraw.vapi b/vapi/libraw.vapi
+index b1b5875b1..146f447ed 100644
+--- a/vapi/libraw.vapi
++++ b/vapi/libraw.vapi
+@@ -248,7 +248,7 @@ public struct Thumbnail {
+     public uint tlength;
+     public int tcolors;
+     [CCode (array_length_cname="tlength")]
+-    public uint8[] thumb;
++    public unowned uint8[] thumb;
+ }
+ 
+ [CCode (cname="enum LibRaw_thumbnail_formats", cprefix="LIBRAW_THUMBNAIL_")]
+-- 
+GitLab
+
