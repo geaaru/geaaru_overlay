@@ -1,0 +1,56 @@
+# Distributed under the terms of the GNU General Public License v2
+
+EAPI=6
+
+inherit cmake-utils
+
+DESCRIPTION="An open-source Zelda-like 2D game engine"
+HOMEPAGE="http://www.solarus-games.org/"
+SRC_URI="https://gitlab.com/api/v4/projects/6933824/repository/archive.tar.bz2?sha=3aec70b0556a8d7aed7903d1a3e4d9a18c5d1649 -> solarus-1.6.5-3aec70b.tar.bz2"
+
+LICENSE="GPL-3"
+SLOT="0"
+KEYWORDS="*"
+IUSE="doc luajit"
+
+RDEPEND="
+	dev-games/physfs
+	media-libs/libmodplug
+	>=media-libs/libsdl2-2.0.1[X,joystick,video]
+	media-libs/libvorbis
+	media-libs/openal
+	media-libs/sdl2-image[png]
+	>=media-libs/sdl2-ttf-2.0.12
+	luajit? ( dev-lang/luajit:2 )
+	!luajit? ( dev-lang/lua:0 )"
+DEPEND="${RDEPEND}
+	doc? ( app-doc/doxygen )"
+
+post_src_unpack() {
+	mv solarus-* ${S}
+}
+
+src_prepare() {
+	cmake-utils_src_prepare
+}
+
+src_configure() {
+	local mycmakeargs=(
+		-DSOLARUS_INSTALL_DESTINATION="/usr/bin"
+		-DSOLARUS_USE_LUAJIT="$(usex luajit)"
+	)
+	cmake-utils_src_configure
+}
+
+src_compile() {
+	cmake-utils_src_compile
+	if use doc ; then
+		cd doc || die
+		doxygen || die
+	fi
+}
+
+src_install() {
+	cmake-utils_src_install
+	use doc && dodoc -r doc/${PV%.*}/html/*
+}

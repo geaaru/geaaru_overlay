@@ -1,0 +1,9 @@
+solarus:
+  generator: gitlab-1
+  packages:
+    - solarus:
+        gitlab:
+          user: solarus-games
+          repo: solarus
+          server: "gitlab.com"
+          query: tags
