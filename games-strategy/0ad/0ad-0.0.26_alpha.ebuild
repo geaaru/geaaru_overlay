@@ -67,15 +67,12 @@ pkg_setup() {
 
 src_configure() {
 	local myconf=(
-		--with-system-nvtt
-		--with-system-miniupnpc
 		--minimal-flags
 		$(usex nvtt "" "--without-nvtt")
 		$(usex pch "" "--without-pch")
 		$(usex test "" "--without-tests")
 		$(usex editor "--atlas" "")
 		$(usex lobby "" "--without-lobby")
-		--collada
 		--bindir="/usr/bin"
 		--libdir="/usr/$(get_libdir)"/${PN}
 		--datadir="/usr/share/${PN}"
