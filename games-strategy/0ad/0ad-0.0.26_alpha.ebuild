@@ -65,6 +65,17 @@ pkg_setup() {
 	python-any-r1_pkg_setup
 }
 
+src_prepare() {
+	default
+
+	# https://bugs.gentoo.org/859244
+	filter-lto
+
+	# SpiderMonkey's configure no longer recognises --build for
+	# the build tuple
+	sed -i -e "/--build/d" libraries/source/spidermonkey/build.sh || die
+}
+
 src_configure() {
 	local myconf=(
 		--minimal-flags
@@ -108,10 +119,12 @@ src_compile() {
 	fi
 
 	# build bundled and patched spidermonkey
+	# Forcing set SHELL to avoid issue on os detection
 	cd libraries/source/spidermonkey || die
 	elog "Building bundled SpiderMonkey (bug #768840)"
 	XARGS="${EPREFIX}/usr/bin/xargs" \
 		JOBS="-j$(makeopts_jobs)" \
+		SHELL="/bin/bash" \
 		./build.sh \
 	|| die "Failed to build bundled SpiderMonkey"
 
