@@ -5,12 +5,14 @@ EAPI=7
 WX_GTK_VER="3.0-gtk3"
 
 PYTHON_COMPAT=( python3+ )
-inherit eutils wxwidgets toolchain-funcs gnome2-utils python-any-r1
+inherit destkop flag-o-matic eutils wxwidgets toolchain-funcs gnome2-utils python-any-r1
 
 MY_P=0ad-${PV/_/-}
 DESCRIPTION="A free, real-time strategy game"
 HOMEPAGE="https://play0ad.com/"
-SRC_URI="http://releases.wildfiregames.com/${MY_P}-unix-build.tar.xz"
+#SRC_URI="http://releases.wildfiregames.com/${MY_P}-unix-build.tar.xz"
+LAST_TAG="0.0.26_alpha"
+SRC_URI="https://github.com/0ad/0ad/tarball/1dfaca89e60239decd8bcd0ce783d3a6fa23e5f1 -> ${PN}-${LAST_TAG}_p20240126.tar.gz"
 
 LICENSE="BitstreamVera CC-BY-SA-3.0 GPL-2 LGPL-2.1 LPPL-1.3c MIT ZLIB"
 SLOT="0"
@@ -25,7 +27,6 @@ RDEPEND="
 	dev-libs/libsodium
 	dev-libs/libxml2
 	dev-libs/nspr
-	~games-strategy/0ad-data-${PV}
 	media-libs/libpng:0
 	media-libs/libsdl2[X,opengl,video]
 	media-libs/libvorbis
@@ -55,10 +56,11 @@ QA_PRESTRIPPED="/usr/lib64/0ad/libCollada.so /usr/bin/0ad"
 
 PATCHES=(
 	"${FILESDIR}"/${PN}-0.0.24b_alpha-respect-tc.patch
-	"${FILESDIR}"/${PN}-0.0.25b_alpha-fix-setuptools.patch
-	# https://code.wildfiregames.com/D4997
-	"${FILESDIR}"/${P}-add-missing-cstdint-include.patch
 )
+
+post_src_unpack() {
+	mv 0ad-* ${S}
+}
 
 pkg_setup() {
 	use editor && setup-wxwidgets
@@ -74,6 +76,8 @@ src_prepare() {
 	# SpiderMonkey's configure no longer recognises --build for
 	# the build tuple
 	sed -i -e "/--build/d" libraries/source/spidermonkey/build.sh || die
+
+	rm binaries/data/tools/fontbuilder/fonts/*.txt
 }
 
 src_configure() {
@@ -110,7 +114,6 @@ src_compile() {
 
 	# Build bundled NVTT
 	# nvtt is abandoned upstream and 0ad has forked it and added fixes.
-	# Use their copy. bug #768930
 	if use nvtt ; then
 		cd libraries/source/nvtt || die
 		elog "Building bundled NVTT"
@@ -119,12 +122,11 @@ src_compile() {
 	fi
 
 	# build bundled and patched spidermonkey
-	# Forcing set SHELL to avoid issue on os detection
 	cd libraries/source/spidermonkey || die
 	elog "Building bundled SpiderMonkey (bug #768840)"
 	XARGS="${EPREFIX}/usr/bin/xargs" \
-		JOBS="-j$(makeopts_jobs)" \
 		SHELL="/bin/bash" \
+		JOBS="-j$(makeopts_jobs)" \
 		./build.sh \
 	|| die "Failed to build bundled SpiderMonkey"
 
@@ -133,6 +135,40 @@ src_compile() {
 	# build 0ad
 	elog "Building 0ad"
 	JOBS="-j$(makeopts_jobs)" emake -C build/workspace/gcc verbose=1
+
+	if use nvtt ; then
+		# Without nvtt the icons generation fail.
+
+		# source/lib/sysdep/os/linux/ldbg.cpp:debug_SetThreadName() tries to open /proc/self/task/${TID}/comm for writing.
+		addpredict /proc/self/task
+
+		# Based on source/tools/dist/build-archives.sh used by source/tools/dist/build.sh.
+		local archivebuild_input archivebuild_output mod_name
+		for archivebuild_input in binaries/data/mods/[A-Za-z0-9]*; do
+			mod_name="${archivebuild_input##*/}"
+			archivebuild_output="archives/${mod_name}"
+
+			mkdir -p "${archivebuild_output}" || die
+
+			einfo pyrogenesis -archivebuild="${archivebuild_input}" -archivebuild-output="${archivebuild_output}/${mod_name}.zip"
+			LD_LIBRARY_PATH="binaries/system" binaries/system/pyrogenesis \
+				-archivebuild="${archivebuild_input}" \
+				-archivebuild-output="${archivebuild_output}/${mod_name}.zip" \
+			|| die "Failed to build assets"
+
+			if [[ -f "${archivebuild_input}/mod.json" ]]; then
+				cp "${archivebuild_input}/mod.json" "${archivebuild_output}" || die
+			fi
+
+			rm -r "${archivebuild_input}" || die
+			mv "${archivebuild_output}" "${archivebuild_input}" || die
+		done
+
+		# Based on source/tools/dist/build-unix-win32.sh used by source/tools/dist/build.sh.
+		rm binaries/data/config/dev.cfg || die
+		rm -r binaries/data/mods/_test.* || die
+
+	fi
 }
 
 src_test() {
@@ -145,11 +181,13 @@ src_install() {
 	use editor && newbin binaries/system/ActorEditor 0ad-ActorEditor
 
 	insinto /usr/share/${PN}
-	doins -r binaries/data/l10n
+	#doins -r binaries/data/l10n
+	#doins -r binaries/data/{l10n,config,mods,tools}
+	doins -r binaries/data/*
 
 	# Install bundled SpiderMonkey and collada
 	exeinto /usr/$(get_libdir)/${PN}
-	doexe binaries/system/{libCollada,libmozjs78-ps-release}.so
+	doexe binaries/system/{libCollada,libmozjs91-ps-release}.so
 
 	use nvtt && doexe binaries/system/{libnvtt,libnvcore,libnvimage,libnvmath}.so
 	use editor && doexe binaries/system/libAtlasUI.so
@@ -170,3 +208,4 @@ pkg_postinst() {
 pkg_postrm() {
 	gnome2_icon_cache_update
 }
+
