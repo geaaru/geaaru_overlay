@@ -1,0 +1,33 @@
+diff --git a/source/ps/DllLoader.cpp b/source/ps/DllLoader.cpp
+index 928ffb4cbd..1a9701e551 100644
+--- a/source/ps/DllLoader.cpp
++++ b/source/ps/DllLoader.cpp
+@@ -22,6 +22,8 @@
+ #include "lib/timer.h"
+ #include "lib/posix/posix_dlfcn.h"
+ 
++#include <cstdlib>
++
+ #if OS_MACOSX
+ # include "lib/sysdep/os/osx/osx_bundle.h"
+ #endif
+@@ -73,7 +75,18 @@ CStr DllLoader::GenerateFilename(const CStr& name, const CStr& suffix, const CSt
+ 	CStr n;
+ 
+ 	if (!g_Libdir.empty())
+-		n = g_Libdir + "/";
++	{
++		// Override libdir with ZEROAD_LIBPATH
++		const char *bpath = std::getenv("ZEROAD_LIBPATH");
++		if (bpath != NULL)
++		{
++			n = std::string(bpath) + "/";
++		}
++		else
++		{
++			n = g_Libdir + "/";
++		}
++	}
+ 
+ #if OS_MACOSX
+ 	if (osx_IsAppBundleValid())

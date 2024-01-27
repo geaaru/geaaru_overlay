@@ -56,6 +56,7 @@ QA_PRESTRIPPED="/usr/lib64/0ad/libCollada.so /usr/bin/0ad"
 
 PATCHES=(
 	"${FILESDIR}"/${PN}-0.0.24b_alpha-respect-tc.patch
+	"${FILESDIR}"/${PN}-dlopen.patch
 )
 
 post_src_unpack() {
@@ -139,6 +140,8 @@ src_compile() {
 	if use nvtt ; then
 		# Without nvtt the icons generation fail.
 
+		rm binaries/sytem/*.dll
+
 		# source/lib/sysdep/os/linux/ldbg.cpp:debug_SetThreadName() tries to open /proc/self/task/${TID}/comm for writing.
 		addpredict /proc/self/task
 
@@ -151,7 +154,10 @@ src_compile() {
 			mkdir -p "${archivebuild_output}" || die
 
 			einfo pyrogenesis -archivebuild="${archivebuild_input}" -archivebuild-output="${archivebuild_output}/${mod_name}.zip"
-			LD_LIBRARY_PATH="binaries/system" binaries/system/pyrogenesis \
+			export ZEROAD_LIBPATH="$(pwd)/binaries/system"
+
+			LD_LIBRARY_PATH="binaries/system"
+				binaries/system/pyrogenesis \
 				-archivebuild="${archivebuild_input}" \
 				-archivebuild-output="${archivebuild_output}/${mod_name}.zip" \
 			|| die "Failed to build assets"
