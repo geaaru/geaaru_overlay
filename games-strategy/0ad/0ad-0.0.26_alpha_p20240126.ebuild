@@ -140,8 +140,6 @@ src_compile() {
 	if use nvtt ; then
 		# Without nvtt the icons generation fail.
 
-		rm binaries/sytem/*.dll
-
 		# source/lib/sysdep/os/linux/ldbg.cpp:debug_SetThreadName() tries to open /proc/self/task/${TID}/comm for writing.
 		addpredict /proc/self/task
 
@@ -156,7 +154,7 @@ src_compile() {
 			einfo pyrogenesis -archivebuild="${archivebuild_input}" -archivebuild-output="${archivebuild_output}/${mod_name}.zip"
 			export ZEROAD_LIBPATH="$(pwd)/binaries/system"
 
-			LD_LIBRARY_PATH="binaries/system"
+			LD_LIBRARY_PATH="binaries/system" \
 				binaries/system/pyrogenesis \
 				-archivebuild="${archivebuild_input}" \
 				-archivebuild-output="${archivebuild_output}/${mod_name}.zip" \
