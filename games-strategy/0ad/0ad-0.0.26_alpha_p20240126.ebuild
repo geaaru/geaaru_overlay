@@ -5,7 +5,7 @@ EAPI=7
 WX_GTK_VER="3.0-gtk3"
 
 PYTHON_COMPAT=( python3+ )
-inherit destkop flag-o-matic eutils wxwidgets toolchain-funcs gnome2-utils python-any-r1
+inherit desktop flag-o-matic eutils wxwidgets toolchain-funcs gnome2-utils python-any-r1
 
 MY_P=0ad-${PV/_/-}
 DESCRIPTION="A free, real-time strategy game"
