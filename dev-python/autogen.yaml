@@ -323,6 +323,12 @@ setuptools_builds:
             - wheel
             - cython
 
+    - PySDL2:
+        rdepend: |
+          media-libs/libsdl2
+        depend: '${RDEPEND}'
+
+
 flit_builds:
   defaults:
     cat: dev-python
