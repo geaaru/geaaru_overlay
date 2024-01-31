@@ -71,6 +71,9 @@ src_configure() {
 		--with-dbdir=/var/lib/openvswitch \
 		$(use_enable ssl)
 
+	# Fix doc generation after alabaster upgrade (0.7.16) - See FL-12010
+	echo "html_theme = 'sphinx_rtd_theme'" >>   Documentation/conf.py
+
 	# Configure the OVN code
 	cd ..
 	econf --prefix=/usr \
