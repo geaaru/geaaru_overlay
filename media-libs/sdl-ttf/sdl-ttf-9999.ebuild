@@ -13,7 +13,7 @@ HOMEPAGE="http://www.libsdl.org/"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS="~x86 ~amd64"
+KEYWORDS="*"
 IUSE="X"
 
 DEPEND="X? ( x11-libs/libXt )
