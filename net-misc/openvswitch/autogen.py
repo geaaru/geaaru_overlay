@@ -4,9 +4,11 @@ from packaging.version import Version
 async def generate(hub, **pkginfo):
 	supported_releases = {
 		# Current LTS release
-		'2.17': { 'selector': '>=2.17,<2.17.9' },
+		'2.17': { 'selector': '>=2.17,<2.18' },
 		# New Release
-		'3.0': { 'selector': '>=3.0,<3.0.6', 'template': 'openvswitch3.tmpl' },
+		'3.0': { 'selector': '>=3.0,<3.1', 'template': 'openvswitch3.tmpl' },
+		'3.1': { 'selector': '>=3.1,<3.2', 'template': 'openvswitch3.tmpl' },
+		'3.2': { 'selector': '>=3.2,<3.3', 'template': 'openvswitch3.tmpl' },
 	}
 	github_user = "openvswitch"
 	github_repo = "ovs"
