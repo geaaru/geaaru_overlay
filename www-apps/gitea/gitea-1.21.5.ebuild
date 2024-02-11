@@ -29,10 +29,6 @@ FILECAPS=(
 	-m 711 cap_net_bind_service+ep usr/bin/gitea
 )
 
-post_src_unpack() {
-	mv go-gitea-${PN}-* "${S}"
-}
-
 pkg_setup() {
 	enewgroup git
 	enewuser git -1 /bin/bash /var/lib/gitea git
