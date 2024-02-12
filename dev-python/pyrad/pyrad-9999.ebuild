@@ -15,7 +15,7 @@ EGIT_BRANCH="master"
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~amd64 ~x86 ~arm"
+KEYWORDS=""
 IUSE="doc test"
 
 RDEPEND="dev-python/netaddr[${PYTHON_USEDEP}]
