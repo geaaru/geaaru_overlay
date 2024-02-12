@@ -1,9 +1,7 @@
-# Copyright 1999-2014 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Heade$
 
-EAPI=6
-PYTHON_COMPAT=( python{3_5,3_6,3_7} )
+EAPI=7
+PYTHON_COMPAT=( python3+ )
 
 inherit distutils-r1 git-r3
 
@@ -12,11 +10,11 @@ HOMEPAGE="https://pypi.python.org/pypi/pyrad"
 
 EGIT_REPO_URI="https://github.com/geaaru/pyrad.git"
 EGIT_BRANCH="master"
-EGIT_COMMIT="c9edcca29d460d09cb41623fe75f7f1931738e79"
+EGIT_COMMIT="7c1ff50703a40172b186d724d517a5e2705d00dd"
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~amd64 ~x86 ~arm"
+KEYWORDS="*"
 IUSE="doc test"
 
 RDEPEND="dev-python/netaddr[${PYTHON_USEDEP}]
@@ -33,4 +31,3 @@ DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]
 			>=dev-python/testtools-0.9.34[${PYTHON_USEDEP}] )
 	doc? ( dev-python/sphinx[${PYTHON_USEDEP}] )
 ${RDEPEND}"
-
