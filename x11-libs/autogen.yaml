@@ -1,0 +1,13 @@
+xorg_lib_pkgs:
+  generator: gitlab-1
+  defaults:
+    cat: x11-libs
+    gitlab:
+      user: xorg/lib
+      server: gitlab.freedesktop.org
+      query: tags
+  packages:
+    - libxcvt:
+        license: BSD
+        gitlab:
+          repo: libxcvt
