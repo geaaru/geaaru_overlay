@@ -328,6 +328,19 @@ setuptools_builds:
           media-libs/libsdl2
         depend: '${RDEPEND}'
 
+    - pycups:
+        rdepend: "net-print/cups"
+        depend: 'net-print/cups'
+        iuse: examples
+        license: GPL-2
+        body: |
+          python_install_all() {
+            if use examples; then
+              dodoc -r examples
+              docompress -x /usr/share/doc/${PF}/examples
+            fi
+            distutils-r1_python_install_all
+          }
 
 flit_builds:
   defaults:
