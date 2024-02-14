@@ -148,7 +148,7 @@ async def release_gen(project, hub, extra_args, **pkginfo):
 	if "query_parameters" in pkginfo["gitlab"]:
 		qparams = pkginfo["gitlab"]["query_parameters"]
 
-	releases = project.releases.list(query_parameters=qparams)
+	releases = project.releases.list(query_parameters=qparams, iterator=True)
 
 	# NOTE: the releases by default are returned in desc order
 
@@ -181,7 +181,7 @@ async def release_gen(project, hub, extra_args, **pkginfo):
 
 		# TODO: The version parsing must be reviewed to support filters.
 		release_version = found_version.name
-		version = await sanitize_version(release_version, gitlab_repo, gitlab_tag_prefix)
+		version = await sanitize_version(release_version, gitlab_repo, gitlab_tagprefix)
 
 		sha = found_version.commit["id"]
 
@@ -206,7 +206,7 @@ async def release_gen(project, hub, extra_args, **pkginfo):
 				hub.pkgtools.ebuild.Artifact(
 					url=sources, final_name=f'{gitlab_repo}-{version}.{gitlab_sources_format}')],
 			"sha": sha,
-			"tag": found_version["tag_name"],
+			"tag": found_version.tag_name,
 			"release": release_version,
 		}
 
@@ -222,7 +222,7 @@ async def tag_gen(project, hub, extra_args, **pkginfo):
 	if "query_parameters" in pkginfo["gitlab"]:
 		qparams = pkginfo["gitlab"]["query_parameters"]
 	
-	tags = project.tags.list(query_parameters=qparams)
+	tags = project.tags.list(query_parameters=qparams, iterator=True)
 
 	# NOTE: the tags by default are returned in desc order
 
