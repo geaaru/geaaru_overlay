@@ -1,0 +1,20 @@
+xorg_server_pkgs:
+  generator: gitlab-1
+  defaults:
+    cat: x11-base
+    gitlab:
+      user: xorg
+      server: gitlab.freedesktop.org
+      query: tags
+  packages:
+    - xorg-server:
+        gitlab:
+          repo: xserver
+          match: ^xorg-server-([0-9.]+)$
+          tag_prefix: "xorg-server-"
+
+    - xwayland:
+        gitlab:
+          repo: xserver
+          match: ^xwayland-([0-9.]+)$
+          tag_prefix: "xwayland-"
