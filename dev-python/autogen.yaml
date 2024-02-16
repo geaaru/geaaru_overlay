@@ -342,6 +342,56 @@ setuptools_builds:
             distutils-r1_python_install_all
           }
 
+    - python-dateutil:
+        license: BSD
+        desc: "Extensions to the standard Python datetime module"
+        rdepend: 'sys-libs/timezone-data'
+        patches:
+          - 0001-zoneinfo-Get-timezone-data-from-system-tzdata.patch
+        pydeps:
+          py:all:build:
+            - six
+            - setuptools_scm
+          py:all:runtime:
+            - six
+        body: |
+          python_prepare_all() {
+            # don't install zoneinfo tarball
+            sed -i '/package_data=/d' setup.py || die
+
+            distutils-r1_python_prepare_all
+          }
+
+    - vobject:
+        license: Apache-2.0
+        pydeps:
+          py:all:runtime:
+            - python-dateutil
+
+    - utidylib:
+        license: MIT
+        rdepend: 'app-text/htmldity'
+
+    - python-levenshtein:
+        license: GPL-2
+        desc: "Functions for fast computation of Levenshtein distance, and edit operations"
+
+    - jaraco-functools:
+        pypy_name: jaraco.functools
+        license: MIT
+        desc: "Additional functions used by other projects by developer jaraco"
+        pydeps:
+          py:all:runtime:
+            - more-itertools
+            - namespace-jaraco
+          py:all:build:
+            - more-itertools
+            - namespace-jaraco
+        body: |
+          post_src_unpack() {
+            mv jaraco.functools-* "${S}"
+          }
+
 flit_builds:
   defaults:
     cat: dev-python
