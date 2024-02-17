@@ -370,7 +370,7 @@ setuptools_builds:
 
     - utidylib:
         license: MIT
-        rdepend: 'app-text/htmltidy'
+        rdepend: 'app-text/tidy-html5'
 
     - python-levenshtein:
         license: GPL-2
