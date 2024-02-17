@@ -11,7 +11,7 @@ HOMEPAGE="https://cihar.com/software/utidylib/ https://pypi.org/project/uTidylib
 SRC_URI="https://files.pythonhosted.org/packages/00/86/0b4d2061b28f5e5c2c5213361f20709d1add4fdcda200ba08788f171137f/uTidylib-0.9.tar.gz -> uTidylib-0.9.tar.gz"
 
 DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]"
-RDEPEND="app-text/htmldity"
+RDEPEND="app-text/htmltidy"
 IUSE=""
 SLOT="0"
 LICENSE="MIT"
