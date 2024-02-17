@@ -16,3 +16,7 @@ SLOT="0"
 LICENSE="GPL-2"
 KEYWORDS="*"
 S="${WORKDIR}/python-levenshtein-0.25.0"
+
+post_src_unpack() {
+	mv python-* "${S}"
+}

@@ -374,7 +374,12 @@ setuptools_builds:
 
     - python-levenshtein:
         license: GPL-2
+        pypy_name: python-Levenshtein
         desc: "Functions for fast computation of Levenshtein distance, and edit operations"
+        body: |
+          post_src_unpack() {
+            mv python-* "${S}"
+          }
 
     - jaraco-functools:
         pypy_name: jaraco.functools
