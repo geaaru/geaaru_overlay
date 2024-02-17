@@ -1,9 +1,9 @@
-htmltidy:
+tidy-html5:
   generator: github-1
   defaults:
     cat: app-text
   packages:
-    - htmltidy:
+    - tidy-html5:
         github:
           repo: tidy-html5
           user: htacg
