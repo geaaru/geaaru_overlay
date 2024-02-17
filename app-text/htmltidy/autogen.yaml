@@ -1,0 +1,18 @@
+htmltidy:
+  generator: github-1
+  defaults:
+    cat: app-text
+  packages:
+    - htmltidy:
+        github:
+          repo: tidy-html5
+          user: htacg
+          query: tags
+        desc: "Tidy the layout and correct errors in HTML and XML documents"
+        homepage: "https://www.html-tidy.org/"
+        license: BSD
+        patches:
+          - htmltidy-5.8.0-no_static_lib.patch
+          - htmltidy-5.8.0-ol_type.patch
+
+
