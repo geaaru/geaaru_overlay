@@ -371,6 +371,10 @@ setuptools_builds:
     - utidylib:
         license: MIT
         rdepend: 'app-text/tidy-html5'
+        body: |
+          post_src_unpack() {
+            mv uTidylib-* "${S}"
+          }
 
     - python-levenshtein:
         license: GPL-2

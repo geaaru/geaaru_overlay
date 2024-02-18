@@ -17,3 +17,7 @@ SLOT="0"
 LICENSE="MIT"
 KEYWORDS="*"
 S="${WORKDIR}/utidylib-0.9"
+
+post_src_unpack() {
+	mv uTidylib-* "${S}"
+}
