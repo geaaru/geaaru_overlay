@@ -12,7 +12,6 @@ SRC_URI="https://files.pythonhosted.org/packages/de/95/3ae0e46a67f1c687adae77a89
 
 DEPEND="
 	dev-python/setuptools[${PYTHON_USEDEP}]
-	dev-python/random2[${PYTHON_USEDEP}]
 	dev-python/six[${PYTHON_USEDEP}]"
 RDEPEND="
 	dev-python/random2[${PYTHON_USEDEP}]

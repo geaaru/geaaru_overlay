@@ -409,7 +409,6 @@ setuptools_builds:
             - random2
             - six
           py:all:build:
-            - random2
             - six
 
 
