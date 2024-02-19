@@ -401,6 +401,18 @@ setuptools_builds:
             mv jaraco.functools-* "${S}"
           }
 
+    - pysol_cards:
+        license: 'Apache-2.0 MIT'
+        desc: "Deal PySol FreeCell cards"
+        pydeps:
+          py:all:runtime:
+            - random2
+            - six
+          py:all:build:
+            - random2
+            - six
+
+
 flit_builds:
   defaults:
     cat: dev-python
