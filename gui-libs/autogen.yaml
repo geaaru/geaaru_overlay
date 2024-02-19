@@ -1,0 +1,12 @@
+egl_wayland:
+  generator: github-1
+  defaults:
+    github:
+      user: NVIDIA
+  packages:
+    - egl-wayland:
+        github:
+          repo: egl-wayland
+          query: releases
+        patches:
+          - "1.1.6-remove-werror.patch"
