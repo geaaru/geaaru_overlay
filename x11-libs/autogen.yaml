@@ -11,3 +11,4 @@ xorg_lib_pkgs:
         license: BSD
         gitlab:
           repo: libxcvt
+          tag_prefix: "lbxcvt-"
