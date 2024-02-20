@@ -1,0 +1,13 @@
+libglvnd:
+  generator: gitlab-1
+  defaults:
+    cat: media-libs
+    gitlab:
+      user: glvnd
+      repo: libglvnd
+      server: gitlab.freedesktop.org
+      query: releases
+  packages:
+    - libglvnd:
+        patches:
+          - 1.7.0-backport-pr291.patch
