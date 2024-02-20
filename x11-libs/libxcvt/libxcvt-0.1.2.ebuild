@@ -12,12 +12,14 @@ LICENSE="BSD"
 SLOT="0"
 KEYWORDS="*"
 
-S="${WORKDIR}/${PN}-${PN}-${PV}"
-
 DEPEND=""
 RDEPEND="${DEPEND}
 	!<=x11-base/xorg-server-1.20.11
 "
+
+post_src_unpack() {
+	mv ${PN}-* "${S}"
+}
 
 # Override xorg-3's src_prepare
 src_prepare() {
