@@ -74,6 +74,10 @@ RDEPEND="${DEPEND}
 	selinux? ( sec-policy/selinux-xserver )
 "
 
+post_src_unpack() {
+	mv xserver-* "${S}"
+}
+
 src_configure() {
 	local emesonargs=(
 		--localstatedir "${EPREFIX}"/var
