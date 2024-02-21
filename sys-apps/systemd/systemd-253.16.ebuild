@@ -62,7 +62,9 @@ COMMON_DEPEND=">=sys-apps/util-linux-2.30:0=[${MULTILIB_USEDEP}]
 	qrcode? ( media-gfx/qrencode:0= )
 	seccomp? ( >=sys-libs/libseccomp-2.3.3:0= )
 	selinux? ( sys-libs/libselinux:0= )
-	xkb? ( >=x11-libs/libxkbcommon-0.4.1:0= )"
+	xkb? ( >=x11-libs/libxkbcommon-0.4.1:0= )
+	app-arch/zstd
+"
 
 # baselayout-2.2 has /run
 RDEPEND="${COMMON_DEPEND}
