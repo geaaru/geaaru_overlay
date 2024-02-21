@@ -46,6 +46,10 @@ RDEPEND="${DEPEND}
 	!<=x11-base/xorg-server-1.20.11
 "
 
+post_src_unpack() {
+	mv xserver-* "${S}"
+}
+
 src_configure() {
 	local emesonargs=(
 		$(meson_use rpc secure-rpc)
