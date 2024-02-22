@@ -35,7 +35,6 @@ DEPEND="
 	elogind? (
 		sys-apps/dbus
 		sys-auth/elogind[pam]
-		sys-libs/pam[elogind]
 	)
 	kdrive? (
 		>=x11-libs/libXext-1.0.99.4
