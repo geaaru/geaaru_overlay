@@ -1,0 +1,12 @@
+wayland_utils:
+  generator: gitlab-1
+  defaults:
+    cat: app-misc
+    gitlab:
+      server: gitlab.freedesktop.org
+      user: wayland
+      query: releases
+  packages:
+    - wayland-utils:
+        gitlab:
+          repo: wayland-utils
