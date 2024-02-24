@@ -11,3 +11,20 @@ xorg_lib_pkgs:
         license: BSD
         gitlab:
           repo: libxcvt
+
+xorg_lib_dirlisting_pkgs:
+  generator: dirlisting-1
+  defaults:
+    cat: x11-libs
+    dir:
+      order: asc
+      format: tar.xz
+      url: https://www.x.org/releases/individual/lib/
+  packages:
+    - libX11:
+        desc: X.Org X11 library
+        files:
+          - libX11
+    - libXpm:
+        files:
+          - libXpm
