@@ -1,0 +1,8 @@
+waydroid:
+  generator: github-1
+  packages:
+    - waydroid:
+        github:
+          user: waydroid
+          repo: waydroid
+          query: tags
