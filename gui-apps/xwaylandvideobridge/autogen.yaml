@@ -1,0 +1,10 @@
+xwaylandvideobridge:
+  generator: github-1
+  defaults:
+    cat: gui-apps
+    github:
+      user: KDE
+  packages:
+    - xwaylandvideobridge:
+        github:
+          query: tags
