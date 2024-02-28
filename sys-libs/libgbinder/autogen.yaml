@@ -1,0 +1,10 @@
+libgbinder:
+  generator: github-1
+  defaults:
+    cat: sys-libs
+    github:
+      user: mer-hybris
+  packages:
+    - libgbinder:
+        github:
+          query: tags
