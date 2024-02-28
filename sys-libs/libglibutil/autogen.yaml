@@ -1,0 +1,10 @@
+libglibutil:
+  generator: github-1
+  defaults:
+    cat: sys-libs
+    github:
+      user: sailfishos
+  packages:
+    - libglibutil:
+        github:
+          query: tags
