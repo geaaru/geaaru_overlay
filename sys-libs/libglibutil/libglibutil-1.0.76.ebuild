@@ -30,7 +30,9 @@ src_compile() {
 }
 
 src_install() {
-	emake install LIBDIR=/usr/$(get_libdir) DESTDIR="${D}"
+	# Using install-dev instead of install to
+	# install includes files too.
+	emake install-dev LIBDIR=/usr/$(get_libdir) DESTDIR="${D}"
 
 	dodir /usr/share/pkgconfig
 	insinto /usr/share/pkgconfig
