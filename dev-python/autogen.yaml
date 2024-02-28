@@ -1,4 +1,3 @@
-#
 simple:
   defaults:
     cat: dev-python
@@ -459,3 +458,16 @@ poetry_builds:
             distutils-r1_src_prepare
           }
 
+
+custom_github_builds:
+  generator: github-1
+  defaults:
+    cat: dev-python
+    github:
+      query: tags
+  packages:
+    - gbinder-python:
+        github:
+          user: erfanoabdi
+          repo: gbinder-python
+        desc: Python bindings for libgbinder
