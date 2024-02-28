@@ -20,18 +20,19 @@ post_src_unpack() {
 
 src_compile() {
 	# do nothing
+	echo "Nothing to compile. Go ahead"
 }
 
 src_install() {
 	USE_SYSTEMD=$(usex systemd 1 0) \
 		USE_NFTABLES=$(usex nftables 1 0) \
-		PREFIX=${D}/usr \
+		DESTDIR=${D} \
 		emake install
 
 	if use apparmor ; then
 		USE_SYSTEMD=$(usex systemd 1 0) \
 			USE_NFTABLES=$(usex nftables 1 0) \
-			PREFIX=${D}/usr \
+			DESTDIR=${D} \
 		emake install_apparmor
 	fi
 }
