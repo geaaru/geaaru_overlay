@@ -410,6 +410,17 @@ setuptools_builds:
           py:all:build:
             - six
 
+    # Used by waydroid
+    - pyclip:
+        license: 'Apache-2.0'
+        desc: 'Cross-platform Clipboard module for Python with binary support'
+        body: |
+          src_prepare() {
+            # Fix README.md path.
+            sed -i -e 's|docs/README.md|README.md|g' setup.py
+
+            default
+          }
 
 flit_builds:
   defaults:
