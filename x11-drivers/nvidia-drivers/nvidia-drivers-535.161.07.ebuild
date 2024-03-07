@@ -19,7 +19,7 @@ SRC_URI="
 
 LICENSE="GPL-2 NVIDIA-r2"
 SLOT="0/${PV%.*}"
-KEYWORDS="-* ~amd64 ~arm64"
+KEYWORDS="*"
 RESTRICT="bindist strip"
 EMULTILIB_PKG="true"
 
