@@ -93,10 +93,6 @@ nv_do_fixups() {
 	fi
 }
 
-nv_use() {
-	return 0;
-}
-
 # Check tls type
 _nv_tls() {
 	# Always install both.
@@ -112,7 +108,6 @@ root_install() {
 	local myperms="$3"
 	local mymodule="${4#MODULE:}"
 
-	nv_use "${mymodule}" || return 0
 	einfo "[${mymodule:-*}] Installing '${myfile}' with perms ${myperms} to '${mydir%/}'."
 
 	if ! [ -e "${myfile}" ] ; then
@@ -133,7 +128,6 @@ nv_install() {
 	local myperms="$3"
 	local mymodule="${4#MODULE:}"
 
-	nv_use "${mymodule}" || return 0
 	einfo "[${mymodule:-*}] Installing '${myfile}' with perms ${myperms} to '${mydir%/}'."
 
 	if ! [ -e "${myfile}" ] ; then
@@ -163,7 +157,6 @@ nv_symlink() {
 	local mytgt="${2#/}"
 	local mysrc="$3"
 	local mymodule="${4#MODULE:}"
-	nv_use "${mymodule}" || return 0
 	einfo "[${mymodule:-*}] Linking '${mysrc}' to '${mytgt}' in '${mydir%/}'."
 	dosym "${mysrc}" "${mydir%/}/${mytgt#/}"
 }
@@ -180,7 +173,6 @@ nv_symlink_lib_arch() {
 
 # <dir> <name> <perms> <MODULE:>
 nv_install_modprobe() {
-	nv_use "${4#MODULE:}" || return 0
 	# install nvidia-modprobe setuid and symlink in /usr/bin (bug #505092)
 	nv_install "${1}" "${2}" "${3}" "${4}"
 	fowners root:video "${NV_ROOT}/${1%/}/nvidia-modprobe"
@@ -189,7 +181,6 @@ nv_install_modprobe() {
 
 # <dir> <file> <perms> <MODULE:>
 nv_install_outputclass_config() {
-	nv_use "${4#MODULE:}" || return 0
 	nv_install "${1}" "${2}" "${3}" "${4}"
 	sed -e '/EndSection/ i\\tModulePath "'"${NV_NATIVE_LIBDIR}"'"\n\tModulePath "'"${NV_NATIVE_LIBDIR}/${NV_X_MODDIR}"'"\n\tModulePath "'"${NV_NATIVE_LIBDIR}/${NV_OPENGL_VEND_DIR}/extensions"'"' \
 		-i "${D%/}/${NV_ROOT#/}/${1#/}/${2#/}"
@@ -197,7 +188,6 @@ nv_install_outputclass_config() {
 
 # <dir> <file> <perms> <MODULE:>
 nv_install_desktop() {
-	nv_use "${4#MODULE:}" || return 0
 	nv_install "${1%/*}" "${2}" "${3}" "${4}"
 	sed -e 's|__UTILS_PATH__|'"${NV_ROOT}/bin"'|' \
 		-e 's|__PIXMAP_PATH__|'"${NV_ROOT}/${1/applications/doc}"'|' \
