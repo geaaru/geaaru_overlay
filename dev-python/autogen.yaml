@@ -67,6 +67,7 @@ simple:
             - setuptools
             - pbr
     - dnspython:
+        license: ISC
         pydeps:
           py:3:build:
             - idna
@@ -74,6 +75,11 @@ simple:
           py:3:runtime:
             - idna
             - cryptography
+        body: |
+          src_prepare() {
+            sed -i -e 's|^license =.*|license = {text = "ISC"}|g' pyproject.toml
+            distutils-r1_src_prepare
+          }
 
 
 hatchling_builds:
