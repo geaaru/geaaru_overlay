@@ -105,13 +105,8 @@ pkg_setup() {
 	python-single-r1_pkg_setup
 }
 
-src_unpack() {
-	if [[ ${PV} = 9999* ]]; then
-		git-r3_src_unpack
-	else
-		default
-	fi
-	[[ -d "${S}" ]] || mv -v "${WORKDIR}/${P}_202"?-??-* "${S}" || die
+post_src_unpack() {
+	mv ${PN}-* "${S}"
 }
 
 src_prepare() {
