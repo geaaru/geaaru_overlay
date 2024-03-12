@@ -17,12 +17,12 @@ KEYWORDS="*"
 IUSE="systemd apparmor nftables"
 
 DEPEND="
-	dev-python/gbinder-python[${PYTHON_COMPAT}]
+	dev-python/gbinder-python[${PYTHON_USEDEP}]
 	sys-libs/libgbinder
 "
 RDEPEND="$DEPEND
 	app-emulation/lxc
-	dev-python/pyclip[${PYTHON_COMPAT}]
+	dev-python/pyclip[${PYTHON_USEDEP}]
 "
 
 post_src_unpack() {
