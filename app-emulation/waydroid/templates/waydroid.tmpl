@@ -4,7 +4,7 @@ EAPI=7
 
 PYTHON_COMPAT=( python3+ )
 
-inherit autotools distutils-r1
+inherit autotools distutils-r1 xdg-utils
 
 SRC_URI="{{ src_uri }}"
 
@@ -35,7 +35,8 @@ src_prepare() {
 	# on container when this option is present:
 	# lxc.apparmor.profile = unconfined
 	sed -i -e 's|^lxc.apparmor.profile|#lxc.apparmor.profile|g' \
-		data/configs/config_3
+		data/configs/config_3 || die "Error on update config_3"
+	eapply_user
 }
 
 src_compile() {
@@ -55,6 +56,14 @@ src_install() {
 			DESTDIR=${D} \
 		emake install_apparmor
 	fi
+}
+
+pkg_postinst() {
+	xdg_desktop_database_update
+}
+
+pkg_postrm() {
+	xdg_desktop_database_update
 }
 
 # vim: filetype=ebuild
