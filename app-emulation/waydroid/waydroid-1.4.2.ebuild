@@ -4,7 +4,7 @@ EAPI=7
 
 PYTHON_COMPAT=( python3+ )
 
-inherit autotools
+inherit autotools distutils-r1
 
 SRC_URI="https://github.com/waydroid/waydroid/tarball/209c90d47330ddb357b5209309c80c4257f05fe3 -> waydroid-1.4.2-209c90d.tar.gz"
 
