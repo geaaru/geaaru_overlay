@@ -36,6 +36,15 @@ src_prepare() {
 	# lxc.apparmor.profile = unconfined
 	sed -i -e 's|^lxc.apparmor.profile|#lxc.apparmor.profile|g' \
 		data/configs/config_3 || die "Error on update config_3"
+
+	# Avoid Probing of AshMem not available
+	# in vanilla kernel. When the driver will be available
+	# this could be added in the autoload.d directory.
+	sed -i -e 's|helpers.drivers.probeAshmemDriver|#helpers.drivers.probeAshmemDriver|g' \
+		tools/actions/container_manager.py \
+		tools/actions/initializer.py \
+		tools/actions/upgrader.py || die "Error on disable ashmem probe"
+
 	eapply_user
 }
 
