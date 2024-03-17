@@ -70,7 +70,6 @@ RDEPEND="
 	lv2? ( media-libs/lilv )
 	pipewire-alsa? (
 		>=media-libs/alsa-lib-1.1.7
-		!media-plugins/alsa-plugins[pulseaudio]
 	)
 	!pipewire-alsa? ( media-plugins/alsa-plugins[pulseaudio] )
 	ssl? ( dev-libs/openssl:= )
@@ -79,9 +78,12 @@ RDEPEND="
 	X? (
 		media-libs/libcanberra
 		x11-libs/libX11
+		>=x11-libs/libXfixes-6.0.0
 	)
 	zeroconf? ( net-dns/avahi )
 "
+
+# !media-plugins/alsa-plugins[pulseaudio]
 
 DEPEND="${RDEPEND}
 	>=sys-kernel/linux-headers-4.19-r1"
