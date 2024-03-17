@@ -28,3 +28,7 @@ xorg_lib_dirlisting_pkgs:
     - libXpm:
         files:
           - libXpm
+    - libXfixes:
+        desc: X.Org Xfixes library
+        files:
+          - libXfixes
