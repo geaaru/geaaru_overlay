@@ -1,0 +1,11 @@
+pipewire:
+  generator:
+    github-1
+  packages:
+    - pipewire:
+        github:
+          user: PipeWire
+          query: tags
+        revision:
+          0.3.59: 1
+
