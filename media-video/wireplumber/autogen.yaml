@@ -1,0 +1,8 @@
+wireplumber:
+  generator: github-1
+  packages:
+    - wireplumber:
+        github:
+          user: PipeWire
+          repo: wireplumber
+          query: tags
