@@ -6,7 +6,7 @@ LUA_COMPAT=( lua5-{1,3} )
 
 inherit lua-single meson systemd user
 
-SRC_URI="https://github.com/PipeWire/wireplumber/tarball/2249d8d9df121cec987527327050924ba34b3930 -> wireplumber-0.4.90-2249d8d.tar.gz"
+SRC_URI="https://github.com/PipeWire/wireplumber/tarball/59d190a2bd400f3b093f99b16fc0fb06f6cb2cfe -> wireplumber-0.5.0-59d190a.tar.gz"
 KEYWORDS="*"
 DESCRIPTION="Session and policy manager for Pipewire"
 HOMEPAGE="https://gitlab.freedesktop.org/pipewire/wireplumber"
@@ -47,6 +47,10 @@ PATCHES=(
 pkg_setup() {
 	enewgroup pipewire
 	enewuser pipewire -1 -1 /var/run/pipewire "pipewire,audio"
+}
+
+post_src_unpack() {
+	mv PipeWire-wireplumber-* "${S}"
 }
 
 src_configure() {

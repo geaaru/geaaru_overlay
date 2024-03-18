@@ -49,6 +49,10 @@ pkg_setup() {
 	enewuser pipewire -1 -1 /var/run/pipewire "pipewire,audio"
 }
 
+post_src_unpack() {
+	mv PipeWire-wireplumber-* "${S}"
+}
+
 src_configure() {
 	local emesonargs=(
 		-Ddaemon=true
