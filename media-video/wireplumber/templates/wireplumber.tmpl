@@ -41,22 +41,14 @@ RDEPEND="${DEPEND}"
 DOCS=( {NEWS,README}.rst )
 
 pkg_setup() {
+	lua-single_pkg_setup
+
 	enewgroup pipewire
 	enewuser pipewire -1 -1 /var/run/pipewire "pipewire,audio"
 }
 
 post_src_unpack() {
 	mv PipeWire-wireplumber-* "${S}"
-}
-
-src_prepare() {
-	# Disable bluez_monitor and alsa_monitor by default
-	sed -i -e 's|^bluez_monitor.enabled = true|bluez_monitor.enabled = false|g' \
-		src/config/bluetooth.lua.d/50-bluez-config.lua
-	sed -i -e 's|^alsa_monitor.enabled = true|alsa_monitor.enabled = false|g' \
-		src/config/main.lua.d/50-alsa-config.lua
-
-	default
 }
 
 src_configure() {
