@@ -7,14 +7,14 @@ DISTUTILS_USE_PEP517="setuptools"
 inherit distutils-r1
 
 DESCRIPTION="A network address manipulation library for Python"
-HOMEPAGE="https://github.com/drkjam/netaddr/ https://pypi.org/project/netaddr/"
-SRC_URI="https://files.pythonhosted.org/packages/af/96/f4878091248450bbdebfbd01bf1d95821bd47eb38e756815a0431baa6b07/netaddr-0.10.1.tar.gz -> netaddr-0.10.1.tar.gz"
+HOMEPAGE=" https://pypi.org/project/netaddr/"
+SRC_URI="https://files.pythonhosted.org/packages/54/e6/0308695af3bd001c7ce503b3a8628a001841fe1def19374c06d4bce9089b/netaddr-1.2.1.tar.gz -> netaddr-1.2.1.tar.gz"
 
 DEPEND="
 	dev-python/setuptools[${PYTHON_USEDEP}]
 	dev-python/setuptools[${PYTHON_USEDEP}]"
 IUSE=""
 SLOT="0"
-LICENSE="BSD MIT"
+LICENSE="BSD"
 KEYWORDS="*"
-S="${WORKDIR}/netaddr-0.10.1"
+S="${WORKDIR}/netaddr-1.2.1"
