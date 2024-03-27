@@ -264,7 +264,6 @@ src_install() {
 	# MODULE:powerd extras
 	if use powerd; then
 		newinitd "${FILESDIR}"/nvidia-powerd.initd nvidia-powerd #923117
-		systemd_dounit systemd/system/nvidia-powerd.service
 
 		insinto /usr/share/dbus-1/system.d
 		doins nvidia-dbus.conf
