@@ -19,7 +19,7 @@ SRC_URI="
 
 LICENSE="GPL-2 NVIDIA-r2"
 SLOT="0/${PV%.*}"
-KEYWORDS=""
+KEYWORDS="*"
 RESTRICT="bindist strip"
 EMULTILIB_PKG="true"
 
@@ -63,7 +63,7 @@ NV_DISTFILES_PATH="${NV_ROOT}/distfiles/"
 NV_NATIVE_LIBDIR="${NV_ROOT%/}/lib64"
 NV_COMPAT32_LIBDIR="${NV_ROOT%/}/lib32"
 
-QA_PREBUILT="${NV_ROOT#${EPREFIX}/}/*"
+QA_PREBUILT="lib/firmware/* ${NV_ROOT#${EPREFIX}/}/*"
 
 # Relative to $NV_ROOT
 NV_BINDIR="bin"
@@ -85,11 +85,6 @@ nv_do_fixups() {
 	foo=$(ls ${D}${NV_NATIVE_LIBDIR}/libnvidia-egl-wayland.so.1.*)
 	if [ -e "$foo" ] && [ ! -e "${D}${NV_NATIVE_LIBDIR}/libnvidia-egl-wayland.so.1" ]; then
 		dosym ${foo##*/} ${NV_NATIVE_LIBDIR}/libnvidia-egl-wayland.so.1
-	fi
-	# This creates a symlink so that nvidia-settings can find the default nvidia application profiles. Weird issue.
-	foo=$(ls ${D}${NV_ROOT}/share/nvidia/*-key-documentation)
-	if [ -e "$foo" ]; then
-		dosym ${foo##*/} ${NV_ROOT}/share/nvidia/nvidia-application-profiles-key-documentation
 	fi
 }
 
@@ -165,7 +160,6 @@ src_install() {
 	local libdir=$(get_libdir)
 	local -A paths=(
 		[APPLICATION_PROFILE]=/usr/share/nvidia
-		[CUDA_ICD]=/etc/OpenCL/vendors
 		[EGL_EXTERNAL_PLATFORM_JSON]=/usr/share/egl/egl_external_platform.d
 		[FIRMWARE]=/lib/firmware/nvidia/${PV}
 		[GBM_BACKEND_LIB_SYMLINK]=/usr/${libdir}/gbm
@@ -174,10 +168,9 @@ src_install() {
 		[VULKAN_ICD_JSON]=/usr/share/vulkan
 		[WINE_LIB]=/usr/${libdir}/nvidia/wine
 		[XORG_OUTPUTCLASS_CONFIG]=/usr/share/X11/xorg.conf.d
+		[CUDA_ICD]=/etc/OpenCL/vendors
 
-		[GLX_MODULE_SHARED_LIB]=/usr/${libdir}/xorg/modules/extensions
-		[GLX_MODULE_SYMLINK]=/usr/${libdir}/xorg/modules
-		[XMODULE_SHARED_LIB]=/usr/${libdir}/xorg/modules
+		[XMODULE_SHARED_LIB]=${NV_NATIVE_LIBDIR}/xorg/modules
 	)
 
 	local skip_files=(
@@ -186,18 +179,17 @@ src_install() {
 		libnvidia-{gtk,wayland-client} nvidia-{settings,xconfig} # from source
 		#libnvidia-egl-gbm 15_nvidia_gbm # gui-libs/egl-gbm
 		#libnvidia-egl-wayland 10_nvidia_wayland # gui-libs/egl-wayland
-		libnvidia-pkcs11.so # using the openssl3 version instead
+		#libnvidia-pkcs11.so # using the openssl3 version instead
+		libnvidia-pkcs11-openssl3.so # waiting for openssl v3
 	)
 	local skip_modules=(
 		$(usev !X "nvfbc vdpau xdriver")
-		gsp
 		$(usev !powerd powerd)
 		installer nvpd # handled separately / built from source
 	)
 	local skip_types=(
 		GLVND_LIB GLVND_SYMLINK EGL_CLIENT.\* GLX_CLIENT.\* # media-libs/libglvnd
-		OPENCL_WRAPPER.\* # virtual/opencl
-		DOCUMENTATION DOT_DESKTOP .\*_SRC DKMS_CONF SYSTEMD_UNIT # handled separately / unused
+		DOCUMENTATION DOT_DESKTOP DKMS_CONF SYSTEMD_UNIT # handled separately / unused
 	)
 
 	local DOCS=(
@@ -229,14 +221,20 @@ src_install() {
 		elif [[ ${m[2]} == EXPLICIT_PATH ]]; then
 			into=${m[3]}
 		elif [[ ${m[2]} == *_BINARY ]]; then
-			into=/opt/bin
+			into=/opt/${P}/bin
 		elif [[ ${m[3]} == COMPAT32 ]]; then
 			continue
 		# Doesn't support systemd for now
 		elif [[ ${m[3]} == SYSTEMD_* ]]; then
 			continue
+		elif [[ ${m[2]} == OPENCL_WRAPPER_LIB ]]; then
+			into=${NV_NATIVE_LIBDIR}/${NV_OPENCL_VEND_DIR}/lib
+		elif [[ ${m[2]} == GLX_MODULE_* ]]; then
+			into=${NV_NATIVE_LIBDIR}/${NV_OPENGL_VEND_DIR}/extensions
 		elif [[ ${m[2]} == *_@(LIB|SYMLINK) ]]; then
-			into=/usr/${libdir}
+			into=${NV_NATIVE_LIBDIR}
+		elif [[ ${m[2]} == *_SRC ]]; then
+			into=${NV_ROOT}/src/$(dirname ${m[0]})
 		else
 			die "No known installation path for ${m[0]}"
 		fi
@@ -269,10 +267,6 @@ src_install() {
 		doins nvidia-dbus.conf
 	fi
 
-	# symlink non-versioned so nvidia-settings can use it even if misdetected
-	dosym nvidia-application-profiles-${PV}-key-documentation \
-		${paths[APPLICATION_PROFILE]}/nvidia-application-profiles-key-documentation
-
 	# don't attempt to strip firmware files (silences errors)
 	dostrip -x ${paths[FIRMWARE]}
 
@@ -294,7 +288,7 @@ src_install() {
 		domenu nvidia-settings.desktop
 
 		exeinto /etc/X11/xinit/xinitrc.d
-		newexe "${FILESDIR}"/95-nvidia-settings-r1 95-nvidia-settings
+		newexe "${FILESDIR}"/95-nvidia-settings.xinitrc 95-nvidia-settings
 	fi
 
 	# If 'X' flag is enabled, link nvidia-drm-outputclass.conf into system xorg.conf.d directory (xorg 1.16 and up),
@@ -334,18 +328,12 @@ src_install() {
 	fi
 
 	# Setup an env.d file with appropriate lib paths.
-	ldpath="${NV_NATIVE_LIBDIR}:${NV_NATIVE_LIBDIR}/tls"
+	ldpath="${NV_NATIVE_LIBDIR}"
 	printf -- "LDPATH=\"${ldpath}\"\n" > "${T}/09nvidia"
 	doenvd "${T}/09nvidia"
 
 	# Run fixups specific to this driver (defined at top)
 	nv_do_fixups
-
-	for x in ${D}/${NV_ROOT}/share/man/man1/*; do
-		gzip -d $x
-		doman ${x%.gz}
-	done
-	rm -rf ${D}/${NV_ROOT}/share/man || die
 
 	readme.gentoo_create_doc
 }
