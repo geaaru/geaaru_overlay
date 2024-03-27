@@ -1,7 +1,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-inherit eutils flag-o-matic linux-info linux-mod multilib-minimal nvidia-driver \
+inherit desktop eutils flag-o-matic linux-info linux-mod nvidia-driver \
 	portability toolchain-funcs unpacker user udev
 
 DESCRIPTION="NVIDIA Accelerated Graphics Driver"
