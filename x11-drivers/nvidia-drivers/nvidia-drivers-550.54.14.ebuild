@@ -1,6 +1,6 @@
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 inherit desktop eutils flag-o-matic linux-info linux-mod nvidia-driver \
 	portability toolchain-funcs unpacker user udev
 
@@ -290,8 +290,8 @@ src_install() {
 			[ -f "${D}${NV_ROOT}/bin/nvidia-${tool}" ] && dosym "${NV_ROOT}/bin/nvidia-${tool}" "/usr/bin/nvidia-${tool}"
 		done
 
-		doicon nvidia-settings/doc/nvidia-settings.png
-		domenu nvidia-settings/doc/nvidia-settings.desktop
+		doicon nvidia-settings.png
+		domenu nvidia-settings.desktop
 
 		exeinto /etc/X11/xinit/xinitrc.d
 		newexe "${FILESDIR}"/95-nvidia-settings-r1 95-nvidia-settings
