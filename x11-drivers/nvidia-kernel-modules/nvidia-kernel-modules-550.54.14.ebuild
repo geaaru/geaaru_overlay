@@ -10,7 +10,7 @@ SRC_URI=""
 
 LICENSE="GPL-2 NVIDIA-r2"
 SLOT="0/${PV%.*}"
-KEYWORDS=""
+KEYWORDS="*"
 RESTRICT="bindist"
 
 IUSE="+kms +uvm videogroup"
@@ -20,10 +20,10 @@ DEPEND="
 	virtual/linux-sources
 "
 NVDRIVERS_DIR="${EPREFIX}/opt/nvidia/nvidia-drivers-${PV}"
-S="${WORKDIR}/kernel-modules"
+S="${WORKDIR}/kernel"
 
 # Maximum supported kernel version in form major.minor
-: "${NV_MAX_KERNEL_VERSION:=6.3}"
+: "${NV_MAX_KERNEL_VERSION:=6.7}"
 
 
 nvidia_drivers_versions_check() {
@@ -78,7 +78,7 @@ pkg_setup() {
 }
 
 src_unpack() {
-	cp -r "${NVDRIVERS_DIR}/src/kernel-modules" "${S}" || die
+	cp -r "${NVDRIVERS_DIR}/src/kernel" "${S}" || die
 }
 
 
