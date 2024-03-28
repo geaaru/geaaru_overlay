@@ -1,7 +1,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
-inherit eutils flag-o-matic linux-info linux-mod multilib-minimal nvidia-driver \
+EAPI=7
+inherit desktop eutils flag-o-matic linux-info linux-mod nvidia-driver \
 	portability toolchain-funcs unpacker user udev
 
 DESCRIPTION="NVIDIA Accelerated Graphics Driver"
@@ -19,12 +19,12 @@ SRC_URI="
 
 LICENSE="GPL-2 NVIDIA-r2"
 SLOT="0/${PV%.*}"
-KEYWORDS="-* ~amd64 ~arm64"
+KEYWORDS="*"
 RESTRICT="bindist strip"
 EMULTILIB_PKG="true"
 
 IUSE_DUMMY="static-libs acpi"
-IUSE="${IUSE_DUMMY} +X +opencl +cuda +tools +egl +glvnd +uvm +wayland"
+IUSE="${IUSE_DUMMY} +X +opencl +cuda +tools +egl +glvnd +uvm +wayland +powerd"
 
 COMMON="
 	opencl? (
@@ -63,7 +63,7 @@ NV_DISTFILES_PATH="${NV_ROOT}/distfiles/"
 NV_NATIVE_LIBDIR="${NV_ROOT%/}/lib64"
 NV_COMPAT32_LIBDIR="${NV_ROOT%/}/lib32"
 
-QA_PREBUILT="${NV_ROOT#${EPREFIX}/}/*"
+QA_PREBUILT="lib/firmware/* ${NV_ROOT#${EPREFIX}/}/*"
 
 # Relative to $NV_ROOT
 NV_BINDIR="bin"
@@ -78,212 +78,6 @@ NV_X_MODDIR="xorg/modules"
 
 # Maximum supported kernel version in form major.minor
 : "${NV_MAX_KERNEL_VERSION:=6.3}"
-
-# Fixups for issues with particular versions of the package.
-nv_do_fixups() {
-	# This creates a missing symlink which would otherwise cause a Portage warning:
-	foo=$(ls ${D}${NV_NATIVE_LIBDIR}/libnvidia-egl-wayland.so.1.*)
-	if [ -e "$foo" ] && [ ! -e "${D}${NV_NATIVE_LIBDIR}/libnvidia-egl-wayland.so.1" ]; then
-		dosym ${foo##*/} ${NV_NATIVE_LIBDIR}/libnvidia-egl-wayland.so.1
-	fi
-	# This creates a symlink so that nvidia-settings can find the default nvidia application profiles. Weird issue.
-	foo=$(ls ${D}${NV_ROOT}/share/nvidia/*-key-documentation)
-	if [ -e "$foo" ]; then
-		dosym ${foo##*/} ${NV_ROOT}/share/nvidia/nvidia-application-profiles-key-documentation
-	fi
-}
-
-nv_use() {
-	return 0;
-}
-
-# Check tls type
-_nv_tls() {
-	# Always install both.
-	case "$1" in
-		CLASSIC|NEW) return 0 ;;
-	esac
-	return 1
-}
-
-root_install() {
-	local mydir="${1#${NV_ROOT}}"
-	local myfile="${2#/}"
-	local myperms="$3"
-	local mymodule="${4#MODULE:}"
-
-	nv_use "${mymodule}" || return 0
-	einfo "[${mymodule:-*}] Installing '${myfile}' with perms ${myperms} to '${mydir%/}'."
-
-	if ! [ -e "${myfile}" ] ; then
-		ewarn "File '${myfile}' specified in manifest does not exist!"
-		return 1
-	fi
-
-	insinto "${mydir%/}"
-	insopts "-m${myperms}"
-	doins "${myfile}"
-}
-
-# <dir> <file> <perms> <MODULE:>
-nv_install() {
-	local mydir="${1#${NV_ROOT}}"
-	mydir="${NV_ROOT}/${mydir#/}"
-	local myfile="${2#/}"
-	local myperms="$3"
-	local mymodule="${4#MODULE:}"
-
-	nv_use "${mymodule}" || return 0
-	einfo "[${mymodule:-*}] Installing '${myfile}' with perms ${myperms} to '${mydir%/}'."
-
-	if ! [ -e "${myfile}" ] ; then
-		ewarn "File '${myfile}' specified in manifest does not exist!"
-		return 1
-	fi
-
-	insinto "${mydir%/}"
-	insopts "-m${myperms}"
-	doins "${myfile}"
-}
-
-# <dir> <file> <perms> <arch> <MODULE:>
-nv_install_lib_arch() {
-	local libdir
-	case "${4}" in
-		NATIVE) libdir="${NV_NATIVE_LIBDIR}" ;;
-		*) die "nv_install_lib_arch called with something other than NATIVE or COMPAT32 arch" ;;
-	esac
-	nv_install "${libdir}/${1#/}" "$2" "$3" "$5"
-}
-
-# <dir> <target> <source> <MODULE:>
-nv_symlink() {
-	local mydir="${1#${NV_ROOT}}"
-	mydir="${NV_ROOT}/${mydir#/}"
-	local mytgt="${2#/}"
-	local mysrc="$3"
-	local mymodule="${4#MODULE:}"
-	nv_use "${mymodule}" || return 0
-	einfo "[${mymodule:-*}] Linking '${mysrc}' to '${mytgt}' in '${mydir%/}'."
-	dosym "${mysrc}" "${mydir%/}/${mytgt#/}"
-}
-
-# <dir> <target> <arch> <source> <MODULE:>
-nv_symlink_lib_arch() {
-	local libdir
-	case "${3}" in
-		NATIVE) libdir="${NV_NATIVE_LIBDIR}" ;;
-		*) die "nv_install_lib_arch called with something other than NATIVE or COMPAT32 arch" ;;
-	esac
-	nv_symlink "${libdir%/}/${1#/}" "$2" "$4" "$5"
-}
-
-# <dir> <name> <perms> <MODULE:>
-nv_install_modprobe() {
-	nv_use "${4#MODULE:}" || return 0
-	# install nvidia-modprobe setuid and symlink in /usr/bin (bug #505092)
-	nv_install "${1}" "${2}" "${3}" "${4}"
-	fowners root:video "${NV_ROOT}/${1%/}/nvidia-modprobe"
-	fperms 4710 "${NV_ROOT}/${1%/}/nvidia-modprobe"
-}
-
-# <dir> <file> <perms> <MODULE:>
-nv_install_outputclass_config() {
-	nv_use "${4#MODULE:}" || return 0
-	nv_install "${1}" "${2}" "${3}" "${4}"
-	sed -e '/EndSection/ i\\tModulePath "'"${NV_NATIVE_LIBDIR}"'"\n\tModulePath "'"${NV_NATIVE_LIBDIR}/${NV_X_MODDIR}"'"\n\tModulePath "'"${NV_NATIVE_LIBDIR}/${NV_OPENGL_VEND_DIR}/extensions"'"' \
-		-i "${D%/}/${NV_ROOT#/}/${1#/}/${2#/}"
-}
-
-# <dir> <file> <perms> <MODULE:>
-nv_install_desktop() {
-	nv_use "${4#MODULE:}" || return 0
-	nv_install "${1%/*}" "${2}" "${3}" "${4}"
-	sed -e 's|__UTILS_PATH__|'"${NV_ROOT}/bin"'|' \
-		-e 's|__PIXMAP_PATH__|'"${NV_ROOT}/${1/applications/doc}"'|' \
-		-i "${D}${NV_ROOT}/${1%/*}/${2#/}"
-}
-
-# Run from root of extracted nvidia-drivers package.
-nv_parse_manifest() {
-	[ -r .manifest ] || die "Can not read .manifest!"
-	local name perms type f4 f5 f6 f7
-	local module fields
-	while read -r name perms type f4 f5 f6 f7; do
-		#einfo "Manifest entry: '$name' '$perms' '$type' '$f4' '$f5' '$f6' '$f7'"
-
-		# Figure out which is our last field, and if it contains a MODULE: entry, grab that value and clear the field.
-		case "${f7}~${f6}~${f5}~${f4}~" in
-			MODULE:*~*~*~*~) module="$f7" ; f7="" ; fields=6 ;;
-			~MODULE:*~*~*~) module="$f6" ; f6="" ; fields=5 ;;
-			~~MODULE:*~*~) module="$f5" ; f5="" ; fields=4 ;;
-			~~~MODULE:*~) module="$f4" ; f4="" ; fields=3 ;;
-			~*~*~*~) fields=6 ;;
-			~~*~*~) fields=5 ;;
-			~~~*~) fields=4 ;;
-			~~~~) fields=3 ;;
-		esac
-
-		case "$type" in
-			INTERNAL_UTILITY_BINARY|INTERNAL_UTILITY_LIB|INTERNAL_UTILITY_DATA) ;;
-			GLVND_LIB) nv_install_lib_arch "${NV_OPENGL_VEND_DIR}/lib/${f5%/}" "$name" "$perms" "$f4" "$module" ;;
-			CUDA_LIB|OPENCL_LIB|OPENGL_LIB|NVCUVID_LIB|TLS_LIB|ENCODEAPI_LIB|NVIFR_LIB|UTILITY_LIB|VDPAU_LIB|VDPAU_WRAPPER_LIB) nv_install_lib_arch "${NV_LIBDIR}/${f5%/}" "$name" "$perms" "$f4" "$module" ;;
-			OPENCL_WRAPPER_LIB) nv_install_lib_arch "${NV_OPENCL_VEND_DIR}/lib/${f5%/}" "$name" "$perms" "$f4" "$module" ;;
-			GLX_CLIENT_LIB|EGL_CLIENT_LIB) nv_install_lib_arch "${NV_OPENGL_VEND_DIR}/lib" "$name" "$perms" "$f4" "$module" ;;
-			TLS_LIB)
-				case "$f5" in
-					CLASSIC|NEW) _nv_tls "$f5" && nv_install_lib_arch "${NV_LIBDIR}/${f6%/}" "$name" "$perms" "$f4" "$module" ;;
-					*) nv_install_lib_arch "${NV_LIBDIR}/${f5%/}" "$name" "$perms" "$f4" "$module" ;;
-				esac;;
-			GLVND_SYMLINK) nv_symlink_lib_arch "${NV_OPENGL_VEND_DIR}/lib" "$name" "$f4" "$f5" "$module" ;;
-			OPENGL_SYMLINK|NVCUVID_LIB_SYMLINK|ENCODEAPI_LIB_SYMLINK|NVIFR_LIB_SYMLINK|UTILITY_LIB_SYMLINK|GBM_BACKEND_LIB_SYMLINK) nv_symlink_lib_arch "${NV_LIBDIR}" "$name" "$f4" "$f5" "$module" ;;
-			OPENCL_LIB_SYMLINK|CUDA_SYMLINK|VDPAU_SYMLINK|VDPAU_WRAPPER_SYMLINK) nv_symlink_lib_arch "${NV_LIBDIR}/${f5%/}" "$name" "$f4" "$f6" "$module" ;;
-			OPENCL_WRAPPER_SYMLINK) nv_symlink_lib_arch "${NV_OPENCL_VEND_DIR}/lib/${f5%/}" "$name" "$f4" "$f6" "$module" ;;
-			GLX_CLIENT_SYMLINK|EGL_CLIENT_SYMLINK) nv_symlink_lib_arch "${NV_OPENGL_VEND_DIR}/lib" "$name" "$f4" "$f5" "$module" ;;
-			XMODULE_SHARED_LIB) nv_install "$(get_libdir)/${NV_X_MODDIR}/${f4%/}" "$name" "$perms" "$module";;
-			GLX_MODULE_SHARED_LIB) nv_install "$(get_libdir)/${NV_OPENGL_VEND_DIR}/${f4%/}" "$name" "$perms" "$module" ;;
-			XMODULE_SYMLINK|XMODULE_NEWSYM) nv_symlink "$(get_libdir)/${NV_X_MODDIR}/${f4%/}" "$name" "$f5" "$module";;
-			GLX_MODULE_SYMLINK) nv_symlink "$(get_libdir)/${NV_OPENGL_VEND_DIR}/${f4%/}" "$name" "$f5" "$module" ;;
-			OPENGL_HEADER) nv_install "${NV_INCDIR}/${f4%/}" "$name" "$perms" "$module" ;;
-			APPLICATION_PROFILE) nv_install "${NV_SHAREDIR}/nvidia/${f4%/}" "$name" "$perms" "$module" ;;
-			DOT_DESKTOP) nv_install_desktop "${NV_SHAREDIR}/applications/${f4%/}" "$name" "$perms" "$module" ;;
-			NVIDIA_MODPROBE) nv_install_modprobe "${NV_BINDIR}" "$name" "$perms" "$module" ;;
-			NVIDIA_MODPROBE_MANPAGE|MANPAGE) nv_install "${NV_SHAREDIR}/man/${f4%/}" "$name" "$perms" "$module" ;;
-			DOCUMENTATION) nv_install "${NV_SHAREDIR}/doc/${f4%/}" "$name" "$perms" "$module" ;;
-			EXPLICIT_PATH) nv_install "${ED%/}/${f4%/}" "$name" "$perms" "$module" ;;
-			INSTALLER_BINARY) [ "x${name}" = "xnvidia-installer" ] || nv_install "${NV_BINDIR}" "$name" "$perms" "$module" ;;
-			UTILITY_BINARY) nv_install "${NV_BINDIR}" "$name" "$perms" "$module" ;;
-			XORG_OUTPUTCLASS_CONFIG) nv_install_outputclass_config "${NV_SHAREDIR}/X11/xorg.conf.d" "$name" "$perms" "$module" ;;
-			CUDA_ICD) nv_install "${NV_SHAREDIR}/OpenCL/vendors/" "$name" "$perms" "$module" ;;
-			VULKAN_ICD_JSON) root_install "/usr/share/vulkan/${f4}" "$name" "$perms" "$module" ;;
-			GLVND_EGL_ICD_JSON) nv_install "${NV_SHAREDIR}/glvnd/egl_vendor.d/" "$name" "$perms" "$module" ;;
-			EGL_EXTERNAL_PLATFORM_JSON) nv_install "${NV_SHAREDIR}/egl/egl_external_platform.d/" "$name" "$perms" "$module" ;;
-			UTILITY_BIN_SYMLINK) [ "x${f4}" = "xnvidia-installer" ] || nv_symlink "${NV_BINDIR}" "$name" "$f4" "$module" ;;
-			# Various new installer file fixes from https://bugs.funtoo.org/browse/FL-9800
-			# Skip installing Systemd related services, this will impact power management functionality of the driver during suspending
-			# Nvidia uses systemd services to control this driver functionality
-			# These process supervisor scripts potentially and if possible would have ported to OpenRC if needed on Funtoo
-			# For complete details on systemd power management see:
-			# http://download.nvidia.com/XFree86/Linux-x86_64/515.48.07/README/powermanagement.html#SystemdConfigur74e29
-			SYSTEMD_UNIT|SYSTEMD_UNIT_SYMLINK|SYSTEMD_SLEEP_SCRIPT);;
-			# Right now we will exclude the GPU System Processor (GSP) fireware from installation
-			# It is only used by a small subset high end Nvidia cards Telsa, T4, A100, etc.
-			# As of nvidia-drivers-515.48.07 there is only one FIRMWARE reference in the installer .manifest config
-			# Eventually we will have to plumb in the installation of the FIRMWARE when/if Nvidia integrates it into more consumer GPUs
-			# For complete details on GSP firmware see:
-			# http://download.nvidia.com/XFree86/Linux-x86_64/515.48.07/README/gsp.html
-			FIRMWARE);;
-			# Kernel modules sources handled elsewhere
-			KERNEL_MODULE_SRC|UVM_MODULE_SRC|DKMS_CONF) : ;;
-			UVM_MODULE_SRC) : ;;
-			# Warn about any unhandled manifest entries
-			*) ewarn "Unhandled manifest entry: ${name} ${perms} ${type} ${f4} ${f5} ${f6} ${f7}" ;;
-		esac
-		
-	done <<-EOF
-		$(tail -n +9 .manifest)
-	EOF
-}
 
 nvidia_drivers_versions_check() {
 	if use kernel_linux && kernel_is ge ${NV_MAX_KERNEL_VERSION%%.*} ${NV_MAX_KERNEL_VERSION#*.}; then
@@ -331,35 +125,176 @@ src_unpack() {
 }
 
 src_prepare() {
+	default
+
 	# Reclassify wayland-related files to MODULE:wayland
 	sed -e 's:\(wayland.*\)egl:\1wayland:g' -i .manifest
-	default
+
+	# prevent detection of incomplete kernel DRM support (bug #603818)
+	#sed 's/defined(CONFIG_DRM/defined(CONFIG_DRM_KMS_HELPER/g' \
+	#	-i kernel{,-module-source/kernel-open}/conftest.sh || die
+
+	# enable nvidia-drm.modeset=1 by default with USE=wayland
+	cp "${FILESDIR}"/nvidia.conf "${T}"/nvidia.conf || die
+	use !wayland || sed -i '/^#.*modeset=1$/s/^#//' "${T}"/nvidia.conf || die
+
+	# makefile attempts to install wayland library even if not built
+	use wayland || sed -i 's/ WAYLAND_LIB_install$//' \
+		nvidia-settings/src/Makefile || die
 }
 
 src_install() {
+	[ -r .manifest ] || die "Can not read .manifest!"
+	local name perms type f4 f5 f6 f7
+	local module fields
 
-	# Parse our manifest file and install to our destroot.
-	nv_parse_manifest
+	local libdir=$(get_libdir)
+	local -A paths=(
+		[APPLICATION_PROFILE]=/usr/share/nvidia
+		[EGL_EXTERNAL_PLATFORM_JSON]=/usr/share/egl/egl_external_platform.d
+		[FIRMWARE]=/lib/firmware/nvidia/${PV}
+		#[GBM_BACKEND_LIB_SYMLINK]=/usr/${libdir}/gbm
+		[GLVND_EGL_ICD_JSON]=/usr/share/glvnd/egl_vendor.d
+		[OPENGL_DATA]=/usr/share/nvidia
+		[VULKAN_ICD_JSON]=/usr/share/vulkan
+		[WINE_LIB]=/usr/${libdir}/nvidia/wine
+		[XORG_OUTPUTCLASS_CONFIG]=${NV_ROOT}/share/X11/xorg.conf.d
+		[CUDA_ICD]=/etc/OpenCL/vendors
 
-	# Remove symlink libwfb.so if it exists to avoid problems. (per nvidia docs)
-	rm -f "${D}${NV_ROOT}/$(get_libdir)/${NV_X_MODDIR}/libwfb.so"
+		[XMODULE_SHARED_LIB]=${NV_NATIVE_LIBDIR}/xorg/modules
+	)
 
-	# Install source for kernel modules
-	dodir "${NV_ROOT}/src/kernel-modules"
-	(set +f; cp -r "${NV_KMOD_SRC}"/* "${D}${NV_ROOT}/src/kernel-modules" || return 1 ) || die "Could not copy kernel module sources!"
+		#libnvidia-egl-wayland 10_nvidia_wayland # gui-libs/egl-wayland
+	local skip_files=(
+		#$(usev !X "libGLX_nvidia libglxserver_nvidia")
+		$libGLX_indirect # non-glvnd unused fallback
+		#libnvidia-{gtk,wayland-client} nvidia-{settings,xconfig} # from source
+		libnvidia-egl-wayland 10_nvidia_wayland # gui-libs/egl-wayland
+		libnvidia-egl-gbm 15_nvidia_gbm # gui-libs/egl-gbm
+		#libnvidia-pkcs11.so # using the openssl3 version instead
+		libnvidia-pkcs11-openssl3.so # waiting for openssl v3
+	)
+	local skip_modules=(
+		#$(usev !X "nvfbc vdpau xdriver")
+		$(usev !powerd powerd)
+		installer nvpd # handled separately / built from source
+	)
+	# GLVND_LIB GLVND_SYMLINK GLX_CLIENT.\* # media-libs/libglvnd
+	local skip_types=(
+		GLVND_LIB GLVND_SYMLINK EGL_CLIENT.\* GLX_CLIENT.\* # media-libs/libglvnd
+		DOCUMENTATION DOT_DESKTOP DKMS_CONF SYSTEMD_UNIT # handled separately / unused
+		ICON # handled separately
+	)
+	#.\*_SRC
 
-	# Link nvidia-modprobe utility to /usr/bin if installed.
-	[ -f "${D}${NV_ROOT}/bin/nvidia-modprobe" ] && dosym "${NV_ROOT}/bin/nvidia-modprobe" "/usr/bin/nvidia-modprobe"
+	local DOCS=(
+		README.txt NVIDIA_Changelog supported-gpus/supported-gpus.json
+	)
+	local HTML_DOCS=( html/. )
+	einstalldocs
 
-	# If 'tools' flag is enabled, link nvidia-settings and nvidia-smi utilities into /usr/bin, install an xinitrc.d file to start it, and link it's desktop file.
+	# mimic nvidia-installer by reading .manifest to install files
+	# 0:file 1:perms 2:type 3+:subtype/arguments -:module
+	local m into
+	while IFS=' ' read -ra m; do
+		! [[ ${#m[@]} -ge 2 && ${m[-1]} =~ MODULE: ]] ||
+			[[ " ${m[0]##*/}" =~ ^(\ ${skip_files[*]/%/.*|\\} )$ ]] ||
+			[[ " ${m[2]}" =~ ^(\ ${skip_types[*]/%/|\\} )$ ]] ||
+			has ${m[-1]#MODULE:} "${skip_modules[@]}" && continue
+
+		case ${m[2]} in
+			MANPAGE)
+				gzip -dc ${m[0]} | newman - ${m[0]%.gz}; assert
+				continue
+			;;
+			VDPAU_SYMLINK) m[4]=vdpau/; m[5]=${m[5]#vdpau/};; # .so to vdpau/
+		esac
+
+		if [[ -v 'paths[${m[2]}]' ]]; then
+			into=${paths[${m[2]}]}
+		elif [[ ${m[2]} == EXPLICIT_PATH ]]; then
+			into=${m[3]}
+		elif [[ ${m[2]} == *_BINARY ]]; then
+			into=/opt/nvidia/${P}/bin
+		elif [[ ${m[2]} == NVIDIA_MODPROBE ]]; then
+			into=/opt/nvidia/${P}/bin
+		elif [[ ${m[3]} == COMPAT32 ]]; then
+			continue
+		# Doesn't support systemd for now
+		elif [[ ${m[3]} == SYSTEMD_* ]]; then
+			continue
+		elif [[ ${m[2]} == OPENCL_WRAPPER_LIB ]]; then
+			into=${NV_NATIVE_LIBDIR}/${NV_OPENCL_VEND_DIR}/lib
+		elif [[ ${m[2]} == OPENCL_WRAPPER_SYMLINK ]]; then
+			into=${NV_NATIVE_LIBDIR}/${NV_OPENCL_VEND_DIR}/lib
+		elif [[ ${m[2]} == GLX_MODULE_SHARED_LIB ]]; then
+			into=${NV_NATIVE_LIBDIR}/${NV_OPENGL_VEND_DIR}/extensions
+		elif [[ ${m[2]} == GLX_MODULE_SYMLINK ]]; then
+			into=${NV_NATIVE_LIBDIR}/${NV_OPENGL_VEND_DIR}/extensions
+			dosym ${m[4]} ${into}/${m[0]}
+			#echo "LINK ${m[4]} into ${into}/${m[0]}"
+			continue
+		elif [[ ${m[2]} == *_@(LIB|SYMLINK) ]]; then
+			into=${NV_NATIVE_LIBDIR}
+		elif [[ ${m[2]} == *_SRC ]]; then
+			into=${NV_ROOT}/src/$(dirname ${m[0]})
+		else
+			die "No known installation path for ${m[0]}"
+		fi
+		[[ ${m[3]: -2} == ?/ ]] && into+=/${m[3]%/}
+		[[ ${m[4]: -2} == ?/ ]] && into+=/${m[4]%/}
+
+		if [[ ${m[2]} =~ _SYMLINK$ ]]; then
+			[[ ${m[4]: -1} == / ]] && m[4]=${m[5]}
+			dosym ${m[4]} ${into}/${m[0]}
+			#echo "LINK ${m[4]} into ${into}/${m[0]}"
+			continue
+		fi
+		[[ ${m[0]} =~ ^libnvidia-ngx.so|^libnvidia-egl-gbm.so ]] && {
+			#echo "LINK ${m[0]} into ${into}/${m[0]%.so*}.so.1"
+			dosym ${m[0]} ${into}/${m[0]%.so*}.so.1 # soname not in .manifest
+		}
+
+		printf -v m[1] %o $((m[1] | 0200)) # 444->644
+		insopts -m${m[1]}
+		insinto ${into}
+		doins ${m[0]}
+		#echo "INST ${m[0]} into ${into}"
+	done < .manifest || die
+	insopts -m0644 # reset
+
+	dobin nvidia-bug-report.sh
+
+	# MODULE:powerd extras
+	if use powerd; then
+		newinitd "${FILESDIR}"/nvidia-powerd.initd nvidia-powerd #923117
+
+		insinto /usr/share/dbus-1/system.d
+		doins nvidia-dbus.conf
+	fi
+
+	# don't attempt to strip firmware files (silences errors)
+	dostrip -x ${paths[FIRMWARE]}
+
+	# sandbox issues with /dev/nvidiactl others (bug #904292,#921578)
+	# are widespread and sometime affect revdeps of packages built with
+	# USE=opencl/cuda making it hard to manage in ebuilds (minimal set,
+	# ebuilds should handle manually if need others or addwrite)
+	insinto /etc/sandbox.d
+	newins - 20nvidia <<<'SANDBOX_PREDICT="/dev/nvidiactl:/dev/nvidia-caps:/dev/char"'
+
+
 	if use tools; then
+		#emake "${NV_ARGS[@]}" -C nvidia-settings install
 		for tool in settings smi xconfig; do
 			[ -f "${D}${NV_ROOT}/bin/nvidia-${tool}" ] && dosym "${NV_ROOT}/bin/nvidia-${tool}" "/usr/bin/nvidia-${tool}"
 		done
+
+		doicon nvidia-settings.png
+		domenu nvidia-settings.desktop
+
 		exeinto /etc/X11/xinit/xinitrc.d
-		newexe "${FILESDIR}"/95-nvidia-settings.xinitrc-r1 95-nvidia-settings
-		dosym "${NV_ROOT}/share/applications/nvidia-settings.desktop" "/usr/share/applications/nvidia-settings.desktop"
-		dosym "${NV_ROOT}/share/nvidia" "/usr/share/nvidia"
+		newexe "${FILESDIR}"/95-nvidia-settings.xinitrc 95-nvidia-settings
 	fi
 
 	# If 'X' flag is enabled, link nvidia-drm-outputclass.conf into system xorg.conf.d directory (xorg 1.16 and up),
@@ -376,16 +311,6 @@ src_install() {
 		dosym "${NV_NATIVE_LIBDIR}/xorg/modules/drivers/nvidia_drv.so" "/usr/$(get_libdir)/xorg/modules/drivers/nvidia_drv.so"
 	fi
 
-	# If 'egl' flag is enabled, link 10_nvidia.json into the system egl_vendor.d directory.
-	use egl && dosym "${NV_ROOT}/share/glvnd/egl_vendor.d/10_nvidia.json" "/usr/share/glvnd/egl_vendor.d/10_nvidia.json"
-
-	# If 'egl' flag is enabled, link 10_nvidia_wayland.json into the system egl_external_platform.d directory.
-	use wayland && dosym "${NV_ROOT}/share/egl/egl_external_platform.d/10_nvidia_wayland.json" "/usr/share/egl/egl_external_platform.d/10_nvidia_wayland.json"
-
-	# OpenCL ICD for NVIDIA
-	# If 'opencl' or 'cuda' flags are enabled, link nvidia.icd into system OpenCL/vendors directory.
-	( use opencl || use cuda ) && dosym "${NV_ROOT}/share/OpenCL/vendors/nvidia.icd" "/etc/OpenCL/vendors/nvidia.icd"
-
 	# On linux kernels, install nvidia-persistenced init and conf files after fixing up paths.
 	for filename in nvidia-{smi,persistenced}.init ; do
 		sed -e 's:/opt/bin:'"${NV_ROOT}"'/bin:g' "${FILESDIR}/${filename}" > "${T}/${filename}"
@@ -398,35 +323,19 @@ src_install() {
 		dosym "${NV_NATIVE_LIBDIR}/opengl/nvidia" "${EPREFIX}/usr/lib/opengl/nvidia"
 	fi
 
-	# Support link for Bumblebee
-	dosym "${NV_NATIVE_LIBDIR}" "${EPREFIX}/usr/lib/nvidia"
-
 	# Setup an env.d file with appropriate lib paths.
-	ldpath="${NV_NATIVE_LIBDIR}:${NV_NATIVE_LIBDIR}/tls"
+	ldpath="${NV_NATIVE_LIBDIR}"
 	printf -- "LDPATH=\"${ldpath}\"\n" > "${T}/09nvidia"
 	doenvd "${T}/09nvidia"
 
-	# Run fixups specific to this driver (defined at top)
-	nv_do_fixups
-
-	for x in ${D}/${NV_ROOT}/share/man/man1/*; do
-		gzip -d $x
-		doman ${x%.gz}
-	done
-	rm -rf ${D}/${NV_ROOT}/share/man || die
-
-	# Get NVIDIA documentation in the correct place:
-	rm -rf ${D}/usr/share/doc/${PF}
-	dodir /usr/share/doc
-	mv ${D}/${NV_ROOT}/share/doc/NVIDIA_GLX-1.0 ${D}/usr/share/doc/${PF} || die "doc thang"
-	# Fix nvidia-settings icon location... the only thing we don't want to move.
-	dodir ${NV_ROOT}/share/doc/NVIDIA_GLX-1.0
-	mv ${D}/usr/share/doc/${PF}/nvidia-settings.png ${D}/${NV_ROOT}/share/doc/NVIDIA_GLX-1.0
 	readme.gentoo_create_doc
 }
 
 
 pkg_preinst() {
+	#has_version "${CATEGORY}/${PN}[kernel-open]" && NV_HAD_KERNEL_OPEN=
+	has_version "${CATEGORY}/${PN}[wayland]" && NV_HAD_WAYLAND=
+
 	# Clean the dynamic libGL stuff's home to ensure
 	# we dont have stale libs floating around
 	if [ -d "${ROOT}"/usr/lib/opengl/nvidia ]; then

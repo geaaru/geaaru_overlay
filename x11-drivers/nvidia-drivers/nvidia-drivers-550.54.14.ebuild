@@ -79,15 +79,6 @@ NV_X_MODDIR="xorg/modules"
 # Maximum supported kernel version in form major.minor
 : "${NV_MAX_KERNEL_VERSION:=6.3}"
 
-# Fixups for issues with particular versions of the package.
-nv_do_fixups() {
-	# This creates a missing symlink which would otherwise cause a Portage warning:
-	foo=$(ls ${D}${NV_NATIVE_LIBDIR}/libnvidia-egl-wayland.so.1.*)
-	if [ -e "$foo" ] && [ ! -e "${D}${NV_NATIVE_LIBDIR}/libnvidia-egl-wayland.so.1" ]; then
-		dosym ${foo##*/} ${NV_NATIVE_LIBDIR}/libnvidia-egl-wayland.so.1
-	fi
-}
-
 nvidia_drivers_versions_check() {
 	if use kernel_linux && kernel_is ge ${NV_MAX_KERNEL_VERSION%%.*} ${NV_MAX_KERNEL_VERSION#*.}; then
 		ewarn "These NVIDIA drivers are designed to work with Linux ${NV_MAX_KERNEL_VERSION} or earlier."
@@ -162,35 +153,38 @@ src_install() {
 		[APPLICATION_PROFILE]=/usr/share/nvidia
 		[EGL_EXTERNAL_PLATFORM_JSON]=/usr/share/egl/egl_external_platform.d
 		[FIRMWARE]=/lib/firmware/nvidia/${PV}
-		[GBM_BACKEND_LIB_SYMLINK]=/usr/${libdir}/gbm
+		#[GBM_BACKEND_LIB_SYMLINK]=/usr/${libdir}/gbm
 		[GLVND_EGL_ICD_JSON]=/usr/share/glvnd/egl_vendor.d
 		[OPENGL_DATA]=/usr/share/nvidia
 		[VULKAN_ICD_JSON]=/usr/share/vulkan
 		[WINE_LIB]=/usr/${libdir}/nvidia/wine
-		[XORG_OUTPUTCLASS_CONFIG]=/usr/share/X11/xorg.conf.d
+		[XORG_OUTPUTCLASS_CONFIG]=${NV_ROOT}/share/X11/xorg.conf.d
 		[CUDA_ICD]=/etc/OpenCL/vendors
 
 		[XMODULE_SHARED_LIB]=${NV_NATIVE_LIBDIR}/xorg/modules
 	)
 
 	local skip_files=(
-		$(usev !X "libGLX_nvidia libglxserver_nvidia")
+		#$(usev !X "libGLX_nvidia libglxserver_nvidia")
 		$libGLX_indirect # non-glvnd unused fallback
-		libnvidia-{gtk,wayland-client} nvidia-{settings,xconfig} # from source
+		#libnvidia-{gtk,wayland-client} nvidia-{settings,xconfig} # from source
 		#libnvidia-egl-gbm 15_nvidia_gbm # gui-libs/egl-gbm
 		#libnvidia-egl-wayland 10_nvidia_wayland # gui-libs/egl-wayland
 		#libnvidia-pkcs11.so # using the openssl3 version instead
 		libnvidia-pkcs11-openssl3.so # waiting for openssl v3
 	)
 	local skip_modules=(
-		$(usev !X "nvfbc vdpau xdriver")
+		#$(usev !X "nvfbc vdpau xdriver")
 		$(usev !powerd powerd)
 		installer nvpd # handled separately / built from source
 	)
+	# GLVND_LIB GLVND_SYMLINK EGL_CLIENT.\* GLX_CLIENT.\* # media-libs/libglvnd
 	local skip_types=(
-		GLVND_LIB GLVND_SYMLINK EGL_CLIENT.\* GLX_CLIENT.\* # media-libs/libglvnd
+		GLVND_LIB GLVND_SYMLINK GLX_CLIENT.\* # media-libs/libglvnd
 		DOCUMENTATION DOT_DESKTOP DKMS_CONF SYSTEMD_UNIT # handled separately / unused
+		ICON # handled separately
 	)
+	#.\*_SRC
 
 	local DOCS=(
 		README.txt NVIDIA_Changelog supported-gpus/supported-gpus.json
@@ -212,7 +206,6 @@ src_install() {
 				gzip -dc ${m[0]} | newman - ${m[0]%.gz}; assert
 				continue
 			;;
-			GBM_BACKEND_LIB_SYMLINK) m[4]=../${m[4]};; # missing ../
 			VDPAU_SYMLINK) m[4]=vdpau/; m[5]=${m[5]#vdpau/};; # .so to vdpau/
 		esac
 
@@ -221,7 +214,7 @@ src_install() {
 		elif [[ ${m[2]} == EXPLICIT_PATH ]]; then
 			into=${m[3]}
 		elif [[ ${m[2]} == *_BINARY ]]; then
-			into=/opt/${P}/bin
+			into=/opt/nvidia/${P}/bin
 		elif [[ ${m[3]} == COMPAT32 ]]; then
 			continue
 		# Doesn't support systemd for now
@@ -229,8 +222,15 @@ src_install() {
 			continue
 		elif [[ ${m[2]} == OPENCL_WRAPPER_LIB ]]; then
 			into=${NV_NATIVE_LIBDIR}/${NV_OPENCL_VEND_DIR}/lib
-		elif [[ ${m[2]} == GLX_MODULE_* ]]; then
+		elif [[ ${m[2]} == OPENCL_WRAPPER_SYMLINK ]]; then
+			into=${NV_NATIVE_LIBDIR}/${NV_OPENCL_VEND_DIR}/lib
+		elif [[ ${m[2]} == GLX_MODULE_SHARED_LIB ]]; then
 			into=${NV_NATIVE_LIBDIR}/${NV_OPENGL_VEND_DIR}/extensions
+		elif [[ ${m[2]} == GLX_MODULE_SYMLINK ]]; then
+			into=${NV_NATIVE_LIBDIR}/${NV_OPENGL_VEND_DIR}/extensions
+			dosym ${m[4]} ${into}/${m[0]}
+			#echo "LINK ${m[4]} into ${into}/${m[0]}"
+			continue
 		elif [[ ${m[2]} == *_@(LIB|SYMLINK) ]]; then
 			into=${NV_NATIVE_LIBDIR}
 		elif [[ ${m[2]} == *_SRC ]]; then
@@ -244,6 +244,7 @@ src_install() {
 		if [[ ${m[2]} =~ _SYMLINK$ ]]; then
 			[[ ${m[4]: -1} == / ]] && m[4]=${m[5]}
 			dosym ${m[4]} ${into}/${m[0]}
+			#echo "LINK ${m[4]} into ${into}/${m[0]}"
 			continue
 		fi
 		[[ ${m[0]} =~ ^libnvidia-ngx.so|^libnvidia-egl-gbm.so ]] &&
@@ -253,6 +254,7 @@ src_install() {
 		insopts -m${m[1]}
 		insinto ${into}
 		doins ${m[0]}
+		#echo "INST ${m[0]} into ${into}"
 	done < .manifest || die
 	insopts -m0644 # reset
 
@@ -305,16 +307,6 @@ src_install() {
 		dosym "${NV_NATIVE_LIBDIR}/xorg/modules/drivers/nvidia_drv.so" "/usr/$(get_libdir)/xorg/modules/drivers/nvidia_drv.so"
 	fi
 
-	# If 'egl' flag is enabled, link 10_nvidia.json into the system egl_vendor.d directory.
-	use egl && dosym "${NV_ROOT}/share/glvnd/egl_vendor.d/10_nvidia.json" "/usr/share/glvnd/egl_vendor.d/10_nvidia.json"
-
-	# If 'egl' flag is enabled, link 10_nvidia_wayland.json into the system egl_external_platform.d directory.
-	use wayland && dosym "${NV_ROOT}/share/egl/egl_external_platform.d/10_nvidia_wayland.json" "/usr/share/egl/egl_external_platform.d/10_nvidia_wayland.json"
-
-	# OpenCL ICD for NVIDIA
-	# If 'opencl' or 'cuda' flags are enabled, link nvidia.icd into system OpenCL/vendors directory.
-	( use opencl || use cuda ) && dosym "${NV_ROOT}/share/OpenCL/vendors/nvidia.icd" "/etc/OpenCL/vendors/nvidia.icd"
-
 	# On linux kernels, install nvidia-persistenced init and conf files after fixing up paths.
 	for filename in nvidia-{smi,persistenced}.init ; do
 		sed -e 's:/opt/bin:'"${NV_ROOT}"'/bin:g' "${FILESDIR}/${filename}" > "${T}/${filename}"
@@ -331,9 +323,6 @@ src_install() {
 	ldpath="${NV_NATIVE_LIBDIR}"
 	printf -- "LDPATH=\"${ldpath}\"\n" > "${T}/09nvidia"
 	doenvd "${T}/09nvidia"
-
-	# Run fixups specific to this driver (defined at top)
-	nv_do_fixups
 
 	readme.gentoo_create_doc
 }
