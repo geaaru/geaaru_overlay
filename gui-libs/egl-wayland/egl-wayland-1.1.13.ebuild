@@ -31,3 +31,10 @@ PATCHES=(
 post_src_unpack() {
 	mv NVIDIA-${PN}-* "${S}"
 }
+
+src_install() {
+	meson_src_install
+
+	insinto /usr/share/egl/egl_external_platform.d
+	doins "${FILESDIR}"/10_nvidia_wayland.json
+}
