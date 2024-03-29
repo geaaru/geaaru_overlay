@@ -1,0 +1,7 @@
+systemd:
+  generator: github-1
+  packages:
+    - egl-gbm:
+        github:
+          user: NVIDIA
+          query: tags
