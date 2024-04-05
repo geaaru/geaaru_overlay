@@ -39,7 +39,7 @@ async def generate(hub, **pkginfo):
 		# So, version 0.4.0 for example will be 0.4 as tarball.
 		v = Version(pv)
 		tar_version = pv
-		if v.micro == 0:
+		if v.micro == 0 and v.major == 0:
 			tar_version = "%s.%s" % (v.major, v.minor)
 
 		url=f"https://github.com/lxc/incus/releases/download/v{pv}/incus-{tar_version}.tar.xz"
