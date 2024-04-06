@@ -6,7 +6,7 @@ inherit bash-completion-r1 linux-info meson optfeature systemd
 
 DESCRIPTION="A userspace interface for the Linux kernel containment features"
 HOMEPAGE="https://linuxcontainers.org/ https://github.com/lxc/lxc"
-SRC_URI="{{ artifacts[0].src_uri }}"
+SRC_URI="https://github.com/lxc/lxc/tarball/3dee5fb88c6f77496dbcab46f31bcd891c9ee4e0 -> lxc-6.0.0-3dee5fb.tar.gz"
 
 KEYWORDS="*"
 

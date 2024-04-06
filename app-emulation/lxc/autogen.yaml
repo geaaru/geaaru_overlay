@@ -5,10 +5,6 @@ lxc:
         github:
           user: lxc
           query: tags
-          tarball: "lxc-{version}.tar.gz"
-          match: '^lxc-([0-9.]+)$'
         versions:
           latest:
-            template: lxc.tmpl
-          5.0.2:
             template: lxc.tmpl
