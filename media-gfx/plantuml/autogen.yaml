@@ -1,0 +1,8 @@
+plantuml:
+  generator: github-1
+  packages:
+    - plantuml:
+        github:
+          select: '^v1.2024.*'
+          query: tags
+

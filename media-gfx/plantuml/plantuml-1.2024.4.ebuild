@@ -1,0 +1,40 @@
+# Distributed under the terms of the GNU General Public License v2
+
+EAPI=7
+
+JAVA_PKG_IUSE="source"
+inherit java-pkg-2 java-ant-2 desktop xdg
+
+DESCRIPTION="Draw UML diagrams using a simple and human readable text description"
+HOMEPAGE="https://plantuml.com"
+SRC_URI="https://github.com/plantuml/plantuml/tarball/9432e0b1e5231e9843b846b83e00d623953cc2c1 -> plantuml-1.2024.4-9432e0b.tar.gz"
+LICENSE="GPL-3"
+SLOT="0"
+KEYWORDS="*"
+
+DEPEND=">=virtual/jdk-1.8:*
+	dev-java/ant-bin:1.10
+"
+
+RDEPEND="
+	>=virtual/jre-1.8:*
+	media-gfx/graphviz"
+
+EANT_BUILD_TARGET="dist"
+EANT_GENTOO_CLASSPATH="ant-bin:1.10"
+JAVA_ANT_REWRITE_CLASSPATH="true"
+
+post_src_unpack() {
+	mv "${WORKDIR}"/${PN}-* ${S}
+	default
+}
+
+src_install() {
+	java-pkg_dojar ${PN}.jar
+	java-pkg_dolauncher ${PN} --jar ${PN}.jar
+	use source && java-pkg_dosrc src/*
+
+	make_desktop_entry plantuml PlantUML
+}
+
+# vim: filetype=ebuild
