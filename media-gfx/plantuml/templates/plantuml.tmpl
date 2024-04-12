@@ -21,7 +21,7 @@ RDEPEND="
 	media-gfx/graphviz"
 
 EANT_BUILD_TARGET="dist"
-EANT_GENTOO_CLASSPATH="ant-bin:1.10"
+EANT_GENTOO_CLASSPATH="ant-bin-1.10"
 JAVA_ANT_REWRITE_CLASSPATH="true"
 
 post_src_unpack() {
