@@ -44,7 +44,11 @@ _freeradius-modules_set_metadata() {
 	FR_P="freeradius-server-${fr_version}"
 
 	if [ "${FREERADIUS_VERSION}" != "9999" ] ; then
-        SRC_URI+=" ftp://ftp.freeradius.org/pub/radius/${FR_P}.tar.gz"
+		if [ -n "${FREERADIUS_LEGACY}" ] ; then
+			SRC_URI+=" ftp://ftp.freeradius.org/pub/radius/old/${FR_P}.tar.gz"
+		else
+			SRC_URI+=" ftp://ftp.freeradius.org/pub/radius/${FR_P}.tar.gz"
+		fi
 	fi
 }
 
