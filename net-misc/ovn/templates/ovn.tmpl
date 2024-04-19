@@ -88,6 +88,8 @@ src_compile() {
 }
 
 src_install() {
+	# Avoid races on install
+	export MAKEOPTS=-j1
 	default
 
 	keepdir /var/{lib,log}/ovn
