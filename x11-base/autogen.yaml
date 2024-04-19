@@ -10,11 +10,11 @@ xorg_server_pkgs:
     - xorg-server:
         gitlab:
           repo: xserver
-          match: ^xorg-server-([0-9.]+)$
+          match: ^xorg-server-21.([0-9.]+)$
           tag_prefix: "xorg-server-"
 
     - xwayland:
         gitlab:
           repo: xserver
-          match: ^xwayland-([0-9.]+)$
+          match: ^xwayland-23.([0-9.]+)$
           tag_prefix: "xwayland-"
