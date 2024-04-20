@@ -8,11 +8,11 @@ inherit distutils-r1
 
 DESCRIPTION="ECDSA cryptographic signature library (pure python)"
 HOMEPAGE="http://github.com/tlsfuzzer/python-ecdsa https://pypi.org/project/ecdsa/"
-SRC_URI="https://files.pythonhosted.org/packages/ff/7b/ba6547a76c468a0d22de93e89ae60d9561ec911f59532907e72b0d8bc0f1/ecdsa-0.18.0.tar.gz -> ecdsa-0.18.0.tar.gz"
+SRC_URI="https://files.pythonhosted.org/packages/5e/d0/ec8ac1de7accdcf18cfe468653ef00afd2f609faf67c423efbd02491051b/ecdsa-0.19.0.tar.gz -> ecdsa-0.19.0.tar.gz"
 
 DEPEND="dev-python/setuptools[${PYTHON_USEDEP}]"
 IUSE=""
 SLOT="0"
 LICENSE="MIT"
 KEYWORDS="*"
-S="${WORKDIR}/ecdsa-0.18.0"
+S="${WORKDIR}/ecdsa-0.19.0"
