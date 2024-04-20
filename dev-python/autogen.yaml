@@ -133,6 +133,15 @@ hatchling_builds:
             - appdirs
             - bcrypt
 
+    - python-sqlparse:
+        pypi_name: sqlparse
+        license: BSD
+        pydeps:
+          py:all:build:
+            - flake8
+          py:all:runtime:
+            - flake8
+
 setuptools_builds:
   defaults:
     cat: dev-python
@@ -351,8 +360,6 @@ setuptools_builds:
         license: BSD
         desc: "Extensions to the standard Python datetime module"
         rdepend: 'sys-libs/timezone-data'
-        patches:
-          - 0001-zoneinfo-Get-timezone-data-from-system-tzdata.patch
         pydeps:
           py:all:build:
             - six
@@ -439,15 +446,6 @@ flit_builds:
   generator: pypi-simple-1
   packages:
     - ptyprocess
-
-    - python-sqlparse:
-        pypi_name: sqlparse
-        license: BSD
-        pydeps:
-          py:all:build:
-            - flake8
-          py:all:runtime:
-            - flake8
 
 
 poetry_builds:
