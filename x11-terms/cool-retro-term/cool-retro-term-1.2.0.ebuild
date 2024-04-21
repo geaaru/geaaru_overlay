@@ -5,7 +5,7 @@ EAPI=7
 inherit gnome3-utils qmake-utils
 
 QTW_PN=qmltermwidget
-QTW_PV=0.2.0
+QTW_PV=63228027e1f97c24abb907550b22ee91836929c5
 QTW_P=${QTW_PN}-${QTW_PV}
 
 DESCRIPTION="terminal emulator which mimics the look and feel of the old cathode tube screens"
@@ -47,6 +47,9 @@ src_install() {
 	# default attempts to install directly to /usr
 	emake INSTALL_ROOT="${D}" install || die
 	doman packaging/debian/cool-retro-term.1
+
+	insinto "/usr/share/metainfo"
+	doins "packaging/appdata/cool-retro-termol-retro-term.appdata.xml"
 }
 
 pkg_preinst() { gnome3_schemas_savelist; }
