@@ -36,7 +36,7 @@ src_prepare() {
 
 	# Fix std:iswspace
 	sed -i -e '/^#include "konsole_wcwidth.h/a #include <cwctype>' \
-		lib/TerminalCharacterDecoder.cpp || die
+		qmltermwidget/lib/TerminalCharacterDecoder.cpp || die
 }
 
 src_configure() {
