@@ -2,7 +2,7 @@
 
 EAPI=7
 
-inherit gnome2-utils qmake-utils
+inherit gnome3-utils qmake-utils
 
 QTW_PN=qmltermwidget
 QTW_PV=0.2.0
@@ -49,6 +49,6 @@ src_install() {
 	doman packaging/debian/cool-retro-term.1
 }
 
-pkg_preinst() { gnome2_icon_savelist; }
-pkg_postinst() { gnome2_icon_cache_update; }
-pkg_postrm() { gnome2_icon_cache_update; }
+pkg_preinst() { gnome3_schemas_savelist; }
+pkg_postinst() { gnome3_schemas_update; }
+pkg_postrm() { gnome3_schemas_update; }
