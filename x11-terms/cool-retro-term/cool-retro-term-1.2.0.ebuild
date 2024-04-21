@@ -35,8 +35,8 @@ src_prepare() {
 	mv "${WORKDIR}/${QTW_P}" qmltermwidget || die
 
 	# Fix std:iswspace
-	sed -i -e '/^#include "konsole_wcwidth.h/a #include <cwctype>' \
-		qmltermwidget/lib/TerminalCharacterDecoder.cpp || die
+	#sed -i -e '/^#include "konsole_wcwidth.h/a #include <cwctype>' \
+	#	qmltermwidget/lib/TerminalCharacterDecoder.cpp || die
 }
 
 src_configure() {
@@ -45,11 +45,11 @@ src_configure() {
 
 src_install() {
 	# default attempts to install directly to /usr
-	emake INSTALL_ROOT="${D}" install || die
+	emake -j1 INSTALL_ROOT="${D}" install || die
 	doman packaging/debian/cool-retro-term.1
 
 	insinto "/usr/share/metainfo"
-	doins "packaging/appdata/cool-retro-termol-retro-term.appdata.xml"
+	doins "packaging/appdata/cool-retro-term.appdata.xml"
 }
 
 pkg_preinst() { gnome3_schemas_savelist; }
