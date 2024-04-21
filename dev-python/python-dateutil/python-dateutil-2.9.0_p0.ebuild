@@ -21,6 +21,9 @@ IUSE=""
 SLOT="0"
 LICENSE="BSD"
 KEYWORDS="*"
+PATCHES=(
+	"$FILESDIR"/0001-zoneinfo-Get-timezone-data-from-system-tzdata-2.9.patch
+)
 S="${WORKDIR}/python-dateutil-2.9.0.post0"
 
 python_prepare_all() {
