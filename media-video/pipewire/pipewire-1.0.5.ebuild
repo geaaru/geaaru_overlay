@@ -9,7 +9,7 @@ RESTRICT="mirror"
 
 DESCRIPTION="Multimedia processing graphs"
 HOMEPAGE="http://pipewire.org/"
-SRC_URI="https://github.com/PipeWire/pipewire/tarball/f2874ad1c2f7f0b9a1da05cc4f402b3ea3761ee6 -> pipewire-1.0.4-f2874ad.tar.gz"
+SRC_URI="https://github.com/PipeWire/pipewire/tarball/a2287be601710eea0d073261223ec34b92384c8a -> pipewire-1.0.5-a2287be.tar.gz"
 
 LICENSE="MIT LGPL-2.1+ GPL-2"
 SLOT="0"
@@ -71,7 +71,6 @@ RDEPEND="
 	pipewire-alsa? (
 		>=media-libs/alsa-lib-1.1.7
 	)
-	!pipewire-alsa? ( media-plugins/alsa-plugins[pulseaudio] )
 	ssl? ( dev-libs/openssl:= )
 	systemd? ( sys-apps/systemd )
 	v4l? ( media-libs/libv4l )
