@@ -22,11 +22,6 @@ simple:
         pydeps:
           py:3:build:
             - setuptools
-    - incremental:
-        desc: "A small library that versions your Python projects."
-        pydeps:
-          py:3:build:
-            - setuptools
     - constantly:
         pydeps:
           py:3:build:
@@ -436,6 +431,13 @@ setuptools_builds:
 
             default
           }
+
+    - incremental:
+        license: MIT
+        desc: 'Incremental is a small library that versions your Python projects'
+        pydeps:
+          py:all:runtime:
+            - click
 
 flit_builds:
   defaults:
