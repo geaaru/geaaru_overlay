@@ -169,7 +169,11 @@ src_install() {
 	rm -r "${ED}"/usr/lib/incus/*.a || die
 	rm -r "${ED}"/usr/lib/incus/pkgconfig || die
 
-	newbashcomp scripts/bash/incus incus
+	# Generate and install shell completion files.
+	mkdir -p "${D}"/usr/share/{bash-completion/completions/,fish/vendor_completions.d/,zsh/site-functions/} || die
+	"${D}"/usr/bin/incus completion bash > "${D}"/usr/share/bash-completion/completions/incus || die
+	"${D}"/usr/bin/incus completion fish > "${D}"/usr/share/fish/vendor_completions.d/incus.fish || die
+	"${D}"/usr/bin/incus completion zsh > "${D}"/usr/share/zsh/site-functions/_incus || die
 
 	exeinto /usr/sbin/
 	doexe "${FILESDIR}"/incus-startup
