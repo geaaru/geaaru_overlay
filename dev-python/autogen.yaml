@@ -439,6 +439,31 @@ setuptools_builds:
           py:all:runtime:
             - click
 
+    - fspath:
+        license: AGPL-3.0
+        desc: 'Handling path names and executables more comfortable'
+        pydeps:
+          py:all:runtime:
+            - six
+          py:all:build:
+            - six
+            - wheel
+
+    - linuxdoc:
+        license: AGPL-3.0
+        desc: 'Sphinx-doc extensions for sophisticated C developer'
+        pydeps:
+          py:all:build:
+            - fspath
+            - sphinx
+            - wheel
+            - docutils
+          py:all:runtime:
+            - fspath
+            - sphinx
+            - docutils
+
+
 flit_builds:
   defaults:
     cat: dev-python
