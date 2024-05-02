@@ -9,7 +9,7 @@ inherit cmake flag-o-matic xdg toolchain-funcs python-single-r1
 
 DESCRIPTION="SVG based generic vector-drawing program"
 HOMEPAGE="https://inkscape.org/ https://gitlab.com/inkscape/inkscape/"
-SRC_URI="https://gitlab.com/inkscape/inkscape/-/archive/INKSCAPE_1_3_2/inkscape-INKSCAPE_1_3_2.tar.bz2 -> inkscape-1.3.2.tar.bz2"
+SRC_URI="https://inkscape.org//gallery/item/44615/inkscape-1.3.2.tar.xz -> inkscape-1.3.2.tar.xz"
 KEYWORDS="next"
 
 LICENSE="GPL-2 LGPL-2.1"
@@ -96,6 +96,11 @@ DEPEND="${COMMON_DEPEND}
 
 RESTRICT="!test? ( test )"
 
+PATCHES=(
+	"${FILESDIR}"/inkscape-1.3.2-poppler-24.03.patch
+)
+
+
 pkg_pretend() {
 	[[ ${MERGE_TYPE} != binary ]] && use openmp && tc-check-openmp
 }
@@ -105,8 +110,13 @@ pkg_setup() {
 	python-single-r1_pkg_setup
 }
 
-post_src_unpack() {
-	mv ${PN}-* "${S}"
+src_unpack() {
+	if [[ ${PV} = 9999* ]]; then
+		git-r3_src_unpack
+	else
+		default
+	fi
+	[[ -d "${S}" ]] || mv -v "${WORKDIR}/${P}_202"?-??-* "${S}" || die
 }
 
 src_prepare() {

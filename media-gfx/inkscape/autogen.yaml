@@ -1,12 +1,4 @@
 inkscape:
-  generator: gitlab-1
+  generator: inkscape
   packages:
-    - inkscape:
-        cat: media-gfx
-        desc: SVG based generic vector-drawing program
-        homepage: https://inkscape.org
-        gitlab:
-          server: "gitlab.com"
-          query: releases
-          tag_prefix: "Inkscape "
-
+    - inkscape
