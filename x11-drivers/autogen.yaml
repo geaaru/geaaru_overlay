@@ -1,0 +1,5 @@
+nvidia:
+  generator: nvidia
+  packages:
+    - nvidia-drivers
+    - nvidia-kernel-modules
