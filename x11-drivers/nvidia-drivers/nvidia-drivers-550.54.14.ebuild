@@ -7,14 +7,9 @@ inherit desktop eutils flag-o-matic linux-info linux-mod nvidia-driver \
 DESCRIPTION="NVIDIA Accelerated Graphics Driver"
 HOMEPAGE="http://www.nvidia.com/ http://www.nvidia.com/Download/Find.aspx"
 
-AMD64_NV_PACKAGE="NVIDIA-Linux-x86_64-${PV}"
-ARM64_NV_PACKAGE="NVIDIA-Linux-aarch64-${PV}"
-
-NV_URI="http://download.nvidia.com/XFree86/"
-
 SRC_URI="
-	amd64? ( ${NV_URI}Linux-x86_64/${PV}/${AMD64_NV_PACKAGE}-no-compat32.run )
-	arm64? ( ${NV_URI}Linux-aarch64/${PV}/NVIDIA-Linux-aarch64-${PV}.run )
+	amd64? ( http://download.nvidia.com/XFree86/Linux-x86_64/550.54.14/NVIDIA-Linux-x86_64-550.54.14-no-compat32.run -> NVIDIA-Linux-x86_64-550.54.14-no-compat32.run )
+	arm64? ( http://download.nvidia.com/XFree86/Linux-aarch64/550.54.14/NVIDIA-Linux-aarch64-550.54.14.run -> NVIDIA-Linux-aarch64-550.54.14.run )
 "
 
 LICENSE="GPL-2 NVIDIA-r2"
@@ -77,7 +72,7 @@ NV_OPENCL_VEND_DIR="OpenCL/nvidia"
 NV_X_MODDIR="xorg/modules"
 
 # Maximum supported kernel version in form major.minor
-: "${NV_MAX_KERNEL_VERSION:=6.3}"
+: "${NV_MAX_KERNEL_VERSION:=6.7}"
 
 nvidia_drivers_versions_check() {
 	if use kernel_linux && kernel_is ge ${NV_MAX_KERNEL_VERSION%%.*} ${NV_MAX_KERNEL_VERSION#*.}; then
@@ -164,12 +159,13 @@ src_install() {
 		[XMODULE_SHARED_LIB]=${NV_NATIVE_LIBDIR}/xorg/modules
 	)
 
+		#libnvidia-egl-wayland 10_nvidia_wayland # gui-libs/egl-wayland
 	local skip_files=(
 		#$(usev !X "libGLX_nvidia libglxserver_nvidia")
 		$libGLX_indirect # non-glvnd unused fallback
 		#libnvidia-{gtk,wayland-client} nvidia-{settings,xconfig} # from source
-		#libnvidia-egl-gbm 15_nvidia_gbm # gui-libs/egl-gbm
-		#libnvidia-egl-wayland 10_nvidia_wayland # gui-libs/egl-wayland
+		libnvidia-egl-wayland 10_nvidia_wayland # gui-libs/egl-wayland
+		libnvidia-egl-gbm 15_nvidia_gbm # gui-libs/egl-gbm
 		#libnvidia-pkcs11.so # using the openssl3 version instead
 		libnvidia-pkcs11-openssl3.so # waiting for openssl v3
 	)
@@ -178,9 +174,9 @@ src_install() {
 		$(usev !powerd powerd)
 		installer nvpd # handled separately / built from source
 	)
-	# GLVND_LIB GLVND_SYMLINK EGL_CLIENT.\* GLX_CLIENT.\* # media-libs/libglvnd
+	# GLVND_LIB GLVND_SYMLINK GLX_CLIENT.\* # media-libs/libglvnd
 	local skip_types=(
-		GLVND_LIB GLVND_SYMLINK GLX_CLIENT.\* # media-libs/libglvnd
+		GLVND_LIB GLVND_SYMLINK EGL_CLIENT.\* GLX_CLIENT.\* # media-libs/libglvnd
 		DOCUMENTATION DOT_DESKTOP DKMS_CONF SYSTEMD_UNIT # handled separately / unused
 		ICON # handled separately
 	)
@@ -215,6 +211,8 @@ src_install() {
 			into=${m[3]}
 		elif [[ ${m[2]} == *_BINARY ]]; then
 			into=/opt/nvidia/${P}/bin
+		elif [[ ${m[2]} == NVIDIA_MODPROBE ]]; then
+			into=/opt/nvidia/${P}/bin
 		elif [[ ${m[3]} == COMPAT32 ]]; then
 			continue
 		# Doesn't support systemd for now
@@ -247,8 +245,10 @@ src_install() {
 			#echo "LINK ${m[4]} into ${into}/${m[0]}"
 			continue
 		fi
-		[[ ${m[0]} =~ ^libnvidia-ngx.so|^libnvidia-egl-gbm.so ]] &&
+		[[ ${m[0]} =~ ^libnvidia-ngx.so|^libnvidia-egl-gbm.so ]] && {
+			#echo "LINK ${m[0]} into ${into}/${m[0]%.so*}.so.1"
 			dosym ${m[0]} ${into}/${m[0]%.so*}.so.1 # soname not in .manifest
+		}
 
 		printf -v m[1] %o $((m[1] | 0200)) # 444->644
 		insopts -m${m[1]}
@@ -257,7 +257,6 @@ src_install() {
 		#echo "INST ${m[0]} into ${into}"
 	done < .manifest || die
 	insopts -m0644 # reset
-
 
 	dobin nvidia-bug-report.sh
 
@@ -346,3 +345,4 @@ pkg_preinst() {
 pkg_postinst() {
 	readme.gentoo_print_elog
 }
+# vim: ft=ebuild

@@ -7,14 +7,9 @@ inherit desktop eutils flag-o-matic linux-info linux-mod nvidia-driver \
 DESCRIPTION="NVIDIA Accelerated Graphics Driver"
 HOMEPAGE="http://www.nvidia.com/ http://www.nvidia.com/Download/Find.aspx"
 
-AMD64_NV_PACKAGE="NVIDIA-Linux-x86_64-${PV}"
-ARM64_NV_PACKAGE="NVIDIA-Linux-aarch64-${PV}"
-
-NV_URI="http://download.nvidia.com/XFree86/"
-
 SRC_URI="
-	amd64? ( ${NV_URI}Linux-x86_64/${PV}/${AMD64_NV_PACKAGE}-no-compat32.run )
-	arm64? ( ${NV_URI}Linux-aarch64/${PV}/NVIDIA-Linux-aarch64-${PV}.run )
+	amd64? ( http://download.nvidia.com/XFree86/Linux-x86_64/535.86.05/NVIDIA-Linux-x86_64-535.86.05-no-compat32.run -> NVIDIA-Linux-x86_64-535.86.05-no-compat32.run )
+	arm64? ( http://download.nvidia.com/XFree86/Linux-aarch64/535.86.05/NVIDIA-Linux-aarch64-535.86.05.run -> NVIDIA-Linux-aarch64-535.86.05.run )
 "
 
 LICENSE="GPL-2 NVIDIA-r2"
@@ -77,7 +72,7 @@ NV_OPENCL_VEND_DIR="OpenCL/nvidia"
 NV_X_MODDIR="xorg/modules"
 
 # Maximum supported kernel version in form major.minor
-: "${NV_MAX_KERNEL_VERSION:=6.3}"
+: "${NV_MAX_KERNEL_VERSION:=6.7}"
 
 nvidia_drivers_versions_check() {
 	if use kernel_linux && kernel_is ge ${NV_MAX_KERNEL_VERSION%%.*} ${NV_MAX_KERNEL_VERSION#*.}; then
@@ -350,3 +345,4 @@ pkg_preinst() {
 pkg_postinst() {
 	readme.gentoo_print_elog
 }
+# vim: ft=ebuild
