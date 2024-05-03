@@ -1,6 +1,6 @@
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 inherit eutils flag-o-matic linux-info linux-mod multilib-minimal nvidia-driver \
 	portability toolchain-funcs unpacker user udev
 
@@ -10,10 +10,10 @@ SRC_URI=""
 
 LICENSE="GPL-2 NVIDIA-r2"
 SLOT="0/${PV%.*}"
-KEYWORDS="*"
+KEYWORDS="-* ~amd64 ~arm64"
 RESTRICT="bindist"
 
-IUSE="+kms +uvm videogroup"
+IUSE="+kms +uvm videogroup open-kernel"
 
 DEPEND="
 	~x11-drivers/nvidia-drivers-${PV}
@@ -78,12 +78,15 @@ pkg_setup() {
 }
 
 src_unpack() {
-	cp -r "${NVDRIVERS_DIR}/src/kernel" "${S}" || die
+	if use open-kernel ; then
+		cp -r "${NVDRIVERS_DIR}/src/kernel-open" "${S}" || die
+	else
+		cp -r "${NVDRIVERS_DIR}/src/kernel" "${S}" || die
+	fi
 }
 
 
 src_prepare() {
-
 	# Apply patches for our exact package and version
 	local mypatch
 	for mypatch in "${FILESDIR}"/${P}*.patch ; do
@@ -92,7 +95,6 @@ src_prepare() {
 	done
 
 	default
-
 }
 
 src_compile() {
@@ -148,3 +150,5 @@ pkg_postinst() {
 		einfo "group."
 	fi
 }
+
+# vim: filetype=ebuild
