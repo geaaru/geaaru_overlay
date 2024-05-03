@@ -138,7 +138,6 @@ src_prepare() {
 		nvidia-settings/src/Makefile || die
 }
 
-#jinja2: trim_blocks:False
 src_install() {
 	[ -r .manifest ] || die "Can not read .manifest!"
 	local name perms type f4 f5 f6 f7
