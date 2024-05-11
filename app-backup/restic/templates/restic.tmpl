@@ -33,8 +33,12 @@ src_install() {
 	dobin restic
 
 	newbashcomp doc/bash-completion.sh "${PN}"
-	newzshcomp doc/zsh-completion.zsh _restic
-	newfishcomp doc/fish-completion.fish "${PN}"
+
+	insinto /usr/share/zsh/site-functions
+	newins doc/zsh-completion.zsh _restic
+
+	insinto /usr/share/fish/vendor_completions.d/
+	newins doc/fish-completion.fish "${PN}"
 
 	doman doc/man/*
 	dodoc doc/*.rst

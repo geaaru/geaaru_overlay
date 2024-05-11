@@ -315,7 +315,7 @@ EGO_SUM=(
 DESCRIPTION="A backup program that is fast, efficient and secure"
 HOMEPAGE="https://restic.github.io/"
 SRC_URI="https://github.com/restic/restic/tarball/9a9cc6dd0d978a8a452ff181558d5856dc217a37 -> restic-0.16.4-9a9cc6d.tar.gz
-https://direct.funtoo.org/aa/52/c6/aa52c6b99da6919d8cce4f17a2ee4ac2d24b1eb98a9c7e5a8cefa90d2e0cc009f6a7a5ba7d6bd6055be08bb063ca80915d80b865790d6a29045a05b026e2493d -> restic-0.16.4-funtoo-go-bundle-ae47dba26aafe7203e2127296462d8064105080fa26f8bc079932e59fc1665c6d55985d521393389d03ac6315a02137d97535e4567568a5dda577852b91a5774.tar.gz"
+https://direct.funtoo.org/17/a9/66/17a966f283ce7619cf1d3c9c3d5f993585bb1e37ce69cb6aaf819fc15361ae61b681fa0eed4304d73f8d1e6503cbd5caab9972b12d34717e678d24545112bd50 -> restic-0.16.4-funtoo-go-bundle-ae47dba26aafe7203e2127296462d8064105080fa26f8bc079932e59fc1665c6d55985d521393389d03ac6315a02137d97535e4567568a5dda577852b91a5774.tar.gz"
 
 LICENSE="Apache-2.0 BSD BSD-2 LGPL-3-with-linking-exception MIT"
 SLOT="0"
@@ -339,8 +339,12 @@ src_install() {
 	dobin restic
 
 	newbashcomp doc/bash-completion.sh "${PN}"
-	newzshcomp doc/zsh-completion.zsh _restic
-	newfishcomp doc/fish-completion.fish "${PN}"
+
+	insinto /usr/share/zsh/site-functions
+	newins doc/zsh-completion.zsh _restic
+
+	insinto /usr/share/fish/vendor_completions.d/
+	newins doc/fish-completion.fish "${PN}"
 
 	doman doc/man/*
 	dodoc doc/*.rst
