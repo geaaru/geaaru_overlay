@@ -1,0 +1,10 @@
+incus:
+  generator: dirlisting-1
+  packages:
+    - incus:
+        dir:
+          url: https://linuxcontainers.org/downloads/incus/
+          format: tar.xz
+          order: asc
+          files:
+            - incus
