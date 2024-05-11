@@ -112,7 +112,7 @@ EGO_SUM=(
 DESCRIPTION="Backrest is a web UI and orchestrator for restic backup"
 HOMEPAGE="https://github.com/garethgeorge/backrest"
 SRC_URI="https://github.com/garethgeorge/backrest/tarball/5d8633c6d2c7dacd6e4bf7dc37b9e5b5bb0271c2 -> backrest-0.17.2-5d8633c.tar.gz
-https://direct.funtoo.org/5b/80/59/5b8059f5be0fc13a2ee9ff48f77153f03f1613395b35ddd04a3a1e974d9e14d3412b2001aeb425f76513809a4e4563011702f935d7498feb84ffd126f51d3458 -> backrest-0.17.2-funtoo-go-bundle-84e536a597fe0ebdb1eeaa72a4649baefb48a8e8a9db96ffc9e56676ae53289d7d9ec35f94d70719f6e644f3199e9113f69d1f525ab011c6f8fbe88810edfe0a.tar.gz"
+https://direct.funtoo.org/87/91/e3/8791e323b7e729095b6b6b6ebd24988cb20c113dacb6a3d2e242d0850eba157aa783f12df40a1d4a119cb65d2bb03fe74e41fdc63621becd0dfc09218353f9a5 -> backrest-0.17.2-funtoo-go-bundle-84e536a597fe0ebdb1eeaa72a4649baefb48a8e8a9db96ffc9e56676ae53289d7d9ec35f94d70719f6e644f3199e9113f69d1f525ab011c6f8fbe88810edfe0a.tar.gz"
 
 LICENSE="GPL-3.0"
 SLOT="0"
