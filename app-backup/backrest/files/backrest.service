@@ -6,9 +6,8 @@ After=network.target
 Type=simple
 User=backrest
 Group=backrest
-ExecStart=/usr/bin/backrest
 EnvironmentFile=/etc/conf.d/backrest
-Environment="BACKREST_PORT=127.0.0.1:9898"
+ExecStart=/usr/bin/backrest
 
 [Install]
 WantedBy=multi-user.target
