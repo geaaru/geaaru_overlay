@@ -2,7 +2,7 @@
 
 EAPI=7
 
-inherit go-module bash-completion-r1 systemd
+inherit go-module systemd user
 
 EGO_SKIP_TIDY=1
 EGO_SUM=(
