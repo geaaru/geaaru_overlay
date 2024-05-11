@@ -1,0 +1,41 @@
+# Distributed under the terms of the GNU General Public License v2
+
+EAPI=7
+
+inherit go-module bash-completion-r1
+
+EGO_SKIP_TIDY=1
+EGO_SUM=(
+{{gosum}})
+
+DESCRIPTION="Backrest is a web UI and orchestrator for restic backup"
+HOMEPAGE="https://github.com/garethgeorge/backrest"
+SRC_URI="{{ src_uri }}"
+
+LICENSE="GPL-3.0"
+SLOT="0"
+KEYWORDS="*"
+
+RDEPEND="app-backup/restic"
+DEPEND="${RDEPEND}
+	dev-node/nodejs
+"
+
+post_src_unpack() {
+	mv ${WORKDIR}/garethgeorge-backrest-* ${S}
+}
+
+src_compile() {
+	GOOS=linux BACKREST_BUILD_VERSION={{version}} \
+		go generate ./...
+
+	CGO_ENABLED=0 \
+		go build \
+		-asmflags "-trimpath=${S}" \
+		-gcflags "-trimpath=${S}" \
+		-o backrest .
+}
+
+src_install() {
+	dobin backrest
+}
