@@ -50,6 +50,7 @@ src_install() {
 	diropts -m0750 -o backrest -g backrest
 	dodir /var/lib/backrest/
 	fowners backrest:backrest /var/lib/backrest
+	keepdir /var/lib/backrest
 	if use systemd ; then
 		systemd_newunit "${FILESDIR}"/backrest.service backrest.service || die
 	else
