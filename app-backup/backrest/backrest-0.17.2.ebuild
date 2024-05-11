@@ -2,7 +2,7 @@
 
 EAPI=7
 
-inherit go-module bash-completion-r1
+inherit go-module bash-completion-r1 systemd
 
 EGO_SKIP_TIDY=1
 EGO_SUM=(
@@ -113,15 +113,24 @@ DESCRIPTION="Backrest is a web UI and orchestrator for restic backup"
 HOMEPAGE="https://github.com/garethgeorge/backrest"
 SRC_URI="https://github.com/garethgeorge/backrest/tarball/5d8633c6d2c7dacd6e4bf7dc37b9e5b5bb0271c2 -> backrest-0.17.2-5d8633c.tar.gz
 https://direct.funtoo.org/87/91/e3/8791e323b7e729095b6b6b6ebd24988cb20c113dacb6a3d2e242d0850eba157aa783f12df40a1d4a119cb65d2bb03fe74e41fdc63621becd0dfc09218353f9a5 -> backrest-0.17.2-funtoo-go-bundle-84e536a597fe0ebdb1eeaa72a4649baefb48a8e8a9db96ffc9e56676ae53289d7d9ec35f94d70719f6e644f3199e9113f69d1f525ab011c6f8fbe88810edfe0a.tar.gz"
-
+# Uses npm to download packages
+RESTRICT="network-sandbox"
 LICENSE="GPL-3.0"
 SLOT="0"
 KEYWORDS="*"
+IUSE="systemd"
 
 RDEPEND="app-backup/restic"
 DEPEND="${RDEPEND}
 	net-libs/nodejs
 "
+
+pkg_setup() {
+	ebegin "Ensuring backrest group and user exist"
+	enewgroup backrest
+	enewuser backrest -1 -1 /var/lib/backrest backrest
+	eend $?
+}
 
 post_src_unpack() {
 	mv ${WORKDIR}/garethgeorge-backrest-* ${S}
@@ -140,4 +149,13 @@ src_compile() {
 
 src_install() {
 	dobin backrest
+	diropts -m0750 -o backrest -g backrest
+	dodir /var/lib/backrest/
+	fowners backrest:backrest /var/lib/backrest
+	if use systemd ; then
+		systemd_newunit "${FILESDIR}"/backrest.service backrest.service || die
+	else
+		newinitd "${FILESDIR}"/backrest.initd backrest
+	fi
+	newconfd "${FILESDIR}"/backrest.confd backrest
 }

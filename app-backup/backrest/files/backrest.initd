@@ -1,0 +1,22 @@
+#!/sbin/openrc-run
+# Distributed under the terms of the GNU General Public License v2
+
+name="backrest daemon"
+description="Restic WebUI Orchestrator"
+command=/usr/bin/backrest
+command_args="${backrest_args}"
+
+depend() {
+	need net
+}
+
+start() {
+	ebegin "Starting backrest service"
+	start-stop-daemon --start \
+		--pidfile ${PIDFILE} \
+		--exec ${DAEMON} \
+		--background \
+		--make-pidfile
+
+	eend ${?}
+}
