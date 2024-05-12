@@ -31,7 +31,6 @@ depend() {
 
 start() {
 	ebegin "Starting backrest service"
-	echo "Using $BACKREST_PORT"
 	start-stop-daemon --start \
 		--user ${buser} \
 		--group ${bgroup} \
