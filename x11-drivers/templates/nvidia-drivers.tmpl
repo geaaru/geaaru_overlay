@@ -2,7 +2,8 @@
 
 EAPI=7
 inherit desktop eutils flag-o-matic linux-info linux-mod \
-	portability toolchain-funcs unpacker user udev
+	portability toolchain-funcs unpacker user udev \
+	readme.gentoo-r1
 
 DESCRIPTION="NVIDIA Accelerated Graphics Driver"
 HOMEPAGE="http://www.nvidia.com/ http://www.nvidia.com/Download/Find.aspx"
