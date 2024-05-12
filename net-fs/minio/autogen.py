@@ -23,18 +23,23 @@ async def generate(hub, **pkginfo):
 	url = latest_release["tarball_url"]
 	final_name = f'{pkginfo["name"]}-{version}.tar.gz'
 	src_artifact = hub.pkgtools.ebuild.Artifact(url=url, final_name=final_name)
-	artifacts = await hub.pkgtools.golang.generate_gosum_from_artifact(src_artifact)
+
 	version=version.replace('RELEASE.', '')
 	version=version.replace('-', '.').replace('T', '.').replace('Z', '')
-	ebuild = hub.pkgtools.ebuild.BreezyBuild(
-		**pkginfo,
-		version=version.lstrip("v"),
-		tag_sha=data['object']['sha'],
-		github_user=user,
-		github_repo=repo,
-		gosum=artifacts["gosum"],
-		artifacts=[src_artifact, *artifacts["gosum_artifacts"]],
-	)
+
+	result = {
+			"version": version.lstrip("v"),
+			"sha": data['object']['sha'],
+			"artifacts": [ src_artifact ],
+			"tag": data['object']['sha'],
+			"github_user": user,
+			"github_repo": repo,
+	}
+
+	pkginfo.update(result)
+
+	await hub.pkgtools.golang.add_gosum_bundle(hub, pkginfo, src_artifact=pkginfo['artifacts'][0])
+	ebuild = hub.pkgtools.ebuild.BreezyBuild(**pkginfo)
 	ebuild.push()
 
 # vim: ts=4 sw=4 noet
