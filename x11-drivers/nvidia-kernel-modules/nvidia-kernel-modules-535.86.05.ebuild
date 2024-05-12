@@ -2,8 +2,7 @@
 
 EAPI=7
 inherit eutils flag-o-matic linux-info linux-mod multilib-minimal \
-	portability toolchain-funcs unpacker user udev \
-	readme.gentoo-r1
+	portability toolchain-funcs unpacker user udev
 
 DESCRIPTION="NVIDIA GPU Kernel Modules"
 HOMEPAGE="http://www.nvidia.com/ http://www.nvidia.com/Download/Find.aspx"
@@ -117,7 +116,6 @@ src_install() {
 	exeinto "$(get_udevdir)"
 	doexe "${T}"/nvidia-udev.sh
 	udev_newrules "${FILESDIR}"/nvidia.udev-rule 99-nvidia.rules
-	readme.gentoo_create_doc
 }
 
 pkg_preinst() {
