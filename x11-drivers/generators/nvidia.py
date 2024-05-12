@@ -6,6 +6,7 @@ async def generate(hub, **pkginfo):
     supported_versions = {
         '535.86.05': '6.7',
         '550.54.14': '6.7',
+        '550.78'   : '6.7',
     }
 
     for version, maxk in supported_versions.items():
