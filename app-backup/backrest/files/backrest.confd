@@ -10,3 +10,9 @@ BACKREST_DATA=/var/lib/backrest/data
 
 # Override the path of the backrest config file
 # BACKREST_CONFIG=
+
+# Define additional command line args.
+# backrest_args=
+
+# backrest_user=backrest
+# backrest_group=backrest
