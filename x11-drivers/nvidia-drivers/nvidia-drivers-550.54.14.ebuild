@@ -1,7 +1,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-inherit desktop eutils flag-o-matic linux-info linux-mod nvidia-driver \
+inherit desktop eutils flag-o-matic linux-info linux-mod \
 	portability toolchain-funcs unpacker user udev
 
 DESCRIPTION="NVIDIA Accelerated Graphics Driver"
@@ -34,6 +34,7 @@ COMMON="
 
 DEPEND="
 	${COMMON}
+	sys-apps/pciutils
 	virtual/linux-sources
 "
 
@@ -78,12 +79,6 @@ nvidia_drivers_versions_check() {
 	if use kernel_linux && kernel_is ge ${NV_MAX_KERNEL_VERSION%%.*} ${NV_MAX_KERNEL_VERSION#*.}; then
 		ewarn "These NVIDIA drivers are designed to work with Linux ${NV_MAX_KERNEL_VERSION} or earlier."
 	fi
-
-	# Since Nvidia ships many different series of drivers, we need to give the user
-	# some kind of guidance as to what version they should install. This tries
-	# to point the user in the right direction but can't be perfect. check
-	# nvidia-driver.eclass
-	nvidia-driver-check-warning
 
 	# Kernel features/options to check for
 	CONFIG_CHECK="~ZONE_DMA ~MTRR ~SYSVIPC ~!LOCKDEP"
