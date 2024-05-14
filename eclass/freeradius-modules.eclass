@@ -161,7 +161,7 @@ freeradius-modules_src_unpack() {
 	rm -rf ${S}/src/modules/rlm_{sqlcounter,sqlhpwippool,sqlippool,test,unbound} || true
 	rm -rf ${S}/src/modules/rlm_sql_map || true
 	rm -rf ${S}/src/modules/rlm_{unix,unpack,utf8,wimax,yubikey} || true
-	rm -rf ${S}/src/modules/rlm_{detail,pap} || true
+	rm -rf ${S}/src/modules/rlm_{detail,pap,totp} || true
 
 	if [ "${FREERADIUS_MOD_SRC_WITH_TREE}" = "1" ] ; then
 		cp -rf ${S_OLD}/* ${S}
