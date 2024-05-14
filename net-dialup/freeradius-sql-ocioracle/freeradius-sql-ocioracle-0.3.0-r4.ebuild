@@ -1,11 +1,10 @@
-# Copyright 1999-2014 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/net-dialup/freeradius/freeradius-3.0.3.ebuild,v 1.3 2014/12/28 16:14:40 titanofold Exp $
 
 EAPI=6
 
 FREERADIUS_MOD_TYPE="sql"
 FREERADIUS_VERSION="3.0.20"
+FREERADIUS_LEGACY=1
 
 SLOT="3.0"
 
@@ -17,7 +16,7 @@ HOMEPAGE="https://github.com/geaaru/rlm_sql_ocioracle"
 EGIT_REPO_URI="https://github.com/geaaru/rlm_sql_ocioracle.git"
 EGIT_COMMIT="0.3.0"
 
-KEYWORDS="~amd64"
+KEYWORDS="*"
 LICENSE="GPL-2"
 IUSE=""
 
