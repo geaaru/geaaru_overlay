@@ -1,24 +1,22 @@
-# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 DESCRIPTION="OCILib opensource Library"
 HOMEPAGE="http://orclib.sourceforge.net"
-SRC_URI="https://github.com/vrogier/ocilib/releases/download/v${PV}/${PF}-gnu.tar.gz"
+SRC_URI="https://github.com/vrogier/ocilib/releases/download/v4.6.0/ocilib-4.6.0-gnu.tar.gz -> ocilib-4.6.0-gnu.tar.gz"
 
 RESTRICT="nomirror"
 
-LICENSE="GPL-2.1"
+LICENSE="Apache-2.0"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="*"
 IUSE=""
 
 DEPEND="dev-db/oracle-instantclient-basic"
 RDEPEND="dev-db/oracle-instantclient-basic"
 
 PATCHES=(
-  "${FILESDIR}"/${P}-560dd544010bebef5d03434771b5f69c3083f92b.patch
 )
 
 src_compile() {
@@ -31,12 +29,12 @@ src_compile() {
 	myconf="${myconf} --enable-shared"
 
 	myconf="${myconf} \
-			--with-oracle-headers-path=/usr/lib/oracle/${oracle_version}/client/include"
+			--with-oracle-headers-path=/usr/lib64/oracle/${oracle_version}/client/include"
 	myconf="${myconf} \
-			--with-oracle-lib-path=/usr/lib/oracle/${oracle_version}/client/lib"
+			--with-oracle-lib-path=/usr/lib64/oracle/${oracle_version}/client/lib"
 
 	myconf="${myconf} \
-			--with-oracle-home=/usr/lib/oracle/${oracle_version}/client/"
+			--with-oracle-home=/usr/lib64/oracle/${oracle_version}/client/"
 
 	econf ${myconf} || die
 	emake || die
@@ -45,3 +43,5 @@ src_compile() {
 src_install() {
 	make install DESTDIR="${D}" || die "install failed"
 }
+
+# vim: filetype=ebuild

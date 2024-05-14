@@ -1,0 +1,14 @@
+gitea:
+  generator: github-1
+  packages:
+    - ocilib:
+        github:
+          user: vrogier
+          repo: ocilib
+          query: releases
+          tarball: ocilib-{version}-gnu.tar.gz
+        version:
+          latest:
+            template: ocilib.tmpl
+          4.6.0:
+            template: ocilib.tmpl
