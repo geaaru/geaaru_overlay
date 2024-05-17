@@ -1,5 +1,4 @@
 #!/sbin/openrc-run
-# Copyright 2016-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 description="Minio Object Storage Server"
