@@ -9,7 +9,7 @@ AssertFileIsExecutable=/usr/bin/minio
 User=minio
 Group=minio
 
-EnvironmentFile=/etc/default/minio
+EnvironmentFile=/etc/conf.d/minio
 ExecStartPre=/bin/sh -c "if [ -z \"${MINIO_VOLUMES}\" ]; then echo \"Variable MINIO_VOLUMES not set in /etc/default/minio\"; exit 1; fi"
 
 ExecStart=/usr/bin/minio server $MINIO_OPTS $MINIO_VOLUMES
