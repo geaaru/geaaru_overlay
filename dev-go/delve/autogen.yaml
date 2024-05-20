@@ -1,0 +1,8 @@
+delve:
+  generator: github-1
+  packages:
+    - delve:
+        github:
+          user: go-delve
+          repo: delve
+          query: releases
