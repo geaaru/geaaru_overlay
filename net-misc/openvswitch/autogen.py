@@ -9,6 +9,7 @@ async def generate(hub, **pkginfo):
 		'3.0': { 'selector': '>=3.0,<3.1', 'template': 'openvswitch3.tmpl' },
 		'3.1': { 'selector': '>=3.1,<3.2', 'template': 'openvswitch3.tmpl' },
 		'3.2': { 'selector': '>=3.2,<3.3', 'template': 'openvswitch3.tmpl' },
+		'3.3': { 'selector': '>=3.3,<3.4', 'template': 'openvswitch3.tmpl' },
 	}
 	github_user = "openvswitch"
 	github_repo = "ovs"
