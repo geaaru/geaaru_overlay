@@ -7,7 +7,7 @@ inherit autotools toolchain-funcs
 
 DESCRIPTION="Library of glib utilities"
 HOMEPAGE="https://github.com/sailfishos/libglibutil"
-SRC_URI="https://github.com/sailfishos/libglibutil/tarball/fe0d5c4a98feffe543ab2186982727ce44c0089b -> libglibutil-1.0.76-fe0d5c4.tar.gz"
+SRC_URI="https://github.com/sailfishos/libglibutil/tarball/7df665e17f00345ff2cbd12452a0bf67e203dccd -> libglibutil-1.0.79-7df665e.tar.gz"
 
 LICENSE="BSD-3-Clause"
 SLOT="0"
