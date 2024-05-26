@@ -4,9 +4,10 @@ async def generate(hub, **pkginfo):
     NV_URI="http://download.nvidia.com/XFree86/"
 
     supported_versions = {
-        '535.86.05': '6.7',
-        '550.54.14': '6.7',
-        '550.78'   : '6.7',
+        '535.86.05'  : '6.7',
+        '550.54.14'  : '6.7',
+        '550.78'     : '6.7',
+        '555.42.02'  : '6.7',
     }
 
     for version, maxk in supported_versions.items():
