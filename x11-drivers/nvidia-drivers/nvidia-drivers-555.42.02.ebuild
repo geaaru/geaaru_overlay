@@ -74,7 +74,7 @@ NV_OPENCL_VEND_DIR="OpenCL/nvidia"
 NV_X_MODDIR="xorg/modules"
 
 # Maximum supported kernel version in form major.minor
-: "${NV_MAX_KERNEL_VERSION:=6.7}"
+: "${NV_MAX_KERNEL_VERSION:=6.8}"
 
 nvidia_drivers_versions_check() {
 	if use kernel_linux && kernel_is ge ${NV_MAX_KERNEL_VERSION%%.*} ${NV_MAX_KERNEL_VERSION#*.}; then
@@ -319,7 +319,7 @@ src_install() {
 	printf -- "LDPATH=\"${ldpath}\"\n" > "${T}/09nvidia"
 	doenvd "${T}/09nvidia"
 
-	readme.gentoo_create_doc
+	#readme.gentoo_create_doc
 }
 
 
@@ -338,7 +338,7 @@ pkg_preinst() {
 	fi
 }
 
-pkg_postinst() {
-	readme.gentoo_print_elog
-}
+#pkg_postinst() {
+#	readme.gentoo_print_elog
+#}
 # vim: ft=ebuild

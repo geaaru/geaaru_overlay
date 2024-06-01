@@ -319,7 +319,7 @@ src_install() {
 	printf -- "LDPATH=\"${ldpath}\"\n" > "${T}/09nvidia"
 	doenvd "${T}/09nvidia"
 
-	readme.gentoo_create_doc
+	#readme.gentoo_create_doc
 }
 
 
@@ -338,7 +338,7 @@ pkg_preinst() {
 	fi
 }
 
-pkg_postinst() {
-	readme.gentoo_print_elog
-}
+#pkg_postinst() {
+#	readme.gentoo_print_elog
+#}
 # vim: ft=ebuild
