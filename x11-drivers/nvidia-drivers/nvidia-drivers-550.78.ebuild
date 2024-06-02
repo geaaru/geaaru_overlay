@@ -14,7 +14,7 @@ SRC_URI="
 "
 
 LICENSE="GPL-2 NVIDIA-r2"
-SLOT="0/${PV%.*}"
+SLOT="550"
 KEYWORDS="*"
 RESTRICT="bindist strip"
 EMULTILIB_PKG="true"
@@ -141,16 +141,16 @@ src_install() {
 
 	local libdir=$(get_libdir)
 	local -A paths=(
-		[APPLICATION_PROFILE]=/usr/share/nvidia
-		[EGL_EXTERNAL_PLATFORM_JSON]=/usr/share/egl/egl_external_platform.d
+		[APPLICATION_PROFILE]=${NV_ROOT}/usr/share/nvidia
+		[EGL_EXTERNAL_PLATFORM_JSON]=${NV_ROOT}/usr/share/egl/egl_external_platform.d
 		[FIRMWARE]=/lib/firmware/nvidia/${PV}
 		#[GBM_BACKEND_LIB_SYMLINK]=/usr/${libdir}/gbm
-		[GLVND_EGL_ICD_JSON]=/usr/share/glvnd/egl_vendor.d
-		[OPENGL_DATA]=/usr/share/nvidia
-		[VULKAN_ICD_JSON]=/usr/share/vulkan
-		[WINE_LIB]=/usr/${libdir}/nvidia/wine
+		[GLVND_EGL_ICD_JSON]=${NV_ROOT}/usr/share/glvnd/egl_vendor.d
+		[OPENGL_DATA]=${NV_ROOT}/usr/share/nvidia
+		[VULKAN_ICD_JSON]=${NV_ROOT}/usr/share/vulkan
+		[WINE_LIB]=${NV_ROOT}/usr/${libdir}/nvidia/wine
 		[XORG_OUTPUTCLASS_CONFIG]=${NV_ROOT}/share/X11/xorg.conf.d
-		[CUDA_ICD]=/etc/OpenCL/vendors
+		[CUDA_ICD]=${NV_ROOT}/etc/OpenCL/vendors
 
 		[XMODULE_SHARED_LIB]=${NV_NATIVE_LIBDIR}/xorg/modules
 	)
@@ -158,7 +158,7 @@ src_install() {
 		#libnvidia-egl-wayland 10_nvidia_wayland # gui-libs/egl-wayland
 	local skip_files=(
 		#$(usev !X "libGLX_nvidia libglxserver_nvidia")
-		$libGLX_indirect # non-glvnd unused fallback
+		libGLX_indirect # non-glvnd unused fallback
 		#libnvidia-{gtk,wayland-client} nvidia-{settings,xconfig} # from source
 		libnvidia-egl-wayland 10_nvidia_wayland # gui-libs/egl-wayland
 		libnvidia-egl-gbm 15_nvidia_gbm # gui-libs/egl-gbm
@@ -176,7 +176,7 @@ src_install() {
 		DOCUMENTATION DOT_DESKTOP DKMS_CONF SYSTEMD_UNIT # handled separately / unused
 		ICON # handled separately
 	)
-	#.\*_SRC
+	# .\*_SRC
 
 	local DOCS=(
 		README.txt NVIDIA_Changelog supported-gpus/supported-gpus.json
@@ -254,13 +254,14 @@ src_install() {
 	done < .manifest || die
 	insopts -m0644 # reset
 
-	dobin nvidia-bug-report.sh
+	#dobin nvidia-bug-report.sh
 
 	# MODULE:powerd extras
 	if use powerd; then
-		newinitd "${FILESDIR}"/nvidia-powerd.initd nvidia-powerd #923117
+		insinto ${NV_ROOT}/etc/init.d
+		newins "${FILESDIR}"/nvidia-powerd.initd nvidia-powerd #923117
 
-		insinto /usr/share/dbus-1/system.d
+		insinto ${NV_ROOT}/usr/share/dbus-1/system.d
 		doins nvidia-dbus.conf
 	fi
 
@@ -271,53 +272,59 @@ src_install() {
 	# are widespread and sometime affect revdeps of packages built with
 	# USE=opencl/cuda making it hard to manage in ebuilds (minimal set,
 	# ebuilds should handle manually if need others or addwrite)
-	insinto /etc/sandbox.d
+	insinto ${NV_ROOT}/etc/sandbox.d
 	newins - 20nvidia <<<'SANDBOX_PREDICT="/dev/nvidiactl:/dev/nvidia-caps:/dev/char"'
 
 
 	if use tools; then
 		#emake "${NV_ARGS[@]}" -C nvidia-settings install
-		for tool in settings smi xconfig; do
-			[ -f "${D}${NV_ROOT}/bin/nvidia-${tool}" ] && dosym "${NV_ROOT}/bin/nvidia-${tool}" "/usr/bin/nvidia-${tool}"
-		done
+		#for tool in settings smi xconfig; do
+		#	[ -f "${D}${NV_ROOT}/bin/nvidia-${tool}" ] && dosym "${NV_ROOT}/bin/nvidia-${tool}" "/usr/bin/nvidia-${tool}"
+		#done
 
-		doicon nvidia-settings.png
-		domenu nvidia-settings.desktop
+		insinto ${NV_ROOT}/usr/share/pixmaps
+		doins nvidia-settings.png
 
-		exeinto /etc/X11/xinit/xinitrc.d
+		insinto ${NV_ROOT}/usr/share/applications
+		doins nvidia-settings.desktop
+
+		exeinto ${NV_ROOT}/etc/X11/xinit/xinitrc.d
 		newexe "${FILESDIR}"/95-nvidia-settings.xinitrc 95-nvidia-settings
 	fi
+
+	# Move man files under NV_ROOT
+	mv ${D}/usr/share/man ${D}${NV_ROOT}/usr/share
 
 	# If 'X' flag is enabled, link nvidia-drm-outputclass.conf into system xorg.conf.d directory (xorg 1.16 and up),
 	# link nvidia_drv.so into /usr/$(get_libdir)/xorg/modules/drivers,
 	# and link nvidia_icd.json into system vulkan/icd.d directory.
-	if use X; then
+	#if use X; then
 
 		# Xorg nvidia.conf
-		if has_version '>=x11-base/xorg-server-1.16'; then
-			dosym "${NV_ROOT}/share/X11/xorg.conf.d/nvidia-drm-outputclass.conf" "/usr/share/X11/xorg.conf.d/50-nvidia-drm-outputclass.conf"
-		fi
+		#if has_version '>=x11-base/xorg-server-1.16'; then
+		#	dosym "${NV_ROOT}/share/X11/xorg.conf.d/nvidia-drm-outputclass.conf" "/usr/share/X11/xorg.conf.d/50-nvidia-drm-outputclass.conf"
+		#fi
 
 		# Xorg driver nvidia_drv.so
-		dosym "${NV_NATIVE_LIBDIR}/xorg/modules/drivers/nvidia_drv.so" "/usr/$(get_libdir)/xorg/modules/drivers/nvidia_drv.so"
-	fi
+		#dosym "${NV_NATIVE_LIBDIR}/xorg/modules/drivers/nvidia_drv.so" "/usr/$(get_libdir)/xorg/modules/drivers/nvidia_drv.so"
+	#fi
 
 	# On linux kernels, install nvidia-persistenced init and conf files after fixing up paths.
-	for filename in nvidia-{smi,persistenced}.init ; do
-		sed -e 's:/opt/bin:'"${NV_ROOT}"'/bin:g' "${FILESDIR}/${filename}" > "${T}/${filename}"
-		newinitd "${T}/${filename}" "${filename%.init}"
-	done
-	newconfd "${FILESDIR}/nvidia-persistenced.conf" nvidia-persistenced
+	#for filename in nvidia-{smi,persistenced}.init ; do
+	#	sed -e 's:/opt/bin:'"${NV_ROOT}"'/bin:g' "${FILESDIR}/${filename}" > "${T}/${filename}"
+	#	newinitd "${T}/${filename}" "${filename%.init}"
+	#done
+	#newconfd "${FILESDIR}/nvidia-persistenced.conf" nvidia-persistenced
 
 	# If we're not using glvnd support, then set up directory expected by eselect opengl:
-	if ! use glvnd ; then
-		dosym "${NV_NATIVE_LIBDIR}/opengl/nvidia" "${EPREFIX}/usr/lib/opengl/nvidia"
-	fi
+	#if ! use glvnd ; then
+	#	dosym "${NV_NATIVE_LIBDIR}/opengl/nvidia" "${EPREFIX}/usr/lib/opengl/nvidia"
+	#fi
 
 	# Setup an env.d file with appropriate lib paths.
-	ldpath="${NV_NATIVE_LIBDIR}"
-	printf -- "LDPATH=\"${ldpath}\"\n" > "${T}/09nvidia"
-	doenvd "${T}/09nvidia"
+	#ldpath="${NV_NATIVE_LIBDIR}"
+	#printf -- "LDPATH=\"${ldpath}\"\n" > "${T}/09nvidia"
+	#doenvd "${T}/09nvidia"
 
 	#readme.gentoo_create_doc
 }
