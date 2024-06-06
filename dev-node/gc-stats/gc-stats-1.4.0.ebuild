@@ -11,6 +11,7 @@ LICENSE="Unlicense"
 SLOT="0"
 KEYWORDS="*"
 IUSE=""
+RESTRICT="network-sandbox"
 
 DEPEND="
 	>=dev-node/nan-2.14.0
