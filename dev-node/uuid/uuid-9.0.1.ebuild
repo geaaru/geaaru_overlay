@@ -17,7 +17,10 @@ RDEPEND="${DEPEND}"
 
 NPM_NO_DEPS=1
 NPM_BINS="
-uuid => node-uuid-uuidjs
+dist/bin/uuid => node-uuid-uuidjs
+"
+NPM_PKG_DIRS="
+	dist
 "
 
 S="${WORKDIR}/package"
