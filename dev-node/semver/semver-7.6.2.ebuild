@@ -16,7 +16,12 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 NPM_NO_DEPS=1
-
+NPM_PKG_DIRS="
+classes
+functions
+internal
+ranges
+"
 S="${WORKDIR}/package"
 
 inherit npmv1
