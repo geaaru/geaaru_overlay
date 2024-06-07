@@ -22,6 +22,9 @@ functions
 internal
 ranges
 "
+NPM_BINS="
+semver.js => node-semver
+"
 S="${WORKDIR}/package"
 
 inherit npmv1
