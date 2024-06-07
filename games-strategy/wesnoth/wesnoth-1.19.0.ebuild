@@ -7,7 +7,7 @@ inherit cmake flag-o-matic xdg user
 DESCRIPTION="Battle for Wesnoth - A fantasy turn-based strategy game"
 HOMEPAGE="http://www.wesnoth.org
 	https://github.com/wesnoth/wesnoth"
-SRC_URI="https://downloads.sourceforge.net/wesnoth/wesnoth-1.18.0.tar.bz2 -> wesnoth-1.18.0.tar.bz2"
+SRC_URI="https://downloads.sourceforge.net/wesnoth/wesnoth-1.19.0.tar.bz2 -> wesnoth-1.19.0.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="0"
