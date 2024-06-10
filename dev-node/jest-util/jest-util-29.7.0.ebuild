@@ -24,7 +24,9 @@ NPM_LOCAL_MODULES="
 @jest
 @types
 "
-
+NPM_PKG_DIRS="
+build
+"
 S="${WORKDIR}/package"
 
 inherit npmv1
