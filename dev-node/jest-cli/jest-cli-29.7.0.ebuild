@@ -28,6 +28,13 @@ NPM_LOCAL_MODULES="
 @jest
 "
 
+NPM_PKG_DIRS="
+build
+"
+NPM_BINS="
+	jest.js => node-jestcli
+"
+
 S="${WORKDIR}/package"
 
 inherit npmv1
