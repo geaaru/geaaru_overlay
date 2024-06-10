@@ -61,7 +61,7 @@ inherit epatch
 #  * NPM_PV              Define version used for download sources when NPM_GITHUP_MOD is used.
 #                        Default value is "v${PV}".
 
-NPMV1_ECLASS_VERSION="0.3.2"
+NPMV1_ECLASS_VERSION="0.4.0"
 
 _npmv1_set_metadata() {
 
@@ -274,6 +274,11 @@ ${nodecmd}${bindir}/${binfile} \$@
 		fi
 	}
 
+	_npmv1_copy_builddir () {
+		cp -rf ./build ${D}/${NPM_PACKAGEDIR} || \
+			die "Error on copy directory build!"
+	}
+
 	_npmv1_copy_dirs() {
 
 		local i=0
@@ -425,6 +430,13 @@ ${nodecmd}${bindir}/${binfile} \$@
 		cp -rf lib ${D}/${NPM_PACKAGEDIR} || die "Error on copy directory lib!"
 	fi
 
+	# Copy build directory if contains cjs
+	if [[ -d build ]] ; then
+		if [ "$(ls -1 --color=none build/*.cjs 2>/dev/null | wc -l)" != "0" ] ; then
+			_npmv1_copy_builddir
+		fi
+	fi
+
 	# Check if are present additional directories to copy
 	if [[ -n "${NPM_PKG_DIRS}" ]] ; then
 		_npmv1_copy_dirs
@@ -441,6 +453,7 @@ ${nodecmd}${bindir}/${binfile} \$@
 	unset -f _npmv1_create_bin_script
 	unset -f _npmv1_install_module
 	unset -f _npmv1_copy_root_js_files
+	unset -f _npmv1_copy_builddir
 	unset -f _npmv1_copy_dirs
 	unset -f _npmv1_install_native_objs
 
