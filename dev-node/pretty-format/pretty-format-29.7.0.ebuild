@@ -13,7 +13,7 @@ IUSE=""
 RESTRICT="network-sandbox"
 
 DEPEND="
-	>=dev-node/ansi-styles-5.2.0
+	dev-node/ansi-styles
 	>=dev-node/react-is-18.3.1
 "
 RDEPEND="${DEPEND}"
