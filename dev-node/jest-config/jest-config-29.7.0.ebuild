@@ -14,7 +14,7 @@ RESTRICT="network-sandbox"
 
 DEPEND="
 	>=dev-node/babel-jest-29.7.0
-	>=dev-node/chalk-4.1.2
+	dev-node/chalk
 	>=dev-node/ci-info-3.9.0
 	>=dev-node/deepmerge-4.3.1
 	>=dev-node/glob-7.1.3

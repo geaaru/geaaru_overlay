@@ -15,7 +15,7 @@ RESTRICT="network-sandbox"
 DEPEND="
 	>=dev-node/babel-plugin-istanbul-6.1.1
 	>=dev-node/babel-preset-jest-29.6.3
-	>=dev-node/chalk-4.1.2
+	dev-node/chalk
 	>=dev-node/graceful-fs-4.2.11
 	>=dev-node/slash-3.0.0
 "

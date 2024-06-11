@@ -13,7 +13,7 @@ IUSE=""
 RESTRICT="network-sandbox"
 
 DEPEND="
-	>=dev-node/chalk-4.1.2
+	dev-node/chalk
 	>=dev-node/jest-get-type-29.6.3
 	>=dev-node/jest-util-29.7.0
 	>=dev-node/pretty-format-29.7.0

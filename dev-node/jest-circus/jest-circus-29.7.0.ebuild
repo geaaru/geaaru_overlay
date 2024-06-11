@@ -13,7 +13,7 @@ IUSE=""
 RESTRICT="network-sandbox"
 
 DEPEND="
-	>=dev-node/chalk-4.1.2
+	dev-node/chalk
 	>=dev-node/co-4.6.0
 	>=dev-node/dedent-1.5.3
 	>=dev-node/is-generator-fn-2.1.0

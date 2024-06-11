@@ -14,7 +14,7 @@ RESTRICT="network-sandbox"
 
 DEPEND="
 	>=dev-node/camelcase-6.3.0
-	>=dev-node/chalk-4.1.2
+	dev-node/chalk
 	>=dev-node/jest-get-type-29.6.3
 	>=dev-node/leven-3.1.0
 	>=dev-node/pretty-format-29.7.0

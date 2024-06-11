@@ -13,7 +13,7 @@ IUSE=""
 RESTRICT="network-sandbox"
 
 DEPEND="
-	>=dev-node/chalk-4.1.2
+	dev-node/chalk
 	>=dev-node/cjs-module-lexer-1.3.1
 	>=dev-node/collect-v8-coverage-1.0.2
 	>=dev-node/glob-7.1.3

@@ -14,7 +14,7 @@ RESTRICT="network-sandbox"
 
 DEPEND="
 	>=dev-node/babel-preset-current-node-syntax-1.0.1
-	>=dev-node/chalk-4.1.2
+	dev-node/chalk
 	>=dev-node/expect-29.7.0
 	>=dev-node/graceful-fs-4.2.11
 	>=dev-node/jest-diff-29.7.0

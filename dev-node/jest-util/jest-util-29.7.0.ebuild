@@ -13,7 +13,7 @@ IUSE=""
 RESTRICT="network-sandbox"
 
 DEPEND="
-	>=dev-node/chalk-4.1.2
+	dev-node/chalk
 	>=dev-node/ci-info-3.9.0
 	>=dev-node/graceful-fs-4.2.11
 	>=dev-node/picomatch-2.3.1

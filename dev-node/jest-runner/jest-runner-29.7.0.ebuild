@@ -13,7 +13,7 @@ IUSE=""
 RESTRICT="network-sandbox"
 
 DEPEND="
-	>=dev-node/chalk-4.1.2
+	dev-node/chalk
 	>=dev-node/emittery-0.13.1
 	>=dev-node/graceful-fs-4.2.11
 	>=dev-node/jest-docblock-29.7.0

@@ -14,7 +14,7 @@ RESTRICT="network-sandbox"
 
 DEPEND="
 	>=dev-node/ansi-escapes-4.3.2
-	>=dev-node/chalk-4.1.2
+	dev-node/chalk
 	>=dev-node/emittery-0.13.1
 	>=dev-node/jest-util-29.7.0
 	>=dev-node/string-length-4.0.2

@@ -12,7 +12,7 @@ KEYWORDS="*"
 IUSE=""
 
 DEPEND="
-	>=dev-node/chalk-4.1.2
+	dev-node/chalk
 	>=dev-node/graceful-fs-4.2.11
 	>=dev-node/jest-haste-map-29.7.0
 	>=dev-node/jest-pnp-resolver-1.2.3

@@ -13,7 +13,7 @@ IUSE=""
 RESTRICT="network-sandbox"
 
 DEPEND="
-	>=dev-node/chalk-4.1.2
+	dev-node/chalk
 	>=dev-node/graceful-fs-4.2.11
 	>=dev-node/micromatch-4.0.7
 	>=dev-node/pretty-format-29.7.0
