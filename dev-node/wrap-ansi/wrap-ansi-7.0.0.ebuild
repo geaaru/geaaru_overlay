@@ -12,7 +12,7 @@ KEYWORDS="*"
 IUSE=""
 
 DEPEND="
-	>=dev-node/ansi-styles-4.3.0
+	dev-node/ansi-styles
 	>=dev-node/string-width-4.2.3
 	>=dev-node/strip-ansi-6.0.1
 "
