@@ -13,7 +13,7 @@ IUSE=""
 RESTRICT="network-sandbox"
 
 DEPEND="
-	>=dev-node/chalk-4.1.2
+	dev-node/chalk
 	>=dev-node/create-jest-29.7.0
 	>=dev-node/exit-0.1.2
 	>=dev-node/import-local-3.1.0
