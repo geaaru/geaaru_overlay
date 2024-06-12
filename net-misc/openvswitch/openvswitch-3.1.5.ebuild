@@ -7,7 +7,7 @@ inherit autotools python-r1 systemd tmpfiles
 
 DESCRIPTION="Production quality, multilayer virtual switch"
 HOMEPAGE="https://www.openvswitch.org"
-SRC_URI="https://www.openvswitch.org/releases/openvswitch-3.1.4.tar.gz -> openvswitch-3.1.4.tar.gz"
+SRC_URI="https://www.openvswitch.org/releases/openvswitch-3.1.5.tar.gz -> openvswitch-3.1.5.tar.gz"
 
 LICENSE="Apache-2.0 GPL-2"
 SLOT="0"
