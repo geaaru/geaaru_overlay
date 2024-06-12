@@ -7,8 +7,8 @@ inherit autotools python-r1 systemd tmpfiles
 
 DESCRIPTION="Open Virtual Network"
 HOMEPAGE="https://www.ovn.org/"
-SRC_URI="https://github.com/ovn-org/ovn/archive/refs/tags/v23.09.3.tar.gz -> v23.09.3.tar.gz
-https://github.com/openvswitch/ovs/archive/49e64f13b2c965f5b53a65eeab70ac2e3f0bf69a.tar.gz -> ovn-ovs-23.09.3.tar.gz
+SRC_URI="https://github.com/ovn-org/ovn/archive/refs/tags/v23.09.4.tar.gz -> v23.09.4.tar.gz
+https://github.com/openvswitch/ovs/archive/c88a35fc29f0c0eb6189853bfc738c2100d4860f.tar.gz -> ovn-ovs-23.09.4.tar.gz
 "
 
 LICENSE="Apache-2.0 GPL-2"
