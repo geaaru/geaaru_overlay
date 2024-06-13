@@ -1,0 +1,13 @@
+diff --git a/src/modules/rlm_sql/drivers/rlm_sql_mongo/rlm_sql_mongo.c b/src/modules/rlm_sql/drivers/rlm_sql_mongo/rlm_sql_mongo.c
+index f40f18af3c..1896c03e5c 100644
+--- a/src/modules/rlm_sql/drivers/rlm_sql_mongo/rlm_sql_mongo.c
++++ b/src/modules/rlm_sql/drivers/rlm_sql_mongo/rlm_sql_mongo.c
+@@ -528,7 +528,7 @@ static CC_HINT(nonnull) sql_rcode_t sql_query(rlm_sql_handle_t *handle, rlm_sql_
+ 		}
+ 
+ 		if (!conn->affected_rows) {
+-			WARN("rlm_sql_mongo: No document updated for query.");
++			DEBUG3("rlm_sql_mongo: No document updated for query.");
+ 		}
+ 
+ 		if (!bson_iter_init_find(&iter, &bson_reply, "value")) {
