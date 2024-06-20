@@ -1,0 +1,8 @@
+keepalived:
+  generator: github-1
+  packages:
+    - keepalived:
+        github:
+          user: acassen
+          repo: keepalived
+          query: tags
