@@ -10,6 +10,7 @@ HOMEPAGE="https://code.funtoo.org/bitbucket/users/drobbins/repos/funtoo-metatool
 EGIT_REPO_URI="https://code.funtoo.org/bitbucket/scm/~drobbins/funtoo-metatools.git"
 EGIT_COMMIT="291d6531640d757bce9cfa471d09d68fe941ab77"
 
+RESTRICT="network-sandbox"
 DEPEND=">=dev-python/subpop-2.0.0[${PYTHON_USEDEP}]"
 RDEPEND="
 	app-arch/unzip
