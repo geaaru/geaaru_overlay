@@ -7,7 +7,7 @@ inherit java-pkg-2 java-ant-2 desktop xdg
 
 DESCRIPTION="Draw UML diagrams using a simple and human readable text description"
 HOMEPAGE="https://plantuml.com"
-SRC_URI="https://github.com/plantuml/plantuml/tarball/9432e0b1e5231e9843b846b83e00d623953cc2c1 -> plantuml-1.2024.4-9432e0b.tar.gz"
+SRC_URI="https://github.com/plantuml/plantuml/tarball/7ddfd61a328a5229f67f29bacb2f20e534ea641b -> plantuml-1.2024.5-7ddfd61.tar.gz"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="*"
