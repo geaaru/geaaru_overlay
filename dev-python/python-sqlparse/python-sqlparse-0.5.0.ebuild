@@ -11,8 +11,8 @@ HOMEPAGE="None https://pypi.org/project/sqlparse/"
 SRC_URI="https://files.pythonhosted.org/packages/50/26/5da251cd090ccd580f5cfaa7d36cdd8b2471e49fffce60ed520afc27f4bc/sqlparse-0.5.0.tar.gz -> sqlparse-0.5.0.tar.gz"
 
 DEPEND="
-	$(python_gen_cond_dep 'dev-python/hatch-vcs[${PYTHON_USEDEP}]' -3)
-	dev-python/flake8[${PYTHON_USEDEP}]"
+	dev-python/flake8[${PYTHON_USEDEP}]
+	$(python_gen_cond_dep 'dev-python/hatch-vcs[${PYTHON_USEDEP}]' -3)"
 RDEPEND="dev-python/flake8[${PYTHON_USEDEP}]"
 IUSE=""
 SLOT="0"
