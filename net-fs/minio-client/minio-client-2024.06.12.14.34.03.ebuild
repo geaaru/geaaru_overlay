@@ -137,8 +137,8 @@ EGO_SUM=(
 	"github.com/minio/colorjson v1.0.7/go.mod"
 	"github.com/minio/filepath v1.0.0"
 	"github.com/minio/filepath v1.0.0/go.mod"
-	"github.com/minio/madmin-go/v3 v3.0.51"
-	"github.com/minio/madmin-go/v3 v3.0.51/go.mod"
+	"github.com/minio/madmin-go/v3 v3.0.55-0.20240603092915-420a67132c32"
+	"github.com/minio/madmin-go/v3 v3.0.55-0.20240603092915-420a67132c32/go.mod"
 	"github.com/minio/md5-simd v1.1.2"
 	"github.com/minio/md5-simd v1.1.2/go.mod"
 	"github.com/minio/minio-go/v7 v7.0.70"
@@ -371,8 +371,8 @@ EGO_SKIP_TIDY=1
 DESCRIPTION="Fast tool to manage MinIO clusters"
 HOMEPAGE="https://min.io/ https://github.com/minio/mc"
 SRC_URI="
-https://api.github.com/repos/minio/mc/tarball/RELEASE.2024-05-24T09-08-49Z -> minio-client-RELEASE.2024-05-24T09-08-49Z.tar.gz
-https://direct.funtoo.org/15/6e/c6/156ec64f19aab065a067f8d2d54c96264558a21303582b1317989035f8028cedef105a96615e5a13e5f576f32f5b2f9a28213e5ae638509a847d0c5b5684636d -> minio-client-2024.05.24.09.08.49-funtoo-go-bundle-fed53e153f5bea37f3da6f14aff8a3a4a336a123345196a263f24b896f308def21512283eb4ea4be748c4f578c8f579f26b6441048b3bd46be68db7b83b27f2e.tar.gz"
+https://api.github.com/repos/minio/mc/tarball/RELEASE.2024-06-12T14-34-03Z -> minio-client-RELEASE.2024-06-12T14-34-03Z.tar.gz
+https://direct.funtoo.org/4d/aa/85/4daa850c0506cf4bdd6a0346a02d38a861bb7768ed2d985b12c05c1283db8bfc908c1783bfa8e949be0cc92845d3bfdac82fd76cbf1b35921c3d155787ee0975 -> minio-client-2024.06.12.14.34.03-funtoo-go-bundle-01c8d16b25a8059d31c948cd8abaa6c5c82e08bae77c5944fba4b7a18efd035aed1a6f401cded9f7ab18188508e590744e297c3a4d1dbe3e2ee3ec0f1826360c.tar.gz"
 
 MY_PV="$(ver_cut 1-3)T$(ver_cut 4-7)Z"
 MY_PV=${MY_PV//./-}
