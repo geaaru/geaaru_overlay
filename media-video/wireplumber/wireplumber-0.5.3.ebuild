@@ -6,7 +6,7 @@ LUA_COMPAT=( lua5-{1,3} )
 
 inherit lua-single meson systemd user
 
-SRC_URI="https://github.com/PipeWire/wireplumber/tarball/59d190a2bd400f3b093f99b16fc0fb06f6cb2cfe -> wireplumber-0.5.0-59d190a.tar.gz"
+SRC_URI="https://github.com/PipeWire/wireplumber/tarball/65e4ae83b994616401fc5859e00d5051b72518ba -> wireplumber-0.5.3-65e4ae8.tar.gz"
 KEYWORDS="*"
 DESCRIPTION="Session and policy manager for Pipewire"
 HOMEPAGE="https://gitlab.freedesktop.org/pipewire/wireplumber"
