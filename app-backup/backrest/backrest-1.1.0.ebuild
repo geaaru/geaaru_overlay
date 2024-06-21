@@ -1,0 +1,257 @@
+# Distributed under the terms of the GNU General Public License v2
+
+EAPI=7
+
+inherit go-module systemd user
+
+EGO_SKIP_TIDY=1
+EGO_SUM=(
+	"connectrpc.com/connect v1.16.2"
+	"connectrpc.com/connect v1.16.2/go.mod"
+	"github.com/akavel/rsrc v0.10.2"
+	"github.com/akavel/rsrc v0.10.2/go.mod"
+	"github.com/alessio/shellescape v1.4.2"
+	"github.com/alessio/shellescape v1.4.2/go.mod"
+	"github.com/benbjohnson/clock v1.1.0/go.mod"
+	"github.com/containrrr/shoutrrr v0.8.0"
+	"github.com/containrrr/shoutrrr v0.8.0/go.mod"
+	"github.com/davecgh/go-spew v1.1.0/go.mod"
+	"github.com/davecgh/go-spew v1.1.1"
+	"github.com/davecgh/go-spew v1.1.1/go.mod"
+	"github.com/dchest/jsmin v0.0.0-20220218165748-59f39799265f"
+	"github.com/dchest/jsmin v0.0.0-20220218165748-59f39799265f/go.mod"
+	"github.com/djherbis/buffer v1.1.0/go.mod"
+	"github.com/djherbis/buffer v1.2.0"
+	"github.com/djherbis/buffer v1.2.0/go.mod"
+	"github.com/djherbis/nio/v3 v3.0.1"
+	"github.com/djherbis/nio/v3 v3.0.1/go.mod"
+	"github.com/fatih/color v1.17.0"
+	"github.com/fatih/color v1.17.0/go.mod"
+	"github.com/getlantern/context v0.0.0-20190109183933-c447772a6520/go.mod"
+	"github.com/getlantern/context v0.0.0-20220418194847-3d5e7a086201"
+	"github.com/getlantern/context v0.0.0-20220418194847-3d5e7a086201/go.mod"
+	"github.com/getlantern/errors v0.0.0-20190325191628-abdb3e3e36f7/go.mod"
+	"github.com/getlantern/errors v1.0.1/go.mod"
+	"github.com/getlantern/errors v1.0.4"
+	"github.com/getlantern/errors v1.0.4/go.mod"
+	"github.com/getlantern/golog v0.0.0-20190830074920-4ef2e798c2d7/go.mod"
+	"github.com/getlantern/golog v0.0.0-20230503153817-8e72de7e0a65"
+	"github.com/getlantern/golog v0.0.0-20230503153817-8e72de7e0a65/go.mod"
+	"github.com/getlantern/hex v0.0.0-20190417191902-c6586a6fe0b7/go.mod"
+	"github.com/getlantern/hex v0.0.0-20220104173244-ad7e4b9194dc"
+	"github.com/getlantern/hex v0.0.0-20220104173244-ad7e4b9194dc/go.mod"
+	"github.com/getlantern/hidden v0.0.0-20190325191715-f02dbb02be55/go.mod"
+	"github.com/getlantern/hidden v0.0.0-20220104173330-f221c5a24770"
+	"github.com/getlantern/hidden v0.0.0-20220104173330-f221c5a24770/go.mod"
+	"github.com/getlantern/ops v0.0.0-20190325191751-d70cb0d6f85f/go.mod"
+	"github.com/getlantern/ops v0.0.0-20220713155959-1315d978fff7/go.mod"
+	"github.com/getlantern/ops v0.0.0-20231025133620-f368ab734534"
+	"github.com/getlantern/ops v0.0.0-20231025133620-f368ab734534/go.mod"
+	"github.com/getlantern/systray v1.2.2"
+	"github.com/getlantern/systray v1.2.2/go.mod"
+	"github.com/gitploy-io/cronexpr v0.2.2"
+	"github.com/gitploy-io/cronexpr v0.2.2/go.mod"
+	"github.com/go-logr/logr v1.2.2/go.mod"
+	"github.com/go-logr/logr v1.2.3/go.mod"
+	"github.com/go-logr/logr v1.4.2"
+	"github.com/go-logr/logr v1.4.2/go.mod"
+	"github.com/go-logr/stdr v1.2.2"
+	"github.com/go-logr/stdr v1.2.2/go.mod"
+	"github.com/go-stack/stack v1.8.0/go.mod"
+	"github.com/go-stack/stack v1.8.1"
+	"github.com/go-stack/stack v1.8.1/go.mod"
+	"github.com/go-task/slim-sprig v0.0.0-20230315185526-52ccab3ef572"
+	"github.com/go-task/slim-sprig v0.0.0-20230315185526-52ccab3ef572/go.mod"
+	"github.com/golang-jwt/jwt/v5 v5.2.1"
+	"github.com/golang-jwt/jwt/v5 v5.2.1/go.mod"
+	"github.com/golang/protobuf v1.5.4"
+	"github.com/golang/protobuf v1.5.4/go.mod"
+	"github.com/google/go-cmp v0.5.8/go.mod"
+	"github.com/google/go-cmp v0.6.0"
+	"github.com/google/go-cmp v0.6.0/go.mod"
+	"github.com/google/pprof v0.0.0-20210407192527-94a9f03dee38"
+	"github.com/google/pprof v0.0.0-20210407192527-94a9f03dee38/go.mod"
+	"github.com/google/shlex v0.0.0-20191202100458-e7afc7fbc510"
+	"github.com/google/shlex v0.0.0-20191202100458-e7afc7fbc510/go.mod"
+	"github.com/hashicorp/errwrap v1.0.0/go.mod"
+	"github.com/hashicorp/errwrap v1.1.0"
+	"github.com/hashicorp/errwrap v1.1.0/go.mod"
+	"github.com/hashicorp/go-multierror v1.1.1"
+	"github.com/hashicorp/go-multierror v1.1.1/go.mod"
+	"github.com/hectane/go-acl v0.0.0-20230122075934-ca0b05cb1adb"
+	"github.com/hectane/go-acl v0.0.0-20230122075934-ca0b05cb1adb/go.mod"
+	"github.com/jarcoal/httpmock v1.3.0"
+	"github.com/jarcoal/httpmock v1.3.0/go.mod"
+	"github.com/josephspurrier/goversioninfo v1.4.0"
+	"github.com/josephspurrier/goversioninfo v1.4.0/go.mod"
+	"github.com/kr/pretty v0.1.0/go.mod"
+	"github.com/kr/pty v1.1.1/go.mod"
+	"github.com/kr/text v0.1.0/go.mod"
+	"github.com/lxn/walk v0.0.0-20210112085537-c389da54e794/go.mod"
+	"github.com/lxn/win v0.0.0-20210218163916-a377121e959e/go.mod"
+	"github.com/mattn/go-colorable v0.1.13"
+	"github.com/mattn/go-colorable v0.1.13/go.mod"
+	"github.com/mattn/go-isatty v0.0.16/go.mod"
+	"github.com/mattn/go-isatty v0.0.20"
+	"github.com/mattn/go-isatty v0.0.20/go.mod"
+	"github.com/natefinch/atomic v1.0.1"
+	"github.com/natefinch/atomic v1.0.1/go.mod"
+	"github.com/ncruces/zenity v0.10.12"
+	"github.com/ncruces/zenity v0.10.12/go.mod"
+	"github.com/onsi/ginkgo/v2 v2.9.2"
+	"github.com/onsi/ginkgo/v2 v2.9.2/go.mod"
+	"github.com/onsi/gomega v1.27.6"
+	"github.com/onsi/gomega v1.27.6/go.mod"
+	"github.com/oxtoacart/bpool v0.0.0-20190530202638-03653db5a59c"
+	"github.com/oxtoacart/bpool v0.0.0-20190530202638-03653db5a59c/go.mod"
+	"github.com/pkg/errors v0.8.1/go.mod"
+	"github.com/pmezard/go-difflib v1.0.0"
+	"github.com/pmezard/go-difflib v1.0.0/go.mod"
+	"github.com/randall77/makefat v0.0.0-20210315173500-7ddd0e42c844"
+	"github.com/randall77/makefat v0.0.0-20210315173500-7ddd0e42c844/go.mod"
+	"github.com/skratchdot/open-golang v0.0.0-20200116055534-eef842397966/go.mod"
+	"github.com/stretchr/objx v0.1.0/go.mod"
+	"github.com/stretchr/objx v0.4.0/go.mod"
+	"github.com/stretchr/testify v1.3.0/go.mod"
+	"github.com/stretchr/testify v1.6.1/go.mod"
+	"github.com/stretchr/testify v1.7.0/go.mod"
+	"github.com/stretchr/testify v1.7.1/go.mod"
+	"github.com/stretchr/testify v1.8.0/go.mod"
+	"github.com/stretchr/testify v1.9.0"
+	"github.com/stretchr/testify v1.9.0/go.mod"
+	"github.com/yuin/goldmark v1.3.5/go.mod"
+	"go.etcd.io/bbolt v1.3.10"
+	"go.etcd.io/bbolt v1.3.10/go.mod"
+	"go.opentelemetry.io/otel v1.9.0/go.mod"
+	"go.opentelemetry.io/otel v1.27.0"
+	"go.opentelemetry.io/otel v1.27.0/go.mod"
+	"go.opentelemetry.io/otel/metric v1.27.0"
+	"go.opentelemetry.io/otel/metric v1.27.0/go.mod"
+	"go.opentelemetry.io/otel/trace v1.9.0/go.mod"
+	"go.opentelemetry.io/otel/trace v1.27.0"
+	"go.opentelemetry.io/otel/trace v1.27.0/go.mod"
+	"go.uber.org/atomic v1.7.0/go.mod"
+	"go.uber.org/goleak v1.1.11-0.20210813005559-691160354723/go.mod"
+	"go.uber.org/goleak v1.3.0"
+	"go.uber.org/goleak v1.3.0/go.mod"
+	"go.uber.org/multierr v1.6.0/go.mod"
+	"go.uber.org/multierr v1.11.0"
+	"go.uber.org/multierr v1.11.0/go.mod"
+	"go.uber.org/zap v1.19.1/go.mod"
+	"go.uber.org/zap v1.27.0"
+	"go.uber.org/zap v1.27.0/go.mod"
+	"golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod"
+	"golang.org/x/crypto v0.0.0-20191011191535-87dc89f01550/go.mod"
+	"golang.org/x/crypto v0.23.0"
+	"golang.org/x/crypto v0.23.0/go.mod"
+	"golang.org/x/image v0.16.0"
+	"golang.org/x/image v0.16.0/go.mod"
+	"golang.org/x/lint v0.0.0-20190930215403-16217165b5de/go.mod"
+	"golang.org/x/mod v0.4.2/go.mod"
+	"golang.org/x/net v0.0.0-20190311183353-d8887717615a/go.mod"
+	"golang.org/x/net v0.0.0-20190404232315-eb5bcb51f2a3/go.mod"
+	"golang.org/x/net v0.0.0-20190620200207-3b0461eec859/go.mod"
+	"golang.org/x/net v0.0.0-20210405180319-a5a99cb37ef4/go.mod"
+	"golang.org/x/net v0.25.0"
+	"golang.org/x/net v0.25.0/go.mod"
+	"golang.org/x/sync v0.0.0-20190423024810-112230192c58/go.mod"
+	"golang.org/x/sync v0.0.0-20210220032951-036812b2e83c/go.mod"
+	"golang.org/x/sync v0.7.0"
+	"golang.org/x/sync v0.7.0/go.mod"
+	"golang.org/x/sys v0.0.0-20190215142949-d0b11bdaac8a/go.mod"
+	"golang.org/x/sys v0.0.0-20190412213103-97732733099d/go.mod"
+	"golang.org/x/sys v0.0.0-20190529164535-6a60838ec259/go.mod"
+	"golang.org/x/sys v0.0.0-20201018230417-eeed37f84f13/go.mod"
+	"golang.org/x/sys v0.0.0-20201119102817-f84b799fce68/go.mod"
+	"golang.org/x/sys v0.0.0-20210330210617-4fbd30eecc44/go.mod"
+	"golang.org/x/sys v0.0.0-20210510120138-977fb7262007/go.mod"
+	"golang.org/x/sys v0.0.0-20220811171246-fbc7d0a398ab/go.mod"
+	"golang.org/x/sys v0.1.0/go.mod"
+	"golang.org/x/sys v0.6.0/go.mod"
+	"golang.org/x/sys v0.20.0"
+	"golang.org/x/sys v0.20.0/go.mod"
+	"golang.org/x/term v0.0.0-20201126162022-7de9c90e9dd1/go.mod"
+	"golang.org/x/text v0.3.0/go.mod"
+	"golang.org/x/text v0.3.3/go.mod"
+	"golang.org/x/text v0.15.0"
+	"golang.org/x/text v0.15.0/go.mod"
+	"golang.org/x/tools v0.0.0-20180917221912-90fa682c2a6e/go.mod"
+	"golang.org/x/tools v0.0.0-20190311212946-11955173bddd/go.mod"
+	"golang.org/x/tools v0.0.0-20191119224855-298f0cb1881e/go.mod"
+	"golang.org/x/tools v0.1.5/go.mod"
+	"golang.org/x/tools v0.20.0"
+	"golang.org/x/tools v0.20.0/go.mod"
+	"golang.org/x/xerrors v0.0.0-20190717185122-a985d3407aa7/go.mod"
+	"golang.org/x/xerrors v0.0.0-20191011141410-1b5146add898/go.mod"
+	"golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1/go.mod"
+	"google.golang.org/genproto/googleapis/api v0.0.0-20240521202816-d264139d666e"
+	"google.golang.org/genproto/googleapis/api v0.0.0-20240521202816-d264139d666e/go.mod"
+	"google.golang.org/genproto/googleapis/rpc v0.0.0-20240521202816-d264139d666e"
+	"google.golang.org/genproto/googleapis/rpc v0.0.0-20240521202816-d264139d666e/go.mod"
+	"google.golang.org/grpc v1.64.0"
+	"google.golang.org/grpc v1.64.0/go.mod"
+	"google.golang.org/protobuf v1.34.1"
+	"google.golang.org/protobuf v1.34.1/go.mod"
+	"gopkg.in/!knetic/govaluate.v3 v3.0.0/go.mod"
+	"gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod"
+	"gopkg.in/check.v1 v1.0.0-20180628173108-788fd7840127/go.mod"
+	"gopkg.in/natefinch/lumberjack.v2 v2.2.1"
+	"gopkg.in/natefinch/lumberjack.v2 v2.2.1/go.mod"
+	"gopkg.in/yaml.v2 v2.2.8/go.mod"
+	"gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c/go.mod"
+	"gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b/go.mod"
+	"gopkg.in/yaml.v3 v3.0.1"
+	"gopkg.in/yaml.v3 v3.0.1/go.mod"
+)
+
+DESCRIPTION="Backrest is a web UI and orchestrator for restic backup"
+HOMEPAGE="https://github.com/garethgeorge/backrest"
+SRC_URI="https://github.com/garethgeorge/backrest/tarball/2d0c29e78d989e3b77ee04806d41da80dac785e9 -> backrest-1.1.0-2d0c29e.tar.gz
+https://direct.funtoo.org/18/f6/fe/18f6fe600370e2e5ab99eaff0ae81d146812bf913e1988ff521667369c6037e517d7a531e57bcf718647819b89660cc9d08009fb83520a49941162a260ca7b09 -> backrest-1.1.0-funtoo-go-bundle-4401e27a254cf974b32e8752643abec5e6c45517e1fc641586816648d31020b45f34d76fe7aeb7c654882b9e660228b3a100d0562eb941fa5d3c397670f34c18.tar.gz"
+# Uses npm to download packages
+RESTRICT="network-sandbox"
+LICENSE="GPL-3.0"
+SLOT="0"
+KEYWORDS="*"
+IUSE="systemd"
+
+RDEPEND="app-backup/restic"
+DEPEND="${RDEPEND}
+	net-libs/nodejs
+"
+
+pkg_setup() {
+	ebegin "Ensuring backrest group and user exist"
+	enewgroup backrest
+	enewuser backrest -1 -1 /var/lib/backrest backrest
+	eend $?
+}
+
+post_src_unpack() {
+	mv ${WORKDIR}/garethgeorge-backrest-* ${S}
+}
+
+src_compile() {
+	GOOS=linux BACKREST_BUILD_VERSION=1.1.0 \
+		go generate ./...
+
+	CGO_ENABLED=0 \
+		go build \
+		-asmflags "-trimpath=${S}" \
+		-gcflags "-trimpath=${S}" \
+		-o backrest .
+}
+
+src_install() {
+	dobin backrest
+	diropts -m0750 -o backrest -g backrest
+	dodir /var/lib/backrest/
+	fowners backrest:backrest /var/lib/backrest
+	keepdir /var/lib/backrest
+	if use systemd ; then
+		systemd_newunit "${FILESDIR}"/backrest.service backrest.service || die
+	else
+		newinitd "${FILESDIR}"/backrest.initd backrest
+	fi
+	newconfd "${FILESDIR}"/backrest.confd backrest
+}
