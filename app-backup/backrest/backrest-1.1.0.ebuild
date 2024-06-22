@@ -239,7 +239,7 @@ src_compile() {
 		go build \
 		-asmflags "-trimpath=${S}" \
 		-gcflags "-trimpath=${S}" \
-		-o backrest .
+		-o backrest ./cmd/backrest
 }
 
 src_install() {
