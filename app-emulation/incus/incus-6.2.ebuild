@@ -6,7 +6,7 @@ inherit autotools golang-base bash-completion-r1 linux-info user systemd
 
 DESCRIPTION="Fast, dense and secure container management"
 HOMEPAGE="https://linuxcontainers.org/incus/introduction/ https://github.com/lxc/incus"
-SRC_URI="incus? ( https://linuxcontainers.org/downloads/incus/incus-6.2.tar.xz -> incus-6.2.tar.xz )
+SRC_URI="https://linuxcontainers.org/downloads/incus/incus-6.2.tar.xz -> incus-6.2.tar.xz
 "
 
 # Needs to include licenses for all bundled programs and libraries.
