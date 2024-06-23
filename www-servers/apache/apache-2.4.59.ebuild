@@ -132,7 +132,8 @@ inherit apache-2 systemd tmpfiles toolchain-funcs
 DESCRIPTION="The Apache Web Server"
 HOMEPAGE="https://httpd.apache.org/"
 
-SRC_URI="https://archive.apache.org/dist/httpd/httpd-2.4.58.tar.bz2 -> httpd-2.4.58.tar.bz2"
+SRC_URI="https://archive.apache.org/dist/httpd/httpd-2.4.59.tar.bz2 -> httpd-2.4.59.tar.bz2
+"
 # some helper scripts are Apache-1.1, thus both are here
 LICENSE="Apache-2.0 Apache-1.1"
 SLOT="2"
