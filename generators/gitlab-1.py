@@ -190,9 +190,11 @@ async def release_gen(project, hub, extra_args, **pkginfo):
 
 		assets = found_version.assets
 
-		gitlab_sources_format = pkginfo["sources_format"] if "sources_format" in pkginfo else "tar.bz2"
+		gitlab_sources_format = pkginfo["gitlab"]["sources_format"] if "sources_format" in pkginfo["gitlab"] else "tar.bz2"
 
 		sources = None
+		# TODO: The downloads urls are also under found_version["assets"]["links"]
+		#       we can define a property for this.
 		for u in assets["sources"]:
 			if u["format"] == gitlab_sources_format:
 				sources = u["url"]
