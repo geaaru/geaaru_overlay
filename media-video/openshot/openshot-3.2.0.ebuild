@@ -12,7 +12,7 @@ MY_PN="${PN}-qt"
 
 DESCRIPTION="Award-winning free and open-source video editor"
 HOMEPAGE="https://openshot.org/"
-SRC_URI="https://github.com/OpenShot/${MY_PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/OpenShot/openshot-qt/tarball/47e8755c71390ba862cfcfdfe9ae109f31718867 -> openshot-qt-3.2.0-47e8755.tar.gz"
 S="${WORKDIR}/${MY_PN}-${PV}"
 
 LICENSE="GPL-3+"
@@ -33,6 +33,10 @@ BDEPEND="$(python_gen_cond_dep '
 		doc? ( dev-python/sphinx[${PYTHON_USEDEP}] )
 	')"
 
+post_src_unpack() {
+	mv OpenShot-openshot-* "${S}"
+}
+
 src_prepare() {
 	distutils-r1_python_prepare_all
 	# prevent setup.py from trying to update MIME databases
@@ -47,3 +51,5 @@ python_install_all() {
 	use doc && local HTML_DOCS=( doc/_build/html/. )
 	distutils-r1_python_install_all
 }
+
+# vim: ft=ebuild
