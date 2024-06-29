@@ -1,0 +1,10 @@
+libopenshot_audio:
+  generator: github-1
+  packages:
+    - libopenshot-audio:
+        github:
+          user: OpenShot
+          repo: libopenshot-audio
+          #query: tags
+          query: releases
+
