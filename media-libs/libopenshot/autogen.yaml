@@ -1,0 +1,10 @@
+libopenshot:
+  generator: github-1
+  packages:
+    - libopenshot:
+        github:
+          user: OpenShot
+          repo: libopenshot
+          #query: tags
+          query: releases
+

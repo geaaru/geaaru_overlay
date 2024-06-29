@@ -8,7 +8,7 @@ inherit cmake python-single-r1 toolchain-funcs
 
 DESCRIPTION="Video editing library used by OpenShot"
 HOMEPAGE="https://www.openshot.org/"
-SRC_URI="https://github.com/OpenShot/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/OpenShot/libopenshot/tarball/3170768e0ccbaad5b2a4696e84dd649738ec1a1b -> libopenshot-0.3.3-3170768.tar.gz"
 
 LICENSE="GPL-3+"
 SLOT="0/21"
@@ -33,6 +33,10 @@ DEPEND="${RDEPEND}"
 BDEPEND="doc? ( app-doc/doxygen )
 	python? ( dev-lang/swig )
 	"
+
+post_src_unpack() {
+	mv OpenShot-${PN}-* "${S}"
+}
 
 pkg_pretend() {
 	[[ ${MERGE_TYPE} != binary ]] && tc-check-openmp
