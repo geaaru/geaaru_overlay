@@ -96,6 +96,18 @@ hatchling_builds:
             - distlib
             - filelock
             - platformdirs
+    - uvicorn:
+        desc: "The lightning-fast ASGI server"
+        license: BSD-3-Clause
+        pydeps:
+          py:all:build:
+            - click
+            - h11
+            - typing_extensions
+          py:all:runtime:
+            - click
+            - h11
+            - typing_extensions
     - twisted:
         iuse: conch crypt serial http2
         depend: |
