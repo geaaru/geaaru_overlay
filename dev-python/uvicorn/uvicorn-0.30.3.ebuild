@@ -13,12 +13,12 @@ SRC_URI="https://files.pythonhosted.org/packages/77/40/b650be95700dc83d14c5f2b9e
 DEPEND="
 	dev-python/click[${PYTHON_USEDEP}]
 	dev-python/h11[${PYTHON_USEDEP}]
-	dev-python/typing_extensions[${PYTHON_USEDEP}]
+	dev-python/typing-extensions[${PYTHON_USEDEP}]
 	$(python_gen_cond_dep 'dev-python/hatch-vcs[${PYTHON_USEDEP}]' -3)"
 RDEPEND="
 	dev-python/click[${PYTHON_USEDEP}]
 	dev-python/h11[${PYTHON_USEDEP}]
-	dev-python/typing_extensions[${PYTHON_USEDEP}]"
+	dev-python/typing-extensions[${PYTHON_USEDEP}]"
 IUSE=""
 SLOT="0"
 LICENSE="BSD-3-Clause"

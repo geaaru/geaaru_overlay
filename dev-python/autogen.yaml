@@ -103,11 +103,11 @@ hatchling_builds:
           py:all:build:
             - click
             - h11
-            - typing_extensions
+            - typing-extensions
           py:all:runtime:
             - click
             - h11
-            - typing_extensions
+            - typing-extensions
     - twisted:
         iuse: conch crypt serial http2
         depend: |
