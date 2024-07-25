@@ -7,7 +7,7 @@ inherit autotools toolchain-funcs
 
 DESCRIPTION="GLib-style interface to binder (Android IPC mechanism)"
 HOMEPAGE="https://github.com/mer-hybris/libgbinder"
-SRC_URI="https://github.com/mer-hybris/libgbinder/tarball/545f5bc28d8e72f88be21f9e31518a9275cf3a48 -> libgbinder-1.1.39-545f5bc.tar.gz"
+SRC_URI="https://github.com/mer-hybris/libgbinder/tarball/624bfa843d7ab971ee65ddf26a48629795ce49b4 -> libgbinder-1.1.40-624bfa8.tar.gz"
 
 LICENSE="BSD-3-Clause"
 SLOT="0"
