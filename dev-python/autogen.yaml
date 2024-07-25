@@ -76,33 +76,6 @@ simple:
             distutils-r1_src_prepare
           }
 
-    - python-oracledb:
-        pypi_name: oracledb
-        license: Apache-2.0 UPL-1.0
-        depend: "dev-db/oracle-instantclient-basic"
-        rdepend: "dev-db/oracle-instantclient-basic"
-        iuse: doc examples
-        pydeps:
-          py:3:build:
-            - setuptools
-            - wheel
-            - cython
-        body: |
-          python_install_all() {
-            distutils-r1_python_install_all
-
-            if use doc; then
-              dohtml -r html/* || die
-            fi
-
-            if use examples; then
-              docinto examples
-              dodoc samples/* || die
-            fi
-
-            # Drop wrong paths
-            #rm -rf ${D}/usr/cx_Oracle-doc/
-          }
 hatchling_builds:
   defaults:
     cat: dev-python
@@ -540,6 +513,34 @@ setuptools_builds:
               dodoc -r examples
               docompress -x /usr/share/doc/${PF}
             fi
+          }
+
+    - python-oracledb:
+        pypi_name: oracledb
+        license: Apache-2.0 UPL-1.0
+        depend: "dev-db/oracle-instantclient-basic"
+        rdepend: "dev-db/oracle-instantclient-basic"
+        iuse: doc examples
+        pydeps:
+          py:3:build:
+            - setuptools
+            - wheel
+            - cython
+        body: |
+          python_install_all() {
+            distutils-r1_python_install_all
+
+            if use doc; then
+              dohtml -r html/* || die
+            fi
+
+            if use examples; then
+              docinto examples
+              dodoc samples/* || die
+            fi
+
+            # Drop wrong paths
+            #rm -rf ${D}/usr/cx_Oracle-doc/
           }
 
 flit_builds:
