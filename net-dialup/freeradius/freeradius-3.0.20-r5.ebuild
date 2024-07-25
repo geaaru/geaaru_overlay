@@ -74,7 +74,7 @@ PATCHES=(
 	"${FILESDIR}"/${P}-py3-fixes.patch
 	"${FILESDIR}"/${P}-auth_reject_69eb74fb1f66e111ec0c8d458eae3752cf3c5260.patch
 	"${FILESDIR}"/${P}-auth_log_6c863ae3cf0be67341171d3fdb6cc70686e66863.patch
-	"${FILESDIR}"/${P}-3.0.x-rlm_sql_mongo-quiet-warn.patch
+	"${FILESDIR}"/${PN}-3.0.x-rlm_sql_mongo-quiet-warn.patch
 )
 
 pkg_setup() {
