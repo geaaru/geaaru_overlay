@@ -12,6 +12,7 @@ SRC_URI="https://files.pythonhosted.org/packages/f4/8c/01e960b15fc6ab882633c83e9
 
 DEPEND="
 	dev-db/oracle-instantclient-basic
+	dev-python/setuptools[${PYTHON_USEDEP}]
 	$(python_gen_cond_dep 'dev-python/cython[${PYTHON_USEDEP}] dev-python/setuptools[${PYTHON_USEDEP}] dev-python/wheel[${PYTHON_USEDEP}]' -3)"
 RDEPEND="dev-db/oracle-instantclient-basic"
 IUSE="doc examples"
