@@ -25,12 +25,12 @@ src_compile() {
 
 	CGO_ENABLED=0 go build \
 		-ldflags "${anise_ldflags[*]}" \
-		-o luet -v -x -mod=vendor . || die
+		-o ${PN} -v -x -mod=vendor . || die
 }
 
 src_install() {
-	dosym ${PN} /usr/bin/luet
-	dobin "luet"
+	dobin "anise"
+	dosym /usr/bin/${PN} /usr/bin/luet
 	dodoc README.md
 }
 
