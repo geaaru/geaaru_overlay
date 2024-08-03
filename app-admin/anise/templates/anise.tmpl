@@ -32,6 +32,16 @@ src_install() {
 	dobin "anise"
 	dosym /usr/bin/${PN} /usr/bin/luet
 	dodoc README.md
+
+	keepdir /etc/anise
+	dosym /etc/anise /etc/luet
+
+	insinto /etc/anise
+	newins "${FILESDIR}"/anise.yaml anise.yaml
+	dosym /etc/anise/anise.yaml /etc/luet/luet.yaml
+
+	insinto /etc/anise/repos.conf.d
+	newins "${FILESDIR}"/geaaru-repo-index.yml geaaru-repo-index.yml
 }
 
-# vim:
+# vim: filetype=ebuild
