@@ -17,11 +17,11 @@ LICENSE="Apache-2.0"
 KEYWORDS="*"
 
 src_install() {
-	insinto /usr/share/macaroni/whip/eclass
+	insinto /usr/share/macaroni/whip-catalog/eclass
 	for f in "${WORKDIR}"/catalog/eclass/*.yaml ; do
 		doins "${f}"
 	done
-	insinto /usr/share/macaroni/whip/commons
+	insinto /usr/share/macaroni/whip-catalog/commons
 	for f in "${WORKDIR}"/catalog/commons/*.yaml ; do
 		doins "${f}"
 	done
