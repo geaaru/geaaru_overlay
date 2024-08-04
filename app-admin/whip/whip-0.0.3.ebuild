@@ -13,7 +13,7 @@ KEYWORDS="*"
 DEPEND="dev-lang/go"
 
 post_src_unpack() {
-	mv geaaru-${PN}-* ${S}
+	mv macaroni-os-${PN}-* ${S}
 }
 
 src_compile() {
