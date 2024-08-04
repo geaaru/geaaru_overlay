@@ -19,7 +19,7 @@ post_src_unpack() {
 src_compile() {
 	golang_ldflags=(
 		"-X \"github.com/macaroni-os/macaronictl/pkg/converter.BuildTime=$(date -u '+%Y-%m-%d %I:%M:%S %Z')\""
-		"-X github.com/macaroni-os/macaronictl/pkg/converter.BuildCommit="
+		"-X github.com/macaroni-os/macaronictl/pkg/converter.BuildCommit=395adeae819ca9e1342f76c2c7f62d2afa64de0f"
 	)
 
 	CGO_ENABLED=0 go build \
