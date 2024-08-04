@@ -9,7 +9,7 @@ HOMEPAGE="http://www.nvidia.com/ http://www.nvidia.com/Download/Find.aspx"
 SRC_URI=""
 
 LICENSE="GPL-2 NVIDIA-r2"
-SLOT="0/${PV%.*}"
+SLOT="550"
 KEYWORDS="-* ~amd64 ~arm64"
 RESTRICT="bindist"
 
@@ -100,9 +100,35 @@ src_compile() {
 	MAKEOPTS=-j1 linux-mod_src_compile
 }
 
+_nvidia_mod_src_install() {
+	local modulename libdir srcdir objdir i n
+	[[ -n ${KERNEL_DIR} ]] && addpredict "${KERNEL_DIR}/null.dwo"
+
+	strip_modulenames;
+	for i in ${MODULE_NAMES}
+	do
+		unset libdir srcdir objdir
+		for n in $(find_module_params ${i})
+		do
+			eval ${n/:*}=${n/*:/}
+		done
+		libdir=${libdir:-misc}
+		srcdir=${srcdir:-${S}}
+		objdir=${objdir:-${srcdir}}
+
+		einfo "Installing ${modulename} module"
+		cd "${objdir}" || die "${objdir} does not exist"
+		insinto /lib/modules/nvidia/${PV}/${KV_FULL}/${libdir}
+		doins ${modulename}.${KV_OBJ} || die "doins ${modulename}.${KV_OBJ} failed"
+		cd "${OLDPWD}"
+
+		generate_modulesd "${objdir}/${modulename}"
+	done
+}
+
 
 src_install() {
-	linux-mod_src_install
+	_nvidia_mod_src_install
 	insinto /etc/modprobe.d
 	if use videogroup; then
 		newins "${FILESDIR}"/nvidia.conf.modprobe-r1.video nvidia.conf
