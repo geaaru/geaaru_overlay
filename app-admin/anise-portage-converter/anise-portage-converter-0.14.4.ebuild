@@ -19,7 +19,7 @@ post_src_unpack() {
 src_compile() {
 	anise_ldflags=(
 		"-X \"github.com/macaroni-os/anise-portage-converter/pkg/converter.BuildTime=$(date -u '+%Y-%m-%d %I:%M:%S %Z')\""
-		"-X github.com/macaroni-os/anise-portage-converter/pkg/converter.BuildCommit="
+		"-X github.com/macaroni-os/anise-portage-converter/pkg/converter.BuildCommit=9ba5319f11cdebc6fa9284921e15ddd856fbf004"
 	)
 
 	CGO_ENABLED=0 go build \
