@@ -168,6 +168,11 @@ pkg_postinst() {
 		einfo "any user accounts that need to access NVIDIA devices to this"
 		einfo "group."
 	fi
+
+	einfo "The NVIDIA kernel driver is installed on path for"
+	einfo "app-admin/gpu-configurator tool."
+	einfo "Uses: gpu-configurator nvidia set ${PV}"
+	einfo "to add hardlink to kernel path."
 }
 
 # vim: filetype=ebuild
