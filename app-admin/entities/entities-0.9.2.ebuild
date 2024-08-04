@@ -19,7 +19,7 @@ post_src_unpack() {
 src_compile() {
 	golang_ldflags=(
 		"-X \"github.com/geaaru/entities/pkg/converter.BuildTime=$(date -u '+%Y-%m-%d %I:%M:%S %Z')\""
-		"-X github.com/geaaru/entities/pkg/converter.BuildCommit="
+		"-X github.com/geaaru/entities/pkg/converter.BuildCommit=99abd77f3780e8a2abd60e9705ade630419529a5"
 		"-X github.com/geaaru/entities/pkg/config.BuildGoVersion=$(go env GOVERSION)"
 	)
 
