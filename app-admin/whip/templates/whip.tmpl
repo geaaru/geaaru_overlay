@@ -30,6 +30,9 @@ src_compile() {
 src_install() {
 	dobin "${PN}"
 	dodoc README.md
+
+	insinto /etc
+	doins "${FILESDIR}"/whip.yml
 }
 
 # vim: filetype=ebuild
