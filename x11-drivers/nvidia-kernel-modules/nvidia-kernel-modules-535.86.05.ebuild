@@ -118,7 +118,11 @@ _nvidia_mod_src_install() {
 
 		einfo "Installing ${modulename} module"
 		cd "${objdir}" || die "${objdir} does not exist"
-		insinto /lib/modules/nvidia/${PV}/${KV_FULL}/${libdir}
+		if use open-kernel ; then
+			insinto /lib/modules/nvidia-open/${PV}/${KV_FULL}/${libdir}
+		else
+			insinto /lib/modules/nvidia/${PV}/${KV_FULL}/${libdir}
+		fi
 		doins ${modulename}.${KV_OBJ} || die "doins ${modulename}.${KV_OBJ} failed"
 		cd "${OLDPWD}"
 
