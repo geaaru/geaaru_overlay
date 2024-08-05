@@ -5,9 +5,10 @@ async def generate(hub, **pkginfo):
 
     supported_versions = {
         '535.86.05'  : '6.7',
+        '535.179'    : '6.7',
         '550.54.14'  : '6.7',
         '550.78'     : '6.7',
-        '555.42.02'  : '6.7',
+        '555.42.02'  : '6.8',
     }
 
     for version, maxk in supported_versions.items():
@@ -29,6 +30,7 @@ async def generate(hub, **pkginfo):
             **pkginfo,
             version=version,
             max_kernel=maxk,
+            slot=version.split('.')[0],
             artifacts=artifacts,
         )
         ebuild.push()

@@ -149,7 +149,7 @@ src_install() {
 		[OPENGL_DATA]=${NV_ROOT}/usr/share/nvidia
 		[VULKAN_ICD_JSON]=${NV_ROOT}/usr/share/vulkan
 		[WINE_LIB]=${NV_ROOT}/usr/${libdir}/nvidia/wine
-		[XORG_OUTPUTCLASS_CONFIG]=${NV_ROOT}/share/X11/xorg.conf.d
+		[XORG_OUTPUTCLASS_CONFIG]=${NV_ROOT}/usr/share/X11/xorg.conf.d
 		[CUDA_ICD]=${NV_ROOT}/etc/OpenCL/vendors
 
 		[XMODULE_SHARED_LIB]=${NV_NATIVE_LIBDIR}/xorg/modules
@@ -168,7 +168,8 @@ src_install() {
 	local skip_modules=(
 		#$(usev !X "nvfbc vdpau xdriver")
 		$(usev !powerd powerd)
-		installer nvpd # handled separately / built from source
+		installer
+		#nvpd # handled separately / built from source (using nvidia-persistenced binary for now)
 	)
 	# GLVND_LIB GLVND_SYMLINK GLX_CLIENT.\* # media-libs/libglvnd
 	local skip_types=(
@@ -277,11 +278,6 @@ src_install() {
 
 
 	if use tools; then
-		#emake "${NV_ARGS[@]}" -C nvidia-settings install
-		#for tool in settings smi xconfig; do
-		#	[ -f "${D}${NV_ROOT}/bin/nvidia-${tool}" ] && dosym "${NV_ROOT}/bin/nvidia-${tool}" "/usr/bin/nvidia-${tool}"
-		#done
-
 		insinto ${NV_ROOT}/usr/share/pixmaps
 		doins nvidia-settings.png
 
@@ -310,21 +306,19 @@ src_install() {
 	#fi
 
 	# On linux kernels, install nvidia-persistenced init and conf files after fixing up paths.
-	#for filename in nvidia-{smi,persistenced}.init ; do
-	#	sed -e 's:/opt/bin:'"${NV_ROOT}"'/bin:g' "${FILESDIR}/${filename}" > "${T}/${filename}"
-	#	newinitd "${T}/${filename}" "${filename%.init}"
-	#done
-	#newconfd "${FILESDIR}/nvidia-persistenced.conf" nvidia-persistenced
+	for filename in nvidia-{smi,persistenced}.init ; do
+		sed -e 's:/opt/bin:'"${NV_ROOT}"'/bin:g' "${FILESDIR}/${filename}" > "${T}/${filename}"
+		insinto ${NV_ROOT}/etc/init.d/
+		newins "${T}/${filename}" "${filename%.init}"
+	done
+
+	insinto ${NV_ROOT}/etc/conf.d/
+	newins "${FILESDIR}/nvidia-persistenced.conf" nvidia-persistenced
 
 	# If we're not using glvnd support, then set up directory expected by eselect opengl:
 	#if ! use glvnd ; then
 	#	dosym "${NV_NATIVE_LIBDIR}/opengl/nvidia" "${EPREFIX}/usr/lib/opengl/nvidia"
 	#fi
-
-	# Setup an env.d file with appropriate lib paths.
-	#ldpath="${NV_NATIVE_LIBDIR}"
-	#printf -- "LDPATH=\"${ldpath}\"\n" > "${T}/09nvidia"
-	#doenvd "${T}/09nvidia"
 
 	#readme.gentoo_create_doc
 }
