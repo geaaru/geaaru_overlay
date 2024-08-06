@@ -32,7 +32,7 @@ index 99244d5..be0c891 100644
    right: any,
  ): any {
 diff --git a/src/index.ts b/src/index.ts
-index bdc51be..a68cd7a 100644
+index bdc51be..a128d3f 100644
 --- a/src/index.ts
 +++ b/src/index.ts
 @@ -16,7 +16,7 @@ export function expressionToConstant(
@@ -44,3 +44,12 @@ index bdc51be..a68cd7a 100644
      if (!constant) return;
      if (b.isArrayExpression(expression)) {
        const result = [];
+@@ -362,8 +362,3 @@ export function toConstant(
+ 
+ export default isConstant;
+ 
+-module.exports = isConstant;
+-module.exports.default = isConstant;
+-module.exports.expressionToConstant = expressionToConstant;
+-module.exports.isConstant = isConstant;
+-module.exports.toConstant = toConstant;
