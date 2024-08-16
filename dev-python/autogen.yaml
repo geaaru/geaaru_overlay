@@ -76,6 +76,17 @@ simple:
             distutils-r1_src_prepare
           }
 
+
+meono_python_builds:
+  defaults:
+    cat: dev-python
+    python_compat: python3+
+    du_pep517: meson-python
+  generator: pypi-compat-1
+  packages:
+    - numpy:
+        template: numpy.tmpl
+
 hatchling_builds:
   defaults:
     cat: dev-python
@@ -147,6 +158,7 @@ hatchling_builds:
             - flake8
           py:all:runtime:
             - flake8
+
 
 setuptools_builds:
   defaults:
