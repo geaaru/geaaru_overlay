@@ -23,6 +23,7 @@ IUSE_DUMMY="static-libs acpi"
 IUSE="${IUSE_DUMMY} +X +opencl +cuda +tools +egl +glvnd +uvm +wayland +powerd"
 
 COMMON="
+	!x11-drivers/nvidia-drivers
 	opencl? (
 		dev-libs/ocl-icd
 	)
