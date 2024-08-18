@@ -8,7 +8,7 @@ inherit distutils-r1 git-r3
 DESCRIPTION="Funtoo's metatools -- autogeneration framework."
 HOMEPAGE="https://github.com/macaroni-os/funtoo-metatools"
 EGIT_REPO_URI="https://github.com/macaroni-os/funtoo-metatools"
-EGIT_COMMIT="3562abdc0385f862a9eb0afc5f9db383b97dbda4"
+EGIT_COMMIT="4d65e4a0890f2a0caa860c5429b58e70eebe9bea"
 
 RESTRICT="network-sandbox"
 DEPEND=">=dev-python/subpop-2.0.0[${PYTHON_USEDEP}]"
