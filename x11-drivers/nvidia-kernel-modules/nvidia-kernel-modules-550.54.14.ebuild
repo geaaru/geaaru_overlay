@@ -133,35 +133,10 @@ _nvidia_mod_src_install() {
 
 src_install() {
 	_nvidia_mod_src_install
-	insinto /etc/modprobe.d
-	if use videogroup; then
-		newins "${FILESDIR}"/nvidia.conf.modprobe-r1.video nvidia.conf
-	else
-		newins "${FILESDIR}"/nvidia.conf.modprobe-r1 nvidia.conf
-	fi
-	newins "${FILESDIR}"/nvidia-rmmod.conf.modprobe nvidia-rmmod.conf
-	doins "${FILESDIR}"/nouveau-blacklist.conf
-	# Ensures that our device nodes are created when not using X
-	sed -e 's:/opt/bin:'"${NVDRIVERS_DIR}"'/bin:g' "${FILESDIR}/nvidia-udev.sh" > "${T}/nvidia-udev.sh"
-	exeinto "$(get_udevdir)"
-	doexe "${T}"/nvidia-udev.sh
-	udev_newrules "${FILESDIR}"/nvidia.udev-rule 99-nvidia.rules
 }
 
 pkg_preinst() {
 	linux-mod_pkg_preinst
-	if use videogroup; then
-		local videogroup="$(egetent group video | cut -d ':' -f 3)"
-		if [ -z "${videogroup}" ]; then
-			eerror "Failed to determine the video group gid"
-			die "Failed to determine the video group gid"
-		else
-			sed -i \
-				-e "s:PACKAGE:${PF}:g" \
-				-e "s:VIDEOGID:${videogroup}:" \
-				"${D}"/etc/modprobe.d/nvidia.conf || die
-		fi
-	fi
 }
 
 pkg_postinst() {
