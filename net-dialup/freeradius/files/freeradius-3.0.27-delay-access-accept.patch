@@ -1,0 +1,69 @@
+diff --git a/src/main/process.c b/src/main/process.c
+index 671dab1fd3..d731057251 100644
+--- a/src/main/process.c
++++ b/src/main/process.c
+@@ -431,6 +431,29 @@ static void coa_separate(REQUEST *request, bool retransmit) CC_HINT(nonnull);
+ 
+ #define INSERT_EVENT(_function, _ctx) if (!fr_event_insert(el, _function, _ctx, &((_ctx)->when), &((_ctx)->ev))) { _rad_panic(__FILE__, __LINE__, "Failed to insert event"); }
+ 
++#define HANDLE_RESPONSE_DELAY do { \
++		vp = fr_pair_find_by_num(request->reply->vps, PW_FREERADIUS_RESPONSE_DELAY, 0, TAG_ANY); \
++		if (vp) { \
++			if (vp->vp_integer <= 10) { \
++				request->response_delay.tv_sec = vp->vp_integer; \
++			} else { \
++				request->response_delay.tv_sec = 10; \
++			} \
++			request->response_delay.tv_usec = 0; \
++		} else { \
++			vp = fr_pair_find_by_num(request->reply->vps, PW_FREERADIUS_RESPONSE_DELAY_USEC, 0, TAG_ANY); \
++			if (vp) { \
++				if (vp->vp_integer <= 10 * USEC) { \
++					request->response_delay.tv_sec = vp->vp_integer / USEC; \
++					request->response_delay.tv_usec = vp->vp_integer % USEC; \
++				} else { \
++					request->response_delay.tv_sec = 10; \
++					request->response_delay.tv_usec = 0; \
++				} \
++			} \
++		} \
++} while(0)
++
+ static void tv_add(struct timeval *tv, int usec_delay)
+ {
+ 	if (usec_delay >= USEC) {
+@@ -1570,30 +1593,11 @@ static void request_finish(REQUEST *request, int action)
+ 	 *	See if we need to delay an Access-Reject packet.
+ 	 */
+ 	if ((request->packet->code == PW_CODE_ACCESS_REQUEST) &&
+-	    (request->reply->code == PW_CODE_ACCESS_REJECT) &&
+-	    (request->root->reject_delay.tv_sec > 0)) {
+-		request->response_delay = request->root->reject_delay;
+-
+-		vp = fr_pair_find_by_num(request->reply->vps, PW_FREERADIUS_RESPONSE_DELAY, 0, TAG_ANY);
+-		if (vp) {
+-			if (vp->vp_integer <= 10) {
+-				request->response_delay.tv_sec = vp->vp_integer;
+-			} else {
+-				request->response_delay.tv_sec = 10;
+-			}
+-			request->response_delay.tv_usec = 0;
+-		} else {
+-			vp = fr_pair_find_by_num(request->reply->vps, PW_FREERADIUS_RESPONSE_DELAY_USEC, 0, TAG_ANY);
+-			if (vp) {
+-				if (vp->vp_integer <= 10 * USEC) {
+-					request->response_delay.tv_sec = vp->vp_integer / USEC;
+-					request->response_delay.tv_usec = vp->vp_integer % USEC;
+-				} else {
+-					request->response_delay.tv_sec = 10;
+-					request->response_delay.tv_usec = 0;
+-				}
+-			}
++			(request->reply->code == PW_CODE_ACCESS_REJECT || request->reply->code == PW_CODE_ACCESS_ACCEPT)) {
++		if (request->root->reject_delay.tv_sec > 0 && request->reply->code == PW_CODE_ACCESS_REJECT) {
++			request->response_delay = request->root->reject_delay;
+ 		}
++		HANDLE_RESPONSE_DELAY;
+ 
+ #ifdef WITH_PROXY
+ 		/*
