@@ -19,10 +19,10 @@ KEYWORDS="*"
 S="${WORKDIR}/python-magic-0.4.27"
 
 src_prepare() {
-	mv magic ${PN} || die "error on rename magic directory"
-	sed -i -e "s|'magic'|'python-magic'|g" \
+	mv magic python_magic || die "error on rename magic directory"
+	sed -i -e "s|'magic'|'python_magic'|g" \
 		setup.py || die "error on sed setup.py"
-	sed -i -e 's|from magic import|from python-magic import|g' \
+	sed -i -e 's|from magic import|from python_magic import|g' \
 		python-magic/__init__.py || die "error on sed __init__.py"
 
 	distutils-r1_src_prepare
