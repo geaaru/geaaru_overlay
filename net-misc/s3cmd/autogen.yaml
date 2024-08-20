@@ -1,0 +1,17 @@
+s3cmd:
+  defaults:
+    cat: net-misc
+    python_compat: python3+
+    du_pep517: setuptools
+  generator: pypi-simple-1
+  packages:
+    - s3cmd:
+        license: GPLv2
+        desc: "Command line tool for managing Amazon S3 and CloudFront services"
+        pydeps:
+          py:all:build:
+            - setuptools
+          py:all:runtime:
+            - python-dateutil
+            - python-magic
+
