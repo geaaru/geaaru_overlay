@@ -23,7 +23,7 @@ src_prepare() {
 	sed -i -e "s|'magic'|'python_magic'|g" \
 		setup.py || die "error on sed setup.py"
 	sed -i -e 's|from magic import|from python_magic import|g' \
-		python-magic/__init__.py || die "error on sed __init__.py"
+		python_magic/__init__.py || die "error on sed __init__.py"
 
 	distutils-r1_src_prepare
 }
