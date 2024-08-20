@@ -19,3 +19,10 @@ SLOT="0"
 LICENSE="GPLv2"
 KEYWORDS="*"
 S="${WORKDIR}/s3cmd-2.4.0"
+
+src_prepare() {
+	sed -i -e 's|import magic|import python_magic as magic|g' \
+		S3/S3.py || die "error on sed S3.py"
+
+	distutils-r1_src_prepare
+}
