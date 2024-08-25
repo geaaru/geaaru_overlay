@@ -2,8 +2,7 @@
 
 EAPI=7
 inherit desktop eutils flag-o-matic linux-info linux-mod \
-	portability toolchain-funcs unpacker user udev \
-	readme.gentoo-r1
+	portability toolchain-funcs unpacker user udev
 
 DESCRIPTION="NVIDIA Accelerated Graphics Driver"
 HOMEPAGE="http://www.nvidia.com/ http://www.nvidia.com/Download/Find.aspx"
@@ -279,7 +278,6 @@ src_install() {
 	insinto ${NV_ROOT}/etc/sandbox.d
 	newins - 20nvidia <<<'SANDBOX_PREDICT="/dev/nvidiactl:/dev/nvidia-caps:/dev/char"'
 
-
 	if use tools; then
 		insinto ${NV_ROOT}/usr/share/pixmaps
 		doins nvidia-settings.png
@@ -294,20 +292,6 @@ src_install() {
 	# Move man files under NV_ROOT
 	mv ${D}/usr/share/man ${D}${NV_ROOT}/usr/share
 
-	# If 'X' flag is enabled, link nvidia-drm-outputclass.conf into system xorg.conf.d directory (xorg 1.16 and up),
-	# link nvidia_drv.so into /usr/$(get_libdir)/xorg/modules/drivers,
-	# and link nvidia_icd.json into system vulkan/icd.d directory.
-	#if use X; then
-
-		# Xorg nvidia.conf
-		#if has_version '>=x11-base/xorg-server-1.16'; then
-		#	dosym "${NV_ROOT}/share/X11/xorg.conf.d/nvidia-drm-outputclass.conf" "/usr/share/X11/xorg.conf.d/50-nvidia-drm-outputclass.conf"
-		#fi
-
-		# Xorg driver nvidia_drv.so
-		#dosym "${NV_NATIVE_LIBDIR}/xorg/modules/drivers/nvidia_drv.so" "/usr/$(get_libdir)/xorg/modules/drivers/nvidia_drv.so"
-	#fi
-
 	# On linux kernels, install nvidia-persistenced init and conf files after fixing up paths.
 	for filename in nvidia-{smi,persistenced}.init ; do
 		sed -e 's:/opt/bin:'"${NV_ROOT}"'/bin:g' "${FILESDIR}/${filename}" > "${T}/${filename}"
@@ -317,19 +301,13 @@ src_install() {
 
 	insinto ${NV_ROOT}/etc/conf.d/
 	newins "${FILESDIR}/nvidia-persistenced.conf" nvidia-persistenced
-
-	# If we're not using glvnd support, then set up directory expected by eselect opengl:
-	#if ! use glvnd ; then
-	#	dosym "${NV_NATIVE_LIBDIR}/opengl/nvidia" "${EPREFIX}/usr/lib/opengl/nvidia"
-	#fi
-
-	#readme.gentoo_create_doc
 }
-
 
 pkg_preinst() {
 	#has_version "${CATEGORY}/${PN}[kernel-open]" && NV_HAD_KERNEL_OPEN=
 	has_version "${CATEGORY}/${PN}[wayland]" && NV_HAD_WAYLAND=
+
+	# TODO: replace this with gpu-configurator.
 
 	# Clean the dynamic libGL stuff's home to ensure
 	# we dont have stale libs floating around
@@ -342,7 +320,4 @@ pkg_preinst() {
 	fi
 }
 
-#pkg_postinst() {
-#	readme.gentoo_print_elog
-#}
 # vim: ft=ebuild
