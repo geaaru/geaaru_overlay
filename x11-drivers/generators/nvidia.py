@@ -10,6 +10,7 @@ async def generate(hub, **pkginfo):
         '550.107.02' : '6.7',
         '555.42.02'  : '6.8',
         '555.58.02'  : '6.8',
+        '560.35.03'  : '6.10',
     }
 
     for version, maxk in supported_versions.items():
