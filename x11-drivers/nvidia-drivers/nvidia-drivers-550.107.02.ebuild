@@ -148,6 +148,7 @@ src_install() {
 		[GLVND_EGL_ICD_JSON]=${NV_ROOT}/usr/share/glvnd/egl_vendor.d
 		[OPENGL_DATA]=${NV_ROOT}/usr/share/nvidia
 		[VULKAN_ICD_JSON]=${NV_ROOT}/usr/share/vulkan
+		[VULKANSC_ICD_JSON]=${NV_ROOT}/usr/share/vulkan
 		[WINE_LIB]=${NV_ROOT}/usr/${libdir}/nvidia/wine
 		[XORG_OUTPUTCLASS_CONFIG]=${NV_ROOT}/usr/share/X11/xorg.conf.d
 		[CUDA_ICD]=${NV_ROOT}/etc/OpenCL/vendors
