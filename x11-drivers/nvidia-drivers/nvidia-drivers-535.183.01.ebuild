@@ -282,6 +282,9 @@ src_install() {
 		doins nvidia-settings.png
 
 		insinto ${NV_ROOT}/usr/share/applications
+
+		# Fix nvidia-settings.desktop Exec param.
+		sed -i -e 's|^Exec=.*|Exec=/usr/bin/nvidia-settings|g' nvidia-settings.desktop
 		doins nvidia-settings.desktop
 
 		exeinto ${NV_ROOT}/etc/X11/xinit/xinitrc.d
@@ -297,6 +300,7 @@ src_install() {
 		insinto ${NV_ROOT}/etc/init.d/
 		newins "${T}/${filename}" "${filename%.init}"
 	done
+
 
 	insinto ${NV_ROOT}/etc/conf.d/
 	newins "${FILESDIR}/nvidia-persistenced.conf" nvidia-persistenced
