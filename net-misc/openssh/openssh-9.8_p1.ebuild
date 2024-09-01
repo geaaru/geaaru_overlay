@@ -17,7 +17,7 @@ LICENSE="BSD GPL-2"
 SLOT="0"
 KEYWORDS="*"
 # Probably want to drop ssl defaulting to on in a future version.
-IUSE="abi_mips_n32 audit bindist debug hpn kerberos kernel_linux ldns libedit livecd pam +pie +scp security-key sctp selinux +ssl static test X xmss"
+IUSE="abi_mips_n32 audit bindist debug hpn kerberos kernel_linux ldns libedit livecd pam +pie +scp security-key sctp selinux +ssl static test X xmss dsa"
 
 RESTRICT="!test? ( test )"
 
@@ -110,6 +110,9 @@ src_configure() {
 		$(use_with selinux)
 		$(use_with ssl openssl)
 		$(use_with ssl ssl-engine)
+		# Release of openssh after 2025/01 will drop
+		# this option.
+		$(use_enable dsa)
 	)
 
 	if use elibc_musl; then
@@ -230,3 +233,5 @@ pkg_postinst() {
 		/etc/init.d/sshd restart
 	fi
 }
+
+# vim: filetype=ebuild
