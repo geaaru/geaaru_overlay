@@ -6,7 +6,7 @@ PYTHON_COMPAT=( python3+ )
 
 inherit autotools distutils-r1 xdg-utils
 
-SRC_URI="https://github.com/waydroid/waydroid/tarball/209c90d47330ddb357b5209309c80c4257f05fe3 -> waydroid-1.4.2-209c90d.tar.gz"
+SRC_URI="https://github.com/waydroid/waydroid/tarball/9cd66662ba53d491ce7e3c74218b5194267a6f68 -> waydroid-1.4.3-9cd6666.tar.gz"
 
 DESCRIPTION="Container-based approach to boot a full Android system on a regular GNU/Linux"
 HOMEPAGE="https://github.com/waydroid/waydroid"
