@@ -73,6 +73,10 @@ RDEPEND="${DEPEND}
 	selinux? ( sec-policy/selinux-xserver )
 "
 
+PATCHES=(
+	"${FILESDIR}"/xorg-server-dri2-crash.patch
+)
+
 post_src_unpack() {
 	mv xserver-* "${S}"
 }
@@ -147,3 +151,5 @@ pkg_postrm() {
 		rm -rf "${EROOT}"/usr/$(get_libdir)/xorg/modules
 	fi
 }
+
+# vim: filetype=ebuild
