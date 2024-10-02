@@ -26,7 +26,10 @@ NPM_NO_DEPS=0
 # Override default npm install option because using --production
 # doesn't compile.
 NPM_DEFAULT_OPTS="-E --no-optional"
-NPM_LOCAL_MODULES="@types"
+NPM_LOCAL_MODULES="
+	@types
+	@babel
+"
 
 S="${WORKDIR}/package"
 
