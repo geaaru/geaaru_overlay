@@ -18,7 +18,7 @@ RDEPEND="${DEPEND}"
 
 NPM_NO_DEPS=1
 
-NPM_LOCAL_MODULES="
+NPM_PKG_DIRS="
 	core.json
 "
 
