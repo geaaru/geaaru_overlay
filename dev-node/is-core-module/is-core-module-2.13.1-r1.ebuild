@@ -18,6 +18,10 @@ RDEPEND="${DEPEND}"
 
 NPM_NO_DEPS=1
 
+NPM_LOCAL_MODULES="
+	core.json
+"
+
 S="${WORKDIR}/package"
 
 inherit npmv1
