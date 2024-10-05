@@ -18,7 +18,7 @@ RDEPEND="dev-libs/libxml2:2
 
 DEPEND="${RDEPEND}
 	dev-libs/glib:2
-	>=dev-ruby/sass-3.5
+	dev-lang/sassc
 	x11-libs/gdk-pixbuf:2"
 
 post_src_unpack() {
