@@ -2,6 +2,8 @@
 
 EAPI=7
 
+inherit gnome3-utils xdg
+
 DESCRIPTION="Orchis is a Material Design theme for GNOME/GTK based desktop environments. "
 HOMEPAGE="https://github.com/vinceliuice/Orchis-theme"
 SRC_URI="{{ src_uri }}"
@@ -23,6 +25,10 @@ DEPEND="${RDEPEND}
 
 post_src_unpack() {
 	mv {{ github_user }}-{{ github_repo }}-* ${S}
+}
+
+src_configure() {
+	default
 }
 
 src_install() {
@@ -65,6 +71,16 @@ src_install() {
 	if use macos ; then
 		${S}/install.sh -d ${D}/usr/share/themes --tweaks macos -n Orchis-Macos
 	fi
+}
+
+pkg_postinst() {
+	xdg_pkg_postinst
+	gnome3_gconf_install
+	gnome3_gdk_pixbuf_update
+}
+
+pkg_postrm() {
+	xdg_pkg_postrm
 }
 
 # vim: filetype=ebuild
