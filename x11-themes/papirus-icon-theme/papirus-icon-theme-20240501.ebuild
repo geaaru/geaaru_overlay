@@ -2,7 +2,7 @@
 
 EAPI=7
 
-inherit gnome3-utils xdg-utils
+inherit gnome3-utils xdg
 
 DESCRIPTION="Pixel perfect icon theme for Linux"
 HOMEPAGE="https://github.com/PapirusDevelopmentTeam/papirus-icon-theme"
@@ -23,8 +23,7 @@ src_install() {
 	doins -r ePapirus{,-Dark} Papirus{,-Dark,-Light}
 }
 
-pkg_preinst() { gnome3_icon_savelist; }
-pkg_postinst() { gnome3_icon_cache_update; }
-pkg_postrm() { xdg_icon_cache_update; }
+pkg_postinst() { xdg_pkg_postinst; gnome3_gdk_pixbuf_update; }
+pkg_postrm() { xdg_pkg_postrm; }
 
 # vim: filetype=ebuild
