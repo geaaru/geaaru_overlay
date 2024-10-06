@@ -12,6 +12,10 @@ LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="*"
 
+post_src_unpack() {
+  mv PapirusDevelopmentTeam-papirus-icon-theme-* "${S}"
+}
+
 src_compile() { :; }
 
 src_install() {
@@ -23,3 +27,5 @@ src_install() {
 pkg_preinst() { gnome3_icon_savelist; }
 pkg_postinst() { gnome3_icon_cache_update; }
 pkg_postrm() { xdg_icon_cache_update; }
+
+# vim: filetype=ebuild
