@@ -13,15 +13,14 @@ SLOT="0"
 KEYWORDS="*"
 
 post_src_unpack() {
-  mv PapirusDevelopmentTeam-papirus-icon-theme-* "${S}"
+	mv PapirusDevelopmentTeam-papirus-icon-theme-* "${S}"
 }
 
 src_compile() { :; }
 
 src_install() {
 	insinto /usr/share/icons
-  doins -r ePapirus{,-Dark} Papirus{,-Dark,-Light}
-
+	doins -r ePapirus{,-Dark} Papirus{,-Dark,-Light}
 }
 
 pkg_preinst() { gnome3_icon_savelist; }
