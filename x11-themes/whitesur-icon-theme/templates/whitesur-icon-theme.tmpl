@@ -40,10 +40,10 @@ src_install() {
 		)
 	fi
 
-	${S}/install.sh -n WhiteSur -d ${D}/usr/share/themes ${args[@]}
+	${S}/install.sh -n WhiteSur -d ${D}/usr/share/icons ${args[@]}
 
 	if use alternative ; then
-		${S}/install.sh -n WhiteSur-Alternative -d ${D}/usr/share/themes ${args[@]}
+		${S}/install.sh -n WhiteSur-Alternative -d ${D}/usr/share/icons ${args[@]}
 	fi
 }
 
