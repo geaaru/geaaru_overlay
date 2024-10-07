@@ -1,0 +1,12 @@
+whitesur:
+  generator: github-1
+  packages:
+    - whitesur-icon-theme:
+        github:
+          user: vinceliuice
+          repo: WhiteSur-icon-theme
+          query: releases
+          transform:
+            - kind: string
+              match: '-'
+              replace: ''
