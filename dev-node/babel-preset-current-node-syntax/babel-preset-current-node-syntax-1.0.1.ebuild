@@ -24,3 +24,7 @@ S="${WORKDIR}/package"
 
 inherit npmv1
 
+src_prepare() {
+	chmod a+x ${S}/scripts/check-yarn-bug.sh
+	npmv1_src_prepare
+}
