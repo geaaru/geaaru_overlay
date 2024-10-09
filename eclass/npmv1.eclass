@@ -1,4 +1,3 @@
-# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
@@ -61,17 +60,26 @@ inherit epatch
 #  * NPM_PV              Define version used for download sources when NPM_GITHUP_MOD is used.
 #                        Default value is "v${PV}".
 
-NPMV1_ECLASS_VERSION="0.4.0"
+NPMV1_ECLASS_VERSION="0.5.0"
 
 _npmv1_set_metadata() {
 
-	if has "${EAPI:-0}" 5 6; then
-
+	if has "${EAPI:-0}" 5 6 7; then
 		DEPEND="${DEPEND}
 		net-libs/nodejs[npm(+)]
 		"
 		if [[ -z "${NPM_DEFAULT_OPTS}" ]] ; then
-			NPM_DEFAULT_OPTS="-E --no-optional --production"
+			# Retrieve the nodejs major version
+			local node_version=$(node --version)
+			node_version=${node_version/v}
+			node_version=${node_version/\.*}
+			if [ "${node_version}" -ge 20 ] ; then
+				# For nodejs >20 we need to use --omit=dev instead of --no-optional
+				NPM_DEFAULT_OPTS="-E --omit=optional"
+			else
+				NPM_DEFAULT_OPTS="-E --no-optional --production"
+			fi
+			#einfo "Using nodejs major version ${node_version}:\t${NPM_DEFAULT_OPTS}"
 		fi
 		if [[ -z "${NPM_PKG_NAME}" ]] ; then
 			NPM_PKG_NAME="${PN}"
@@ -91,8 +99,8 @@ _npmv1_set_metadata() {
 			fi
 		fi
 		if [[ -z "${SRC_URI}" && -z "${EGIT_REPO_URI}" ]] ; then
-			if [[ -n "${NPM_GITHUP_MOD}" ]] ; then
-				SRC_URI="https://github.com/${NPM_GITHUP_MOD}/archive/${NPM_PV}.zip -> ${PF}.zip"
+			if [[ -n "${NPM_GITHUB_MOD}" ]] ; then
+				SRC_URI="https://github.com/${NPM_GITHUB_MOD}/archive/${NPM_PV}.zip -> ${PF}.zip"
 			else
 				SRC_URI="http://registry.npmjs.org/${NPM_PKG_NAME}/-/${NPM_PKG_NAME}-${PV}.tgz"
 			fi
