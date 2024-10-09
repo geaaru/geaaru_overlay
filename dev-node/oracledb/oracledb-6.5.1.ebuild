@@ -21,7 +21,7 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
-NPM_GITHUP_MOD="oracle/node-oracledb"
+NPM_GITHUB_MOD="oracle/node-oracledb"
 NPM_PKG_DIRS="
 build/Release
 "

@@ -16,7 +16,7 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
-NPM_GITHUP_MOD="minimistjs/minimist"
-SRC_URI="https://github.com/${NPM_GITHUP_MOD}/archive/v${PV}.zip -> ${P}.zip"
+NPM_GITHUB_MOD="minimistjs/minimist"
+SRC_URI="https://github.com/${NPM_GITHUB_MOD}/archive/v${PV}.zip -> ${P}.zip"
 
 inherit npmv1

@@ -6,7 +6,7 @@ EAPI=6
 
 DESCRIPTION="Provides an extendable describer for kubernetes resources. Includes an angular directive for rendering an instance of a describer."
 HOMEPAGE="https://github.com/kubernetes-ui/describer#readme"
-NPM_GITHUP_MOD="kubernetes-ui/${PN}"
+NPM_GITHUB_MOD="kubernetes-ui/${PN}"
 
 SLOT="0"
 KEYWORDS="*"

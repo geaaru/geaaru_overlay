@@ -6,7 +6,7 @@ EAPI=6
 
 DESCRIPTION="An HTML5 VNC client"
 HOMEPAGE="https://github.com/kanaka/noVNC"
-NPM_GITHUP_MOD="novnc/${PN}"
+NPM_GITHUB_MOD="novnc/${PN}"
 
 LICENSE="MPL 2.0"
 SLOT="0"

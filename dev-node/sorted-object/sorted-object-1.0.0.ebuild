@@ -18,7 +18,7 @@ RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/package"
 
-NPM_GITHUP_MOD="domenic/sorted-object"
+NPM_GITHUB_MOD="domenic/sorted-object"
 SRC_URI="http://registry.npmjs.org/${PN}/-/${PF}.tgz"
 
 

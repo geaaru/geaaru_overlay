@@ -7,7 +7,7 @@ EAPI=6
 
 DESCRIPTION="Feature rich priority job queue backed by redis"
 HOMEPAGE="http://automattic.github.io/kue/"
-NPM_GITHUP_MOD="Automattic/kue"
+NPM_GITHUB_MOD="Automattic/kue"
 
 LICENSE="MIT"
 SLOT="0"

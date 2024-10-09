@@ -24,7 +24,7 @@ RDEPEND="${DEPEND}"
 
 NPM_PV="${PV}"
 NPM_NO_DEPS=1
-NPM_GITHUP_MOD="geaaru/node-ebuilder"
+NPM_GITHUB_MOD="geaaru/node-ebuilder"
 NPM_PKG_DIRS="
 	adapters
 "
