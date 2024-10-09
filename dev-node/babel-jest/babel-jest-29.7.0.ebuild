@@ -30,3 +30,9 @@ S="${WORKDIR}/package"
 
 inherit npmv1
 
+src_prepare() {
+	# The @jest/test-utils@29.7.0 is not online
+	sed -i '/test-utils/d' package.json
+	npmv1_src_prepare
+}
+
