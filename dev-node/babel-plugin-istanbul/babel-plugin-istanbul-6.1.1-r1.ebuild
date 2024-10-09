@@ -18,12 +18,11 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
+NPM_GITHUB_MOD=istanbuljs/${PN}
+
 NPM_LOCAL_MODULES="
 @babel
 @istanbuljs
 "
 
-S="${WORKDIR}/package"
-
 inherit npmv1
-
