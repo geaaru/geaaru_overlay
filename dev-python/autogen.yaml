@@ -532,7 +532,12 @@ setuptools_builds:
         license: Apache-2.0 UPL-1.0
         depend: "dev-db/oracle-instantclient-basic"
         rdepend: "dev-db/oracle-instantclient-basic"
-        iuse: doc examples
+        versions:
+          latest:
+            iuse: doc examples
+          2.3.0:
+            iuse: doc examples
+
         pydeps:
           py:3:build:
             - setuptools
