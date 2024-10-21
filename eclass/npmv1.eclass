@@ -18,7 +18,9 @@ if has "${EAPI:-0}" 5; then
     # https://blogs.gentoo.org/mgorny/2015/11/13/the-ultimate-guide-to-eapi-6/
 fi
 
-inherit epatch
+if [ "${EAPI}" != 7 ] ; then
+	inherit epatch
+fi
 
 # TODO:
 #  * support multi slot ebuilds
@@ -141,11 +143,15 @@ npmv1_src_prepare() {
 		NPM_GYP_PKG=0
 	fi
 
-	[[ ${PATCHES} ]] && epatch "${PATCHES[@]}"
-
-	if [[ ${EAPI} == 6 ]]; then
+	if [[ ${EAPI} == 6 || ${EAPI} == 7 ]]; then
+		if [[ ${PATCHES} ]] ; then
+			eapply "${PATCHES[@]}"
+		fi
 		eapply_user
 	else
+		if [[ ${PATCHES} ]] ; then
+			epatch "${PATCHES[@]}"
+		fi
 		epatch_user
 	fi
 }
