@@ -1,9 +1,7 @@
-# Copyright 1999-2014 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Heade$
 
-EAPI=6
-PYTHON_COMPAT=( python{3_5,3_6,3_7} )
+EAPI=7
+PYTHON_COMPAT=( python3+ )
 
 inherit distutils-r1 git-r3
 
@@ -15,9 +13,9 @@ EGIT_COMMIT="v${PV}"
 
 LICENSE="BSD-2-Clause"
 SLOT="0"
-KEYWORDS="~amd64 ~x86 ~arm"
+KEYWORDS="*"
 IUSE="doc test"
-
+RESTRICT="network-sandbox"
 RDEPEND="dev-python/jinja[${PYTHON_USEDEP}]
 		dev-python/pyyaml[${PYTHON_USEDEP}]"
 
