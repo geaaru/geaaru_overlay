@@ -15,7 +15,7 @@ DEPEND="
 	$(python_gen_cond_dep 'dev-python/hatch-vcs[${PYTHON_USEDEP}]' -3)"
 RDEPEND="
 	!dev-python/j2cli
-	dev-python/jinja2[${PYTHON_USEDEP}]
+	dev-python/jinja[${PYTHON_USEDEP}]
 	dev-python/pyyaml[${PYTHON_USEDEP}]"
 IUSE=""
 SLOT="0"
