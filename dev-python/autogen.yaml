@@ -158,6 +158,13 @@ hatchling_builds:
             - flake8
           py:all:runtime:
             - flake8
+    - jinjanator-plugins:
+        license: Apache-2.0
+        pydeps:
+          py:all:runtime:
+            - attrs
+            - pluggy
+            - typing-extensions
 
     - jinjanator:
         license: BSD-2-Clause
@@ -167,7 +174,8 @@ hatchling_builds:
           !dev-python/j2cli
         pydeps:
           py:all:runtime:
-            - jinja2
+            - jinjanator-plugins
+            - jinja
             - pyyaml
 
 setuptools_builds:
