@@ -159,6 +159,16 @@ hatchling_builds:
           py:all:runtime:
             - flake8
 
+    - jinjanator:
+        license: BSD-2-Clause
+        rdepend: |
+          !dev-python/j2cli
+        depend: |
+          !dev-python/j2cli
+        pydeps:
+          py:all:runtime:
+            - jinja2
+            - pyyaml
 
 setuptools_builds:
   defaults:
