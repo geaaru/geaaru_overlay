@@ -66,7 +66,7 @@ S="${WORKDIR}/${MY_P}"
 
 PATCHES=(
 	"${FILESDIR}"/${PN}-3.0.14-proxy-timestamp.patch
-	"${FILESDIR}"/${PN}-3.0.20-systemd-service.patch
+	"${FILESDIR}"/${PN}-3.0.27-systemd-service.patch
 	"${FILESDIR}"/${P}-delay-access-accept.patch
 	"${FILESDIR}"/${PN}-3.0.x-rlm_sql_mongo-quiet-warn.patch
 
@@ -213,9 +213,9 @@ src_compile() {
 
 src_install() {
 	dodir /etc
-	diropts -m0750 -o root -g radius
+#	diropts -m0750 -o root -g radius
 	dodir /etc/raddb
-	diropts -m0750 -o radius -g radius
+#	diropts -m0750 -o radius -g radius
 	dodir /var/log/radius
 	keepdir /var/log/radius/radacct
 	diropts
@@ -227,8 +227,8 @@ src_install() {
 		R="${D}" \
 		install
 
-	fowners -R radius:radius /etc/raddb
-	fowners -R radius:radius /var/log/radius
+#	fowners -R radius:radius /etc/raddb
+#	fowners -R radius:radius /var/log/radius
 
 	pamd_mimic_system radiusd auth account password session
 
