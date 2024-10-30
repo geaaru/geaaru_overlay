@@ -1,12 +1,12 @@
-# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # Ebuild automatically produced by node-ebuilder.
 
 EAPI=6
 
 DESCRIPTION="merge() utility function"
-HOMEPAGE="https://github.com/jaredhanson/utils-merge#readme"
+HOMEPAGE="http://www.npmjs.com/package/utils-merge"
 
+LICENSE="MIT"
 SLOT="0"
 KEYWORDS="*"
 IUSE=""
