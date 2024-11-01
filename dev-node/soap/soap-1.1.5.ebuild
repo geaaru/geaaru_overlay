@@ -12,8 +12,8 @@ KEYWORDS="*"
 IUSE=""
 
 DEPEND="
-	>=dev-node/axios-1.7.7
-	>=dev-node/axios-ntlm-1.4.2
+	dev-node/axios
+	dev-node/axios-ntlm
 	>=dev-node/debug-4.3.7
 	>=dev-node/formidable-3.5.1
 	>=dev-node/get-stream-6.0.1
