@@ -12,10 +12,10 @@ KEYWORDS="*"
 IUSE=""
 
 DEPEND="
-	>=dev-node/axios-1.7.7
-	>=dev-node/des-js-1.1.0
-	>=dev-node/dev-null-0.1.1
-	>=dev-node/js-md4-0.3.2
+	dev-node/axios
+	dev-node/des-js
+	dev-node/dev-null
+	dev-node/js-md4
 "
 RDEPEND="${DEPEND}"
 
