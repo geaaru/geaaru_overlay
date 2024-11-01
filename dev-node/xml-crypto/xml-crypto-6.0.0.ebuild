@@ -16,7 +16,7 @@ DEPEND="
 	>=dev-node/xpath-0.0.33
 "
 RDEPEND="${DEPEND}"
-
+NPM_DEFAULT_OPTS="-E"
 NPM_LOCAL_MODULES="
 @xmldom
 "
