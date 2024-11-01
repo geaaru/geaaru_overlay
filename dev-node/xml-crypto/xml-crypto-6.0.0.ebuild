@@ -25,3 +25,7 @@ S="${WORKDIR}/package"
 
 inherit npmv1
 
+src_prepare() {
+	npmv1_prepare
+	sed -i -e '/prepare/d' package.json
+}
