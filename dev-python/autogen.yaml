@@ -195,6 +195,7 @@ setuptools_builds:
     - mistune:
         version: 0.8.4
     - python-mimeparse
+    - packaging-legacy
     - hyperlink:
         pydeps:
           py:3:runtime:
