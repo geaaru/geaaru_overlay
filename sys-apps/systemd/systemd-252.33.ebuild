@@ -8,7 +8,7 @@ MY_P=${PN}-${MY_PV}
 MY_PS=${PN}-stable-${MY_PV}
 S=${WORKDIR}/${MY_PS}
 #SRC_URI="https://github.com/systemd/systemd-stable/archive/v${MY_PV}/${MY_P}.tar.gz"
-SRC_URI="https://github.com/systemd/systemd-stable/tarball/3996f89ec48b2a50275cf8510aae22d0fa6e8f77 -> systemd-stable-253.27-3996f89.tar.gz"
+SRC_URI="https://github.com/systemd/systemd-stable/tarball/79b06ed204b031f0765c62a118998347af9b3ce9 -> systemd-stable-252.33-79b06ed.tar.gz"
 KEYWORDS="*"
 
 PYTHON_COMPAT=( python3+ )
