@@ -6,22 +6,8 @@ systemd:
           user: systemd
           repo: systemd-stable
           query: releases
-          #query: tags
-          #select: '^v251.*|^v249.*|^v252.*'
           template: systemd.tmpl
           select: '^v254.*'
-#        versions:
-#          latest:
-#          253.x:
-#            template: systemd.tmpl
-#            select: '^253.*'
-#          252.x:
-#            template: systemd.tmpl
-#            select: '^252.*'
-#          253.14:
-#            template: systemd.tmpl
-              #          249.12:
-              #template: systemd.tmpl
 
     - systemd:
         github:
@@ -38,13 +24,4 @@ systemd:
           query: releases
           select: '^v253.*'
           template: systemd.tmpl
-
-
-#    - systemd:
-#        github:
-#          user: systemd
-#          repo: systemd-stable
-#          query: releases
-#          template: systemd.tmpl
-#          select: '^252.*'
 
