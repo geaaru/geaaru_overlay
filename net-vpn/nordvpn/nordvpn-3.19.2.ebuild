@@ -22,8 +22,7 @@ RDEPEND="net-misc/networkmanager
 		app-misc/ca-certificates
 		sys-process/procps
 		net-firewall/iptables
-		sys-apps/iproute2
-		acct-group/nordvpn"
+		sys-apps/iproute2"
 
 
 RESTRICT="strip"
