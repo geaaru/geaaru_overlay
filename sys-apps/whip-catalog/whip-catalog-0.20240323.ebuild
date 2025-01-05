@@ -18,11 +18,11 @@ KEYWORDS="*"
 
 src_install() {
 	insinto /usr/share/macaroni/whip-catalog/eclass
-	for f in "${WORKDIR}"/catalog/eclass/*.yaml ; do
+	for f in "${S}"/catalog/eclass/*.yaml ; do
 		doins "${f}"
 	done
 	insinto /usr/share/macaroni/whip-catalog/commons
-	for f in "${WORKDIR}"/catalog/commons/*.yaml ; do
+	for f in "${S}"/catalog/commons/*.yaml ; do
 		doins "${f}"
 	done
 }
