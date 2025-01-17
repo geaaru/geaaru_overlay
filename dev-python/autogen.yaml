@@ -594,6 +594,8 @@ setuptools_builds:
             distutils-r1_src_prepare
           }
 
+    - propcache
+
 
 flit_builds:
   defaults:
