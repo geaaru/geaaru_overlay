@@ -1,27 +1,29 @@
 systemd:
-  generator: github-1
+  generator: builtin-github
+  template:
+    engine: j2cli
+
+  defaults:
+    category: sys-apps
+    github:
+      user: systemd
+      repo: systemd-stable
+      query: releases
+      num_pages: 5
+
   packages:
     - systemd:
-        github:
-          user: systemd
-          repo: systemd-stable
-          query: releases
-          template: systemd.tmpl
-          select: '^v254.*'
+        selector:
+          - '<254.22'
+          - '>=254.0'
 
     - systemd:
-        github:
-          user: systemd
-          repo: systemd-stable
-          query: releases
-          select: '^v252.*'
-          template: systemd.tmpl
+        selector:
+          - '<253.0'
+          - '>=252.0'
 
     - systemd:
-        github:
-          user: systemd
-          repo: systemd-stable
-          query: releases
-          select: '^v253.*'
-          template: systemd.tmpl
+        selector:
+          - '<254.0'
+          - '>=253.0'
 

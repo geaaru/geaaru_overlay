@@ -1,4 +1,3 @@
-# Copyright 2011-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -7,13 +6,12 @@ MY_PV=${PV/_/-}
 MY_P=${PN}-${MY_PV}
 MY_PS=${PN}-stable-${MY_PV}
 S=${WORKDIR}/${MY_PS}
-#SRC_URI="https://github.com/systemd/systemd-stable/archive/v${MY_PV}/${MY_P}.tar.gz"
-SRC_URI="https://github.com/systemd/systemd-stable/tarball/9bfeb2b1c7ebb6d3242d1f71e8338a846baa5f31 -> systemd-stable-254.21-9bfeb2b.tar.gz"
+SRC_URI="https://api.github.com/repos/systemd/systemd-stable/tarball/v254.21 -> systemd-254.21.tar.gz"
 KEYWORDS="*"
 
 PYTHON_COMPAT=( python3+ )
 
-inherit bash-completion-r1 linux-info meson multilib-minimal ninja-utils pam python-any-r1 systemd toolchain-funcs udev user
+inherit bash-completion-r1 linux-info meson ninja-utils pam python-any-r1 systemd toolchain-funcs udev user
 
 DESCRIPTION="System and service manager for Linux"
 HOMEPAGE="https://www.freedesktop.org/wiki/Software/systemd"
@@ -27,8 +25,8 @@ RESTRICT="!test? ( test )"
 
 MINKV="3.11"
 
-COMMON_DEPEND=">=sys-apps/util-linux-2.30:0=[${MULTILIB_USEDEP}]
-	sys-libs/libcap:0=[${MULTILIB_USEDEP}]
+COMMON_DEPEND=">=sys-apps/util-linux-2.30:0=
+	sys-libs/libcap:0=
 	!<sys-libs/glibc-2.16
 	acl? ( sys-apps/acl:0= )
 	apparmor? ( sys-libs/libapparmor:0= )
@@ -40,7 +38,7 @@ COMMON_DEPEND=">=sys-apps/util-linux-2.30:0=[${MULTILIB_USEDEP}]
 		!gnutls? ( >=dev-libs/openssl-1.1.0:0= )
 	)
 	elfutils? ( >=dev-libs/elfutils-0.158:0= )
-	gcrypt? ( >=dev-libs/libgcrypt-1.4.5:0=[${MULTILIB_USEDEP}] )
+	gcrypt? ( >=dev-libs/libgcrypt-1.4.5:0= )
 	http? (
 		>=net-libs/libmicrohttpd-0.9.33:0=
 		gnutls? ( >=net-libs/gnutls-3.1.4:0= )
@@ -54,10 +52,10 @@ COMMON_DEPEND=">=sys-apps/util-linux-2.30:0=[${MULTILIB_USEDEP}]
 		sys-libs/zlib:0=
 	)
 	kmod? ( >=sys-apps/kmod-15:0= )
-	lz4? ( >=app-arch/lz4-0_p131:0=[${MULTILIB_USEDEP}] )
-	lzma? ( >=app-arch/xz-utils-5.0.5-r1:0=[${MULTILIB_USEDEP}] )
+	lz4? ( >=app-arch/lz4-0_p131:0= )
+	lzma? ( >=app-arch/xz-utils-5.0.5-r1:0= )
 	nat? ( net-firewall/iptables:0= )
-	pam? ( virtual/pam:=[${MULTILIB_USEDEP}] )
+	pam? ( virtual/pam:= )
 	pcre? ( dev-libs/libpcre2 )
 	qrcode? ( media-gfx/qrencode:0= )
 	seccomp? ( >=sys-libs/libseccomp-2.3.3:0= )
@@ -103,7 +101,7 @@ BDEPEND="
 	>=dev-util/intltool-0.50
 	>=sys-apps/coreutils-8.16
 	sys-devel/m4
-	virtual/pkgconfig[${MULTILIB_USEDEP}]
+	virtual/pkgconfig
 	test? ( sys-apps/dbus )
 	app-text/docbook-xml-dtd:4.2
 	app-text/docbook-xml-dtd:4.5
@@ -167,24 +165,11 @@ src_prepare() {
 
 	[[ -d "${WORKDIR}"/patches ]] && PATCHES+=( "${WORKDIR}"/patches )
 
-	# Add local patches here
-	PATCHES+=(
-#		"${FILESDIR}"/242-gcc-9.patch
-#		"${FILESDIR}"/242-socket-util-flush-accept.patch
-#		"${FILESDIR}"/242-wireguard-listenport.patch
-#		"${FILESDIR}"/242-file-max.patch
-	)
-
-	if ! use vanilla; then
-		PATCHES+=(
-#			"${FILESDIR}/gentoo-Dont-enable-audit-by-default.patch"
-#			"${FILESDIR}/gentoo-systemd-user-pam.patch"
-#			"${FILESDIR}/gentoo-uucp-group-r1.patch"
-#			"${FILESDIR}/gentoo-generator-path-r1.patch"
-		)
-	fi
-
 	default
+}
+
+meson_use() {
+	usex "$1" true false
 }
 
 src_configure() {
@@ -193,30 +178,6 @@ src_configure() {
 
 	python_setup
 
-	multilib-minimal_src_configure
-}
-
-meson_use() {
-	usex "$1" true false
-}
-
-meson_multilib() {
-	if multilib_is_native_abi; then
-		echo true
-	else
-		echo false
-	fi
-}
-
-meson_multilib_native_use() {
-	if multilib_is_native_abi && use "$1"; then
-		echo true
-	else
-		echo false
-	fi
-}
-
-multilib_src_configure() {
 	local myconf=(
 		--localstatedir="${EPREFIX}/var"
 		-Dpamlibdir="$(getpam_mod_dir)"
@@ -230,65 +191,63 @@ multilib_src_configure() {
 		# Avoid infinite exec recursion, bug 642724
 		-Dtelinit-path="${EPREFIX}/lib/sysvinit/telinit"
 		# no deps
-		-Defi=$(meson_multilib)
+		-Defi=true
 		-Dima=true
 		# Optional components/dependencies
-		-Dacl=$(meson_multilib_native_use acl)
-		-Dapparmor=$(meson_multilib_native_use apparmor)
-		-Daudit=$(meson_multilib_native_use audit)
-		-Dlibcryptsetup=$(meson_multilib_native_use cryptsetup)
-		-Dlibcurl=$(meson_multilib_native_use curl)
-		-Delfutils=$(meson_multilib_native_use elfutils)
+		-Dacl=$(usex acl true false)
+		-Dapparmor=$(usex apparmor true false)
+		-Daudit=$(usex audit true false)
+		-Dlibcryptsetup=$(usex cryptsetup true false)
+		-Dlibcurl=$(usex curl true false)
+		-Delfutils=$(usex elfutils true false)
 		-Dgcrypt=$(meson_use gcrypt)
-		-Dgnu-efi=$(meson_multilib_native_use gnuefi)
-		-Dgnutls=$(meson_multilib_native_use gnutls)
-		-Defi-libdir="${EPREFIX}/usr/$(get_libdir)"
-		-Defi-includedir="${ESYSROOT}/usr/include/efi"
-		-Dmicrohttpd=$(meson_multilib_native_use http)
-		-Dimportd=$(meson_multilib_native_use importd)
-		-Dbzip2=$(meson_multilib_native_use importd)
-		-Dzlib=$(meson_multilib_native_use importd)
-		-Dkmod=$(meson_multilib_native_use kmod)
+		# The gnuefi is been renamed in boot
+		-Dbootloader=$(usex gnuefi true false)
+		-Dgnutls=$(usex gnutls true false)
+		-Dmicrohttpd=$(usex http true false)
+		-Dimportd=$(usex importd true false)
+		-Dbzip2=$(usex importd true false)
+		-Dzlib=$(usex importd true false)
+		-Dkmod=$(usex kmod true false)
 		-Dlz4=$(meson_use lz4)
 		-Dxz=$(meson_use lzma)
-		-Dlibiptc=$(meson_multilib_native_use nat)
+		-Dlibiptc=$(usex nat true false)
 		-Dpam=$(meson_use pam)
-		-Dpcre2=$(meson_multilib_native_use pcre)
-		-Dpolkit=$(meson_multilib_native_use policykit)
-		-Dqrencode=$(meson_multilib_native_use qrcode)
-		-Dseccomp=$(meson_multilib_native_use seccomp)
-		-Dselinux=$(meson_multilib_native_use selinux)
-		-Ddbus=$(meson_multilib_native_use test)
-		-Dxkbcommon=$(meson_multilib_native_use xkb)
+		-Dpcre2=$(usex pcre true false)
+		-Dpolkit=$(usex policykit true false)
+		-Dqrencode=$(usex qrcode true false)
+		-Dseccomp=$(usex seccomp true false)
+		-Dselinux=$(usex selinux true false)
+		-Ddbus=$(usex test true false)
+		-Dxkbcommon=$(usex xkb true false)
 		# hardcode a few paths to spare some deps
-		-Dntp-servers="0.gentoo.pool.ntp.org 1.gentoo.pool.ntp.org 2.gentoo.pool.ntp.org 3.gentoo.pool.ntp.org"
+		-Dntp-servers="time.cloudflare.com"
 		# Breaks screen, tmux, etc.
 		-Ddefault-kill-user-processes=false
 
-		# multilib options
-		-Dbacklight=$(meson_multilib)
-		-Dbinfmt=$(meson_multilib)
-		-Dcoredump=$(meson_multilib)
-		-Denvironment-d=$(meson_multilib)
-		-Dfirstboot=$(meson_multilib)
-		-Dhibernate=$(meson_multilib)
-		-Dhostnamed=$(meson_multilib)
-		-Dhwdb=$(meson_multilib)
-		-Dldconfig=$(meson_multilib)
-		-Dlocaled=$(meson_multilib)
-		-Dman=$(meson_multilib)
-		-Dnetworkd=$(meson_multilib)
-		-Dquotacheck=$(meson_multilib)
-		-Drandomseed=$(meson_multilib)
-		-Drfkill=$(meson_multilib)
-		-Dsysusers=$(meson_multilib)
-		-Dtimedated=$(meson_multilib)
-		-Dtimesyncd=$(meson_multilib)
-		-Dtmpfiles=$(meson_multilib)
-		-Dvconsole=$(meson_multilib)
+		-Dbacklight=true
+		-Dbinfmt=true
+		-Dcoredump=true
+		-Denvironment-d=true
+		-Dfirstboot=true
+		-Dhibernate=true
+		-Dhostnamed=true
+		-Dhwdb=true
+		-Dldconfig=true
+		-Dlocaled=true
+		-Dman=true
+		-Dnetworkd=true
+		-Dquotacheck=true
+		-Drandomseed=true
+		-Drfkill=true
+		-Dsysusers=true
+		-Dtimedated=true
+		-Dtimesyncd=true
+		-Dtmpfiles=true
+		-Dvconsole=true
 	)
 
-	if multilib_is_native_abi && use idn; then
+	if use idn; then
 		myconf+=(
 			-Dlibidn2=$(usex libidn2 true false)
 			-Dlibidn=$(usex libidn2 false true)
@@ -300,7 +259,7 @@ multilib_src_configure() {
 		)
 	fi
 
-	if multilib_is_native_abi && use dns-over-tls; then
+	if use dns-over-tls; then
 		myconf+=(
 			-Ddns-over-tls=true
 			-Dopenssl=$(usex !gnutls true false)
@@ -312,20 +271,9 @@ multilib_src_configure() {
 	meson_src_configure "${myconf[@]}"
 }
 
-multilib_src_compile() {
-	eninja
-}
+src_install() {
+	meson_src_install
 
-multilib_src_test() {
-	unset DBUS_SESSION_BUS_ADDRESS XDG_RUNTIME_DIR
-	eninja test
-}
-
-multilib_src_install() {
-	DESTDIR="${D}" eninja install
-}
-
-multilib_src_install_all() {
 	local rootprefix=$(usex split-usr '' /usr)
 
 	# meson doesn't know about docdir
@@ -489,3 +437,5 @@ pkg_prerm() {
 		rm -f -v "${EROOT}"/var/lib/systemd/catalog/database
 	fi
 }
+
+# vim: filetype=ebuild
