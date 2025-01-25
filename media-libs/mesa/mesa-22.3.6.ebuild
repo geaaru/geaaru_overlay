@@ -11,7 +11,7 @@ MY_P="${P/_/-}"
 DESCRIPTION="OpenGL-like graphic library for Linux"
 HOMEPAGE="https://www.mesa3d.org/ https://mesa.freedesktop.org/"
 
-SRC_URI="https://archive.mesa3d.org/${MY_P}.tar.xz"
+SRC_URI="https://archive.mesa3d.org/older-versions/22.x/${MY_P}.tar.xz"
 KEYWORDS="*"
 
 LICENSE="MIT"
