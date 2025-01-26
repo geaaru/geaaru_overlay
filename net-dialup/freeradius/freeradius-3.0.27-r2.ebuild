@@ -19,7 +19,7 @@ LICENSE="GPL-2"
 SLOT="0"
 
 IUSE="
-	debug firebird iodbc kerberos ldap libressl memcached mysql odbc oracle pam
+	debug firebird iodbc kerberos ldap memcached mysql odbc oracle pam
 	pcap postgres python readline rest samba sqlite ssl redis systemd mongo
 	systemd-integration
 "
@@ -48,8 +48,7 @@ RDEPEND="!net-dialup/cistronradius
 	samba? ( net-fs/samba )
 	redis? ( dev-libs/hiredis:= )
 	ssl? (
-		!libressl? ( dev-libs/openssl:0=[-bindist] )
-		libressl? ( dev-libs/libressl:0= )
+		dev-libs/openssl
 	)
 	ldap? ( net-nds/openldap )
 	kerberos? ( virtual/krb5 )
