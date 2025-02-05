@@ -1,0 +1,379 @@
+diff --git a/build.xml b/build.xml
+index b8975f8..8f401c4 100644
+--- a/build.xml
++++ b/build.xml
+@@ -126,7 +126,7 @@
+        ===================================================================
+   -->
+   <path id="classpath">
+-    <fileset dir="lib/optional" includes="*.jar"/>
++    <fileset dir="${lib.dir}" includes="**/*.jar"/>
+   </path>
+ 
+   <path id="tests-classpath">
+@@ -319,27 +319,7 @@
+   <selector id="ant.core">
+     <not>
+       <or>
+-        <selector refid="needs.antlr"/>
+-        <selector refid="needs.apache-bcel"/>
+-        <selector refid="needs.apache-bsf"/>
+-        <selector refid="needs.apache-log4j"/>
+-        <selector refid="needs.apache-oro"/>
+-        <selector refid="needs.apache-regexp"/>
+-        <selector refid="needs.apache-resolver"/>
+-        <selector refid="needs.apache-xalan2"/>
+-        <selector refid="needs.commons-logging"/>
+-        <selector refid="needs.commons-net"/>
+-        <selector refid="needs.jai"/>
+-        <selector refid="needs.javamail"/>
+-        <selector refid="needs.jdepend"/>
+-        <selector refid="needs.jmf"/>
+-        <selector refid="needs.jsch"/>
+-        <selector refid="needs.junit"/>
+-        <selector refid="needs.junit4"/>
+-        <selector refid="needs.junitlauncher"/>
+-        <selector refid="needs.netrexx"/>
+-        <selector refid="needs.swing"/>
+-        <selector refid="needs.xz"/>
++        <selector refid="deps"/>
+         <selector refid="ant.launcher"/>
+       </or>
+     </not>
+@@ -383,6 +363,33 @@
+     <include name="${ant.package}/types/AbstractFileSetTest*"/>
+   </patternset>
+ 
++  <selector id="deps">
++    <or>
++      <selector refid="needs.antlr"/>
++      <selector refid="needs.apache-bcel"/>
++      <selector refid="needs.apache-bsf"/>
++      <selector refid="needs.apache-log4j"/>
++      <selector refid="needs.apache-oro"/>
++      <selector refid="needs.apache-regexp"/>
++      <selector refid="needs.apache-resolver"/>
++      <selector refid="needs.apache-xalan2"/>
++      <selector refid="needs.commons-logging"/>
++      <selector refid="needs.commons-net"/>
++      <selector refid="needs.jai"/>
++      <selector refid="needs.javamail"/>
++      <selector refid="needs.jdepend"/>
++      <selector refid="needs.jmf"/>
++      <selector refid="needs.jsch"/>
++      <selector refid="needs.junit"/>
++      <selector refid="needs.junit4"/>
++      <selector refid="needs.junitlauncher"/>
++      <selector refid="needs.netrexx"/>
++      <selector refid="needs.swing"/>
++      <selector refid="needs.xz"/>
++      <selector refid="ant.launcher"/>
++    </or>
++  </selector>
++
+   <!--
+        ===================================================================
+          Check to see what optional dependencies are available
+@@ -396,9 +403,6 @@
+     </condition>
+     <property name="ignoresystemclasses" value="false"/>
+     <available property="jdk9+" classname="java.lang.module.ModuleDescriptor"/>
+-    <condition property="jdk10+">
+-      <javaversion atleast="10"/>
+-    </condition>
+     <available property="kaffe" classname="kaffe.util.NotImplemented"/>
+     <available property="harmony"
+                classname="org.apache.harmony.luni.util.Base64"/>
+@@ -559,28 +563,28 @@
+     <filterchain id="ant.filters">
+        <expandproperties/>
+     </filterchain>
+-  </target>
+ 
+-  <!--
+-       ===================================================================
+-         Build the code
+-       ===================================================================
+-  -->
+-  <target name="build" depends="prepare"
+-          description="--> compiles the source code">
+     <mkdir dir="${build.dir}"/>
+     <mkdir dir="${build.classes}"/>
+     <mkdir dir="${build.lib}"/>
+ 
+-    <javac srcdir="${java.dir}"
+-           includeantruntime="false"
+-           destdir="${build.classes}"
+-           debug="${debug}"
+-           deprecation="${deprecation}"
+-           target="${javac.target}"
+-           source="${javac.source}"
+-           optimize="${optimize}">
+-      <classpath refid="classpath"/>
++    <copy todir="${build.classes}">
++      <fileset dir="${java.dir}">
++        <include name="**/*.properties"/>
++        <include name="**/*.dtd"/>
++        <include name="**/*.xml"/>
++      </fileset>
++      <fileset dir="${resource.dir}"/>
++    </copy>
++
++    <copy todir="${build.classes}"
++      overwrite="true" encoding="UTF-8">
++      <fileset dir="${java.dir}">
++        <include name="**/version.txt"/>
++        <include name="**/defaultManifest.mf"/>
++      </fileset>
++      <filterchain refid="ant.filters"/>
++    </copy>
+ 
+       <selector id="conditional-patterns">
+         <not>
+@@ -613,26 +617,42 @@
+           </or>
+         </not>
+       </selector>
+-    </javac>
++  </target>
+ 
+-    <copy todir="${build.classes}">
+-      <fileset dir="${java.dir}">
+-        <include name="**/*.properties"/>
+-        <include name="**/*.dtd"/>
+-        <include name="**/*.xml"/>
+-      </fileset>
+-      <fileset dir="${resource.dir}"/>
+-    </copy>
++  <!--
++       ===================================================================
++         Build the code
++       ===================================================================
++  -->
++  <target name="build"
++    depends="build-core, build-deps"
++    description="--> compiles the source code">
++  </target>
+ 
+-    <copy todir="${build.classes}"
+-      overwrite="true" encoding="UTF-8">
+-      <fileset dir="${java.dir}">
+-        <include name="**/version.txt"/>
+-        <include name="**/defaultManifest.mf"/>
+-      </fileset>
+-      <filterchain refid="ant.filters"/>
+-    </copy>
++  <presetdef name="javac.ant">
++    <javac srcdir="${java.dir}"
++           includeantruntime="false"
++           destdir="${build.classes}"
++           debug="${debug}"
++           deprecation="${deprecation}"
++           target="${javac.target}"
++           source="${javac.source}"
++           optimize="${optimize}">
++      <classpath refid="classpath"/>
++    </javac>
++  </presetdef>
++
++  <target name="build-core" depends="prepare">
++    <javac.ant>
++      <selector id="core">
++        <not>
++          <selector refid="deps"/>
++        </not>
++      </selector>
++    </javac.ant>
++  </target>
+ 
++  <target name="copy.junit.xsl">
+     <copy todir="${build.classes}/${optional.package}/junit/xsl">
+       <fileset dir="${etc.dir}">
+         <include name="junit-frames.xsl"/>
+@@ -643,13 +663,46 @@
+     </copy>
+   </target>
+ 
++  <target name="build-deps" depends="prepare">
++    <javac.ant>
++      <selector id="conditional-deps">
++        <and>
++          <selector refid="conditional-patterns"/>
++          <selector refid="deps"/>
++        </and>
++      </selector>
++    </javac.ant>
++  </target>
++
++  <target name="build-junit" depends="prepare">
++    <javac.ant>
++      <selector refid="needs.junit"/>
++    </javac.ant>
++  </target>
++
++  <target name="build-junit4" depends="prepare">
++    <javac.ant>
++      <selector refid="needs.junit4"/>
++    </javac.ant>
++  </target>
++  
++  <target name="build-dep" depends="prepare">
++    <javac.ant>
++      <selector refid="needs.${build.dep}"/>
++    </javac.ant>
++  </target>
++
+   <!--
+        ===================================================================
+          Create the all of the Apache Ant jars
+        ===================================================================
+   -->
+-  <target name="jars" depends="build"
+-          description="--> creates the Apache Ant jars">
++  <target name="jars" depends="jars-core, jars-tasks"
++          description="--> creates the Apache Ant jars" />
++
++  <target name="jars-core" depends="jar-launcher, jar-ant, jar-bootstrap" />
++
++  <target name="jars-prep">
+ 
+     <copy todir="${build.dir}">
+       <fileset dir="${basedir}">
+@@ -661,7 +714,9 @@
+       </fileset>
+       <mapper type="glob" from="*" to="*.txt"/>
+     </copy>
++  </target>
+ 
++  <target name="jar-launcher" depends="build-core, jars-prep">
+     <jar destfile="${build.lib}/${name}-launcher.jar"
+          basedir="${build.classes}" index="true"
+          whenmanifestonly="fail">
+@@ -674,6 +729,9 @@
+         <attribute name="Main-Class" value="org.apache.tools.ant.launch.Launcher"/>
+       </manifest>
+     </jar>
++  </target>
++
++  <target name="jar-ant" depends="build-core, jars-prep">
+ 
+     <jar destfile="${build.lib}/${name}.jar"
+          basedir="${build.classes}" index="true"
+@@ -708,7 +766,9 @@
+         <include name="images/ant_logo_large.gif"/>
+       </fileset>
+     </jar>
++  </target>
+ 
++  <target name="jar-bootstrap" depends="build-core, jars-prep">
+     <jar destfile="${build.lib}/${bootstrap.jar}"
+          basedir="${build.classes}"
+          whenmanifestonly="fail">
+@@ -722,6 +782,7 @@
+         <attribute name="Class-Path" value="ant.jar xalan.jar"/>
+       </manifest>
+     </jar>
++  </target>
+ 
+     <macrodef name="optional-jar">
+       <attribute name="dep"/>
+@@ -756,6 +817,7 @@
+       </sequential>
+     </macrodef>
+ 
++  <target name="jars-tasks" depends="build-deps, copy.junit.xsl">
+     <optional-jar dep="apache-resolver"/>
+     <optional-jar dep="junit"/>
+     <optional-jar dep="junit4"/>
+@@ -780,6 +842,18 @@
+ 
+   </target>
+ 
++  <target name="jar-dep" depends="build-dep, jars-prep">
++    <optional-jar dep="${build.dep}"/>
++  </target>
++
++  <target name="jar-junit" depends="build-junit, copy.junit.xsl, jars-prep">
++    <optional-jar dep="junit"/>
++  </target>
++
++  <target name="jar-junit4" depends="build-junit4, copy.junit.xsl, jars-prep">
++    <optional-jar dep="junit4"/>
++  </target> 
++
+   <!--   Creates jar of test utility classes -->
+   <target name="test-jar" depends="compile-tests"
+           description="--> creates the Apache Ant Test Utilities jar">
+@@ -892,7 +966,7 @@
+          Create the essential distribution that can run Apache Ant
+        ===================================================================
+   -->
+-  <target name="dist-lite" depends="jars,test-jar"
++  <target name="dist-lite-internal"
+           description="--> creates a minimum distribution to run Apache Ant">
+ 
+     <mkdir dir="${dist.dir}"/>
+@@ -943,6 +1017,10 @@
+ 
+   </target>
+ 
++  <target name="dist-lite" depends="jars, test-jar, dist-lite-internal"/>
++
++  <target name="dist-bootstrap" depends="jars-core, dist-lite-internal"/>
++
+   <!--
+         ===================================================================
+           Create the complete distribution
+@@ -985,10 +1063,11 @@
+     </sequential>
+   </macrodef>
+ 
+-  <target name="dist-internal" depends="dist-lite,dist-javadocs">
+-    <mkdir dir="${dist.manual}"/>
++  <target name="dist-internal">
++    <!-- mkdir dir="${dist.manual}"/ -->
+     <mkdir dir="${dist.etc}"/>
+ 
++<!--
+     <copy todir="${dist.lib}" file="${lib.dir}/README"/>
+     <copy todir="${dist.lib}" file="${lib.dir}/libraries.properties"/>
+ 
+@@ -1056,7 +1135,7 @@
+         <include name="**/*.py"/>
+       </fileset>
+     </setpermissions>
+-
++-->
+     <!-- publish some useful stylesheets -->
+     <copy todir="${dist.etc}">
+       <fileset dir="${etc.dir}">
+@@ -1073,9 +1152,11 @@
+         <include name="log.xsl"/>
+         <include name="tagdiff.xsl"/>
+       </fileset>
++<!--
+       <fileset dir="${build.lib}">
+         <include name="${bootstrap.jar}"/>
+       </fileset>
++-->
+     </copy>
+   </target>
+ 
+@@ -1085,7 +1166,7 @@
+        ===================================================================
+   -->
+   <target name="bootstrap" description="--> creates a bootstrap build">
+-    <antcall inheritAll="false" target="dist-lite">
++    <antcall inheritAll="false" target="dist-bootstrap">
+       <param name="dist.dir" value="${bootstrap.dir}"/>
+     </antcall>
+   </target>
+@@ -1533,7 +1614,7 @@
+          Compile testcases
+        ===================================================================
+   -->
+-  <target name="compile-tests" depends="build" if="junit.present">
++  <target name="compile-tests" depends="prepare" if="junit.present">
+     <mkdir dir="${build.tests}"/>
+ 
+     <javac srcdir="${src.junit}"
