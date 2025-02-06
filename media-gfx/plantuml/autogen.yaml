@@ -3,6 +3,6 @@ plantuml:
   packages:
     - plantuml:
         github:
-          select: '^v1.2024.*'
+          select: '^v1.2025.*'
           query: tags
 
