@@ -103,9 +103,10 @@ RDEPEND="${RDEPEND}
 # 1. List all the working slots (with min versions) in ||, newest first.
 # 2. Update the := to specify *max* version, e.g. < 10.
 # 3. Specify LLVM_MAX_SLOT, e.g. 9.
-LLVM_MAX_SLOT="13"
+LLVM_MAX_SLOT="16"
 LLVM_DEPSTR="
 	|| (
+		sys-devel/llvm:16
 		sys-devel/llvm:13
 		sys-devel/llvm:12
 		sys-devel/llvm:11
