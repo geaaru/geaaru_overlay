@@ -14,7 +14,7 @@ systemd:
   packages:
     - systemd:
         selector:
-          - '<254.22'
+          - '<255.0'
           - '>=254.0'
 
     - systemd:
