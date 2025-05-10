@@ -15,3 +15,14 @@ target:
   atoms:
 
     - pkg: sys-apps/systemd
+
+    - pkg: x11-drivers/nvidia-drivers:535
+      conditions:
+        - '>=535.86.05'
+        - '<535.87'
+
+    - pkg: x11-drivers/nvidia-drivers:555
+    - pkg: x11-drivers/nvidia-drivers:560
+    - pkg: x11-drivers/nvidia-drivers:565
+    - pkg: x11-drivers/nvidia-drivers:570
+    - pkg: x11-drivers/nvidia-drivers:575
