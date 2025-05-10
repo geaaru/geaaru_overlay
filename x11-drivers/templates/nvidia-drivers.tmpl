@@ -7,13 +7,23 @@ inherit desktop eutils flag-o-matic linux-info linux-mod \
 DESCRIPTION="NVIDIA Accelerated Graphics Driver"
 HOMEPAGE="http://www.nvidia.com/ http://www.nvidia.com/Download/Find.aspx"
 
-SRC_URI="
-	amd64? ( {{ artifacts[0].src_uri }} )
-	arm64? ( {{ artifacts[1].src_uri }} )
-"
+{{- $assets_len := .Values.artefacts | len }}
+{{- if gt $assets_len 1 }}
+SRC_URI="{{- range $k, $v := .Values.artefacts }}
+{{- if eq $v.Use "" }}
+{{ $v.SrcUri | first }} -> {{ $v.Name }}
+{{- else }}
+{{ $v.Use }}? ( {{ $v.SrcUri | first }} -> {{ $v.Name }} )
+{{- end }}
+{{- end }}"
+{{- else }}
+{{- if .Values.src_uri | default false }}
+SRC_URI="{{ .Values.src_uri }}"
+{{- end }}
+{{- end }}
 
 LICENSE="GPL-2 NVIDIA-r2"
-SLOT="{{ slot }}"
+SLOT="{{ .Values.slot }}"
 KEYWORDS="*"
 RESTRICT="bindist strip"
 EMULTILIB_PKG="true"
@@ -31,6 +41,7 @@ COMMON="
 		!glvnd? ( >=app-eselect/eselect-opengl-1.0.9 )
 		glvnd? ( >=media-libs/libglvnd-1.0.0.20180424 )
 	)
+	app-admin/gpu-configurator
 "
 
 DEPEND="
@@ -74,7 +85,7 @@ NV_OPENCL_VEND_DIR="OpenCL/nvidia"
 NV_X_MODDIR="xorg/modules"
 
 # Maximum supported kernel version in form major.minor
-: "${NV_MAX_KERNEL_VERSION:={{ max_kernel }}}"
+: "${NV_MAX_KERNEL_VERSION:={{ .Values.max_kernel_version }}}"
 
 nvidia_drivers_versions_check() {
 	if use kernel_linux && kernel_is ge ${NV_MAX_KERNEL_VERSION%%.*} ${NV_MAX_KERNEL_VERSION#*.}; then
@@ -324,5 +335,20 @@ pkg_preinst() {
 		rm -f "${ROOT}"/etc/env.d/09nvidia
 	fi
 }
+
+pkg_postinst() {
+	gpu-configurator nvidia configure --with-video-group \
+		${PV} --if-not-set || {
+		ewarn "Something goes wrong with gpu-configurator for version ${P}!"
+	}
+}
+
+pkg_postrm() {
+	gpu-configurator nvidia configure --with-video-group \
+		${PV} --if-not-set --purge || {
+		ewarn "Something goes wrong with gpu-configurator for version ${P}!"
+	}
+}
+
 
 # vim: ft=ebuild
