@@ -23,7 +23,7 @@ NVDRIVERS_DIR="${EPREFIX}/opt/nvidia/nvidia-drivers-${PV}"
 S="${WORKDIR}/kernel"
 
 # Maximum supported kernel version in form major.minor
-: "${NV_MAX_KERNEL_VERSION:=}"
+: "${NV_MAX_KERNEL_VERSION:=6.7}"
 
 
 nvidia_drivers_versions_check() {
