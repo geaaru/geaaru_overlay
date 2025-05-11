@@ -9,7 +9,7 @@ HOMEPAGE="http://www.nvidia.com/ http://www.nvidia.com/Download/Find.aspx"
 SRC_URI=""
 
 LICENSE="GPL-2 NVIDIA-r2"
-SLOT="550"
+SLOT="575"
 KEYWORDS="-* ~amd64 ~arm64"
 RESTRICT="bindist"
 
@@ -23,7 +23,7 @@ NVDRIVERS_DIR="${EPREFIX}/opt/nvidia/nvidia-drivers-${PV}"
 S="${WORKDIR}/kernel"
 
 # Maximum supported kernel version in form major.minor
-: "${NV_MAX_KERNEL_VERSION:=6.7}"
+: "${NV_MAX_KERNEL_VERSION:=}"
 
 
 nvidia_drivers_versions_check() {
@@ -150,7 +150,7 @@ pkg_postinst() {
 
 	einfo "The NVIDIA kernel driver is installed on path for"
 	einfo "app-admin/gpu-configurator tool."
-	einfo "Uses: gpu-configurator nvidia set ${PV}"
+	einfo "Uses: gpu-configurator nvidia kernel ${PV} [kernel-version]"
 	einfo "to add hardlink to kernel path."
 }
 
