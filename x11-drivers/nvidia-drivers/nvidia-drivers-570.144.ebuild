@@ -6,14 +6,12 @@ inherit desktop eutils flag-o-matic linux-info linux-mod \
 
 DESCRIPTION="NVIDIA Accelerated Graphics Driver"
 HOMEPAGE="http://www.nvidia.com/ http://www.nvidia.com/Download/Find.aspx"
-
 SRC_URI="
-	amd64? ( http://download.nvidia.com/XFree86/Linux-x86_64/535.183.01/NVIDIA-Linux-x86_64-535.183.01-no-compat32.run -> NVIDIA-Linux-x86_64-535.183.01-no-compat32.run )
-	arm64? ( http://download.nvidia.com/XFree86/Linux-aarch64/535.183.01/NVIDIA-Linux-aarch64-535.183.01.run -> NVIDIA-Linux-aarch64-535.183.01.run )
-"
+amd64? ( http://download.nvidia.com/XFree86/Linux-x86_64/570.144/NVIDIA-Linux-x86_64-570.144-no-compat32.run -> NVIDIA-Linux-x86_64-570.144-no-compat32.run )
+arm64? ( http://download.nvidia.com/XFree86/Linux-aarch64/570.144/NVIDIA-Linux-aarch64-570.144.run -> NVIDIA-Linux-aarch64-570.144.run )"
 
 LICENSE="GPL-2 NVIDIA-r2"
-SLOT="535"
+SLOT="570"
 KEYWORDS="*"
 RESTRICT="bindist strip"
 EMULTILIB_PKG="true"
@@ -31,6 +29,7 @@ COMMON="
 		!glvnd? ( >=app-eselect/eselect-opengl-1.0.9 )
 		glvnd? ( >=media-libs/libglvnd-1.0.0.20180424 )
 	)
+	app-admin/gpu-configurator
 "
 
 DEPEND="
@@ -74,7 +73,7 @@ NV_OPENCL_VEND_DIR="OpenCL/nvidia"
 NV_X_MODDIR="xorg/modules"
 
 # Maximum supported kernel version in form major.minor
-: "${NV_MAX_KERNEL_VERSION:=6.7}"
+: "${NV_MAX_KERNEL_VERSION:=6.14}"
 
 nvidia_drivers_versions_check() {
 	if use kernel_linux && kernel_is ge ${NV_MAX_KERNEL_VERSION%%.*} ${NV_MAX_KERNEL_VERSION#*.}; then
@@ -322,5 +321,20 @@ pkg_preinst() {
 		rm -f "${ROOT}"/etc/env.d/09nvidia
 	fi
 }
+
+pkg_postinst() {
+	gpu-configurator nvidia configure --with-video-group \
+		${PV} --if-not-set || {
+		ewarn "Something goes wrong with gpu-configurator for version ${P}!"
+	}
+}
+
+pkg_postrm() {
+	gpu-configurator nvidia configure --with-video-group \
+		${PV} --if-not-set --purge || {
+		ewarn "Something goes wrong with gpu-configurator for version ${P}!"
+	}
+}
+
 
 # vim: ft=ebuild

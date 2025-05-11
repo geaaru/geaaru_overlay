@@ -2,19 +2,16 @@
 
 EAPI=7
 inherit desktop eutils flag-o-matic linux-info linux-mod \
-	portability toolchain-funcs unpacker user udev \
-	readme.gentoo-r1
+	portability toolchain-funcs unpacker user udev
 
 DESCRIPTION="NVIDIA Accelerated Graphics Driver"
 HOMEPAGE="http://www.nvidia.com/ http://www.nvidia.com/Download/Find.aspx"
-
 SRC_URI="
-	amd64? ( http://download.nvidia.com/XFree86/Linux-x86_64/550.78/NVIDIA-Linux-x86_64-550.78-no-compat32.run -> NVIDIA-Linux-x86_64-550.78-no-compat32.run )
-	arm64? ( http://download.nvidia.com/XFree86/Linux-aarch64/550.78/NVIDIA-Linux-aarch64-550.78.run -> NVIDIA-Linux-aarch64-550.78.run )
-"
+amd64? ( http://download.nvidia.com/XFree86/Linux-x86_64/575.51.02/NVIDIA-Linux-x86_64-575.51.02-no-compat32.run -> NVIDIA-Linux-x86_64-575.51.02-no-compat32.run )
+arm64? ( http://download.nvidia.com/XFree86/Linux-aarch64/575.51.02/NVIDIA-Linux-aarch64-575.51.02.run -> NVIDIA-Linux-aarch64-575.51.02.run )"
 
 LICENSE="GPL-2 NVIDIA-r2"
-SLOT="550"
+SLOT="575"
 KEYWORDS="*"
 RESTRICT="bindist strip"
 EMULTILIB_PKG="true"
@@ -32,6 +29,7 @@ COMMON="
 		!glvnd? ( >=app-eselect/eselect-opengl-1.0.9 )
 		glvnd? ( >=media-libs/libglvnd-1.0.0.20180424 )
 	)
+	app-admin/gpu-configurator
 "
 
 DEPEND="
@@ -75,7 +73,7 @@ NV_OPENCL_VEND_DIR="OpenCL/nvidia"
 NV_X_MODDIR="xorg/modules"
 
 # Maximum supported kernel version in form major.minor
-: "${NV_MAX_KERNEL_VERSION:=6.7}"
+: "${NV_MAX_KERNEL_VERSION:=6.14}"
 
 nvidia_drivers_versions_check() {
 	if use kernel_linux && kernel_is ge ${NV_MAX_KERNEL_VERSION%%.*} ${NV_MAX_KERNEL_VERSION#*.}; then
@@ -149,6 +147,7 @@ src_install() {
 		[GLVND_EGL_ICD_JSON]=${NV_ROOT}/usr/share/glvnd/egl_vendor.d
 		[OPENGL_DATA]=${NV_ROOT}/usr/share/nvidia
 		[VULKAN_ICD_JSON]=${NV_ROOT}/usr/share/vulkan
+		[VULKANSC_ICD_JSON]=${NV_ROOT}/usr/share/vulkan
 		[WINE_LIB]=${NV_ROOT}/usr/${libdir}/nvidia/wine
 		[XORG_OUTPUTCLASS_CONFIG]=${NV_ROOT}/usr/share/X11/xorg.conf.d
 		[CUDA_ICD]=${NV_ROOT}/etc/OpenCL/vendors
@@ -277,12 +276,14 @@ src_install() {
 	insinto ${NV_ROOT}/etc/sandbox.d
 	newins - 20nvidia <<<'SANDBOX_PREDICT="/dev/nvidiactl:/dev/nvidia-caps:/dev/char"'
 
-
 	if use tools; then
 		insinto ${NV_ROOT}/usr/share/pixmaps
 		doins nvidia-settings.png
 
 		insinto ${NV_ROOT}/usr/share/applications
+
+		# Fix nvidia-settings.desktop Exec param.
+		sed -i -e 's|^Exec=.*|Exec=/usr/bin/nvidia-settings|g' nvidia-settings.desktop
 		doins nvidia-settings.desktop
 
 		exeinto ${NV_ROOT}/etc/X11/xinit/xinitrc.d
@@ -292,20 +293,6 @@ src_install() {
 	# Move man files under NV_ROOT
 	mv ${D}/usr/share/man ${D}${NV_ROOT}/usr/share
 
-	# If 'X' flag is enabled, link nvidia-drm-outputclass.conf into system xorg.conf.d directory (xorg 1.16 and up),
-	# link nvidia_drv.so into /usr/$(get_libdir)/xorg/modules/drivers,
-	# and link nvidia_icd.json into system vulkan/icd.d directory.
-	#if use X; then
-
-		# Xorg nvidia.conf
-		#if has_version '>=x11-base/xorg-server-1.16'; then
-		#	dosym "${NV_ROOT}/share/X11/xorg.conf.d/nvidia-drm-outputclass.conf" "/usr/share/X11/xorg.conf.d/50-nvidia-drm-outputclass.conf"
-		#fi
-
-		# Xorg driver nvidia_drv.so
-		#dosym "${NV_NATIVE_LIBDIR}/xorg/modules/drivers/nvidia_drv.so" "/usr/$(get_libdir)/xorg/modules/drivers/nvidia_drv.so"
-	#fi
-
 	# On linux kernels, install nvidia-persistenced init and conf files after fixing up paths.
 	for filename in nvidia-{smi,persistenced}.init ; do
 		sed -e 's:/opt/bin:'"${NV_ROOT}"'/bin:g' "${FILESDIR}/${filename}" > "${T}/${filename}"
@@ -313,21 +300,16 @@ src_install() {
 		newins "${T}/${filename}" "${filename%.init}"
 	done
 
+
 	insinto ${NV_ROOT}/etc/conf.d/
 	newins "${FILESDIR}/nvidia-persistenced.conf" nvidia-persistenced
-
-	# If we're not using glvnd support, then set up directory expected by eselect opengl:
-	#if ! use glvnd ; then
-	#	dosym "${NV_NATIVE_LIBDIR}/opengl/nvidia" "${EPREFIX}/usr/lib/opengl/nvidia"
-	#fi
-
-	#readme.gentoo_create_doc
 }
-
 
 pkg_preinst() {
 	#has_version "${CATEGORY}/${PN}[kernel-open]" && NV_HAD_KERNEL_OPEN=
 	has_version "${CATEGORY}/${PN}[wayland]" && NV_HAD_WAYLAND=
+
+	# TODO: replace this with gpu-configurator.
 
 	# Clean the dynamic libGL stuff's home to ensure
 	# we dont have stale libs floating around
@@ -340,7 +322,19 @@ pkg_preinst() {
 	fi
 }
 
-#pkg_postinst() {
-#	readme.gentoo_print_elog
-#}
+pkg_postinst() {
+	gpu-configurator nvidia configure --with-video-group \
+		${PV} --if-not-set || {
+		ewarn "Something goes wrong with gpu-configurator for version ${P}!"
+	}
+}
+
+pkg_postrm() {
+	gpu-configurator nvidia configure --with-video-group \
+		${PV} --if-not-set --purge || {
+		ewarn "Something goes wrong with gpu-configurator for version ${P}!"
+	}
+}
+
+
 # vim: ft=ebuild
