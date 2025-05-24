@@ -19,13 +19,13 @@ RESTRICT="test"
 
 COMMON_DEPEND="
 	app-crypt/gpgme:=
-	>=app-containers/conmon-2.0.0
+	>=app-emulation/conmon-2.0.0
 	cgroup-hybrid? ( >=app-containers/runc-1.0.0_rc6  )
 	!cgroup-hybrid? ( app-containers/crun )
 	dev-libs/libassuan:=
 	dev-libs/libgpg-error:=
 	|| (
-		>=app-containers/cni-plugins-0.8.6
+		>=net-misc/cni-plugins-0.8.6
 		( app-containers/netavark app-containers/aardvark-dns )
 	)
 	sys-apps/shadow:=
