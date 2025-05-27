@@ -19,6 +19,9 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
+NPM_PKG_DIRS="
+	src
+"
 NPM_LOCAL_MODULES="
 @types
 "
