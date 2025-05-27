@@ -1,0 +1,28 @@
+# Distributed under the terms of the GNU General Public License v2
+# Ebuild automatically produced by node-ebuilder.
+
+EAPI=7
+
+DESCRIPTION="Get the npm global path prefix."
+HOMEPAGE="https://github.com/jonschlinkert/global-prefix"
+
+LICENSE="MIT"
+SLOT="0"
+KEYWORDS="*"
+IUSE=""
+
+DEPEND="
+	>=dev-node/expand-tilde-2.0.2
+	>=dev-node/homedir-polyfill-1.0.3
+	>=dev-node/ini-1.3.8
+	>=dev-node/is-windows-1.0.2
+	>=dev-node/which-1.3.1
+"
+RDEPEND="${DEPEND}"
+
+NPM_NO_DEPS=1
+
+S="${WORKDIR}/package"
+
+inherit npmv1
+
