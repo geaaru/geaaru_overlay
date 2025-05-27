@@ -1,0 +1,27 @@
+# Distributed under the terms of the GNU General Public License v2
+# Ebuild automatically produced by node-ebuilder.
+
+EAPI=7
+
+DESCRIPTION="A tiny (183B to 210B) and fast utility to ascend parent directories"
+HOMEPAGE="http://www.npmjs.com/package/escalade"
+
+LICENSE="MIT"
+SLOT="0"
+KEYWORDS="*"
+IUSE=""
+
+DEPEND="
+"
+RDEPEND="${DEPEND}"
+
+NPM_NO_DEPS=1
+NPM_PKG_DIRS="
+dist
+sync
+"
+
+S="${WORKDIR}/package"
+
+inherit npmv1
+
