@@ -3,7 +3,7 @@
 
 EAPI=6
 
-PYTHON_COMPAT=( python3_7 )
+PYTHON_COMPAT=( python3+ )
 PYTHON_REQ_USE="threads(+)"
 DISTUTILS_SINGLE_IMPL=1
 
