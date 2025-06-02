@@ -31,7 +31,7 @@ COMMON_DEPEND="
 	sys-libs/libseccomp:=
 	btrfs? ( sys-fs/btrfs-progs )
 	device-mapper? ( sys-fs/lvm2:= )
-	ostree? ( dev-util/ostree )
+	ostree? ( sys-fs/libostree )
 	selinux? ( sys-libs/libselinux:= )
 	systemd? ( sys-apps/systemd:= )"
 DEPEND="
