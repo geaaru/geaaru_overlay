@@ -27,6 +27,6 @@ inherit npmv1 eutils
 src_prepare() {
 	npmv1_src_prepare
 
-	epatch "${FILESDIR}"/support_onem2m_ct.patch || die "Error on apply patch"
+	sed -i -e "s|'application/csp-report',|'application/csp-report',\n    'application/vnd.onem2m-res+json',|g" index.js || die
 }
 
