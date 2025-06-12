@@ -24,6 +24,7 @@ NPM_PKG_DIRS="
 "
 NPM_LOCAL_MODULES="
 @paralleldrive
+@noble
 "
 
 S="${WORKDIR}/package"
