@@ -20,5 +20,9 @@ NPM_NO_DEPS=1
 
 S="${WORKDIR}/package"
 
+NPM_PKG_DIRS="
+	dist
+"
+
 inherit npmv1
 
