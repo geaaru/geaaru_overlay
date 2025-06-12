@@ -17,7 +17,7 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 NPM_PKG_DIRS="
-keywords
+dist
 "
 
 
