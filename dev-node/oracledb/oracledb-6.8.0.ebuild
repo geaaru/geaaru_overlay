@@ -26,3 +26,5 @@ NPM_PKG_DIRS="
 build/Release
 "
 NPM_GYP_PKG=1
+
+RESTRICT="network-sandbox"
