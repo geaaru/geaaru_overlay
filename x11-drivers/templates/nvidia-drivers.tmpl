@@ -201,12 +201,10 @@ src_install() {
 	# 0:file 1:perms 2:type 3+:subtype/arguments -:module
 	local m into
 	while IFS=' ' read -ra m; do
-		{%- raw %}
 		! [[ ${#m[@]} -ge 2 && ${m[-1]} =~ MODULE: ]] ||
 			[[ " ${m[0]##*/}" =~ ^(\ ${skip_files[*]/%/.*|\\} )$ ]] ||
 			[[ " ${m[2]}" =~ ^(\ ${skip_types[*]/%/|\\} )$ ]] ||
 			has ${m[-1]#MODULE:} "${skip_modules[@]}" && continue
-	    {%- endraw %}
 
 		case ${m[2]} in
 			MANPAGE)
