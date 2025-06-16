@@ -7,8 +7,8 @@ inherit desktop eutils flag-o-matic linux-info linux-mod \
 DESCRIPTION="NVIDIA Accelerated Graphics Driver"
 HOMEPAGE="http://www.nvidia.com/ http://www.nvidia.com/Download/Find.aspx"
 SRC_URI="
-amd64? ( http://download.nvidia.com/XFree86/Linux-x86_64/535.86.05/NVIDIA-Linux-x86_64-535.86.05-no-compat32.run -> NVIDIA-Linux-x86_64-535.86.05-no-compat32.run )
-arm64? ( http://download.nvidia.com/XFree86/Linux-aarch64/535.86.05/NVIDIA-Linux-aarch64-535.86.05.run -> NVIDIA-Linux-aarch64-535.86.05.run )"
+amd64? ( http://download.nvidia.com/XFree86/Linux-x86_64/535.247.01/NVIDIA-Linux-x86_64-535.247.01-no-compat32.run -> NVIDIA-Linux-x86_64-535.247.01-no-compat32.run )
+arm64? ( http://download.nvidia.com/XFree86/Linux-aarch64/535.247.01/NVIDIA-Linux-aarch64-535.247.01.run -> NVIDIA-Linux-aarch64-535.247.01.run )"
 
 LICENSE="GPL-2 NVIDIA-r2"
 SLOT="535"
@@ -73,7 +73,7 @@ NV_OPENCL_VEND_DIR="OpenCL/nvidia"
 NV_X_MODDIR="xorg/modules"
 
 # Maximum supported kernel version in form major.minor
-: "${NV_MAX_KERNEL_VERSION:=6.12}"
+: "${NV_MAX_KERNEL_VERSION:=6.15}"
 
 nvidia_drivers_versions_check() {
 	if use kernel_linux && kernel_is ge ${NV_MAX_KERNEL_VERSION%%.*} ${NV_MAX_KERNEL_VERSION#*.}; then
