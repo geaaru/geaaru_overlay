@@ -14,7 +14,7 @@ RESTRICT="network-sandbox"
 
 DEPEND="
 	>=dev-node/assert-never-1.2.1
-	>=dev-node/babel-walk-3.0.0-canary-5
+	>=dev-node/babel-walk-3.0.1
 "
 RDEPEND="${DEPEND}"
 
