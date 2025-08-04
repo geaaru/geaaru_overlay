@@ -1,13 +1,17 @@
 diff --git a/package.json b/package.json
-index 2d38432..8d16508 100644
+index 2d38432..c4cac42 100644
 --- a/package.json
 +++ b/package.json
-@@ -17,7 +17,7 @@
-     "@types/node": "^9.4.4",
+@@ -14,10 +14,10 @@
+     "@babel/types": "^7.6.1"
+   },
+   "devDependencies": {
+-    "@types/node": "^9.4.4",
++    "@types/node": "^20.19.9",
      "mocha": "*",
      "prettier": "^1.18.2",
 -    "typescript": "^2.7.1"
-+    "typescript": "^5.5.4"
++    "typescript": "^5.9.2"
    },
    "scripts": {
      "prepublish": "npm run build",
