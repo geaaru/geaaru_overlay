@@ -1,21 +1,16 @@
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
-
 #
 # @ECLASS: npmv1.eclass
 # @MAINTAINER:
-# geaaru<at>gmail.com
+# geaaru<at>macaronios.org
 # @AUTHOR:
-# Geaaru geaaru<at>gmail.com
+# Daniele Rondina geaaru<at>macaronios.org
 # @DESCRIPTION:
 # Purpose: Manage installation of nodejs application with automatic
 #          download of the modules defined on package.json file.
 
 if has "${EAPI:-0}" 5; then
     inherit multilib
-#else
-    # POST: get_libdir is now part of EAPI.
-    # https://blogs.gentoo.org/mgorny/2015/11/13/the-ultimate-guide-to-eapi-6/
 fi
 
 if [ "${EAPI}" != 7 ] ; then
@@ -72,7 +67,12 @@ _npmv1_set_metadata() {
 		"
 		if [[ -z "${NPM_DEFAULT_OPTS}" ]] ; then
 			# Retrieve the nodejs major version
-			local node_version=$(node --version)
+			node --version >/dev/null 2>&1
+			local nodeispresent=$?
+			local node_version=20
+			if [ "${nodeispresent}" = "0" ] ; then
+				node_version=$(node --version)
+			fi
 			node_version=${node_version/v}
 			node_version=${node_version/\.*}
 			if [ "${node_version}" -ge 20 ] ; then
