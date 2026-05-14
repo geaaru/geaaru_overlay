@@ -51,3 +51,45 @@ standalone_modules:
               distutils-r1_python_compile
             }
 
+
+setuptools_modules:
+  generator: builtin-pypi
+  template:
+    engine: j2cli
+
+  defaults:
+    category: dev-python
+    template: "templates/pypi-generic.tmpl"
+    vars:
+      du_pep517: setuptools
+
+  packages:
+    - python-oracledb:
+        pypi_name: oracledb
+        vars:
+          license: Apache-2.0 UPL-1.0
+          body: |
+            python_install_all() {
+              distutils-r1_python_install_all
+
+              if use doc; then
+                dohtml -r html/* || die
+              fi
+
+              if use examples; then
+                docinto examples
+                dodoc samples/* || die
+              fi
+            }
+          depend: '${RDEPEND}'
+          pydeps:
+            py:all:runtime:
+              - dev-python/typing-extensions
+              - cryptography
+            py:all:build:
+              - cython
+              - wheel
+          rdepend: |
+            dev-db/oracle-instantclient-basic
+        selector:
+          - '<4.0'
