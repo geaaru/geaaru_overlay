@@ -22,6 +22,9 @@ RDEPEND="${DEPEND}"
 NPM_LOCAL_MODULES="
 @nodelib
 "
+NPM_PKG_DIRS="
+out
+"
 
 S="${WORKDIR}/package"
 
