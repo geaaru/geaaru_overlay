@@ -18,27 +18,28 @@ DEPEND="${RDEPEND}
 post_src_unpack() {
 	mv vrogier-ocilib-* ${S}
 }
-
-
 src_compile() {
 	local myconf="${myconf} "
 	local oracle_version=$(best_version dev-db/oracle-instantclient-basic \
-	  | sed -e 's/dev-db\/oracle-instantclient-basic-//')
-	 einfo "Use oracle version ${oracle_version}"
+		| sed -e 's/dev-db\/oracle-instantclient-basic-//')
+
+	einfo "Use oracle version ${oracle_version}"
 	myconf="${myconf} --enable-shared"
-	 myconf="${myconf} \
-	    --with-oracle-headers-path=/usr/lib64/oracle/${oracle_version}/client/include"
+
 	myconf="${myconf} \
-	    --with-oracle-lib-path=/usr/lib64/oracle/${oracle_version}/client/lib"
-	 myconf="${myconf} \
-	    --with-oracle-home=/usr/lib64/oracle/${oracle_version}/client/"
-	 econf ${myconf} || die
+			--with-oracle-headers-path=/usr/lib64/oracle/${oracle_version}/client/include"
+	myconf="${myconf} \
+			--with-oracle-lib-path=/usr/lib64/oracle/${oracle_version}/client/lib"
+
+	myconf="${myconf} \
+			--with-oracle-home=/usr/lib64/oracle/${oracle_version}/client/"
+
+	econf ${myconf} || die
 	emake || die
 }
 src_install() {
 	make install DESTDIR="${D}" || die "install failed"
 }
-
 
 
 # vim: filetype=ebuild

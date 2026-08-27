@@ -1,31 +1,29 @@
 # Distributed under the terms of the GNU General Public License v2
+# Autogen by MARK Devkit
 
 EAPI=7
 
-DESCRIPTION="OCILib opensource Library"
-HOMEPAGE="http://orclib.sourceforge.net"
-SRC_URI="https://github.com/vrogier/ocilib/releases/download/v4.6.0/ocilib-4.6.0-gnu.tar.gz -> ocilib-4.6.0-gnu.tar.gz"
-
-RESTRICT="nomirror"
-
+DESCRIPTION="OCILIB (C and C++ Drivers for Oracle) - Open source C and C++ library for accessing Oracle databases"
+HOMEPAGE="http://www.ocilib.net"
+SRC_URI="https://api.github.com/repos/vrogier/ocilib/tarball/v4.6.0 -> ocilib-4.6.0-c2a4794.tar.gz"
 LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="*"
-IUSE=""
+RDEPEND="dev-db/oracle-instantclient-basic
+	
+"
+DEPEND="${RDEPEND}
+"
 
-DEPEND="dev-db/oracle-instantclient-basic"
-RDEPEND="dev-db/oracle-instantclient-basic"
-
-PATCHES=(
-)
-
+post_src_unpack() {
+	mv vrogier-ocilib-* ${S}
+}
 src_compile() {
 	local myconf="${myconf} "
 	local oracle_version=$(best_version dev-db/oracle-instantclient-basic \
-						   | sed -e 's/dev-db\/oracle-instantclient-basic-//')
+		| sed -e 's/dev-db\/oracle-instantclient-basic-//')
 
 	einfo "Use oracle version ${oracle_version}"
-
 	myconf="${myconf} --enable-shared"
 
 	myconf="${myconf} \
@@ -39,9 +37,9 @@ src_compile() {
 	econf ${myconf} || die
 	emake || die
 }
-
 src_install() {
 	make install DESTDIR="${D}" || die "install failed"
 }
+
 
 # vim: filetype=ebuild
