@@ -36,5 +36,13 @@ ocilib:
         }
 
   packages:
+
     - ocilib:
 
+    - ocilib:
+        selector:
+          - '=4.7.6'
+
+    - ocilib:
+        selector:
+          - '=4.6.0'
