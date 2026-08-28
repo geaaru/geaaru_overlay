@@ -7,6 +7,7 @@
 {%- endfor %}
 {%- endmacro -%}
 # Distributed under the terms of the GNU General Public License v2
+# Autogen by MARK Devkit
 
 EAPI={{eapi|default('7')}}
 
@@ -41,38 +42,8 @@ SRC_URI="{{ src_uri}}
 {{indented('$(cargo_crate_uris ${CRATES})',2)}}
 {%- endif %}
 "
-
-{%- if depend is defined or py_depend is defined %}
-DEPEND="
-{%- if depend is defined %}{{indented(depend|default(''),1)}}{%- endif %}
-{%- if py_depend is defined %}{{indented(py_depend|default(''),1)}}{%- endif %}
-"
-{%- endif %}
-{%- if rdepend is defined or py_rdepend is defined %}
-RDEPEND="
-{%- if rdepend is defined %}{{indented(rdepend|default(''),1)}}{%- endif %}
-{%- if py_rdepend is defined %}{{indented(py_rdepend|default(''),1)}}{%- endif %}
-"
-{%- endif %}
-{%- if pdepend is defined or py_pdepend is defined %}
-PDEPEND="
-{%- if pdepend is defined %}{{indented(pdepend|default(''),1)}}{%- endif %}
-{%- if py_pdepend is defined %}{{indented(py_pdepend|default(''),1)}}{%- endif %}
-"
-{%- endif %}
-{%- if bdepend is defined or py_bdepend is defined %}
-BDEPEND="
-{%- if bdepend is defined %}{{indented(bdepend|default(''),1)}}{%- endif %}
-{%- if py_bdepend is defined %}{{indented(py_bdepend|default(''),1)}}{%- endif %}
-"
-{%- endif %}
-
-IUSE="{{iuse|default('')}}"
-{%- if restrict is defined %}
-RESTRICT="{{restrict|default('')}}"
-{%- endif %}
-SLOT="{{slot|default('0')}}"
 LICENSE="{{license|default('')}}"
+SLOT="{{slot|default('0')}}"
 KEYWORDS="{{keywords|default('*')}}"
 
 {%- if patches is defined %}
@@ -83,8 +54,53 @@ PATCHES=(
 )
 
 {%- endif %}
-{%- if S is defined %}
-S="{{ S }}"
+
+
+{%- if cdepend is defined %}
+CDEPEND="
+{{indented(cdepend|default(''),1)}}
+"
+{%- endif %}
+
+
+{%- if bdepend is defined or py_bdepend is defined %}
+BDEPEND="
+{%- if bdepend is defined %}{{indented(bdepend|default(''),1)}}{%- endif %}
+{%- if py_bdepend is defined %}{{indented(py_bdepend|default(''),1)}}{%- endif %}
+"
+{%- endif %}
+{%- if rdepend is defined or py_rdepend is defined %}
+RDEPEND="
+{%- if rdepend is defined %}{{indented(rdepend|default(''),1)}}{%- endif %}
+{%- if py_rdepend is defined %}
+{{indented(py_rdepend|default(''),1)}}
+{%- endif %}
+"
+{%- endif %}
+{%- if depend is defined or py_depend is defined %}
+DEPEND="
+{% if depend is defined %}{{indented(depend|default(''),1)}}{%- endif %}
+{% if py_depend is defined %}{{indented(py_depend|default(''),1)}}{%- endif %}
+"
+{%- endif %}
+{%- if pdepend is defined or py_pdepend is defined %}
+PDEPEND="
+{%- if pdepend is defined %}{{indented(pdepend|default(''),1)}}{%- endif %}
+{%- if py_pdepend is defined %}{{indented(py_pdepend|default(''),1)}}{%- endif %}
+"
+{%- endif %}
+{%- if iuse is defined %}
+IUSE="{{indented(iuse|default(''),1)}}"
+{%- endif %}
+{%- if required_use is defined %}
+REQUIRED_USE="{{indented(required_use, 1)}}
+"
+{%- endif %}
+{%- if restrict is defined %}
+RESTRICT="{{restrict|default('')}}"
+{%- endif %}
+{%- if s is defined %}
+S="{{ s }}"
 {%- else %}
 S="${WORKDIR}/{{pypi_name}}-{{pypi_version}}"
 {%- endif %}
