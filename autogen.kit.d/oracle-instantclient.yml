@@ -1,0 +1,331 @@
+global_settings:
+  generator: builtin-dirlisting
+  generator_opts:
+    rate_limiter: "1"
+    rate_duration: "10s"
+
+  defaults:
+
+    override_user_agent: "curl/8.12.1"
+    category: dev-db
+    template: "templates/simple.tmpl"
+    files_dir: "{{ .Values.pn }}"
+    vars:
+      inherit:
+        - eutils
+      license: OTN
+      depend: |
+        app-arch/unzip
+      rdepend: |
+        dev-libs/libaio
+
+    transform:
+      - kind: string
+        match: '{{ .Values.tarball_prefix }}'
+        replace: ''
+
+      - kind: string
+        match: 'dbru'
+        replace: ''
+      - kind: string
+        match: '.zip'
+        replace: ''
+    dir:
+      url: https://www.oracle.com/database/technologies/instant-client/linux-x86-64-downloads.html
+      # https://download.oracle.com/otn_software/linux/instantclient/2326300/instantclient-basic-linux.x64-23.26.3.0.0.zip
+      matcher: '{{ .Values.tarball_prefix }}.*.zip'
+      #matcher: '.*.zip'
+      exclude: 'el9'
+
+basic:
+
+  defaults:
+    vars:
+      tarball_prefix: 'instantclient-basic-linux.x64-'
+      s: '{{- $v := .Values.pv  }}${WORKDIR}/instantclient_{{ join "_" ( slice ( splitList "." $v ) 0 2 ) }}/'
+      extra_envs:
+        - 'QA_PREBUILT="usr/lib*/oracle/{{ .Values.pv }}/client/lib*/lib*"'
+      body: |
+        {{- $v := .Values.pv  }}
+        src_install() {
+          local ldpath=
+          # all binaries go here
+          local oracle_home=/usr/$(get_libdir)/oracle/{{ .Values.pv }}/client
+          into "${oracle_home}"
+
+          # shared libraries
+          dolib.so lib*.so*
+
+          # ensure to be linkable
+          [[ -e libocci.so ]] ||
+          dosym libocci.so.{{ join "" ( slice ( splitList "." $v ) 0 1 ) }}.1 \
+            "${oracle_home}"/$(get_libdir)/libocci.so
+          [[ -e libclntsh.so ]] ||
+          dosym libclntsh.so.{{ join "" ( slice ( splitList "." $v ) 0 1 ) }}.1 \
+            "${oracle_home}"/$(get_libdir)/libclntsh.so
+
+          # java archives
+          insinto "${oracle_home}"/$(get_libdir)
+          doins *.jar
+
+          # runtime library path
+          ldpath+=${ldpath:+:}${oracle_home}/$(get_libdir)
+
+          # ensure ORACLE_HOME/lib exists
+          [[ -e ${ED}${oracle_home}/lib ]] ||
+          dosym $(get_libdir) "${oracle_home}"/lib
+
+          # create path for tnsnames.ora
+          insinto /etc/oracle
+          doins "${FILESDIR}"/tnsnames.ora.sample
+
+          # Add OCI libs to library path
+          {
+            echo "ORACLE_HOME=${oracle_home}"
+            echo "LDPATH=${ldpath}"
+            # who does need this?
+            # echo "C_INCLUDE_PATH=${oracle_home}/include"
+            echo "TNS_ADMIN=/etc/oracle/"
+          } > "${T}"/50oracle-instantclient-basic
+          doenvd "${T}"/50oracle-instantclient-basic
+        }
+        pkg_postinst() {
+          elog "TNS_ADMIN has been set to ${EROOT}etc/oracle by default,"
+          elog "put your tnsnames.ora there or configure TNS_ADMIN"
+          elog "to point to your user specific configuration."
+          ewarn "Please re-source your shell settings for ORACLE_HOME"
+          ewarn "  changes, such as: source /etc/profile"
+        }
+
+  packages:
+
+    - oracle-instantclient-basic:
+        selector:
+          - '<20'
+
+    - oracle-instantclient-basic:
+        selector:
+          - '<22'
+
+
+sdk:
+  defaults:
+    vars:
+      patches:
+        - 19.21.0.0-makefile.patch
+      rdepend: |
+        >=dev-db/oracle-instantclient-basic-{{ .Values.pv }}
+      tarball_prefix: 'instantclient-sdk-linux.x64-'
+      s: '{{- $v := .Values.pv  }}${WORKDIR}/instantclient_{{ join "_" ( slice ( splitList "." $v ) 0 2 ) }}/'
+      body: |
+        {{- $v := .Values.pv  }}
+        src_install() {
+          local ldpath=
+          # all binaries go here
+          local oracle_home=/usr/$(get_libdir)/oracle/{{ $v }}/client
+          into "${oracle_home}"
+
+          # runtime library path
+          ldpath+=${ldpath:+:}${oracle_home}/$(get_libdir)
+
+          einfo "Installing SDK ..."
+          cd "${S}"/sdk || die
+
+          # SDK makefile, for #165834
+          # As we change the relative filesystem layout compared
+          # to vanilla instantclient.zip content, it feels easier
+          # to fake the layout found in Oracle eXpress Edition.
+          # Both layouts are known to DBD::Oracle (cpan).
+          insinto "${oracle_home}"/rdbms/demo
+          newins demo/demo.mk demo_xe.mk
+
+          # Remove ldap.h, #299562
+          rm include/ldap.h || die
+          # DBD::Oracle needs rdbms/public as real directory
+          insinto "${oracle_home}"/rdbms/public
+          doins include/*.h
+          dosym rdbms/public "${oracle_home}"/include
+          # ruby-oci8 expects the headers here
+          dosym "${oracle_home}"/rdbms/public /usr/include/oracle/{{ $v }}/client
+
+          dodoc demo/*
+
+          eend $?
+        }
+
+  packages:
+
+    - oracle-instantclient-sdk:
+        selector:
+          - '<20'
+
+    - oracle-instantclient-sdk:
+        selector:
+          - '<22'
+
+
+jdbc:
+
+  defaults:
+    vars:
+      rdepend: |
+        >=dev-db/oracle-instantclient-basic-{{ .Values.pv }}
+      tarball_prefix: 'instantclient-jdbc-linux.x64-'
+      s: '{{- $v := .Values.pv  }}${WORKDIR}/instantclient_{{ join "_" ( slice ( splitList "." $v ) 0 2 ) }}/'
+      body: |
+        {{- $v := .Values.pv  }}
+        src_install() {
+          dodir /usr/$(get_libdir)/oracle/${PV}/client/lib
+          insinto /usr/$(get_libdir)/oracle/${PV}/client/lib
+          doins libheteroxa19.so orai18n.jar orai18n-mapping.jar
+        }
+        pkg_postinst() {
+          elog "The JDBC supplement package for Oracle 10g has been installed."
+          elog "You may wish to install the oracle-instantclient-sqlplus (for "
+          elog "running the SQL*Plus application) package as well."
+          elog
+          elog "oracle-instantclient-* packages aren't installed in different"
+          elog "SLOTs any longer. You may want to uninstall older versions."
+        }
+
+  packages:
+
+    - oracle-instantclient-jdbc:
+        selector:
+          - '<20'
+
+    - oracle-instantclient-jdbc:
+        selector:
+          - '<22'
+
+odbc:
+
+  defaults:
+    vars:
+      rdepend: |
+        >=dev-db/oracle-instantclient-basic-{{ .Values.pv }}
+      tarball_prefix: 'instantclient-odbc-linux.x64-'
+      s: '{{- $v := .Values.pv  }}${WORKDIR}/instantclient_{{ join "_" ( slice ( splitList "." $v ) 0 2 ) }}/'
+      body: |
+        {{- $v := .Values.pv  }}
+        src_install() {
+          # library
+          dodir /usr/$(get_libdir)/oracle/{{ $v }}/client/lib
+          insinto /usr/$(get_libdir)/oracle/{{ $v }}/client/lib
+          doins *.so.{{ join "" ( slice ( splitList "." $v ) 0 1 ) }}.1
+
+          # fixes symlinks
+          dosym /usr/$(get_libdir)/oracle/{{ $v }}/client/lib/libsqora.so.{{ join "" ( slice ( splitList "." $v ) 0 1 ) }}.1 \
+            /usr/$(get_libdir)/oracle/{{ $v }}/client/lib/libsqora.so
+
+          # odbc_update_ini.sh
+          dodir /usr/$(get_libdir)/oracle/{{ $v }}/client/bin
+          exeinto /usr/$(get_libdir)/oracle/{{ $v }}/client/bin
+          doexe odbc_update_ini.sh
+        }
+
+
+  packages:
+
+    - oracle-instantclient-odbc:
+        selector:
+          - '<20'
+
+    - oracle-instantclient-odbc:
+        selector:
+          - '<22'
+
+
+sqlplus:
+
+  defaults:
+    vars:
+      inherit:
+        - eutils
+        - pax-utils
+      rdepend: |
+        >=dev-db/oracle-instantclient-basic-{{ .Values.pv }}
+      tarball_prefix: 'instantclient-sqlplus-linux.x64-'
+      s: '{{- $v := .Values.pv  }}${WORKDIR}/instantclient_{{ join "_" ( slice ( splitList "." $v ) 0 2 ) }}/'
+      extra_envs:
+        - |
+          QA_PREBUILT="
+          usr/lib*/oracle/{{ .Values.pv }}/client/lib*/lib*
+          usr/lib*/oracle/{{ .Values.pv }}/client/bin/sqlplus
+          "
+
+      body: |
+        src_install() {
+          # all binaries go here
+          local oracle_home=usr/$(get_libdir)/oracle/{{ .Values.pn }}/client
+          into /"${oracle_home}"
+          dolib.so libsqlplus.so libsqlplusic.so
+          dobin sqlplus
+          insinto /"${oracle_home}"/sqlplus/admin
+          doins glogin.sql
+          pax-mark -c "${ED}${oracle_home}"/bin/sqlplus || die
+          dosym /"${oracle_home}"/bin/sqlplus /usr/bin/sqlplus
+        }
+
+
+  packages:
+
+    - oracle-instantclient-sqlplus:
+        selector:
+          - '<20'
+
+    - oracle-instantclient-sqlplus:
+        selector:
+          - '<22'
+
+tools:
+
+  defaults:
+    vars:
+      inherit:
+        - eutils
+      docs:
+        - TOOLS_LICENSE
+        - TOOLS_README
+      rdepend: |
+        >=dev-db/oracle-instantclient-basic-{{ .Values.pv }}
+      tarball_prefix: 'instantclient-tools-linux.x64-'
+      s: '{{- $v := .Values.pv  }}${WORKDIR}/instantclient_{{ join "_" ( slice ( splitList "." $v ) 0 2 ) }}/'
+      extra_envs:
+        - |
+          QA_PREBUILT="
+          usr/lib*/oracle/{{ .Values.pv }}/client/lib*/lib*
+          usr/lib*/oracle/{{ .Values.pv }}/client/bin/sqlplus
+          "
+
+      body: |
+        {{- $v := .Values.pv  }}
+        src_install() {
+          local bins=(
+            exp
+            expdp
+            imp
+            impdp
+            sqlldr
+            wrc
+          )
+          local oracle_home=usr/$(get_libdir)/oracle/{{ .Values.pn }}/client
+          into /"${oracle_home}"
+          dolib.so libnfsodm{{ join "" ( slice ( splitList "." $v ) 0 1 ) }}.so libnfsodm{{ join "" ( slice ( splitList "." $v ) 0 1 ) }}.so
+          for b in ${bins[@]} ; do
+            einfo "Add binary ${b}..."
+            dobin ${b}
+            pax-mark -c "${ED}${oracle_home}"/bin/${b}
+            dosym /"${oracle_home}"/bin/${b} /usr/bin/${b}
+          done
+        }
+
+  packages:
+
+    - oracle-instantclient-tools:
+        selector:
+          - '<20'
+
+    - oracle-instantclient-tools:
+        selector:
+          - '<22'

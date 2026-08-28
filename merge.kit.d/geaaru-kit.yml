@@ -15,8 +15,20 @@ target:
   atoms:
 
     - pkg: dev-db/ocilib
+      conditions:
+        - '!=4.7.6'
+        - '!=4.6.0'
+
+    - pkg: dev-db/oracle-instantclient-basic
+    - pkg: dev-db/oracle-instantclient-jdbc
+    - pkg: dev-db/oracle-instantclient-odbc
+    - pkg: dev-db/oracle-instantclient-sdk
+    - pkg: dev-db/oracle-instantclient-sqlplus
+    - pkg: dev-db/oracle-instantclient-tools
 
     - pkg: dev-python/python-oracledb
+      conditions:
+        - '!=2.4.1'
 
     - pkg: sys-apps/systemd
 
