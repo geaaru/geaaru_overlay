@@ -1,11 +1,13 @@
-hatchling_modules:
+global_settings:
   generator: builtin-pypi
   template:
     engine: j2cli
-
   defaults:
     category: dev-python
     template: "templates/pypi-generic.tmpl"
+
+hatchling_modules:
+  defaults:
     vars:
       du_pep517: hatchling
 
@@ -18,13 +20,7 @@ hatchling_modules:
           license: MIT
 
 standalone_modules:
-  generator: builtin-pypi
-  template:
-    engine: j2cli
-
   defaults:
-    category: dev-python
-    template: "templates/pypi-generic.tmpl"
     vars:
       du_pep517: standalone
 
@@ -53,17 +49,10 @@ standalone_modules:
 
 
 python_oracledb:
-  generator: builtin-pypi
-  template:
-    engine: j2cli
-
   defaults:
-    category: dev-python
-    template: "templates/pypi-generic.tmpl"
-
     pydeps:
       py:all:runtime:
-        - dev-python/typing-extensions
+        - typing-extensions
         - cryptography
       py:all:build:
         - cython
@@ -99,3 +88,61 @@ python_oracledb:
         selector:
           - '=2.4.1'
 
+python_oci:
+  defaults:
+    pypi_name: oci
+    pydeps:
+      py:all:runtime:
+        - certifi
+        - cryptography
+        - pyopenssl
+        - pytz
+        - python-dateutil
+        - urllib3
+        - circuitbreaker
+        - pyjwt
+        - crc32c
+        - aiohttp
+      py:all:build:
+        - certifi
+        - cryptography
+        - pyopenssl
+        - pytz
+        - python-dateutil
+        - urllib3
+        - circuitbreaker
+        - pyjwt
+        - crc32c
+        - aiohttp
+    vars:
+      du_pep517: setuptools
+      license: Apache-2.0 UPL-1.0
+
+  packages:
+
+    - oci:
+
+python_ocicli:
+  defaults:
+    pypi_name: oci-cli
+    pydeps:
+      py:all:both:
+        - oci
+        - arrow
+        - certifi
+        - click
+        - cryptography
+        - pyopenssl
+        - jmespath
+        - pytz
+        - python-dateutil
+        - terminaltables
+        - pyyaml
+        - prompt_toolkit
+    vars:
+      du_pep517: setuptools
+      license: Apache-2.0 UPL-1.0
+
+  packages:
+
+    - oci-cli:

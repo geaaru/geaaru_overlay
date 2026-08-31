@@ -29,6 +29,8 @@ target:
     - pkg: dev-python/python-oracledb
       conditions:
         - '!=2.4.1'
+    - pkg: dev-python/oci
+    - pkg: dev-python/oci-cli
 
     - pkg: sys-apps/systemd
 
