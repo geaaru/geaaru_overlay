@@ -21,7 +21,7 @@ BDEPEND="
 RDEPEND="
 	dev-db/oracle-instantclient-basic
 
-	dev-python/dev-python/typing-extensions[${PYTHON_USEDEP}]
+	dev-python/typing-extensions[${PYTHON_USEDEP}]
 	dev-python/cryptography[${PYTHON_USEDEP}]
 "
 DEPEND="
