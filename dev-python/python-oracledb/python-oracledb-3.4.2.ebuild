@@ -30,6 +30,7 @@ DEPEND="
 	dev-db/oracle-instantclient-sdk
 
 "
+IUSE="doc examples"
 S="${WORKDIR}/oracledb-3.4.2"
 
 python_install_all() {
