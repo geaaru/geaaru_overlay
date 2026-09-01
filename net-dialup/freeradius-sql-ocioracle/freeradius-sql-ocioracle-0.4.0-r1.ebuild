@@ -31,7 +31,9 @@ RDEPEND="
 	sys-libs/talloc
 	dev-db/ocilib
 	dev-db/oracle-instantclient-basic"
-DEPEND="${RDEPEND}"
+DEPEND="${RDEPEND}
+	dev-db/oracle-instantclient-sdk
+"
 
 inherit freeradius-modules
 
