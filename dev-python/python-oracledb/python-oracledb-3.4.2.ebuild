@@ -25,7 +25,9 @@ RDEPEND="
 	dev-python/cryptography[${PYTHON_USEDEP}]
 "
 DEPEND="
-${RDEPEND}
+
+	${RDEPEND}
+	dev-db/oracle-instantclient-sdk
 
 "
 S="${WORKDIR}/oracledb-3.4.2"

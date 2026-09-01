@@ -21,11 +21,13 @@ BDEPEND="
 RDEPEND="
 	dev-db/oracle-instantclient-basic
 
-	dev-python/dev-python/typing-extensions[${PYTHON_USEDEP}]
+	dev-python/typing-extensions[${PYTHON_USEDEP}]
 	dev-python/cryptography[${PYTHON_USEDEP}]
 "
 DEPEND="
-${RDEPEND}
+
+	${RDEPEND}
+	dev-db/oracle-instantclient-sdk
 
 "
 S="${WORKDIR}/oracledb-2.4.1"
