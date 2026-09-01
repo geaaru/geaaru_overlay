@@ -21,7 +21,7 @@ global_settings:
 
     transform:
       - kind: string
-        match: '{{ .Values.tarball_prefix }}'
+        match: '{{ .Values.tarball_prefix | default ( printf "%s-" .Values.pn ) }}'
         replace: ''
 
       - kind: string

@@ -61,6 +61,7 @@ python_oracledb:
     vars:
       du_pep517: setuptools
       license: Apache-2.0 UPL-1.0
+      iuse: doc examples
       body: |
         python_install_all() {
           distutils-r1_python_install_all
@@ -74,9 +75,11 @@ python_oracledb:
             dodoc samples/* || die
           fi
         }
-      depend: '${RDEPEND}'
       rdepend: |
         dev-db/oracle-instantclient-basic
+      depend: |
+        ${RDEPEND}
+        dev-db/oracle-instantclient-sdk
 
   packages:
 

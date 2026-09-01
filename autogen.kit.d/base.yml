@@ -10,7 +10,9 @@ ocilib:
     vars:
       rdepend: |
         dev-db/oracle-instantclient-basic
-      depend: '${RDEPEND}'
+      depend: |
+        ${RDEPEND}
+        dev-db/oracle-instantclient-sdk
       body: |
         src_compile() {
           local myconf="${myconf} "
