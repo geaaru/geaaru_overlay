@@ -23,6 +23,10 @@ RDEPEND="${DEPEND}"
 NPM_LOCAL_MODULES="
 @isaacs
 "
+NPM_DEFAULT_OPTS="-E --ignore-scripts --omit=optional --omit=dev --legacy-peer-deps"
+NPM_PKG_DIRS="
+        dist
+"
 
 S="${WORKDIR}/package"
 
