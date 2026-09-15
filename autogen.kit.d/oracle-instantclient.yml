@@ -257,7 +257,7 @@ sqlplus:
       body: |
         src_install() {
           # all binaries go here
-          local oracle_home=usr/$(get_libdir)/oracle/{{ .Values.pn }}/client
+          local oracle_home=usr/$(get_libdir)/oracle/{{ .Values.pv }}/client
           into /"${oracle_home}"
           dolib.so libsqlplus.so libsqlplusic.so
           dobin sqlplus
@@ -295,7 +295,7 @@ tools:
         - |
           QA_PREBUILT="
           usr/lib*/oracle/{{ .Values.pv }}/client/lib*/lib*
-          usr/lib*/oracle/{{ .Values.pv }}/client/bin/sqlplus
+          usr/lib*/oracle/{{ .Values.pv }}/client/bin/*
           "
 
       body: |
@@ -309,7 +309,7 @@ tools:
             sqlldr
             wrc
           )
-          local oracle_home=usr/$(get_libdir)/oracle/{{ .Values.pn }}/client
+          local oracle_home=usr/$(get_libdir)/oracle/{{ .Values.pv }}/client
           into /"${oracle_home}"
           dolib.so libnfsodm{{ join "" ( slice ( splitList "." $v ) 0 1 ) }}.so libnfsodm{{ join "" ( slice ( splitList "." $v ) 0 1 ) }}.so
           for b in ${bins[@]} ; do
