@@ -18,7 +18,7 @@ RDEPEND="${DEPEND}"
 NPM_NO_DEPS=1
 
 NPM_PKG_DIRS="
-  dist
+	dist
 "
 
 S="${WORKDIR}/package"
